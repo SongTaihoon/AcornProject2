@@ -57,9 +57,6 @@
 	width: 454px;    	
 	background-color: #1E96C4;
 }
-html, body {
-    height: 100%;
-}
 #path ol {
     margin-left: auto;      
 }
@@ -112,7 +109,7 @@ html, body {
 #wrapper {
     min-height: 100%;
     position: relative;
-    padding-bottom: 300px;
+    padding-bottom: 700px;
 }
 .footer {
     bottom: 0;

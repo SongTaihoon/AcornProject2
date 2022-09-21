@@ -10,6 +10,7 @@
     text-decoration: none;
     vertical-align: middle;
 }
+
 .table-hover{
 	cursor: pointer;
 }
@@ -26,4 +27,13 @@ table th, table td {
 }
 .footer {
     bottom: 0;
+}
+
+h1{
+	border-bottom: 1px solid #e8e8e8; 
+	min-width: 1200px;
+}
+h1 span{
+	font-size: 35px;
+	
 }

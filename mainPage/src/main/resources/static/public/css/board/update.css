@@ -1,5 +1,4 @@
-@charset "UTF-8";
-
+@charset "EUC-KR";
 html, body {
     height: 100%
 }
@@ -12,8 +11,4 @@ html, body {
 
 .footer {
     bottom: 0;
-}
-
-.container{
-	width: 50%
 }

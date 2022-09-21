@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <title>공지사항 수정페이지</title>
+<link rel="stylesheet" href="/public/css/notice/update.css">
 </head>
 <body>
 	<header th:insert="/NewHeader"></header>
+	<div id="wrapper">
 	<main class="container">
 	<form action="/notice/update.do" method="post" enctype="multipart/form-data">
 		<p class="mb-3 mt-3 input-group" >
@@ -78,5 +80,6 @@
 		</form>
 	</main>
 	<footer class="footer" th:insert="/NewFooter"></footer>
+	</div>
 </body>
 </html>
