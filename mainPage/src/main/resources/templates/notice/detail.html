@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<<<<<<< HEAD
 <title>공지사항 게시글</title>
 <link rel="stylesheet" href="/public/css/notice/detail.css">
 </head>
@@ -46,5 +47,65 @@
 	</main>
 	<footer class="footer" th:insert="/NewFooter"></footer>
 	</div>
+=======
+<title>공지 사항</title>
+<link rel="stylesheet" href="/public/css/board/insert.css">
+</head>
+<body>
+<header th:insert="/NewHeader"></header>
+<div id="wrapper">
+	<main class="container-xl">
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" id="path">
+	  <ol class="breadcrumb">
+	    <li class="breadcrumb-item">
+	    	<a href="/">홈</a>
+	    </li>
+	    <li class="breadcrumb-item">
+	    	<a href="#">고객 센터</a>
+	    </li>
+	    <li class="breadcrumb-item" aria-current="page">
+	    	<a href="/notice/list/1" class="breadcrumb-item active">공지 사항</a>
+	    </li>
+	  </ol>
+	</nav>
+	<h1 class="pb-4 d-flex justify-content-between align-items-center" 
+	    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
+	    <span style="font-size: 35px;">공지 사항</span>
+    </h1>	
+	<table class="mt-5 mb-5 table align-middle table-bordered">
+		<tbody>
+			<tr>
+				<th class="table-light" style="border-left: none;">글 번호</th>
+				<td style="border-right: none;" th:text="${noticeNo}"></td>
+			</tr>
+			<tr>
+				<th class="table-light" style="border-left: none;">제목</th>
+				<td style="border-right: none;" th:text="${notice.title}"></td>
+			</tr>
+			<tr>
+				<th class="table-light" style="border-left: none;">내용</th>
+				<td style="border-right: none;" th:text="${notice.contents}"></td>
+			</tr>
+			<tr>
+				<th class="table-light" style="border-left: none;">작성자</th>
+				<td style="border-right: none;" th:text="${notice.users.userid}"></td>
+			</tr>
+			<tr>
+				<th class="table-light" style="border-left: none;">등록일</th>
+				<td style="border-right: none;" th:text="${notice.post_time}"></td>
+			</tr>
+			<tr>
+				<th class="table-light" style="border-left: none;">조회수</th>
+				<td style="border-right: none;" th:text="${notice.views}"></td>
+			</tr>
+		</tbody>
+	</table>
+		<div id="button">
+			<a href="/notice/list/1" class="btn btn-outline-primary btn-lg">목록</a>
+		</div>
+	</main>
+<footer class="footer" th:insert="/NewFooter"></footer>
+</div>
+>>>>>>> origin/박규빈
 </body>
 </html>

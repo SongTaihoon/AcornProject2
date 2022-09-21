@@ -57,6 +57,10 @@
 	width: 454px;    	
 	background-color: #1E96C4;
 }
+
+html, body {
+    height: 100%;
+}
 #path ol {
     margin-left: auto;      
 }
@@ -103,9 +107,7 @@
 	width: 454px;    	
 	background-color: #1E96C4;
 }
-html, body {
-    height: 100%
-}
+
 #wrapper {
     min-height: 100%;
     position: relative;

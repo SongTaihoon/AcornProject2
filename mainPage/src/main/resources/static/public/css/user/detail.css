@@ -6,7 +6,11 @@ html, body {
 #wrapper {
     min-height: 100%;
     position: relative;
+<<<<<<< HEAD
     padding-bottom: 500px;
+=======
+    padding-bottom: 300px;
+>>>>>>> origin/박규빈
 }
 
 .footer {
