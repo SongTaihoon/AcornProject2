@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>JEJU THE BEST</title>
+<link rel="stylesheet" href="/public/css/index.css">
+</head>
+<body>
+	<header th:insert="/NewHeader"></header>
+	<div id="wrapper">
+		<section class="shopping">
+			<div class="heading">
+				<h1>
+					<span>JEJU THE BEST</span>					
+				</h1>
+				<h2>세계자연유산 제주</h2>
+				<p>
+					방문해 주셔서 감사합니다.
+				</p>
+				<p>
+					당신에게 딱 맞는 여행지를 추천해 드립니다.
+				</p>
+			</div>
+			<video src="/medias/takeoff.mp4" autoplay muted loop></video>
+		</section>
+  	  <footer class="footer" th:insert="/NewFooter"></footer>
+    </div> 
+</body>
+</html>
