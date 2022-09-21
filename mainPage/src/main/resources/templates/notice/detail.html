@@ -2,52 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<<<<<<< HEAD
-<title>공지사항 게시글</title>
-<link rel="stylesheet" href="/public/css/notice/detail.css">
-</head>
-<body>
-	<header th:insert="/NewHeader"></header>
-	<div id="wrapper">
-	<main class="container">
-			<h1 class="m-5">
-				<span th:text="${notice.notice_no}"></span>. 
-				<span th:text="${notice.title}"></span>
-			</h1>
-		<div class = "d-flex justify-content-end">
-				<a th:href="@{/notice/update/{noticeNo}(noticeNo=${notice.notice_no})}" class="btn btn-success">
-					수정
-				</a>		
-				<a th:href="@{/notice/delete/{notice_no}/{userId}(notice_no=${notice.notice_no},userId=${notice.users.userid})}" 
-					class="btn btn-primary">
-					공지사항 삭제
-				</a>
-		</div> 	
-		<p>
-			아이디 : <strong th:text="${notice.users.userid}"></strong> 
-			<br>   
-			이름 : <strong th:text="${notice.users.username}"></strong>
-		</p>
-		<i class="bi bi-eye"
-			data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="조회수">
-			views : <span th:text="${notice.views}"></span>
-		</i>
-		<br>
-		<span th:text="${#dates.format(notice.post_time,'yyyy-MM-dd HH:mm:ss')}"></span>
-		
-		<div>
-			<th:block th:each="noticeImg : ${notice.noticeImgs}">
-				<img th:src="@{/public/img/{fileName}(fileName=${noticeImg.img_path})}" width="50%" class="img-thumbnail" alt="게시글 이미지">
-			</th:block>
-		</div>
-		<div class="form-floating">
-			<textarea class="form-control" placeholder="Leave a comment here"
-			style="height: 100px; resize: none;" th:text="${notice.contents}" readonly="readonly" ></textarea>
-		</div>
-	</main>
-	<footer class="footer" th:insert="/NewFooter"></footer>
-	</div>
-=======
 <title>공지 사항</title>
 <link rel="stylesheet" href="/public/css/board/insert.css">
 </head>
@@ -106,6 +60,5 @@
 	</main>
 <footer class="footer" th:insert="/NewFooter"></footer>
 </div>
->>>>>>> origin/박규빈
 </body>
 </html>

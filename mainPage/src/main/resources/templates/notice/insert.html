@@ -3,21 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <title>공지사항 등록</title>
-<<<<<<< HEAD
 <link rel="stylesheet" href="/public/css/notice/insert.css">
 </head>
 <body>
 	<header th:insert="/NewHeader"></header>
 	<div id="wrapper">
 	<main class="container">
-=======
-</head>
-<body>
-<main class="container">
-	<header th:insert="/NewHeader"></header>
->>>>>>> origin/박규빈
 		<h1 class="m-3">공지사항 등록 페이지</h1>
-		
 		<form  action="/notice/insert.do" method="post" class="row g-3 needs-validation" validate enctype="multipart/form-data">
 			<div class="mb-3 was-validated">
 				<label for="inputId" class="form-label">아이디</label>
@@ -53,17 +45,10 @@
 				<button class="btn btn-primary" type="submit">등록</button>
 			</div>
 		</form>
-<<<<<<< HEAD
 	</main>
 	<footer class="footer" th:insert="/NewFooter"></footer>
 	</div>
 </body>
-=======
-
-	</main>
-</body>
-<footer class="footer" th:insert="/NewFooter"></footer>
->>>>>>> origin/박규빈
 <script>
 function noSpace(obj) { // 공백사용못하게
     var str = /\s/;  // 공백체크
