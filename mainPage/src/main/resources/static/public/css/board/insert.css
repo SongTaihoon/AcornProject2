@@ -1,0 +1,45 @@
+@charset "UTF-8";
+
+html, body {
+    height: 100%
+}
+
+#wrapper {
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 350px;
+}
+
+.footer {
+    bottom: 0;
+}
+h1{
+	display: flex;
+	justify-content: center;
+	padding-top: 50px;
+}
+
+#button{
+	display: flex;
+	justify-content: center;
+	margin-top: 10px;
+}
+
+table{
+	padding: 30px;
+	display: flex;
+	justify-content: center;
+}
+table tr{
+	border: 3px solid;
+	text-align: center;
+}
+table td{
+	border: 3px solid;
+	width: 750px;
+}
+th{
+	width: 150px;
+	height: 50px;
+}
+

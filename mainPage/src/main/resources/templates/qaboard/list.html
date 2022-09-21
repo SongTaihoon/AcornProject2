@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>고객 문의</title>
+<link rel="stylesheet" href="/public/css/qaboard/qaboard.css">
+</head>
+<body>
+<header th:insert="/NewHeader"></header>
+	<div id="wrapper">
+		<div class="container-fluid">
+		<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" id="path">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item">
+		    	<a href="/">홈</a>
+		    </li>
+		    <li class="breadcrumb-item">
+		    	<a href="#">게시판</a>
+		    </li>
+		    <li class="breadcrumb-item" aria-current="page">
+		    	<a href="/qaboard/list/1" class="breadcrumb-item active">고객 문의</a>
+		    </li>
+		  </ol>
+		</nav>
+		<h1 class="pb-4 d-flex justify-content-between align-items-center" 
+			style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
+			<span style="font-size: 35px;">고객 문의</span>
+			<a href="/qaboard/insert.do" class="btn btn-secondary">문의하기</a>
+		</h1>
+		<table class="mt-5 mb-5 table table-bordered table-hover"
+			   style="min-width: 1200px;">
+			<thead class="table-light">
+				<tr>
+					<th>글 번호</th>
+					<th>유형</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>등록일</th>
+					<th>답변 여부</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr id="detail" th:each="q : ${list}" th:onclick="location.href='/qaboard/detail/[[${q.qaBoardNo}]]'">
+					<td th:text="${q.qaBoardNo}"></td>
+					<td th:text="${q.qaBoardKind}"></td>
+					<td th:text="${q.qaBoardTitle}"></td>
+					<td th:text="${q.users.userid}"></td>
+					<td th:text="${#dates.format(q.qaBoardDate,'yyyy-MM-dd')}"></td>
+					<th:block th:if=${q.qaBoardAnswer==0}>
+					<td>미답변</td>
+					</th:block>
+					<th:block th:if=${q.qaBoardAnswer==1}>
+					<td>답변 완료</td>
+					</th:block>
+				</tr>
+			</tbody>
+		</table>
+		<th:block th:unless="${list==null}">
+			<div class="d-flex justify-content-center" th:insert="/pagination"></div>
+		</th:block>
+		<nav class="navbar mt-4 mb-4" style="min-width: 1200px;">
+		  <div class="container-fluid">
+		    <form action="/qaboard/search/1" class="d-flex" id="qnaSearchForm" role="search" name="qnaSearchForm">
+		      <select class="form-select me-2" name="type" style="width: 100px; border: 1px solid #6c757d">
+		            <option value="N">글 번호</option>
+					<option value="T">유형</option>
+					<option value="C">제목</option>
+					<option value="W">작성자</option>
+		      </select>
+		      <input class="form-control me-2" name="keyword" id="search" size="20" 
+		      		 onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);" 
+		      		 type="search" placeholder="검색" aria-label="Search" 
+		      		 style="border: 1px solid #6c757d">
+		      <button class="btn btn-outline-secondary" style="padding: 6px;">
+		      	<div class="bi bi-search" style="width: 28px; height: 28px;"></div>
+		      </button>
+		    </form>
+		  </div>
+		</nav>
+	</div>
+<footer class="footer" th:insert="/NewFooter"></footer>
+</div>
+</body>
+<script>
+function noSpaceForm(obj) { // 공백사용못하게
+    var str_space = /\s/;  // 공백체크
+    if(str_space.exec(obj.value.trim)) { //공백 체크
+        //alert("해당 항목에는 공백을 사용할수 없습니다.\n\n공백은 자동적으로 제거 됩니다.");
+        obj.focus();
+        obj.value = obj.value.replace(/\s| /gi,''); // 공백제거
+        return false;
+    }
+}
+const qnaSearchForm = document.forms.qnaSearchForm;
+qnaSearchForm.addEventListener("submit", (event) => {
+	if(!qnaSearchForm.keyword.value) {
+		event.preventDefault();		
+	}
+});
+</script>
+</html>
