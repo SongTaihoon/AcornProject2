@@ -1,24 +1,15 @@
 @charset "UTF-8";
-<<<<<<< HEAD
 html{
-=======
-html, body {
->>>>>>> origin/박규빈
     height: 100%;
 }
 
 #wrapper {
     min-height: 100%;
     position: relative;
-<<<<<<< HEAD
     padding-bottom: 500px;
 }
 body{
 	height: 100%;
-=======
-}
-body{
->>>>>>> origin/박규빈
 	margin : 10px;
 	font-size: 12px;
     color: #888;
