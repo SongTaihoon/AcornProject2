@@ -41,7 +41,7 @@
 			    </th:block>
 			    <th:block th:unless="${session.loginUsers == null}">
 			    	<li class="breadcrumb-item">
-			    		<a th:href="@{/users/detail/{userid}(user_id=${session.loginUsers.userid})}">					
+			    		<a th:href="@{/users/detail/{userid}(userid=${session.loginUsers.userid})}">					
 	     					<span th:text="${session.loginUsers.username}"></span>
 							(<span th:text="${session.loginUsers.userid}"></span>)
 						</a> 
