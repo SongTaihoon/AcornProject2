@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Header</title>
+<link rel="stylesheet" href="/public/css/header.css">
+<link rel="stylesheet" href="/bootstrap-5.2.0-dist/css/bootstrap.css">
+<script src="/bootstrap-5.2.0-dist/js/bootstrap.bundle.js"></script>
+<script src="/public/js/header.js" defer="defer"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+</head>
+<body>
+    <div id="header">
+        <div id="headerLeft">
+            <h1>
+            	<a href="/">
+            		<img src="/img/logo.png" style="width: 160px; height: 60px;">
+            	</a>		
+            </h1>
+        </div>
+        <div id="headerCenter">
+        	<div class="container-fluid" id="searchBox">
+			  <form class="d-flex" action="/search/1" id="searchForm" name="searchForm" method="get">
+			    <input class="form-control me-2" type="text" name="keyword" id="searchInput" onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);" maxlength="50">
+			    <button class="btn" type="submit" style="padding: 6px 9px;">
+			    	<div class="bi bi-search" style="width: 28px; height: 28px;"></div>
+			    </button>
+			  </form>
+			</div>
+        </div>
+        <div id="headerRight">
+	        <nav style="--bs-breadcrumb-divider: '|';" aria-label="breadcrumb">
+			  <ol class="breadcrumb">
+			  	<th:block th:if="${session.loginUsers == null}">
+			    	<li class="breadcrumb-item">
+			    		<a href="/users/login.do">로그인</a>
+			    	</li>
+			    	<li class="breadcrumb-item">
+			    		<a href="/users/signup.do">회원가입</a>
+			    	</li>
+			    </th:block>
+			    <th:block th:unless="${session.loginUsers == null}">
+			    	<li class="breadcrumb-item">
+			    		<a th:href="@{/users/detail/{userid}(user_id=${session.loginUsers.userid})}">					
+	     					<span th:text="${session.loginUsers.username}"></span>
+							(<span th:text="${session.loginUsers.userid}"></span>)
+						</a> 
+					</li>
+			    	<li class="breadcrumb-item">
+			    		<a href="/users/logout.do">로그아웃</a>
+			    	</li>
+			    	<li class="breadcrumb-item">
+			    		<a th:href="@{/users/mypage.do}">마이페이지</a>
+			    	</li>
+			    </th:block>
+			  </ol>
+			</nav>  
+        </div>
+    </div>
+	<nav id="nav" class="navbar navbar-dark" style="background-color: #1E96C4;">
+	  <div id="navBox" class="container-fluid align-items-start" style="display: flex; justify-content: space-around">
+	    <button id="toggleBtn" style="margin: 11.5px 0;" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+	      <span class="navbar-toggler-icon"></span>
+	    </button>
+	  	<div class="dropdown" id="dropdown1">
+	        <button class="dropdown-btn">Top 10</button>
+	        <div class="dropdown-submenu">
+	            <a href="#none">관광지</a>
+	            <a href="#none">음식</a>
+	            <a href="#none">숙박</a>
+	        </div>
+    	</div>
+        <div class="dropdown" id="dropdown2">
+	        <button class="dropdown-btn">나의 여행 추천</button>
+	        <div class="dropdown-submenu">
+	            <a href="#none">관광지</a>
+	            <a href="#none">음식</a>
+	            <a href="#none">숙박</a>
+	        </div>
+	   	</div>
+	   	<div class="dropdown" id="dropdown3">
+	        <button class="dropdown-btn">게시판</button>
+	        <div class="dropdown-submenu">
+	            <a href="/qaboard/list/1">고객 문의</a>
+	            <a href="/board/list/1">리뷰</a>
+	        </div>
+    	</div>
+    	<div class="dropdown" id="dropdown4">
+	        <button class="dropdown-btn">고객 센터</button>
+	        <div class="dropdown-submenu">
+	            <a href="/notice/list/1">공지 사항</a>
+	            <a href="#none">1:1 문의</a>
+	        </div>
+    	</div>
+	  </div>
+	</nav>
+    <div class="collapse" id="navbarToggleExternalContent">
+	  <div class="p-4" style="background-color: #1E96C4;"></div>
+	</div>
+</body>
+<script th:inline="javascript" defer="defer">
+function noSpaceForm(obj) { // 공백 사용 못하게
+   var str_space = /\s/;  // 공백 체크
+   if(str_space.exec(obj.value.trim)) { //공백 체크
+       //alert("해당 항목에는 공백을 사용할수 없습니다.\n\n공백은 자동적으로 제거 됩니다.");
+       obj.focus();
+       obj.value = obj.value.replace(/\s| /gi,''); // 공백 제거
+       return false;
+   }
+}
+const searchForm = document.forms.searchForm;
+searchForm.addEventListener("submit", (event) => {
+	if(!searchForm.keyword.value) {
+		event.preventDefault();		
+	}
+});
+</script>
+</html>

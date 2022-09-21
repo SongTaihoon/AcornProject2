@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>리뷰</title>
+<link rel="stylesheet" href="/public/css/board/list.css">
+</head>
+<body>
+<header th:insert="/NewHeader"></header>
+<div id="wrapper">
+	<main class="container-fluid">
+	<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" id="path">
+	  <ol class="breadcrumb">
+	    <li class="breadcrumb-item">
+	    	<a href="/">홈</a>
+	    </li>
+	    <li class="breadcrumb-item">
+	    	<a href="#">게시판</a>
+	    </li>
+	    <li class="breadcrumb-item" aria-current="page">
+	    	<a href="/board/list/1" class="breadcrumb-item active">리뷰</a>
+	    </li>
+	  </ol>
+	</nav>
+	  <h1 class="pb-4 d-flex justify-content-between align-items-center" 
+		  style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
+		  <span style="font-size: 35px;">리뷰</span>
+		  <a href="/board/insert.do" class="btn btn-secondary">리뷰 작성하기</a>
+	  </h1>	
+		<table class="mt-5 mb-5 table table-bordered table-hover"
+			   style="min-width: 1200px;">
+			<thead class="table-light">
+				<tr>
+					<th>글 번호</th>
+					<th>카테고리</th>
+					<th>장소</th>
+					<th>별점</th>
+					<th>사진</th>							
+					<th>제목</th>
+					<th>작성자</th>
+					<th>댓글</th>
+					<th>추천</th>
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:each="board : ${boardList}" >
+					<tr th:onclick="location.href='/board/detail/[[${board.board_no}]]'">
+						<td th:text="${board.board_no}"></td>
+						<td th:text="${board.board_no}"></td>
+						<td th:text="${board.board_no}"></td>
+						<td th:text="${board.board_no}"></td>
+						<td th:text="${board.board_no}"></td>
+						<td th:text="${board.title}"></td>
+						<td th:text="${board.users.userid}"></td>
+						<td th:text="${board.replys_size}"></td>
+						<td th:text="${board.good}"></td>
+					</tr>					
+				</th:block>
+			</tbody>
+		</table>
+		<div class="d-flex justify-content-center" th:insert="/pagination"></div>
+		<nav class="navbar mt-4 mb-4" style="min-width: 1200px;">
+		  <div class="container-fluid">
+		    <form action="/board/search/1" class="d-flex" id="reviewSearchForm" role="search" name="reviewSearchForm">
+		      <select class="form-select me-2" name="type" style="width: 100px; border: 1px solid #6c757d">
+		            <option value="N">글 번호</option>
+					<option value="T">장소</option>
+					<option value="C">제목</option>
+					<option value="U">작성자</option>
+		      </select>
+		      <input class="form-control me-2" name="keyword" id="search" size="20" 
+		      		 onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);" 
+		      		 type="search" placeholder="검색" aria-label="Search" 
+		      		 style="border: 1px solid #6c757d">
+		      <button class="btn btn-outline-secondary" style="padding: 6px;">
+		      	<div class="bi bi-search" style="width: 28px; height: 28px;"></div>
+		      </button>
+		    </form>
+		  </div>
+		</nav>
+	</main>
+<footer class="footer" th:insert="/NewFooter"></footer>
+</div>
+</body>
+<script>
+function noSpaceForm(obj) { // 공백사용못하게
+    var str_space = /\s/;  // 공백체크
+    if(str_space.exec(obj.value.trim)) { //공백 체크
+        //alert("해당 항목에는 공백을 사용할수 없습니다.\n\n공백은 자동적으로 제거 됩니다.");
+        obj.focus();
+        obj.value = obj.value.replace(/\s| /gi,''); // 공백제거
+        return false;
+    }
+}
+const reviewSearchForm = document.forms.reviewSearchForm;
+reviewSearchForm.addEventListener("submit", (event) => {
+	if(!reviewSearchForm.keyword.value) {
+		event.preventDefault();		
+	}
+});
+</script>
+</html>

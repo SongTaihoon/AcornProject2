@@ -1,0 +1,50 @@
+@charset "UTF-8";
+html, body {
+    height: 100%
+}
+#wrapper {
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 330px;
+}
+.footer {
+    bottom: 0;
+}
+.shopping{
+    height: 60vh;                    
+    position: relative;            
+    overflow: hidden;         
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to left, black,  transparent);
+}
+.shopping video{
+    position: absolute;          
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;                 
+}
+.shopping .heading{
+    text-align: center;
+    width: 60%;
+    color:#fff;
+}
+.shopping .heading h1{
+    font-weight: 500;
+    line-height: 1.6em;
+    font-size: 2em;
+    margin-bottom: 16px;
+}
+.shopping .heading h2 {
+	font-size: 1.8em;
+	margin-bottom: 16px;
+}
+.shopping .heading span{
+    color: #ff8400;
+    display: block;
+    font-size: 1.3em;
+}
