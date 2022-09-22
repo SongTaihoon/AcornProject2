@@ -57,6 +57,7 @@
 	width: 454px;    	
 	background-color: #1E96C4;
 }
+
 html, body {
     height: 100%;
 }
@@ -106,13 +107,11 @@ html, body {
 	width: 454px;    	
 	background-color: #1E96C4;
 }
-html, body {
-    height: 100%
-}
+
 #wrapper {
     min-height: 100%;
     position: relative;
-    padding-bottom: 300px;
+    padding-bottom: 700px;
 }
 .footer {
     bottom: 0;

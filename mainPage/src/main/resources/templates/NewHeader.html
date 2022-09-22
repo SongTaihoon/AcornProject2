@@ -41,7 +41,11 @@
 			    </th:block>
 			    <th:block th:unless="${session.loginUsers == null}">
 			    	<li class="breadcrumb-item">
+<<<<<<< HEAD
 			    		<a th:href="@{/users/detail/{userid}(userid=${session.loginUsers.userid})}">					
+=======
+			    		<a th:href="@{/users/detail/{userid}(userid=${session.loginUsers.userid})}">
+>>>>>>> f06f0b8e4c71f605053344f9fb6c6609b2969d4a
 	     					<span th:text="${session.loginUsers.username}"></span>
 							(<span th:text="${session.loginUsers.userid}"></span>)
 						</a> 
