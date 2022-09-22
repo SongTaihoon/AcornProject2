@@ -46,7 +46,7 @@
 			</tr>
 			<tr>
 				<th class="table-light" style="border-left: none;">등록일</th>
-				<td style="border-right: none;" th:text="${notice.post_time}"></td>
+				<td style="border-right: none;" th:text="${#dates.format(notice.post_time,'yyyy-MM-dd HH:mm:ss')}"></td>
 			</tr>
 			<tr>
 				<th class="table-light" style="border-left: none;">조회수</th>
@@ -55,7 +55,7 @@
 		</tbody>
 	</table>
 		<div id="button">
-			<a href="/notice/list/1" class="btn btn-outline-primary btn-lg">목록</a>
+			<a href="/notice/list/1" class="btn btn-outline-info btn-lg">목록</a>
 		</div>
 	</main>
 <footer class="footer" th:insert="/NewFooter"></footer>

@@ -8,7 +8,7 @@
 <body>
 	<header th:insert="/NewHeader"></header>
 	<div id="wrapper">
-	  <main class="container">
+	  <main class="container-xl">
 	    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" id="path">
 		  <ol class="breadcrumb">
 		    <li class="breadcrumb-item">
@@ -30,39 +30,40 @@
 			<table class="mt-5 mb-5 table align-middle table-bordered">
 				<tbody>
 					<tr>
-						<th class="table-light">글 번호</th>
-						<td>
-							<input name="qaboardNo" class="form-control" id="qaboardNo" required readonly>
-						</td>
-					</tr>
-					<tr>
 						<th class="table-light">작성자</th>
 						<td>
-							<input name="userId" class="form-control" id="userId" required readonly>
+							<input name="userId" class="form-control" id="userId" th:value="${session.loginUsers.userid}" readonly>
 						</td>
 					</tr>
 					<tr>
 						<th class="table-light">유형</th>
 						<td>
-							<input name="category" class="form-control" id="category" required>
+							<select name="category" class="form-select" id="category">
+								<option></option>
+								<option></option>
+								<option></option>
+								<option></option>
+								<option></option>
+							</select>
 						</td>
 					</tr>
 					<tr>
 						<th class="table-light">제목</th>
 						<td>
-							<input name="title" class="form-control" id="title" required>
+							<input name="title" class="form-control" id="title" onkeyup="noSpace(this);" onchange="noSpace(this);" required>
 						</td>
 					</tr>
 					<tr>
 						<th class="table-light">내용</th>
 						<td>
-							<textarea name="contents" class="form-control" id="contents" required></textarea>
+							<textarea name="contents" class="form-control" id="contents"  onkeyup="noSpace(this);" onchange="noSpace(this);" required></textarea>
 						</td>	
 					</tr>
 				</tbody>
 			</table>
 			<div id="button">
-				<button class="btn btn-outline-primary btn-lg" type="submit">등록</button>
+				<button class="btn btn-outline-primary btn-lg" type="submit" style="margin-right: 16px;">등록</button>
+				<a class="btn btn-outline-dark btn-lg" href="/qaboard/list/1">취소</a>
 			</div>
 		</form>
 	  </main>
