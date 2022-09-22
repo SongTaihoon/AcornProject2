@@ -99,6 +99,10 @@
 						<div class="col-auto signupInputBox">
 						   <input class="form-control signupInput" type="date" name="birth" placeholder="생일(필수)" required aria-required = "true">
 						</div>
+						<div class="col-auto mt-0">
+					       <span id="birthHelp" class="form-text"></span>
+						   <span id="birthHelpInvalid" class="invalid-feedback"></span> 
+					    </div>
 					</div>
 					<div class="row g-3 align-items-center">
 					    <div class="col-auto signupInputBox" style="width: 335px;">
@@ -132,6 +136,11 @@
 						   <span class="valid-feedback"></span>
 						   <span id="addDetailHelpInvalid" class="invalid-feedback"></span> 
 					    </div>
+					</div> 
+					<div class="row g-3 align-items-center">
+					    <div class="col-auto signupInputBox">
+						   <input class="form-control signupInput" type="text" name="user_addr_extra" id="sample6_extraAddress" placeholder="참고 항목(선택)" readonly>
+						</div>
 					</div> 
 				    <button class="btn btn-primary">가입하기</button>
 				</form>
