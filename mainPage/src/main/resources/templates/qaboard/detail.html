@@ -2,130 +2,170 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>문의글 상세페이지</title>
+<title>고객 문의 내역</title>
 <link rel="stylesheet" href="/public/css/qaboard/detail.css">
 </head>
 <body>
 <header th:insert="/NewHeader"></header>
 <div id="wrapper">
-	<main class="container">
+	 <main class="container-xl">
+	   <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" id="path">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item">
+		    	<a href="/">홈</a>
+		    </li>
+		    <li class="breadcrumb-item">
+		    	<a href="#">게시판</a>
+		    </li>
+		    <li class="breadcrumb-item" aria-current="page">
+		    	<a href="/qaboard/list/1" class="breadcrumb-item active">고객 문의</a>
+		    </li>
+		  </ol>
+		</nav>
+	    <h1 class="pb-4 d-flex justify-content-between align-items-center" 
+		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
+		    <span style="font-size: 35px;">고객 문의 내역</span>
+	    </h1>	
+	    <th:block th:if="${(session.loginUsers?.adminCk==1) ||(session.loginUsers?.userid==qaBoard.users.userid)}">
+			<form action="/qaboard/update.do" method="post">
+				<table class="mt-5 mb-3 table align-middle table-bordered">
+					<tbody>
+						<tr>
+							<th class="table-light">글 번호</th>
+							<td>
+								<input name="qaBoardNo" th:value="${qaBoard.qaBoardNo}" 
+									type="text" class="form-control" readonly>
+							</td>
+						</tr>
+						<tr>
+							<th class="table-light">아이디</th>
+							<td>
+								<input name="users.userid" th:value="${qaBoard.users.username+'('+qaBoard.users.userid+')'}" 
+									type="text" class="form-control" readonly>
+							</td>
+						</tr>
+						<tr>
+							<th class="table-light">유형</th>
+							<td>
+								<input name="qaBoardKind" th:value="${qaBoard.qaBoardKind}" class="form-control" readonly>
+							</td>
+						</tr>
+						<tr>
+							<th class="table-light">제목</th>
+							<td>
+								<input name="qaBoardTitle" th:value="${qaBoard.qaBoardTitle}" 
+									type="text" class="form-control"
+									onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this);">
+							</td>
+						</tr>
+						<tr>
+							<th class="table-light">내용</th>
+							<td>
+								<input name="qaContents" th:value="${qaBoard.qaBoardContents}" 
+									type="text" class="form-control"
+									onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this);">
+							</td>
+						</tr>
+						<tr>
+							<th class="table-light">등록일</th>
+							<td>
+								<input name="qaBoardDate" th:value="${#dates.format(qaBoard.qaBoardDate, 'yyyy-MM-dd')}" 
+									type="text" class="form-control" readonly>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div id="button" class="row mb-3 g-3 align-items-center">
+					<div class="col-auto">
+						<button type="reset" class="btn btn-outline-warning btn-lg">초기화</button>
+					</div>
+					<div class="col-auto">
+						<button type="submit" class="btn btn-outline-success btn-lg">수정</button>
+					</div>
+					<div class="col-auto">
+						<a class="btn btn-outline-danger btn-lg" th:href="@{/qaboard/delete/{no}(no=${qaBoard.qaBoardNo})}">삭제</a>
+					</div>
+				</div>
+			</form>
+		</th:block>
+		<th:block th:unless="${(session.loginUsers?.adminCk==1) ||(session.loginUsers?.userid==qaBoard.users.userid)}">
+			<h4 class="input-group input-group-sm mt-5 mb-5">
+				작성자만 볼 수 있습니다.
+			</h4>
+			<div id="button" class="d-flex mb-3 g-3">
+				<a class="btn btn-outline-info btn-lg" href="/qaboard/list/1">확인</a>
+			</div>
+		</th:block>	
 		<div class="mt-5">
-			<ul class="list-group">
-				<li class="list-group-item text-bg-light border-success">
-					<h3>고객문의내역</h3>
-					<hr>
-					<th:block th:if="${(session.loginUsers?.adminCk==1) ||(session.loginUsers?.userid==qaBoard.users.userid)}">
-					<form action="/qaboard/update.do" method="post">
-						<p class="input-group input-group-sm mb-1">
-							<span class="input-group-text">제품명</span>
-							<input name="board.productid" th:value="${qaBoard.product.productName+' '+qaBoard.product.productSize+' '+qaBoard.product.productColor}" 
-								type="text" class="form-control" readonly>
-						</p>
-						<p class="input-group input-group-sm mb-1">
-							<span class="input-group-text">문의분류유형</span>
-							<input name="qaBoardKind" th:value="${qaBoard.qaBoardKind}" class="form-control"
-							readonly>
-						</p>
-						<p class="input-group input-group-sm mb-1">
-							<span class="input-group-text">문의제목</span>
-							<input name="qaBoardTitle" th:value="${qaBoard.qaBoardTitle}" 
-								type="text" class="form-control"
-								onkeyup="noSpace(this);" onchange="noSpace(this);">
-						</p>
-						<p class="input-group input-group-sm mb-1">
-							<span class="input-group-text">등록일</span>
-							<input name="qaBoardDate" th:value="${qaBoard.qaBoardDate}" 
-								type="text" class="form-control" readonly>
-						</p>
-						<p class="input-group input-group-sm mb-1">
-							<span class="input-group-text">작성자(ID)</span>
-							<input name="users.userid" th:value="${qaBoard.users.username+'('+qaBoard.users.userid+')'}" 
-								type="text" class="form-control" readonly>
-						</p>
-						<p class="input-group input-group-sm mb-1">
-							<span class="input-group-text">답변 받으실 이메일</span>
-							<input name="users.email" th:value="${qaBoard.users.email}" 
-								type="text" class="form-control" readonly>
-						</p>
-						<p class="input-group input-group-sm mb-1">
-							<span class="input-group-text">알람 받으실 휴대폰 번호</span>
-							<input name="users.phone" th:value="${qaBoard.users.phone}" 
-								type="text" class="form-control" readonly>
-						</p>
-						<p class="input-group input-group-sm mb-1">
-							<span class="input-group-text">문의내용</span>
-							<input name="qaContents" th:value="${qaBoard.qaBoardContents}" 
-								type="text" class="form-control"
-								onkeyup="noSpace(this);" onchange="noSpace(this);">
-						</p>
-						<p class="mb-1">
-							<a class="btn btn-outline-primary btn-sm" href="/qaboard/list/1">확인</a>
-							<button type="submit" class="btn btn-sm btn-outline-success">수정</button>
-							<a class="btn btn-outline-danger btn-sm" th:href="@{/qaboard/delete/{no}(no=${qaBoard.qaBoardNo})}">삭제</a>
-						</p>
-					</form>
-					</th:block>
-					<th:block th:unless="${(session.loginUsers?.adminCk==1) ||(session.loginUsers?.userid==qaBoard.users.userid)}">
-						<p class="input-group input-group-sm mb-1">
-							작성자만 볼 수 있습니다.
-						</p>
-						<p class="mb-1">
-							<a class="btn btn-outline-primary btn-sm" href="/qaboard/list/1">확인</a>
-						</p>
-					</th:block>
-				</li>
-				</ul>
-				<ul class="list-group">
-				<th:block th:if="${(session.loginUsers?.adminCk==1)&&(qaBoard.qaBoardAnswer==0)}">
-				<li class="list-group-item text-bg-light border-success">
-				<form action="/qaboard/answer.do" method="post">
-						<p class="input-group input-group-sm mb-1">
-							<span class="input-group-text">답변제목</span>
-							<input name="qaReplyTitle"  
-								type="text" class="form-control"
-								onkeyup="noSpace(this);" onchange="noSpace(this);">
-						</p>
-						<p class="input-group input-group-sm mb-1">
-							<span class="input-group-text">답변내용</span>
-							<textarea name="qaReplyContent" 
-								class="form-control"
-								onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
-						</p>
-						<p class="mb-1">
-							<button type="submit" class="btn btn-sm btn-outline-success">등록</button>
-							<input name="qaBoardNo"  
-								type="hidden" th:value=${qaBoard.qaBoardNo}>
-							<input name="qaBoardAnswer"  
-								type="hidden" value="1">
-						</p>
-					</form>
-				</li>
-				</th:block>
-				<th:block th:if="${(session.loginUsers?.userid==qaBoard.users.userid)&&(qaBoard.qaBoardAnswer==1)}">
-				<li class="list-group-item text-bg-light border-success">
-				<h3>에이콘 쇼핑몰 답변 내용</h3>
-				<hr>
-				<p class="input-group input-group-sm mb-1">
-					<span class="input-group-text">답변제목</span>
-					<input name="qaReplyTitle" th:value="${qaBoard.qaReply?.qaReplyTitle}" 
-						type="text" class="form-control" readonly>
-				</p>
-				<p class="input-group input-group-sm mb-1">
-					<span class="input-group-text">답변내용</span>
-					<input name="qaReplyContent" th:value="${qaBoard.qaReply?.qaReplyContent}" 
-						type="text" class="form-control"  readonly>
-				</p>
-				<p class="input-group input-group-sm mb-1">
-					<span class="input-group-text">답변일자</span>
-					<input name="qaReplyDate" th:value="${qaBoard.qaReply?.qaReplyDate}" 
-						type="text" class="form-control"  readonly>
-				</p>
-				<p class="mb-1">
-					<a class="btn btn-outline-primary btn-sm" href="/qaboard/list/1">확인</a>
-				</p>
-				</li>
-				</th:block>
-			</ul>
+			<th:block th:if="${(session.loginUsers?.adminCk==1)&&(qaBoard.qaBoardAnswer==0)}">
+				<h1 class="pb-4 d-flex justify-content-between align-items-center" 
+				    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
+				    <span style="font-size: 35px;">답변 등록</span>
+			    </h1>	
+			    <form action="/qaboard/answer.do" method="post">
+				  <table class="mt-5 mb-3 table align-middle table-bordered">
+					<tbody>
+						<tr>
+							<th class="table-light">제목</th>
+							<td>
+								<input name="qaReplyTitle"  
+									type="text" class="form-control"
+									onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this);">
+							</td>
+						</tr>
+						<tr>
+							<th class="table-light">내용</th>
+							<td>
+								<textarea name="qaReplyContent" 
+									class="form-control"
+									onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this);"></textarea>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div id="button" class="d-flex mb-3 g-3">
+					<button type="submit" class="btn btn-outline-success btn-lg">등록</button>
+					<input name="qaBoardNo"  
+						type="hidden" th:value=${qaBoard.qaBoardNo}>
+					<input name="qaBoardAnswer"  
+						type="hidden" value="1">
+				</div>		
+				</form>
+			</th:block>
+			<th:block th:if="${(session.loginUsers?.userid==qaBoard.users.userid) && (qaBoard.qaBoardAnswer==1)}">
+				<h1 class="pb-4 d-flex justify-content-between align-items-center" 
+					    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
+					    <span style="font-size: 35px;">답변</span>
+			    </h1>	
+				  <table class="mt-5 mb-3 table align-middle table-bordered">
+					<tbody>
+						<tr>
+							<th class="table-light">제목</th>
+							<td>
+								<input name="qaReplyTitle" th:value="${qaBoard.qaReply?.qaReplyTitle}" 
+									   type="text" class="form-control" readonly>
+							</td>
+						</tr>
+						<tr>
+							<th class="table-light">내용</th>
+							<td>
+								<input name="qaReplyContent" th:value="${qaBoard.qaReply?.qaReplyContent}" 
+									   type="text" class="form-control" readonly>
+							</td>
+						</tr>
+						<tr>
+							<th class="table-light">답변일</th>
+							<td>
+								<input name="qaReplyDate" th:value="${#dates.format(qaBoard.qaBoardDate, 'yyyy-MM-dd')}"
+									   type="text" class="form-control" readonly>
+							</td>
+						</tr>
+					</tbody>
+				  </table>
+				  <div id="button" class="d-flex mb-3 g-3">
+					  <a class="btn btn-outline-info btn-lg" href="/qaboard/list/1">확인</a>
+				  </div>		
+			</th:block>
 		</div>
 	</main>
 <footer class="footer" th:insert="/NewFooter"></footer>
@@ -134,14 +174,14 @@
 <script type="text/javascript">
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
-function noSpace(obj) { // 공백사용못하게
-    var str = /\s/;  // 공백체크
-    if(str.exec(obj.value.trim)) { //공백 체크
-        //alert("해당 항목에는 첫 글자 공백을 사용할수 없습니다.");
-        obj.focus();
-        obj.value = obj.value.replace(/^ +/,''); // 공백제거
-        return false;
-    }
+function noSpaceForm(obj) { // 공백 사용 못하게
+   var str_space = /\s/;  // 공백 체크
+   if(str_space.exec(obj.value.trim)) { //공백 체크
+       //alert("해당 항목에는 공백을 사용할수 없습니다.\n\n공백은 자동적으로 제거 됩니다.");
+       obj.focus();
+       obj.value = obj.value.replace(/\s| /gi,''); // 공백 제거
+       return false;
+   }
 }
 </script>
 </html>

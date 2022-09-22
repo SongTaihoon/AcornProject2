@@ -1,17 +1,16 @@
-@charset "UTF-8";
 html, body {
     height: 100%
 }
 #wrapper {
     min-height: 100%;
     position: relative;
-    padding-bottom: 330px;
+    padding-bottom: 325px;
 }
 .footer {
     bottom: 0;
 }
 .shopping{
-    height: 60vh;                    
+    height: 65vh;                    
     position: relative;            
     overflow: hidden;         
     display: flex;

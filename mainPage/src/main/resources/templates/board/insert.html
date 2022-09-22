@@ -30,15 +30,9 @@
 			<table class="mt-5 mb-5 table align-middle table-bordered">
 				<tbody>
 					<tr>
-						<th class="table-light">글 번호</th>
-						<td>
-							<input name="boardNo" class="form-control" id="boardNo" onkeyup="noSpace(this);" onchange="noSpace(this);" required readonly>
-						</td>
-					</tr>
-					<tr>
 						<th class="table-light">작성자</th>
 						<td>
-							<input name="userId" class="form-control" id="userId" onkeyup="noSpace(this);" onchange="noSpace(this);" required readonly>
+							<input name="userId" class="form-control" id="userId" th:value="${session.loginUsers.userid}" readonly>
 						</td>
 					</tr>
 					<tr>
@@ -86,7 +80,7 @@
 					<tr>
 						<th class="table-light">사진</th>
 						<td>
-							<input name="imgFiles" class="form-control mb-1" type="file" >
+							<input name="imgFiles" class="form-control mb-1  form-control-lg" type="file">
 						</td>
 					</tr>
 					<tr>
@@ -98,7 +92,8 @@
 				</tbody>
 			</table>
 			<div id="button">
-				<button class="btn btn-outline-primary btn-lg" type="submit">등록</button>
+				<button class="btn btn-outline-primary btn-lg" type="submit" style="margin-right: 16px;">등록</button>
+				<a class="btn btn-outline-dark btn-lg" href="/board/list/1">취소</a>
 			</div>
 		</form>
 	  </main>
