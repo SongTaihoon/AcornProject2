@@ -61,9 +61,9 @@
 						<tr>
 							<th class="table-light">내용</th>
 							<td>
-								<input name="qaContents" th:value="${qaBoard.qaBoardContents}" 
-									type="text" class="form-control"
-									onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this);">
+								<textarea name="qaContents" 
+								class="form-control" th:text="${qaBoard.qaBoardContents}" 
+								onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this);"></textarea>
 							</td>
 						</tr>
 						<tr>
@@ -149,8 +149,8 @@
 						<tr>
 							<th class="table-light">내용</th>
 							<td>
-								<input name="qaReplyContent" th:value="${qaBoard.qaReply?.qaReplyContent}" 
-									   type="text" class="form-control" readonly>
+								<textarea name="qaReplyContent" th:text="${qaBoard.qaReply?.qaReplyContent}" 
+										  class="form-control" onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this);" readonly></textarea> 
 							</td>
 						</tr>
 						<tr>
