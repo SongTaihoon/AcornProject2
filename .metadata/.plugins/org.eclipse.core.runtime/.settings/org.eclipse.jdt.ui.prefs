@@ -12,6 +12,7 @@ content_assist_proposals_background=255,255,255
 content_assist_proposals_foreground=0,0,0
 =======
 content_assist_number_of_computers=15
+<<<<<<< HEAD
 >>>>>>> d230cadb3b6987da7db39652f3533e69388d70f9
 =======
 content_assist_number_of_computers=15
@@ -40,6 +41,10 @@ content_assist_number_of_computers=15
 =======
 content_assist_number_of_computers=15
 >>>>>>> d230cadb3b6987da7db39652f3533e69388d70f9
+=======
+content_assist_proposals_background=255,255,255
+content_assist_proposals_foreground=0,0,0
+>>>>>>> origin/박규빈
 eclipse.preferences.version=1
 org.eclipse.jdt.ui.formatterprofiles.version=22
 spelling_locale_initialized=true

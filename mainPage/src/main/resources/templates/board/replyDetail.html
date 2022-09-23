@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <p style="font-size: 30px; margin-top: 8px; margin-bottom: 0">댓글 수정/삭제</p>	
+
 <th:block th:if="${session.loginUsers?.userid != reply.users?.userid}">
 <!--///////////////////////////////////// 로그인 안된 유저의 리플 ///////////////////////////////////////////////////////////////// -->	
 		<table class="mt-5 mb-3 table align-middle table-bordered">
