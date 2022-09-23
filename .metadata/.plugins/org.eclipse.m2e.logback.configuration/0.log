@@ -374,3 +374,5 @@
 2022-09-23 12:25:47,946 [Worker-18: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
 2022-09-23 12:25:48,011 [Worker-18: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 158 resources
 2022-09-23 12:25:48,247 [Worker-18: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-09-23 12:25:48,247 [Worker-18: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2022-09-23 12:25:48,247 [Worker-18: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\mingyeong\big_data\spring_workspace\AcornProject2\mainPage\src\test\resources
