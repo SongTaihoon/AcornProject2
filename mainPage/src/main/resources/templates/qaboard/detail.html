@@ -121,7 +121,7 @@
 				 </table>
 				 <div class="d-flex">
 					 <div class="ms-auto">
-					 	<th:block>
+					 	<th:block th:if="${session.loginUsers?.adminCk == 1}">
 					 		<a class="btn btn-outline-info btn-lg" th:href="@{/qaboard/updateReply/{qaBoardNo}(qaBoardNo=${qaBoard.qaBoardNo})}">수정</a>
 					 	</th:block>
 						<a class="btn btn-outline-dark btn-lg" href="/qaboard/list/1">목록</a>

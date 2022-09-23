@@ -108,11 +108,18 @@ public class UsersController {
 	
 	//회원 상세 페이지
 	@GetMapping("/detail/{userId}")
-	public String detail(@PathVariable String userId, Model model) {
+	public String detail(
+			@PathVariable String userId, 
+			Model model,
+			HttpSession session) {
 		UsersDto user = usersMapper.selectId(userId);
-		model.addAttribute("user", user);
-		System.out.println("users : " + user);
-		return "users/detail";
+		Object loginUsers_obj = session.getAttribute("loginUsers");
+		if(user.getUserid().equals(((UsersDto)loginUsers_obj).getUserid()) || (((UsersDto)loginUsers_obj).getAdminCk() == 1)) {
+			model.addAttribute("user", user);
+			return "users/detail";
+		}else {
+			return "redirect:/users/login.do";			
+		}	
 	} 
 	
 	//회원 수정 페이지
@@ -124,8 +131,8 @@ public class UsersController {
 			) {
 		UsersDto user = usersMapper.selectId(userId); 
 		Object loginUsers_obj = session.getAttribute("loginUsers");
-		if(loginUsers_obj != null ) {
-			model.addAttribute(user);
+		if(user.getUserid().equals(((UsersDto)loginUsers_obj).getUserid()) || (((UsersDto)loginUsers_obj).getAdminCk() == 1)) {
+			model.addAttribute("user", user);
 			return "/users/update";	
 		}else {
 			return "redirect:/users/login.do";			

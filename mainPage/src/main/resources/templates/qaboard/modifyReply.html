@@ -55,13 +55,15 @@
 		</table>
 		<div class="d-flex">
 			<div class="ms-auto">
-				<button type="submit" class="btn btn-outline-success btn-lg">수정</button>
+				<button type="reset" class="btn btn-outline-warning btn-lg">초기화</button>
+				<button type="submit" class="btn btn-outline-success btn-lg" 
+					    style="margin-left: 8px; margin-right: 8px;">수정</button>
 				<input name="qaBoardNo"  
 					type="hidden" th:value=${qaBoard.qaBoardNo}>
 				<input name="qaBoardAnswer"  
 					type="hidden" value="1">
 				<a class="btn btn-outline-danger btn-lg" th:href="@{/qaboard/deleteReply/{no}(no=${qaBoard.qaReply?.qaReplyNo})}"
-				   style="margin-left: 8px; margin-right: 8px;">삭제</a>
+				   style="margin-right: 8px;">삭제</a>
 				<a class="btn btn-outline-dark btn-lg" th:href="@{/qaboard/detail/{qaBoardNo}(qaBoardNo=${qaBoard.qaBoardNo})}">취소</a>
 			</div>
 		</div>		

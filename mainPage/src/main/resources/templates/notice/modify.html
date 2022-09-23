@@ -73,7 +73,7 @@
 			<div class="ms-auto">
 				<button class="btn btn-outline-success btn-lg" type="submit" style="margin-right: 8px;">수정</button>
 				<a th:href="@{/notice/delete/{noticeNo}/{userId}(noticeNo=${noticeNo}, userId=${notice.users.userid})}" class="btn btn-outline-danger btn-lg" style="margin-right: 8px;">삭제</a>
-				<a href="/notice/list/1" class="btn btn-outline-dark btn-lg">목록</a>
+				<a th:href="@{/notice/detail/{noticeNo}(noticeNo=${noticeNo})}" class="btn btn-outline-dark btn-lg">취소</a>
 			</div>		
 		</div>
     </form>
