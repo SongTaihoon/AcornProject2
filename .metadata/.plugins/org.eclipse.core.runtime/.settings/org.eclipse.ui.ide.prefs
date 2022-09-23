@@ -1,4 +1,13 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=cc83db082d4219700c397abc97f10888d8880760
+IMPORT_FILES_AND_FOLDERS_RELATIVE=true
+IMPORT_FILES_AND_FOLDERS_TYPE=23,1
 eclipse.preferences.version=1
+<<<<<<< HEAD
 platformState=1663813563369
+=======
+platformState=1658709931754
+>>>>>>> origin/박규빈
 quickStart=false
 tipsAndTricks=true

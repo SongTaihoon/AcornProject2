@@ -1,29 +1,45 @@
-@charset "UTF-8";
+#path {
+    display: flex;
+    margin: 20px 0;
+    min-width: 1200px;
+}
+#path ol {
+    margin-left: auto;      
+}
+#path ol li a {   
+    text-decoration: none;
+    vertical-align: middle;
+}
 html, body {
     height: 100%;
 }
-
 #wrapper {
     min-height: 100%;
+    min-width: 1200px;
     position: relative;
-    padding-bottom: 300px;
+    padding-bottom: 400px;
 }
-
 .footer {
     bottom: 0;
 }
-
-main{
+#button{
 	display: flex;
 	justify-content: center;
+	margin-top: 10px;
 }
-h1{
-	display: flex;
-	justify-content: center;
-	align-items: center;
+input {
+	height: 50px;
 }
-
-.width{
-	display:inline-block;
-	width:66px;
+table{
+	padding: 30px;
+}
+table tr{
+	text-align: center;
+}
+table td{
+	width: 750px;
+}
+th{
+	width: 150px;
+	height: 50px;
 }

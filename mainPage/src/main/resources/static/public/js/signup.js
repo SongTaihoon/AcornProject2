@@ -12,6 +12,7 @@ let pwSubmit = false;
 let pwCheckSubmit = false;
 let emailSubmit = false;
 let phoneSubmit = false;
+let birthSubmit = false;
 let adressSubmit = false;
 
 // 이름 정규식
@@ -472,6 +473,15 @@ signupForm["user_phone"].addEventListener("keydown", (event) => {
 	}	
 });
 
+// 생일 값이 들어오면 빨간 표시 사라짐
+signupForm["birth"].addEventListener("change", (event) => {
+	if(event.target.value) {
+		signupForm["birth"].classList.remove("is-invalid");
+		birthHelp.classList.remove("is-invalid");
+		birthSubmit = true;
+	}	
+});
+
 // 우편번호 버튼 클릭 시 우편번호와 메인 주소의 '필수 정보입니다.' 문구 삭제 이벤트
 signupForm["user_addr_postcode_btn"].addEventListener("click", (event) => {
 	signupForm["user_addr_postcode"].classList.remove("is-invalid");
@@ -555,6 +565,13 @@ signupForm.addEventListener("submit", (event) => {
 		phoneHelp.classList.remove("is-valid");
 		phoneHelp.classList.add("is-invalid");
 	}
+	if(!signupForm["birth"].value) {
+		birthHelpInvalid.innerText = "필수 정보입니다.";
+		signupForm["birth"].classList.remove("is-valid");
+		signupForm["birth"].classList.add("is-invalid");
+		birthHelp.classList.remove("is-valid");
+		birthHelp.classList.add("is-invalid");
+	}
 	if(!signupForm["user_addr_postcode"].value) {
 		addPostCodeHelpInvalid.innerText = "필수 정보입니다.";
 		signupForm["user_addr_postcode"].classList.remove("is-valid");
@@ -576,7 +593,7 @@ signupForm.addEventListener("submit", (event) => {
 		addDetailHelp.classList.remove("is-valid");
 		addDetailHelp.classList.add("is-invalid");
 	}
-	if(nameSubmit && idSubmit && pwSubmit && pwCheckSubmit && emailSubmit && phoneSubmit && adressSubmit) {
+	if(nameSubmit && idSubmit && pwSubmit && pwCheckSubmit && emailSubmit && phoneSubmit && birthSubmit && adressSubmit) {
 		if(signupForm["user_pw"].value === signupForm["pwCheck"].value) {
 			signupForm.submit();	
 		} else {

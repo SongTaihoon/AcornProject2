@@ -7,8 +7,8 @@
 </head>
 <body>
 <header th:insert="/NewHeader"></header>
-	<div id="wrapper">
-		<div class="container-fluid">
+<div id="wrapper">
+	  <div class="container-xl">
 		<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" id="path">
 		  <ol class="breadcrumb">
 		    <li class="breadcrumb-item">
@@ -47,10 +47,10 @@
 					<td th:text="${q.users.userid}"></td>
 					<td th:text="${#dates.format(q.qaBoardDate,'yyyy-MM-dd')}"></td>
 					<th:block th:if=${q.qaBoardAnswer==0}>
-					<td>미답변</td>
+						<td>미답변</td>
 					</th:block>
 					<th:block th:if=${q.qaBoardAnswer==1}>
-					<td>답변 완료</td>
+						<td>답변 완료</td>
 					</th:block>
 				</tr>
 			</tbody>

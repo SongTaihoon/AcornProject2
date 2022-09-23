@@ -1,18 +1,20 @@
 @charset "UTF-8";
-html, body {
+
+html{
     height: 100%;
 }
 
 #wrapper {
     min-height: 100%;
     position: relative;
-    padding-bottom: 300px;
+    padding-bottom: 500px;
 }
 
 .footer {
     bottom: 0;
 }
 body{
+	height: 100%;
 	margin : 10px;
 	font-size: 12px;
     color: #888;
