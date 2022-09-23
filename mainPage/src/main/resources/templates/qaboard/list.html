@@ -15,7 +15,7 @@
 		    	<a href="/">홈</a>
 		    </li>
 		    <li class="breadcrumb-item">
-		    	<a href="#">게시판</a>
+		    	<a href="#">고객 센터</a>
 		    </li>
 		    <li class="breadcrumb-item" aria-current="page">
 		    	<a href="/qaboard/list/1" class="breadcrumb-item active">고객 문의</a>
@@ -44,7 +44,7 @@
 					<td th:text="${q.qaBoardNo}"></td>
 					<td th:text="${q.qaBoardKind}"></td>
 					<td th:text="${q.qaBoardTitle}"></td>
-					<td th:text="${q.users.userid}"></td>
+					<td th:text="${q.users?.userid}"></td>
 					<td th:text="${#dates.format(q.qaBoardDate,'yyyy-MM-dd')}"></td>
 					<th:block th:if=${q.qaBoardAnswer==0}>
 						<td>미답변</td>

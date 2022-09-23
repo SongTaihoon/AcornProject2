@@ -133,7 +133,7 @@ public class NoticeController {
 	public String delete(
 			@PathVariable int noticeNo,
 			@PathVariable String userId,
-			@SessionAttribute(name="loginUsers",required = false) UsersDto loginUsers
+			@SessionAttribute(name="loginUsers", required = false) UsersDto loginUsers
 			) {
 		// loginUsers null이 아니고 loginUsers == userId 때 삭제 가능 
 			if(loginUsers != null && loginUsers.getUserid().equals(userId)) {
@@ -142,10 +142,10 @@ public class NoticeController {
 					delete = noticeService.removeNotice(noticeNo);
 				}catch (Exception e) {e.printStackTrace();}
 				if(delete>0) {
-					System.out.println("삭제성공"+noticeNo);
+					System.out.println("삭제성공 " + noticeNo);
 					return "redirect:/notice/list/1";
 				}else {
-					return "redirect:/notice/detail/"+noticeNo;
+					return "redirect:/notice/detail/" + noticeNo;
 				}
 			}else {
 				return "redirect:/users/login.do";				
@@ -186,7 +186,7 @@ public class NoticeController {
 		Object loginUsers_obj = session.getAttribute("loginUsers");
 		if(loginUsers_obj != null ) {
 			model.addAttribute(notice);
-			return "/notice/update";	
+			return "/notice/modify";	
 		}else {
 			return "redirect:/users/login.do";			
 		}	
@@ -232,9 +232,11 @@ public class NoticeController {
 					e.printStackTrace();
 					}
 				if(update>0) {
-					return "redirect:/notice/detail/"+notice.getNotice_no();
+					System.out.println("성공");
+					return "redirect:/notice/list/1";
 				}else {
-					return "redirect:/notice/update/"+notice.getNotice_no();
+					System.out.println("실패");
+					return "redirect:/notice/detail/"+notice.getNotice_no();
 				}
 			}else {
 				return "redirect:/users/login.do";

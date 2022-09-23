@@ -26,19 +26,13 @@
 		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
 		    <span style="font-size: 35px;">후기 작성</span>
 	    </h1>	
-		<form  action="/board/insert.do" method="post" enctype="multipart/form-data">
+		<form action="/board/insert.do" method="post" enctype="multipart/form-data">
 			<table class="mt-5 mb-5 table align-middle table-bordered">
 				<tbody>
 					<tr>
 						<th class="table-light">작성자</th>
 						<td>
 							<input name="userId" class="form-control" id="userId" th:value="${session.loginUsers.userid}" readonly>
-						</td>
-					</tr>
-					<tr>
-						<th class="table-light">제목</th>
-						<td>
-							<input name="title" class="form-control" id="title" onkeyup="noSpace(this);" onchange="noSpace(this);" required>
 						</td>
 					</tr>
 					<tr>
@@ -84,6 +78,12 @@
 						</td>
 					</tr>
 					<tr>
+						<th class="table-light">제목</th>
+						<td>
+							<input name="title" class="form-control" id="title" onkeyup="noSpace(this);" onchange="noSpace(this);" required>
+						</td>
+					</tr>
+					<tr>
 						<th class="table-light">내용</th>
 						<td>
 							<textarea name="contents" class="form-control" id="inputContents" required></textarea>
@@ -91,9 +91,11 @@
 					</tr>
 				</tbody>
 			</table>
-			<div id="button">
-				<button class="btn btn-outline-primary btn-lg" type="submit" style="margin-right: 16px;">등록</button>
-				<a class="btn btn-outline-dark btn-lg" href="/board/list/1">취소</a>
+			<div class="d-flex">
+				<div class="ms-auto">
+					<button class="btn btn-outline-primary btn-lg" type="submit" style="margin-right: 8px;">등록</button>
+					<a class="btn btn-outline-dark btn-lg" href="/board/list/1">목록</a>
+				</div>
 			</div>
 		</form>
 	  </main>

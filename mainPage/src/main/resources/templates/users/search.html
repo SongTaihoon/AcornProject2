@@ -2,66 +2,101 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>검색결과</title>
-<link rel="stylesheet" href="/public/css/user/search.css">
+<title>검색 결과</title>
+<link rel="stylesheet" href="/public/css/user/list.css">
 </head>
 <body>
-	<header th:insert="/NewHeader"></header>
-	<div id="wrapper">
-		<div  class="container">
-			<h1 class="m-3 d-flex justify-content-between align-items-center" >
-				<span>검색 결과</span>
-			</h1>
+<header th:insert="/NewHeader"></header>
+<div id="wrapper">
+	<main class="container-xl">
+		<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" id="path">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item">
+		    	<a href="/">홈</a>
+		    </li>
+		    <li class="breadcrumb-item" aria-current="page">
+		    	<a href="/users/list/1" class="breadcrumb-item active">회원 리스트</a>
+		    </li>
+		  </ol>
+		</nav>
+		<h1 class="pb-4 d-flex justify-content-between align-items-center" 
+		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
+		    <span style="font-size: 35px;">검색 결과</span>
+		    <span style="font-size: 18px;" class="d-flex align-items-center" >
+			    <span style="margin-right: 8px;">총 회원 수 : </span>  
+			    <span class="badge text-bg-dark" th:text="${count}"></span>
+		    </span>
+	    </h1>
 		<p>
-			페이지 / 총 회원 수 : 
-			<span class="badge text-bg-success" th:text="${page}"></span> / 
-			<span class="badge text-bg-primary" th:text="${count}"></span>
+			
 		</p>
-		<div id="searchId">
-			<form action="/users/search/1" id="searchForm" method="get">
-				<select name="type" class="form-control" style="display: inline; width : 150px;">
-					<option value="none">=== 선택 ===</option>
-					<option value="A">닉네임</option>
-					<option value="N">이름</option>
-				</select>
-				<div class=search_input style="display: inline;">
-					<input type="text" name="keyword" value="">
-					<button class="btn btn-outline-primary">검색</button>
-				</div>
-			</form>
-		</div>
-		<table class="table table-hover">
-			<thead>
+		<table class="mt-5 mb-5 table table-bordered table-hover align-middle"
+			   style="min-width: 1200px;">
+			<thead class="table-light">
 				<tr>
 					<th>아이디</th>
 					<th>이름</th>
-					<th>전화번호</th>
 					<th>이메일</th>
+					<th>전화번호</th>
 					<th>나이</th>
 					<th>주소</th>
 					<th>가입일</th>
 			    </tr>
 			</thead>
 			<tbody>
-				<tr id="detail" th:each="users : ${list}">
-					<td th:text="${users.userid}"></td>
-					<td th:text="${users.username}"></td>
-					<td th:text="${users.phone}"></td>
-					<td th:text="${users.email}"></td>
-					<td th:text="${(#dates.format(#calendars.createNow(),'yyyy'))} - ${(#dates.format(users.birth,'yyyy'))}"></td>
-					<td th:text="${users.add2}"></td>
-					<td th:text="${#dates.format(users.signup,'yyyy-MM-dd HH:mm')}"></td>
-					<td>
-						<a th:href="@{/users/detail/{userid}(userid=${users.userid})}">상세보기</a>
-					</td>
-				</tr>
+				<th:block th:each="users : ${userList}">
+					<tr th:onclick="'location.href = \'' + @{/users/detail/{userid}(userid = ${users.userid})} + '\''">
+						<td th:text="${users.userid}"></td>
+						<td th:text="${users.username}"></td>
+						<td th:text="${users.phone}"></td>
+						<td th:text="${(#dates.format(#calendars.createNow(),'yyyy'))} - ${(#dates.format(users.birth,'yyyy'))}"></td>
+						<td th:text="${users.email}"></td>
+						<td th:text="${users.add2}"></td>
+						<td th:text="${#dates.format(users.signup,'yyyy-MM-dd HH:mm')}"></td>
+					</tr>
+				</th:block>
 			</tbody>
-			</table>
-			<div id="paginrionClass">
-				<div  th:insert="/pagination.html"></div>
-			</div>
-		</div>
-		<footer class="footer" th:insert="/NewFooter"></footer>
-	</div>
+		</table>
+		<th:block th:unless="${userList==null}">
+			<div class="d-flex justify-content-center" th:insert="/pagination"></div>
+		</th:block>
+		<nav class="navbar mt-4 mb-4" style="min-width: 1200px;">
+		  <div class="container-fluid">
+		    <form action="/users/search/1" class="d-flex" id="userSearchForm" role="search" name="userSearchForm">
+		      <select class="form-select me-2" name="type" style="width: 100px; border: 1px solid #6c757d">
+		            <option value="none">선택</option>
+					<option value="A">닉네임</option>
+					<option value="N">이름</option>
+		      </select>
+		      <input class="form-control me-2" name="keyword" id="search" size="20" 
+		      		 onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);" 
+		      		 type="search" placeholder="검색" aria-label="Search" 
+		      		 style="border: 1px solid #6c757d">
+		      <button class="btn btn-outline-secondary" style="padding: 6px;">
+		      	<div class="bi bi-search" style="width: 28px; height: 28px;"></div>
+		      </button>
+		    </form>
+		  </div>
+		</nav>
+	</main>
+<footer class="footer" th:insert="/NewFooter"></footer>
+</div>
 </body>
+<script>
+function noSpaceForm(obj) { // 공백사용못하게
+    var str_space = /\s/;  // 공백체크
+    if(str_space.exec(obj.value.trim)) { //공백 체크
+        //alert("해당 항목에는 공백을 사용할수 없습니다.\n\n공백은 자동적으로 제거 됩니다.");
+        obj.focus();
+        obj.value = obj.value.replace(/\s| /gi,''); // 공백제거
+        return false;
+    }
+}
+const userSearchForm = document.forms.userSearchForm;
+userSearchForm.addEventListener("submit", (event) => {
+	if(!userSearchForm.keyword.value) {
+		event.preventDefault();		
+	}
+});
+</script>
 </html>

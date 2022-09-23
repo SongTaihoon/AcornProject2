@@ -36,7 +36,7 @@ public class UsersDto {
 	private String add1; //회원 주소(우편번호)
 	private String add2; //회원 주소(주소)
 	private String add3; //회원 주소(상세주소)
-	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date signup; //회원 가입일
 	
 }

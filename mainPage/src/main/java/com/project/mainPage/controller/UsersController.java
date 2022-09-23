@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.project.mainPage.dto.Criteria;
 import com.project.mainPage.dto.EmailCheck;
 import com.project.mainPage.dto.IdCheck;
+import com.project.mainPage.dto.Notice;
 import com.project.mainPage.dto.Pagination;
 import com.project.mainPage.dto.PhoneCheck;
 import com.project.mainPage.dto.UsersDto;
@@ -31,7 +32,7 @@ public class UsersController {
 //	@Autowired
 //	private BCryptPasswordEncoder passwordEncoder;
 	
-	//회원리스트
+	//회원 리스트
 	@GetMapping("/list/{page}")
 	public String list(@PathVariable int page, Model model) {
 		int row = 8;
@@ -47,12 +48,13 @@ public class UsersController {
 		model.addAttribute("count",count);
 		model.addAttribute("page",page);	
 		return "/users/list";
-	}
+	}	
 	
-	//회원로그인페이지
+	//회원 로그인 페이지
 	@GetMapping("/login.do")
 		public void login() {};
-	//회원로그인
+		
+	//회원 로그인
 	@PostMapping("/login.do")
 		public String login(
 				@RequestParam(value="userid") String userId, 
@@ -72,7 +74,7 @@ public class UsersController {
 			}
 	}
 	
-	//회원로그아웃
+	//회원 로그아웃
 	@GetMapping("/logout.do")
 	public String logout(HttpSession session) {
 		session.removeAttribute("loginUsers");
@@ -103,15 +105,34 @@ public class UsersController {
 			return "redirect:/users/signup.do";
 		}
 	}
-	//회원상세페이지
+	
+	//회원 상세 페이지
 	@GetMapping("/detail/{userId}")
 	public String detail(@PathVariable String userId, Model model) {
 		UsersDto user = usersMapper.selectId(userId);
-		model.addAttribute(user);
-		System.out.println("user : "+user);
+		model.addAttribute("user", user);
+		System.out.println("users : " + user);
 		return "users/detail";
 	} 
-	//회원정보수정
+	
+	//회원 수정 페이지
+	@GetMapping("/update/{userId}")
+	public String update(
+			@PathVariable String userId,
+			Model model,
+			HttpSession session
+			) {
+		UsersDto user = usersMapper.selectId(userId); 
+		Object loginUsers_obj = session.getAttribute("loginUsers");
+		if(loginUsers_obj != null ) {
+			model.addAttribute(user);
+			return "/users/update";	
+		}else {
+			return "redirect:/users/login.do";			
+		}	
+	}
+	
+	//회원 정보 수정
 	@PostMapping("/update.do")
 	public String update(UsersDto user) {
 		int update=0;
@@ -123,13 +144,14 @@ public class UsersController {
 			e.printStackTrace();
 		}
 		if(update>0) {
-			System.out.println("수정성공 : "+ user);
+			System.out.println("수정 성공 : "+ user);
 			return "redirect:/users/list/1";
 		}else {
 			return "redirect:/users/detail/"+user.getUserid();
 		}
 	}
-	//회원가입 중복체크(id)
+	
+	//회원가입 중복 체크 (id)
 	@GetMapping("/idCheck/{userId}")
 	//ResponseBody가 들어가야 ajax가 작동한다
 	@ResponseBody public IdCheck idCheck(@PathVariable String userId) {
@@ -141,7 +163,8 @@ public class UsersController {
 		}
 		return idCheck;
 	}
-	//회원가입 중복체크(email)
+	
+	//회원가입 중복 체크 (email)
 	@GetMapping("/emailCheck/{user_email}")
 	public @ResponseBody EmailCheck emailCheck(@PathVariable String user_email) {
 		EmailCheck emailCheck = new EmailCheck();
@@ -152,7 +175,8 @@ public class UsersController {
 		}
 		return emailCheck;	
 	}
-	//회원가입 중복체크(phone)
+	
+	//회원가입 중복 체크 (phone)
 	@GetMapping("/phoneCheck/{user_phone}")
 	public @ResponseBody PhoneCheck phoneCheck(@PathVariable String user_phone) {
 		PhoneCheck phoneCheck = new PhoneCheck();
@@ -163,7 +187,8 @@ public class UsersController {
 		}
 		return phoneCheck;	
 	}
-	//회원삭제
+	
+	//회원 삭제
 	@GetMapping("/delete/{userId}")
 	public String delete(@PathVariable String userId) {
 		int delete=0;
@@ -174,6 +199,7 @@ public class UsersController {
 			return "redirect:/users/detail/"+userId;
 		}
 	} 
+	
 	@GetMapping("/search/{page}")
 	public String searchProduct(
 			@RequestParam(value = "type") String type,
@@ -197,12 +223,12 @@ public class UsersController {
 		model.addAttribute("page", page);
 		return "/users/search";
 	}
+	
 	//푸터 연결용
 	@GetMapping("/agreement")
 	public void agreement() {};
 	@GetMapping("/privacy")
 	public void privacy() {};
 	@GetMapping("/emailRejection")
-	public void emailRejection() {};
-	
+	public void emailRejection() {};	
 }

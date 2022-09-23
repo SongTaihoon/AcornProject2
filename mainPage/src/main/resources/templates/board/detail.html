@@ -49,14 +49,12 @@
 				</a>
 			</div>
 	  </div>
-	  <div class="mt-3">
-	 	<table class="table table-bordered table">
+	  <div class="mt-3 mb-3">
+	 	<table class="table table-bordered table align-middle">
 		  <tbody>
 		    <tr>
-		      <th style="width: 100px; border-left: none;" class="bg-light align-middle">작성자</th>
-		      <td style="width: 900px;">
-		      	<input name="userId" class="form-control" id="userId" th:value="${board.users.userid}" readonly>
-		      </td>
+		      <th style="width: 100px; border-left: none;" class="bg-light">작성자</th>
+		      <td style="width: 900px;" th:text="${board.users.userid}"></td>
 		      <td style="width: 300px; border-right: none;" rowspan="5">
 		      	<div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel" style="width: 300px; height: 300px;">
 				  <div class="carousel-inner">
@@ -88,62 +86,31 @@
 		      </td>
 		    </tr>
 		    <tr>
-		      <th style="width: 100px; border-left: none;" class="bg-light align-middle">카테고리</th>
-		      <td style="width: 600px;">
-		      	<select name="category" class="form-select" id="category">
-					<option></option>
-					<option></option>
-					<option></option>
-					<option></option>
-					<option></option>
-				</select>
-		      </td>
+		      <th style="width: 100px; border-left: none;" class="bg-light">카테고리</th>
+		      <td style="width: 600px;" th:text="${board.users.userid}"></td>
 		    </tr>
 		    <tr>
-		      <th style="width: 100px; border-left: none;" class="bg-light align-middle">장소명</th>
-		      <td style="width: 600px;">
-		      	<input name="userId" class="form-control" id="userId" th:value="${board.users.userid}" onkeyup="noSpace(this)" onchange="noSpace(this)">
-		      </td>
+		      <th style="width: 100px; border-left: none;" class="bg-light">장소명</th>
+		      <td style="width: 600px;" th:text="${board.users.userid}"></td>
 		    </tr>
 		    <tr>
-		      <th style="width: 100px; border-left: none;" class="bg-light align-middle">별점</th>
-		      <td style="width: 600px;">
-		      	<select name="rating" class="form-select" id="rating">
-					<option value="0.0">0.0</option>
-					<option value="0.5">0.5</option>
-					<option value="1.0">1.0</option>
-					<option value="1.5">1.5</option>
-					<option value="2.0">2.0</option>
-					<option value="2.5">2.5</option>
-					<option value="3.0">3.0</option>
-					<option value="3.5">3.5</option>
-					<option value="4.0">4.0</option>
-					<option value="4.5">4.5</option>
-					<option value="5.0">5.0</option>
-				</select>
-		      </td>
+		      <th style="width: 100px; border-left: none;" class="bg-light">별점</th>
+		      <td style="width: 600px;" th:text="${board.users.userid}"></td>
 		    </tr>
 		    <tr>
-		      <th style="width: 100px; border-left: none;" class="bg-light align-middle">내용</th>
-		      <td style="width: 600px;">
-		      	<textarea name="contents" class="form-control" style="height: 150px;" th:text="${board.contents}" onkeyup="noSpace(this)" onchange="noSpace(this)" readonly></textarea>
-		      </td>
+		      <th style="width: 100px; border-left: none;" class="bg-light">내용</th>
+		      <td style="width: 600px;" th:text="${board.contents}"></td>
 		    </tr>
 		  </tbody>
 		</table>
 	  </div>	
-	  <div class="d-flex mt-3 mb-3">
-		<th:block th:if="${session.loginUsers?.userid==board.users.userid}">
-			<div th:if="${session.loginUsers?.userid==board.users.userid}">
-				<a th:href="@{/board/update/{no}(no=${board.board_no})}" class="btn btn-outline-success btn-lg p-2" style="margin-right: 8px;">
+	  <div class="d-flex mb-5">
+			<div th:if="${(session.loginUsers?.userid == board.users.userid) || (session.loginUsers?.adminCk == 1)}" class="ms-auto">
+				<a th:href="@{/board/update/{boardNo}(boardNo = ${board.board_no})}" class="btn btn-outline-info btn-lg" style="margin-right: 8px;">
 					수정
 				</a>
-				<a th:href="@{/board/delete/{boardNo}/{userId}(boardNo=${board.board_no},userId=${board.users.userid})}" class="btn btn-outline-danger btn-lg p-2">
-					삭제
-				</a>
+				<a href="/board/list/1" class="btn btn-outline-dark btn-lg">목록</a>
 			</div>
-		</th:block>
-				<a href="/board/list/1" class="btn btn-outline-info btn-lg ms-auto p-2">목록</a>
 	  </div>
 	  	<h1 class="pb-4 d-flex justify-content-between align-items-center" 
 		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
@@ -187,9 +154,11 @@
 								</tr>
 							</tbody>
 						</table>
-						<div id="button" class="mb-2">
-							<button class="btn btn-outline-warning btn-lg" type="reset">초기화</button>
-							<button class="btn btn-outline-primary btn-lg" type="submit" style="margin-right: 16px;">등록</button>
+						<div class="d-flex mb-2">
+							<div class="ms-auto">
+								<button class="btn btn-outline-warning btn-lg" type="reset" style="margin-right: 8px;">초기화</button>
+								<button class="btn btn-outline-primary btn-lg" type="submit">등록</button>
+							</div>
 						</div>
 					</form>
 				</li>
