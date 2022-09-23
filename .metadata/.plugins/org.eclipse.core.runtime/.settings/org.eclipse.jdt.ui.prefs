@@ -5,8 +5,12 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 content_assist_proposals_background=255,255,255
 content_assist_proposals_foreground=0,0,0
+=======
+content_assist_number_of_computers=15
+>>>>>>> d230cadb3b6987da7db39652f3533e69388d70f9
 =======
 content_assist_number_of_computers=15
 >>>>>>> d230cadb3b6987da7db39652f3533e69388d70f9
