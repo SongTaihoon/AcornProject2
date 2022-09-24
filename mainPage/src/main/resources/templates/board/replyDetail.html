@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<th:block th:if="${(session.loginUsers?.userid != reply.users?.userid) && (session.loginUsers?.adminCk == 0)}">
+<th:block th:if="${(session.loginUsers == null) || ((session.loginUsers?.userid != reply.users?.userid) && (session.loginUsers?.adminCk == 0))}">
 <!--///////////////////////////////////// 로그인 안 된 유저 or 다른 유저가 보는 리플 ///////////////////////////////////////////////////////////////// -->	
 		<table class="mt-5 mb-3 table align-middle table-bordered">
 			<tbody>

@@ -111,6 +111,9 @@
 				</a>
 				<a href="/board/list/1" class="btn btn-outline-dark btn-lg">목록</a>
 			</div>
+			<div th:unless="${(session.loginUsers?.userid == board.users.userid) || (session.loginUsers?.adminCk == 1)}" class="ms-auto">
+				<a href="/board/list/1" class="btn btn-outline-dark btn-lg">목록</a>
+			</div>
 	  </div>
 	  	<h1 class="pb-4 d-flex justify-content-between align-items-center" 
 		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
