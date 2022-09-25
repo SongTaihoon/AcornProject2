@@ -70,8 +70,8 @@
  	</update>
 	<insert id="insertOne" parameterType="QaBoard"
 	 useGeneratedKeys="true" keyProperty="qaBoardNo">
-		INSERT INTO QABOARD (qaBoardKind,productid,qaBoardTitle,qaBoardContents,userid)
-		VALUES (#{qaBoardKind},#{product.productid},#{qaBoardTitle},#{qaBoardContents},#{users.userid})
+		INSERT INTO QABOARD (qaBoardKind, qaBoardTitle, qaBoardContents, userid)
+		VALUES (#{qaBoardKind}, #{qaBoardTitle}, #{qaBoardContents}, #{users.userid})
 	</insert>
 	<delete id="deleteOne" parameterType="int">
 		DELETE FROM QABOARD WHERE qaBoardNo=#{qaBoardNo}

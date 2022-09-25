@@ -228,14 +228,14 @@ public class BoardController {
 	};
 	
 	@GetMapping("/update/{boardNo}")
-	public String update(@PathVariable int boardNo,Model model,HttpSession session) {
+	public String update(@PathVariable int boardNo, Model model, HttpSession session) {
 		Board board = null;
 		board = boardMapper.selectDetailOneAll(boardNo);
 		Object loginUsers_obj = session.getAttribute("loginUsers");
-		if(board.getUsers().getUserid().equals(((UsersDto)loginUsers_obj).getUserid())) {
+		if(board.getUsers().getUserid().equals(((UsersDto)loginUsers_obj).getUserid()) || (((UsersDto)loginUsers_obj).getAdminCk() == 1)) {
 			model.addAttribute("board",board);
-			return "/board/update";			
-		}else {
+			return "/board/modify";			
+		} else {
 			return "redirect:/users/login.do";
 		}
 	}
@@ -251,7 +251,7 @@ public class BoardController {
 		int update = 0; 
 		Object loginUsers_obj = session.getAttribute("loginUsers");
 		System.out.println(board);
-		if( ((UsersDto)loginUsers_obj).getUserid().equals(board.getUsers().getUserid()) ) {
+		if(((UsersDto)loginUsers_obj).getUserid().equals(board.getUsers().getUserid()) || (((UsersDto)loginUsers_obj).getAdminCk() == 1)) {
 			try {
 
 				int boardImgCount = boardImgMapper.selectCountBoardNo(board.getBoard_no());  // baordImg 등록된 개수 

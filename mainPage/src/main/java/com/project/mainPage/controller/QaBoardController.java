@@ -2,6 +2,8 @@ package com.project.mainPage.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.project.mainPage.dto.Board;
 import com.project.mainPage.dto.Criteria;
 import com.project.mainPage.dto.Pagination;
 import com.project.mainPage.dto.Product;
@@ -89,6 +92,30 @@ public class QaBoardController {
 			return "redirect:/qaboard/detail/"+qaBoardNo;
 		}
 	} 
+	@GetMapping("/update/{qaBoardNo}")
+	public String update(@PathVariable int qaBoardNo, Model model, HttpSession session) {
+		QaBoard qaBoard = null;
+		qaBoard = qaBoardMapper.selectOne(qaBoardNo);
+		Object loginUsers_obj = session.getAttribute("loginUsers");
+		if(qaBoard.getUsers().getUserid().equals(((UsersDto)loginUsers_obj).getUserid()) || (((UsersDto)loginUsers_obj).getAdminCk() == 1)) {
+			model.addAttribute("qaBoard", qaBoard);
+			return "/qaboard/modify";			
+		} else {
+			return "redirect:/users/login.do";
+		}
+	}
+	@GetMapping("/updateReply/{qaBoardNo}")
+	public String updateReply(@PathVariable int qaBoardNo, Model model, HttpSession session) {
+		QaBoard qaBoard = null;
+		qaBoard = qaBoardMapper.selectOne(qaBoardNo);
+		Object loginUsers_obj = session.getAttribute("loginUsers");
+		if((((UsersDto)loginUsers_obj).getAdminCk() == 1)) {
+			model.addAttribute("qaBoard", qaBoard);
+			return "/qaboard/modifyReply";			
+		} else {
+			return "redirect:/users/login.do";
+		}
+	}
 	@GetMapping("/answer.do")
 	public void replyInsert() {}
 	@PostMapping("/answer.do")
