@@ -31,37 +31,37 @@
         <div id="headerRight">
 	        <nav style="--bs-breadcrumb-divider: '|';" aria-label="breadcrumb">
 			  <ol class="breadcrumb">
-			  	<th:block th:if="${session.loginUsers == null}">
+			  	<th:block th:if="${session.loginUser == null}">
 			    	<li class="breadcrumb-item">
-			    		<a href="/users/login.do">로그인</a>
+			    		<a href="/user/login.do">로그인</a>
 			    	</li>
 			    	<li class="breadcrumb-item">
-			    		<a href="/users/signup.do">회원가입</a>
+			    		<a href="/user/signup.do">회원가입</a>
 			    	</li>
 			    </th:block>
-			    <th:block th:if="${session.loginUsers?.adminCk == 1}">
+			    <th:block th:if="${session.loginUser?.adminCk == 1}">
 			    	<li class="breadcrumb-item">
-			    		<a th:href="@{/users/detail/{userid}(userid=${session.loginUsers.userid})}">
-	     					<span th:text="${session.loginUsers.username}"></span>
-							(<span th:text="${session.loginUsers.userid}"></span>)
+			    		<a th:href="@{/user/detail/{userId}(userId=${session.loginUser.user_id})}">
+	     					<span th:text="${session.loginUser.user_name}"></span>
+							(<span th:text="${session.loginUser.user_id}"></span>)
 						</a> 
 					</li>
 					<li class="breadcrumb-item">
-			    		<a href="/users/list/1">회원 리스트</a>
+			    		<a href="/user/list/1">회원 리스트</a>
 			    	</li>
 			    	<li class="breadcrumb-item">
-			    		<a href="/users/logout.do">로그아웃</a>
+			    		<a href="/user/logout.do">로그아웃</a>
 			    	</li>
 			    </th:block>
-			    <th:block th:if="${(session.loginUsers != null) && (session.loginUsers?.adminCk == 0)}">
+			    <th:block th:if="${(session.loginUser != null) && (session.loginUser?.adminCk == 0)}">
 			    	<li class="breadcrumb-item">
-			    		<a th:href="@{/users/detail/{userid}(userid=${session.loginUsers.userid})}">
-	     					<span th:text="${session.loginUsers.username}"></span>
-							(<span th:text="${session.loginUsers.userid}"></span>)
+			    		<a th:href="@{/user/detail/{userId}(userId=${session.loginUser.user_id})}">
+	     					<span th:text="${session.loginUser.user_name}"></span>
+							(<span th:text="${session.loginUser.user_id}"></span>)
 						</a> 
 					</li>
 			    	<li class="breadcrumb-item">
-			    		<a href="/users/logout.do">로그아웃</a>
+			    		<a href="/user/logout.do">로그아웃</a>
 			    	</li>
 			    </th:block>
 			  </ol>

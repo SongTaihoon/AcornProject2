@@ -15,24 +15,16 @@ public class LoginCheckInterceptor implements HandlerInterceptor{
 		System.out.println("logincheck testing");
 		String prevPage = request.getHeader("Referer");
 		HttpSession session = request.getSession();
-		Object loginCheck_obj=session.getAttribute("loginUsers");
+		Object loginCheck_obj=session.getAttribute("loginUser");
 		System.out.println(session);
 		System.out.println(loginCheck_obj);
 		if(loginCheck_obj!=null) {
 			return true;
 		}else {
 			session.setAttribute("redirectPage", prevPage);
-			response.sendRedirect("/users/login.do");
+			response.sendRedirect("/user/login.do");
 			return false;
 		}
 		
 	}
-//	@Override
-//	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-//			ModelAndView modelAndView) throws Exception {
-//	}
-//	@Override
-//	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-//			throws Exception {
-//	}
 }

@@ -491,22 +491,22 @@ signupForm["user_addr_postcode_btn"].addEventListener("click", (event) => {
 }); 
 
 // 우편번호나 메인 주소 값이 있을 시 상세 주소에 마우스를 올리면 readonly가 삭제되는 이벤트
-signupForm["user_addr_detail"].addEventListener("mouseover", (event) => {
-	if(signupForm["user_addr_main"].value || signupForm["user_addr_postcode"].value) {
+signupForm["add3"].addEventListener("mouseover", (event) => {
+	if(signupForm["add2"].value || signupForm["add1"].value) {
 		event.target.removeAttribute("readonly");
 	}
 }); 
 
 // 상세 주소 입력 이벤트
-signupForm["user_addr_detail"].addEventListener("input", (event) => {
+signupForm["add3"].addEventListener("input", (event) => {
 	let value = event.target.value;
 	if(value && value.trim()) {
-		signupForm["user_addr_detail"].classList.remove("is-invalid");
+		signupForm["add3"].classList.remove("is-invalid");
 		addDetailHelp.classList.remove("is-invalid");
 		adressSubmit = true;
 	} else {
 		addDetailHelpInvalid.innerText = "상세 주소를 입력하세요.";
-		signupForm["user_addr_detail"].classList.add("is-invalid");
+		signupForm["add3"].classList.add("is-invalid");
 		addDetailHelp.classList.add("is-invalid");
 		adressSubmit = false;
 	}
@@ -514,8 +514,8 @@ signupForm["user_addr_detail"].addEventListener("input", (event) => {
 });
 
 // 우편번호나 메인 주소 값이 없을 시 상세 주소 입력 차단
-signupForm["user_addr_detail"].addEventListener("keydown", (event) => {
-	if(!signupForm["user_addr_postcode"].value || !signupForm["user_addr_main"].value) {
+signupForm["add3"].addEventListener("keydown", (event) => {
+	if(!signupForm["add1"].value || !signupForm["add2"].value) {
 		event.preventDefault();
 	}	
 });
@@ -572,24 +572,24 @@ signupForm.addEventListener("submit", (event) => {
 		birthHelp.classList.remove("is-valid");
 		birthHelp.classList.add("is-invalid");
 	}
-	if(!signupForm["user_addr_postcode"].value) {
+	if(!signupForm["add1"].value) {
 		addPostCodeHelpInvalid.innerText = "필수 정보입니다.";
-		signupForm["user_addr_postcode"].classList.remove("is-valid");
-		signupForm["user_addr_postcode"].classList.add("is-invalid");
+		signupForm["add1"].classList.remove("is-valid");
+		signupForm["add1"].classList.add("is-invalid");
 		addPostCodeHelp.classList.remove("is-valid");
 		addPostCodeHelp.classList.add("is-invalid");
 	}
-	if(!signupForm["user_addr_main"].value) {
+	if(!signupForm["add2"].value) {
 		addMainHelpInvalid.innerText = "필수 정보입니다.";
-		signupForm["user_addr_main"].classList.remove("is-valid");
-		signupForm["user_addr_main"].classList.add("is-invalid");
+		signupForm["add2"].classList.remove("is-valid");
+		signupForm["add2"].classList.add("is-invalid");
 		addMainHelp.classList.remove("is-valid");
 		addMainHelp.classList.add("is-invalid");
 	}
-	if(!signupForm["user_addr_detail"].value || !signupForm["user_addr_detail"].value.trim()) {
+	if(!signupForm["add3"].value || !signupForm["add3"].value.trim()) {
 		addDetailHelpInvalid.innerText = "필수 정보입니다.";
-		signupForm["user_addr_detail"].classList.remove("is-valid");
-		signupForm["user_addr_detail"].classList.add("is-invalid");
+		signupForm["add3"].classList.remove("is-valid");
+		signupForm["add3"].classList.add("is-invalid");
 		addDetailHelp.classList.remove("is-valid");
 		addDetailHelp.classList.add("is-invalid");
 	}

@@ -28,7 +28,7 @@ public class Notice {
 	private String contents;
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date post_time;
-	private UsersDto users;
+	private UserDto users;
 	private int views;
 	private List<NoticeImg> noticeImgs;
 	private int notreplys_size;

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.project.mainPage.dto.UsersDto;
+import com.project.mainPage.dto.UserDto;
 
 @Component
 public class AdminInterceptor implements HandlerInterceptor{
@@ -17,7 +17,7 @@ public class AdminInterceptor implements HandlerInterceptor{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		HttpSession session = request.getSession();
-		UsersDto adminCheck = (UsersDto)session.getAttribute("loginUsers");
+		UserDto adminCheck = (UserDto)session.getAttribute("loginUser");
 		if(adminCheck==null || adminCheck.getAdminCk()==0) { // 관리자 아닐경우
 			response.sendRedirect("/"); //메인으로 | 로그인화면으로 보낼꺼면 수정
 			return false;
