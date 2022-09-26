@@ -25,6 +25,9 @@
 		<h1 class="pb-4 d-flex justify-content-between align-items-center" 
 			style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
 			<span style="font-size: 35px;">공지 사항</span>
+			<th:block th:if="${session.loginUsers?.adminCk==1}">
+				<a href="/notice/insert.do" class="btn btn-secondary">공지 사항 등록</a>
+			</th:block>
 		</h1>
 		<table class="mt-5 mb-5 table table-bordered table-hover"
 			   style="min-width: 1200px;">
@@ -53,7 +56,7 @@
 			<div class="d-flex justify-content-center" th:insert="/pagination"></div>
 		</th:block>
 		<nav class="navbar mt-4 mb-4" style="min-width: 1200px;">
-		  <div class="container-fluid">
+		  <div class="container-xl" style="padding-left: 0;">
 		    <form action="/notice/search/1" class="d-flex" id="noticeSearchForm" role="search" name="noticeSearchForm">
 		      <select class="form-select me-2" name="type" style="width: 100px; border: 1px solid #6c757d">
 		            <option value="N">글 번호</option>

@@ -21,7 +21,7 @@
         <div id="headerCenter">
         	<div class="container-fluid" id="searchBox">
 			  <form class="d-flex" action="/search/1" id="searchForm" name="searchForm" method="get">
-			    <input class="form-control me-2" type="text" name="keyword" id="searchInput" onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);" maxlength="50">
+			    <input class="form-control me-2" type="text" name="keyword" id="searchInput" onkeyup="noSpace(this);" onchange="noSpace(this);" maxlength="50">
 			    <button class="btn" type="submit" style="padding: 6px 9px;">
 			    	<div class="bi bi-search" style="width: 28px; height: 28px;"></div>
 			    </button>
@@ -39,7 +39,21 @@
 			    		<a href="/users/signup.do">회원가입</a>
 			    	</li>
 			    </th:block>
-			    <th:block th:unless="${session.loginUsers == null}">
+			    <th:block th:if="${session.loginUsers?.adminCk == 1}">
+			    	<li class="breadcrumb-item">
+			    		<a th:href="@{/users/detail/{userid}(userid=${session.loginUsers.userid})}">
+	     					<span th:text="${session.loginUsers.username}"></span>
+							(<span th:text="${session.loginUsers.userid}"></span>)
+						</a> 
+					</li>
+					<li class="breadcrumb-item">
+			    		<a href="/users/list/1">회원 리스트</a>
+			    	</li>
+			    	<li class="breadcrumb-item">
+			    		<a href="/users/logout.do">로그아웃</a>
+			    	</li>
+			    </th:block>
+			    <th:block th:if="${(session.loginUsers != null) && (session.loginUsers?.adminCk == 0)}">
 			    	<li class="breadcrumb-item">
 			    		<a th:href="@{/users/detail/{userid}(userid=${session.loginUsers.userid})}">
 	     					<span th:text="${session.loginUsers.username}"></span>
@@ -78,7 +92,6 @@
 	   	<div class="dropdown" id="dropdown3">
 	        <button class="dropdown-btn">게시판</button>
 	        <div class="dropdown-submenu">
-	            <a href="/qaboard/list/1">고객 문의</a>
 	            <a href="/board/list/1">후기</a>
 	        </div>
     	</div>
@@ -86,7 +99,7 @@
 	        <button class="dropdown-btn">고객 센터</button>
 	        <div class="dropdown-submenu">
 	            <a href="/notice/list/1">공지 사항</a>
-	            <a href="#none">1:1 문의</a>
+	            <a href="/qaboard/list/1">고객 문의</a>
 	        </div>
     	</div>
 	  </div>
@@ -104,6 +117,15 @@ function noSpaceForm(obj) { // 공백 사용 못하게
        obj.value = obj.value.replace(/\s| /gi,''); // 공백 제거
        return false;
    }
+}
+function noSpace(obj) { // 공백사용못하게
+    var str = /\s/;  // 공백체크
+    if(str.exec(obj.value.trim)) { //공백 체크
+        //alert("해당 항목에는 첫 글자 공백을 사용할수 없습니다.");
+        obj.focus();
+        obj.value = obj.value.replace(/^ +/,''); // 공백제거
+        return false;
+    }
 }
 const searchForm = document.forms.searchForm;
 searchForm.addEventListener("submit", (event) => {

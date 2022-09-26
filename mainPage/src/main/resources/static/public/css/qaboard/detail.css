@@ -25,6 +25,10 @@ html, body {
 .footer {
     bottom: 0;
 }
+
+select, input {
+	height: 48px;
+}
 table{
 	padding: 30px;
 }

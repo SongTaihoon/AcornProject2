@@ -15,7 +15,7 @@
 		    	<a href="/">홈</a>
 		    </li>
 		    <li class="breadcrumb-item">
-		    	<a href="#">게시판</a>
+		    	<a href="#">고객 센터</a>
 		    </li>
 		    <li class="breadcrumb-item" aria-current="page">
 		    	<a href="/qaboard/list/1" class="breadcrumb-item active">고객 문의</a>
@@ -25,146 +25,108 @@
 	    <h1 class="pb-4 d-flex justify-content-between align-items-center" 
 		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
 		    <span style="font-size: 35px;">고객 문의 내역</span>
-	    </h1>	
-	    <th:block th:if="${(session.loginUsers?.adminCk==1) ||(session.loginUsers?.userid==qaBoard.users.userid)}">
-			<form action="/qaboard/update.do" method="post">
-				<table class="mt-5 mb-3 table align-middle table-bordered">
-					<tbody>
-						<tr>
-							<th class="table-light">글 번호</th>
-							<td>
-								<input name="qaBoardNo" th:value="${qaBoard.qaBoardNo}" 
-									type="text" class="form-control" readonly>
-							</td>
-						</tr>
-						<tr>
-							<th class="table-light">아이디</th>
-							<td>
-								<input name="users.userid" th:value="${qaBoard.users.username+'('+qaBoard.users.userid+')'}" 
-									type="text" class="form-control" readonly>
-							</td>
-						</tr>
-						<tr>
-							<th class="table-light">유형</th>
-							<td>
-								<input name="qaBoardKind" th:value="${qaBoard.qaBoardKind}" class="form-control" readonly>
-							</td>
-						</tr>
-						<tr>
-							<th class="table-light">제목</th>
-							<td>
-								<input name="qaBoardTitle" th:value="${qaBoard.qaBoardTitle}" 
-									type="text" class="form-control"
-									onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this);">
-							</td>
-						</tr>
-						<tr>
-							<th class="table-light">내용</th>
-							<td>
-								<textarea name="qaContents" 
-								class="form-control" th:text="${qaBoard.qaBoardContents}" 
-								onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this);"></textarea>
-							</td>
-						</tr>
-						<tr>
-							<th class="table-light">등록일</th>
-							<td>
-								<input name="qaBoardDate" th:value="${#dates.format(qaBoard.qaBoardDate, 'yyyy-MM-dd')}" 
-									type="text" class="form-control" readonly>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				<div id="button" class="row mb-3 g-3 align-items-center">
-					<div class="col-auto">
-						<button type="reset" class="btn btn-outline-warning btn-lg">초기화</button>
-					</div>
-					<div class="col-auto">
-						<button type="submit" class="btn btn-outline-success btn-lg">수정</button>
-					</div>
-					<div class="col-auto">
-						<a class="btn btn-outline-danger btn-lg" th:href="@{/qaboard/delete/{no}(no=${qaBoard.qaBoardNo})}">삭제</a>
-					</div>
-				</div>
-			</form>
-		</th:block>
-		<th:block th:unless="${(session.loginUsers?.adminCk==1) ||(session.loginUsers?.userid==qaBoard.users.userid)}">
-			<h4 class="input-group input-group-sm mt-5 mb-5">
-				작성자만 볼 수 있습니다.
-			</h4>
-			<div id="button" class="d-flex mb-3 g-3">
-				<a class="btn btn-outline-info btn-lg" href="/qaboard/list/1">확인</a>
+	    </h1>
+		<table class="mt-5 mb-5 table align-middle table-bordered">
+			<tbody>
+				<tr>
+					<th class="table-light">글 번호</th>
+					<td th:text="${qaBoard.qaBoardNo}"></td>
+				</tr>
+				<tr>
+					<th class="table-light">아이디</th>
+					<td th:text="${qaBoard.users?.username+'('+qaBoard.users?.userid+')'}"></td>
+				</tr>
+				<tr>
+					<th class="table-light">유형</th>
+					<td th:text="${qaBoard.qaBoardKind}"></td>
+				</tr>
+				<tr>
+					<th class="table-light">제목</th>
+					<td th:text="${qaBoard.qaBoardTitle}"></td>
+				</tr>
+				<tr>
+					<th class="table-light">내용</th>
+					<td th:text="${qaBoard.qaBoardContents}"></td>
+				</tr>
+				<tr>
+					<th class="table-light">등록일</th>
+					<td th:text="${#dates.format(qaBoard.qaBoardDate, 'yyyy-MM-dd')}"></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="d-flex">
+			<div class="ms-auto">
+				<th:block th:if="${(session.loginUsers?.adminCk == 1) || (session.loginUsers?.userid == qaBoard.users.userid)}">
+					<a class="btn btn-outline-info btn-lg" th:href="@{/qaboard/update/{qaBoardNo}(qaBoardNo=${qaBoard.qaBoardNo})}">수정</a>
+				</th:block>
 			</div>
-		</th:block>	
+		</div>
 		<div class="mt-5">
-			<th:block th:if="${(session.loginUsers?.adminCk==1)&&(qaBoard.qaBoardAnswer==0)}">
+			<th:block th:if="${(session.loginUsers?.adminCk == 1) && (qaBoard.qaBoardAnswer == 0)}">
 				<h1 class="pb-4 d-flex justify-content-between align-items-center" 
 				    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
 				    <span style="font-size: 35px;">답변 등록</span>
 			    </h1>	
 			    <form action="/qaboard/answer.do" method="post">
-				  <table class="mt-5 mb-3 table align-middle table-bordered">
+				<table class="mt-5 mb-5 table align-middle table-bordered">
 					<tbody>
 						<tr>
 							<th class="table-light">제목</th>
 							<td>
 								<input name="qaReplyTitle"  
-									type="text" class="form-control"
-									onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this);">
+									   type="text" class="form-control"
+									   onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this);">
 							</td>
 						</tr>
 						<tr>
 							<th class="table-light">내용</th>
 							<td>
-								<textarea name="qaReplyContent" 
-									class="form-control"
-									onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this);"></textarea>
+								<textarea name="qaReplyContent" class="form-control"
+										  onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this);"></textarea>
 							</td>
 						</tr>
 					</tbody>
-				</table>
-				<div id="button" class="d-flex mb-3 g-3">
-					<button type="submit" class="btn btn-outline-success btn-lg">등록</button>
-					<input name="qaBoardNo"  
-						type="hidden" th:value=${qaBoard.qaBoardNo}>
-					<input name="qaBoardAnswer"  
-						type="hidden" value="1">
+				</table>		
+				<div class="d-flex">
+					<div class="ms-auto">
+						<button type="submit" class="btn btn-outline-primary btn-lg">등록</button>
+						<input name="qaBoardNo"  
+							type="hidden" th:value=${qaBoard.qaBoardNo}>
+						<input name="qaBoardAnswer"  
+							type="hidden" value="1">
+					</div>
 				</div>		
 				</form>
 			</th:block>
-			<th:block th:if="${(session.loginUsers?.userid==qaBoard.users.userid) && (qaBoard.qaBoardAnswer==1)}">
-				<h1 class="pb-4 d-flex justify-content-between align-items-center" 
-					    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
-					    <span style="font-size: 35px;">답변</span>
-			    </h1>	
-				  <table class="mt-5 mb-3 table align-middle table-bordered">
+			<th:block th:if="${qaBoard.qaBoardAnswer == 1}">
+				 <h1 class="pb-4 d-flex justify-content-between align-items-center" 
+					 style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
+					 <span style="font-size: 35px;">답변</span>
+			     </h1>	
+				 <table class="mt-5 mb-5 table align-middle table-bordered">
 					<tbody>
 						<tr>
 							<th class="table-light">제목</th>
-							<td>
-								<input name="qaReplyTitle" th:value="${qaBoard.qaReply?.qaReplyTitle}" 
-									   type="text" class="form-control" readonly>
-							</td>
+							<td th:text="${qaBoard.qaReply?.qaReplyTitle}"></td>
 						</tr>
 						<tr>
 							<th class="table-light">내용</th>
-							<td>
-								<textarea name="qaReplyContent" th:text="${qaBoard.qaReply?.qaReplyContent}" 
-										  class="form-control" onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this);" readonly></textarea> 
-							</td>
+							<td th:text="${qaBoard.qaReply?.qaReplyContent}"></td>
 						</tr>
 						<tr>
 							<th class="table-light">답변일</th>
-							<td>
-								<input name="qaReplyDate" th:value="${#dates.format(qaBoard.qaBoardDate, 'yyyy-MM-dd')}"
-									   type="text" class="form-control" readonly>
-							</td>
+							<td th:text="${#dates.format(qaBoard.qaReply?.qaReplyDate, 'yyyy-MM-dd')}"></td>
 						</tr>
 					</tbody>
-				  </table>
-				  <div id="button" class="d-flex mb-3 g-3">
-					  <a class="btn btn-outline-info btn-lg" href="/qaboard/list/1">확인</a>
-				  </div>		
+				 </table>
+				 <div class="d-flex">
+					 <div class="ms-auto">
+					 	<th:block th:if="${session.loginUsers?.adminCk == 1}">
+					 		<a class="btn btn-outline-info btn-lg" th:href="@{/qaboard/updateReply/{qaBoardNo}(qaBoardNo=${qaBoard.qaBoardNo})}">수정</a>
+					 	</th:block>
+						<a class="btn btn-outline-dark btn-lg" href="/qaboard/list/1">목록</a>
+					 </div>
+				 </div>	
 			</th:block>
 		</div>
 	</main>

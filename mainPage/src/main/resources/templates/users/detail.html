@@ -18,8 +18,8 @@
 		    	<a href="/">홈</a>
 		    </li>
 		    <li class="breadcrumb-item" aria-current="page">
-		    	<a th:href="@{/users/detail/{userid}(userid=${session.loginUsers.userid})}" 
-		    	   class="breadcrumb-item active" th:text="${session.loginUsers.username} + '(' + ${session.loginUsers.userid} + ')'"></a>
+		    	<a th:href="@{/users/detail/{userid}(userid=${user?.userid})}" 
+		    	   class="breadcrumb-item active" th:text="${user?.username} + '(' + ${user?.userid} + ')'"></a>
 		    </li>
 		  </ol>
 		</nav>
@@ -27,94 +27,69 @@
 		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
 		    <span style="font-size: 35px;">회원 정보</span>
 	    </h1>	
-		<form action="/users/update.do" method="post">
 			<table class="mt-5 mb-5 table align-middle table-bordered">
 				<tbody>
 					<tr>
 						<th class="table-light">아이디</th>
-						<td>
-							<input name="userid" type="text" class="form-control" th:value="${usersDto.userid}" readonly>
-						</td>
+						<td th:text="${user.userid}"></td>
 					</tr>
 					<tr>
 						<th class="table-light">이름</th>
-						<td>
-							<input name="username" id="username" class="form-control" type="text" th:value="${usersDto.username}" onkeyup="noSpaceForm(this)">
-						</td>
+						<td th:text="${user.username}"></td>
 					</tr>
 					<tr>
 						<th class="table-light">비밀번호</th>
-						<td>
-							<input name="userpw" id="userpw" class="form-control" type="text" th:value="${usersDto.userpw}" onkeyup="noSpaceForm(this)">
-						</td>
+						<td th:text="${user.userpw}"></td>
 					</tr>
 					<tr>
 						<th class="table-light">전화번호</th>
-						<td>
-							<input name="phone" id="phone" class="form-control" type="tel" th:value="${usersDto.phone}" onkeyup="noSpaceForm(this)">
-						</td>
+						<td th:text="${user.phone}"></td>
 					</tr>
 					<tr>
 						<th class="table-light">이메일</th>
-						<td>
-							<input name="email" id="email" class="form-control" type="email" th:value="${usersDto.email}" onkeyup="noSpaceForm(this)">
-						</td>
+						<td th:text="${user.email}"></td>
 					</tr>
 					<tr>
 						<th class="table-light">생일</th>
-						<td>
-							<input name="birth" id="birth" class="form-control" type="date" th:value="${#dates.format(usersDto.birth, 'yyyy-MM-dd')}">
-						</td>
+						<td th:text="${#dates.format(user.birth, 'yyyy-MM-dd')}"></td>
 					</tr>
 					<tr>
 						<th class="table-light">우편번호</th>
-						<td style="text-align: left;">
-						<div class="d-flex align-items-center">
-							<input name="add1" id="sample6_postcode" type="text" size="20" th:value="${usersDto.add1}" 
-							class="form-control" readonly style="display:inline; width:85%; margin-right: 8px;">
-							<input type="button" class="btn btn-secondary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" style="display:inline; width:15%;">
-							</div>
-						</td>
+						<td th:text="${user.add1}"></td>
 					</tr>
 					<tr>
 						<th class="table-light">주소</th>
-						<td>
-							<input name="add2" id="sample6_address" type="text" size="40" th:value="${usersDto.add2}" class="form-control" readonly>
-						</td>	
+						<td th:text="${user.add2}"></td>
 					</tr>
 					<tr>
 						<th class="table-light">상세 주소</th>
-						<td>
-							<input name="add3" id="sample6_detailAddress" type="text" size="40" th:value="${usersDto.add3}" class="form-control">
-						</td>	
+						<td th:text="${user.add3}"></td>
 					</tr>
 					<tr>
 						<th class="table-light">참고 항목</th>
-						<td>
-							<input name="add4" id="sample6_extraAddress" type="text" size="40" th:value="${usersDto.add3}" class="form-control" readonly>
-						</td>	
+						<td th:text="${user.add3}"></td>
 					</tr>
 					<tr>
 						<th class="table-light">가입일</th>
-						<td>
-							<input name="signup" id="inputSignup" class="form-control" type="datetime-local" 
-				    			 th:value="${#dates.format(usersDto.signup, 'yyyy-MM-dd''T''HH:mm')}" readonly>
-						</td>	
+						<td th:text="${#dates.format(user.signup, 'yyyy-MM-dd HH:mm:ss')}"></td>
 					</tr>
 				</tbody>
 			</table>
-			<div id="button" class="row mb-3 g-3 align-items-center">
-				<div class="col-auto">
-					<button type="reset" class="btn btn-outline-warning btn-lg">초기화</button>
+			<th:block th:if="${session.loginUsers?.adminCk == 1}">
+				<div class="d-flex mb-3 g-3">
+					<div class="ms-auto">
+						<a class="btn btn-outline-info btn-lg" th:href="@{/users/update/{userId}(userId=${user.userid})}">수정</a>
+						<a class="btn btn-outline-dark btn-lg" href="/users/list/1">목록</a>
+					</div>
 				</div>
-				<div class="col-auto">
-					<button type="submit" class="btn btn-outline-success btn-lg">수정</button>
+			</th:block>
+			<th:block th:unless="${session.loginUsers?.adminCk == 1}">
+				<div class="d-flex mb-3 g-3">
+					<div class="ms-auto">
+						<a class="btn btn-outline-info btn-lg" th:href="@{/users/update/{userId}(userId=${user.userid})}">수정</a>
+					</div>
 				</div>
-				<div class="col-auto">
-					<a class="btn btn-outline-danger btn-lg" th:href="@{/users/delete/{userid}(userid=${usersDto.userid})}">삭제</a>
-				</div>
-			</div>
-		</form>
+			</th:block>
 	  </main>
 <footer class="footer" th:insert="/NewFooter"></footer>
 </div>
