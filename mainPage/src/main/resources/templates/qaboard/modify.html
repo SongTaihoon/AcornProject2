@@ -26,7 +26,7 @@
 	    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
 	    <span style="font-size: 35px;">고객 문의 수정</span>
     </h1>	
-	<form action="/qaboard/update.do" method="post">
+	<form action="/qaboard/update.do" method="post" name="qaUpdateForm">
 		<table class="mt-5 mb-5 table align-middle table-bordered">
 			<tbody>
 				<tr>
@@ -64,7 +64,7 @@
 				<tr>
 					<th class="table-light">내용</th>
 					<td>
-						<textarea name="qaContents" 
+						<textarea name="qaBoardContents" 
 						class="form-control" th:text="${qaBoard.qaBoardContents}" 
 						onkeyup="noSpace(this)" onchange="noSpace(this);"></textarea>
 					</td>
@@ -72,7 +72,7 @@
 				<tr>
 					<th class="table-light">등록일</th>
 					<td>
-						<input name="qaBoardDate" th:value="${#dates.format(qaBoard.qaBoardDate, 'yyyy-MM-dd')}" 
+						<input name="qaBoardDate" th:value="${#dates.format(qaBoard.qaBoardDate, 'yyyy-MM-dd HH:mm:ss')}" 
 							   type="text" class="form-control" readonly>
 					</td>
 				</tr>
@@ -102,5 +102,13 @@ function noSpace(obj) { // 공백사용못하게
         return false;
     }
 }
+const qaUpdateForm = document.forms.qaUpdateForm;
+const qaBoardTitle = qaUpdateForm.qaBoardTitle;
+const qaBoardContents = qaUpdateForm.qaBoardContents;
+qaUpdateForm.addEventListener("submit", (event) => {
+	if(!qaBoardTitle.value || !qaBoardContents.value) {
+		event.preventDefault();		
+	}
+});
 </script>
 </html>

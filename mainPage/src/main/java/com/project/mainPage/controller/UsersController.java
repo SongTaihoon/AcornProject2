@@ -150,11 +150,11 @@ public class UsersController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if(update>0) {
+		if(update > 0) {
 			System.out.println("수정 성공 : "+ user);
-			return "redirect:/users/list/1";
+			return "redirect:/users/detail/" + user.getUserid();
 		}else {
-			return "redirect:/users/detail/"+user.getUserid();
+			return "redirect:/users/update/"+ user.getUserid();
 		}
 	}
 	
@@ -163,7 +163,7 @@ public class UsersController {
 	//ResponseBody가 들어가야 ajax가 작동한다
 	@ResponseBody public IdCheck idCheck(@PathVariable String userId) {
 		IdCheck idCheck = new IdCheck();
-		UsersDto user=usersMapper.selectId(userId);
+		UsersDto user = usersMapper.selectId(userId);
 		if(user != null) { // 중복된 아이디가 있다
 			idCheck.idCheck=true;
 			idCheck.user=user;

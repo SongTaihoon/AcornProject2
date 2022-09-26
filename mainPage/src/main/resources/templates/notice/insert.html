@@ -26,7 +26,7 @@
 		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
 		    <span style="font-size: 35px;">공지 사항 등록</span>
 	    </h1>	
-	    <form action="/notice/insert.do" method="post">
+	    <form action="/notice/insert.do" method="post" name="noticeInsertForm">
 			<table class="mt-5 mb-5 table align-middle table-bordered">
 				<tbody>
 					<tr>
@@ -38,13 +38,13 @@
 					<tr>
 						<th class="table-light">제목</th>
 						<td>
-							<input name="title" class="form-control" id="title" onkeyup="noSpace(this);" onchange="noSpace(this);" required>
+							<input name="title" class="form-control" id="title" onkeyup="noSpace(this);" onchange="noSpace(this);">
 						</td>
 					</tr>
 					<tr>
 						<th class="table-light">내용</th>
 						<td>
-							<textarea name="contents" class="form-control" id="contents" onkeyup="noSpace(this);" onchange="noSpace(this);" required></textarea>
+							<textarea name="contents" class="form-control" id="contents" onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
 						</td>	
 					</tr>
 				</tbody>
@@ -70,5 +70,14 @@ function noSpace(obj) { // 공백사용못하게
         return false;
     }
 }
+//값이 없을 때 submit 불가
+const noticeInsertForm = document.forms.noticeInsertForm;
+const title = noticeInsertForm.title;
+const contents = noticeInsertForm.contents;
+noticeInsertForm.addEventListener("submit", (event) => {
+	if(!title.value || !contents.value) {
+		event.preventDefault();		
+	}
+});
 </script>
 </html>

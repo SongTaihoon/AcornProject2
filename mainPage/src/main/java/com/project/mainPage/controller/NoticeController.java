@@ -1,5 +1,4 @@
 package com.project.mainPage.controller;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -28,7 +27,6 @@ import com.project.mainPage.dto.UsersDto;
 import com.project.mainPage.mapper.NoticeImgMapper;
 import com.project.mainPage.mapper.NoticeMapper;
 import com.project.mainPage.service.NoticeService;
-
 @Controller
 @RequestMapping("/notice")
 public class NoticeController {
@@ -47,17 +45,17 @@ public class NoticeController {
 	@Autowired
 	private NoticeImgMapper noticeImgMapper;
 	
-	
-	
+//	공지 사항 리스트 페이지
 	@GetMapping("/list/{page}")
-	public String list(@PathVariable int page, Model model) {
+	public String list(
+			@PathVariable int page, 
+			Model model) {
 		int row = 10;
 		int startRow = (page - 1) * row;
 		List<Notice> noticeList = noticeMapper.selectPageAll(startRow, row);
 		int count = noticeMapper.selectPageAllCount();
 		
 		Pagination pagination = new Pagination(page, count, "/notice/list/", row);
-		System.out.println(pagination);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("noticeList", noticeList);
 		model.addAttribute("row", row);
@@ -66,92 +64,7 @@ public class NoticeController {
 		return "/notice/list";
 	}
 	
-	@GetMapping("/detail/{noticeNo}")
-	public String detail(@PathVariable int noticeNo, Model model) {
-		Notice notice = null; 
-		try {
-			notice = noticeService.noticeUpdateView(noticeNo);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		System.out.println("notice"+notice);
-		if(notice != null) {
-			model.addAttribute(notice);
-			return "/notice/detail";
-		}else {
-			return "redirect:/notice/list/1";	
-		}
-	}
-	
-	// 공지사항 등록 
-	@GetMapping("/insert.do")
-	public String insert(HttpSession session) {
-		if(session.getAttribute("loginUsers") != null) {
-			return "/notice/insert";
-		}else {
-			return "redirect:/users/login.do";
-		}
-	}
-	@PostMapping("/insert.do")
-	public String insert(Notice notice, List<MultipartFile>  imgFiles) {
-		System.out.println(notice);
-		System.out.println(savePath);
-		
-		int insert = 0; 
-		try {
-			if(imgFiles != null) {
-				List<NoticeImg> noticeImgs = new ArrayList<NoticeImg>();
-				// imgFiles가 null 이면 오류 발생! 
-				for(MultipartFile imgFile : imgFiles) {
-					String type = imgFile.getContentType();
-					// image 만 설정 
-					if(type.split("/")[0].equals("image")) {
-						String newFileName = "notice_"+System.nanoTime()+"."+type.split("/")[1]; 
-						Path newFilePath = Paths.get(savePath+"/"+newFileName);
-						imgFile.transferTo(newFilePath); // 파일데이터를 지정한 file로 저장
-						NoticeImg noticeImg = new NoticeImg();
-						noticeImg.setImg_path(newFileName);
-						noticeImgs.add(noticeImg);						
-					}
-				}
-				if(noticeImgs.size()>0) {
-					notice.setNoticeImgs(noticeImgs);
-				}
-			}
-			insert = noticeService.NoticeAndNoticeImg(notice);
-		}catch(Exception e) {e.printStackTrace();}
-		if(insert>0) {
-			return "redirect:/notice/list/1";			
-		}else {
-			return "redirect:/notice/insert.do";						
-		}
-		
-	}
-	
-	// 공지사항 삭제 
-	@GetMapping("/delete/{noticeNo}/{userId}")
-	public String delete(
-			@PathVariable int noticeNo,
-			@PathVariable String userId,
-			@SessionAttribute(name="loginUsers", required = false) UsersDto loginUsers
-			) {
-		// loginUsers null이 아니고 loginUsers == userId 때 삭제 가능 
-			if(loginUsers != null && loginUsers.getUserid().equals(userId)) {
-				int delete = 0 ;
-				try {
-					delete = noticeService.removeNotice(noticeNo);
-				}catch (Exception e) {e.printStackTrace();}
-				if(delete>0) {
-					System.out.println("삭제성공 " + noticeNo);
-					return "redirect:/notice/list/1";
-				}else {
-					return "redirect:/notice/detail/" + noticeNo;
-				}
-			}else {
-				return "redirect:/users/login.do";				
-			}
-		
-	}
+//	공지 사항 검색 페이지
 	@GetMapping("/search/{page}")
 	public String searchProduct(
 			@RequestParam(value = "type") String type,
@@ -176,15 +89,113 @@ public class NoticeController {
 		return "/notice/search";
 	}
 	
+//	공지 사항 상세 페이지
+	@GetMapping("/detail/{noticeNo}")
+	public String detail(
+			@PathVariable int noticeNo, 
+			Model model) {
+		Notice notice = null; 
+		try {
+			notice = noticeService.noticeUpdateView(noticeNo);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("notice" + notice);
+		if(notice != null) {
+			model.addAttribute(notice);
+			return "/notice/detail";
+		}else {
+			return "redirect:/notice/list/1";	
+		}
+	}
+	
+//	공지 사항 등록 페이지(관리자)
+	@GetMapping("/insert.do")
+	public String insert(HttpSession session) {
+		if(session.getAttribute("loginUsers") != null) {
+			return "/notice/insert";
+		}else {
+			return "redirect:/users/login.do";
+		}
+	}
+	
+//	공지 사항 등록(관리자)
+	@PostMapping("/insert.do")
+	public String insert(
+			Notice notice, 
+			List<MultipartFile> imgFiles) {
+		System.out.println(notice);
+		int insert = 0; 
+		try {
+			if(imgFiles != null) {
+				List<NoticeImg> noticeImgs = new ArrayList<NoticeImg>();
+				// imgFiles가 null 이면 오류 발생! 
+				for(MultipartFile imgFile : imgFiles) {
+					String type = imgFile.getContentType();
+					// image 만 설정 
+					if(type.split("/")[0].equals("image")) {
+						String newFileName = "notice_"+System.nanoTime()+"."+type.split("/")[1]; 
+						Path newFilePath = Paths.get(savePath+"/"+newFileName);
+						imgFile.transferTo(newFilePath); // 파일데이터를 지정한 file로 저장
+						NoticeImg noticeImg = new NoticeImg();
+						noticeImg.setImg_path(newFileName);
+						noticeImgs.add(noticeImg);						
+					}
+				}
+				if(noticeImgs.size() > 0) {
+					notice.setNoticeImgs(noticeImgs);
+				}
+			}
+			insert = noticeService.NoticeAndNoticeImg(notice);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		if(insert > 0) {
+			System.out.println("공지 사항 등록 성공! : " + insert);
+			return "redirect:/notice/list/1";			
+		}else {
+			System.out.println("공지 사항 등록 실패! : " + insert);
+			return "redirect:/notice/insert.do";						
+		}
+	}
+	
+//	공지 사항 삭제(관리자)
+	@GetMapping("/delete/{noticeNo}/{userId}")
+	public String delete(
+			@PathVariable int noticeNo,
+			@PathVariable String userId,
+			@SessionAttribute(name="loginUsers", required = false) UsersDto loginUsers
+			) {
+		// loginUsers null이 아니고 관리자일 때 삭제 가능 
+			if(loginUsers != null  && (loginUsers.getAdminCk() == 1)) {
+				int delete = 0;
+				try {
+					delete = noticeService.removeNotice(noticeNo);
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
+				if(delete > 0) {
+					System.out.println("공지 사항 삭제 성공! : " + delete);
+					return "redirect:/notice/list/1";
+				}else {
+					System.out.println("공지 사항 삭제 실패! : " + delete);
+					return "redirect:/notice/update/" + noticeNo;
+				}
+			}else {
+				return "redirect:/users/login.do";				
+			}	
+	}
+	
+// 공지 사항 수정 페이지(관리자)
 	@GetMapping("/update/{noticeNo}")
 	public String update(
 			@PathVariable int noticeNo,
 			Model model,
-			HttpSession session
+			HttpSession session,
+			@SessionAttribute(name="loginUsers", required = false) UsersDto loginUsers
 			) {
 		Notice notice = noticeMapper.selectDetailOne(noticeNo); 
-		Object loginUsers_obj = session.getAttribute("loginUsers");
-		if(loginUsers_obj != null ) {
+		if(loginUsers != null && (loginUsers.getAdminCk() == 1)) {
 			model.addAttribute(notice);
 			return "/notice/modify";	
 		}else {
@@ -192,18 +203,19 @@ public class NoticeController {
 		}	
 	}
 	
+//	공지 사항 수정(관리자)
 	@PostMapping("/update.do")
 	public String update(
 			Notice notice,
 			@RequestParam(name = "noticeImgNo",required = false) int [] noticeImgNos,
 			@RequestParam(name = "imgFile", required = false) MultipartFile[]imgFiles,
 			HttpSession session) {
-		int update=0;
+		int update = 0;
 		Object loginUser_obj=session.getAttribute("loginUsers");
 		System.out.println(Arrays.toString(noticeImgNos)); //삭제할 이미지 번호들
 		System.out.println(Arrays.toString(imgFiles)); //등록할 이미지 파일 (blob)
 		System.out.println(notice);
-		if(loginUser_obj!=null)  {
+		if(loginUser_obj != null)  {
 			try {
 				int noticeImgCount=noticeImgMapper.selectCountNoticeNo(notice.getNotice_no()); //3개가 등록되어 있다면..
 				int insertNoticeImgLength = NOTICE_IMG_LIMIT-noticeImgCount+( (noticeImgNos!=null)?noticeImgNos.length:0 );
@@ -223,7 +235,7 @@ public class NoticeController {
 								if(--insertNoticeImgLength == 0) break; //이미지 수가 5개면 반복문 종료
 							}
 						}
-						if(noticeImgs.size()>0) {
+						if(noticeImgs.size() > 0) {
 							notice.setNoticeImgs(noticeImgs);
 						}
 					}
@@ -231,28 +243,15 @@ public class NoticeController {
 				} catch (Exception e) {
 					e.printStackTrace();
 					}
-				if(update>0) {
-					System.out.println("성공");
-					return "redirect:/notice/list/1";
+				if(update > 0) {
+					System.out.println("공지 사항 수정 성공! : " + update);
+					return "redirect:/notice/detail/" + notice.getNotice_no();
 				}else {
-					System.out.println("실패");
-					return "redirect:/notice/detail/"+notice.getNotice_no();
+					System.out.println("공지 사항 수정 실패! : " + update);
+					return "redirect:/notice/update/" + notice.getNotice_no();
 				}
 			}else {
 				return "redirect:/users/login.do";
-			}
-		
-		
-	
-	
+			}	
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

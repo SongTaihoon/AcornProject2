@@ -26,7 +26,7 @@
 		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
 		    <span style="font-size: 35px;">문의하기</span>
 	    </h1>	
-		<form  action="/qaboard/insert.do" method="post" enctype="multipart/form-data">
+		<form action="/qaboard/insert.do" method="post" enctype="multipart/form-data" name="qaInsertForm">
 			<table class="mt-5 mb-5 table align-middle table-bordered">
 				<tbody>
 					<tr>
@@ -48,13 +48,13 @@
 					<tr>
 						<th class="table-light">제목</th>
 						<td>
-							<input name="qaBoardTitle" class="form-control" id="qaBoardTitle" onkeyup="noSpace(this);" onchange="noSpace(this);" required>
+							<input name="qaBoardTitle" class="form-control" id="qaBoardTitle" onkeyup="noSpace(this);" onchange="noSpace(this);">
 						</td>
 					</tr>
 					<tr>
 						<th class="table-light">내용</th>
 						<td>
-							<textarea name="qaBoardContents" class="form-control" id="qaBoardContents" onkeyup="noSpace(this);" onchange="noSpace(this);" required></textarea>
+							<textarea name="qaBoardContents" class="form-control" id="qaBoardContents" onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
 						</td>	
 					</tr>
 				</tbody>
@@ -80,5 +80,13 @@ function noSpace(obj) { // 공백사용못하게
         return false;
     }
 }
+const qaInsertForm = document.forms.qaInsertForm;
+const qaBoardTitle = qaInsertForm.qaBoardTitle;
+const qaBoardContents = qaInsertForm.qaBoardContents;
+qaInsertForm.addEventListener("submit", (event) => {
+	if(!qaBoardTitle.value || !qaBoardContents.value) {
+		event.preventDefault();		
+	}
+});
 </script>
 </html>

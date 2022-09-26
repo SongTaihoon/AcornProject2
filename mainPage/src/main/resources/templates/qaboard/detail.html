@@ -50,7 +50,7 @@
 				</tr>
 				<tr>
 					<th class="table-light">등록일</th>
-					<td th:text="${#dates.format(qaBoard.qaBoardDate, 'yyyy-MM-dd')}"></td>
+					<td th:text="${#dates.format(qaBoard.qaBoardDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
 				</tr>
 			</tbody>
 		</table>
@@ -58,6 +58,10 @@
 			<div class="ms-auto">
 				<th:block th:if="${(session.loginUsers?.adminCk == 1) || (session.loginUsers?.userid == qaBoard.users.userid)}">
 					<a class="btn btn-outline-info btn-lg" th:href="@{/qaboard/update/{qaBoardNo}(qaBoardNo=${qaBoard.qaBoardNo})}">수정</a>
+					<a class="btn btn-outline-dark btn-lg" href="/qaboard/list/1">목록</a>
+				</th:block>
+				<th:block th:unless="${(session.loginUsers?.adminCk == 1) || (session.loginUsers?.userid == qaBoard.users.userid)}">
+					<a class="btn btn-outline-dark btn-lg" href="/qaboard/list/1">목록</a>
 				</th:block>
 			</div>
 		</div>
@@ -67,7 +71,7 @@
 				    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
 				    <span style="font-size: 35px;">답변 등록</span>
 			    </h1>	
-			    <form action="/qaboard/answer.do" method="post">
+			    <form action="/qaboard/replyInsert.do" method="post" name="qaReplyInsertForm">
 				<table class="mt-5 mb-5 table align-middle table-bordered">
 					<tbody>
 						<tr>
@@ -75,14 +79,14 @@
 							<td>
 								<input name="qaReplyTitle"  
 									   type="text" class="form-control"
-									   onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this);">
+									   onkeyup="noSpace(this);" onchange="noSpace(this);">
 							</td>
 						</tr>
 						<tr>
 							<th class="table-light">내용</th>
 							<td>
 								<textarea name="qaReplyContent" class="form-control"
-										  onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this);"></textarea>
+										  onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
 							</td>
 						</tr>
 					</tbody>
@@ -115,16 +119,15 @@
 						</tr>
 						<tr>
 							<th class="table-light">답변일</th>
-							<td th:text="${#dates.format(qaBoard.qaReply?.qaReplyDate, 'yyyy-MM-dd')}"></td>
+							<td th:text="${#dates.format(qaBoard.qaReply?.qaReplyDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
 						</tr>
 					</tbody>
 				 </table>
 				 <div class="d-flex">
 					 <div class="ms-auto">
 					 	<th:block th:if="${session.loginUsers?.adminCk == 1}">
-					 		<a class="btn btn-outline-info btn-lg" th:href="@{/qaboard/updateReply/{qaBoardNo}(qaBoardNo=${qaBoard.qaBoardNo})}">수정</a>
+					 		<a class="btn btn-outline-info btn-lg" th:href="@{/qaboard/replyUpdate/{qaBoardNo}(qaBoardNo=${qaBoard.qaBoardNo})}">수정</a>
 					 	</th:block>
-						<a class="btn btn-outline-dark btn-lg" href="/qaboard/list/1">목록</a>
 					 </div>
 				 </div>	
 			</th:block>
@@ -145,5 +148,23 @@ function noSpaceForm(obj) { // 공백 사용 못하게
        return false;
    }
 }
+function noSpace(obj) { // 공백사용못하게
+    var str = /\s/;  // 공백체크
+    if(str.exec(obj.value.trim)) { //공백 체크
+        //alert("해당 항목에는 첫 글자 공백을 사용할수 없습니다.");
+        obj.focus();
+        obj.value = obj.value.replace(/^ +/,''); // 공백제거
+        return false;
+    }
+}
+//값이 없을 때 submit 불가
+const qaReplyInsertForm = document.forms.qaReplyInsertForm;
+const qaReplyTitle = qaReplyInsertForm.qaReplyTitle;
+const qaReplyContent = qaReplyInsertForm.qaReplyContent;
+qaReplyInsertForm.addEventListener("submit", (event) => {
+	if(!qaReplyTitle.value || !qaReplyContent.value) {
+		event.preventDefault();		
+	}
+});
 </script>
 </html>

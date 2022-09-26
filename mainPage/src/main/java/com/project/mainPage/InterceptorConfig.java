@@ -17,17 +17,18 @@ public class InterceptorConfig implements WebMvcConfigurer{
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 				registry.addInterceptor(loginCheckInterceptor)
-				.addPathPatterns("/users/**")
 				.addPathPatterns("/search/**")
 				.addPathPatterns("/**/insert/**")
 				.addPathPatterns("/**/delete/**")
 				.addPathPatterns("/**/update/**")
+				.addPathPatterns("/users/list/**")
+				.addPathPatterns("/users/detail/**")
+				.addPathPatterns("/qaboard/insert.do")
 				.excludePathPatterns("/users/signup.do")
 				.excludePathPatterns("/users/login.do")
 				.excludePathPatterns("/users/privacy")
 				.excludePathPatterns("/users/emailRejection")
 				.excludePathPatterns("/users/agreement")
-				.addPathPatterns("/qaboard/insert.do")
 				// 추가하거나 예외처리할 주소
 				.addPathPatterns("/ /**")		
 				.excludePathPatterns("/ / ")
@@ -39,10 +40,9 @@ public class InterceptorConfig implements WebMvcConfigurer{
 				.addPathPatterns("/notice/insert.do")
 				.addPathPatterns("/notice/update.do")
 				.addPathPatterns("/notice/delete.do")
-				.addPathPatterns("/qaboard/updateReply/**")
+				.addPathPatterns("/qaboard/replyUpdate/**")
 				.addPathPatterns("/product/insert.do")
 				.addPathPatterns("/product/update.do")
 				.addPathPatterns("/product/delete.do");
-	}
-	
-}
+	} 
+} 
