@@ -1,11 +1,5 @@
-!SESSION 2022-09-24 09:48:34.328 -----------------------------------------------
-eclipse.buildId=4.15.1.202206171354
-java.version=17.0.3
-java.vendor=Eclipse Adoptium
-BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=ko_KR
-Framework arguments:  -product org.springframework.boot.ide.branding.sts4
-Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.springframework.boot.ide.branding.sts4
 
+<<<<<<< HEAD
 This is a continuation of log file C:\Users\kvpar\Desktop\Big_Data_Study_220530\AcornProject2\.metadata\.bak_0.log
 Created Time: 2022-09-24 11:15:09.530
 
@@ -6710,3 +6704,5 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-09-26 10:30:54.570
 !MESSAGE executing callback sts4.classpath.sSlsFNNi SUCCESS [done]
+=======
+>>>>>>> 67e5fdad0042faf2ac8f5e191aaca4e5bec59aa5

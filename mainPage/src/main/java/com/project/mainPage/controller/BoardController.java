@@ -282,7 +282,7 @@ public class BoardController {
 			if(update>0) {
 				return "redirect:/board/detail/"+board.getBoard_no();
 			}else {
-				return "redirect:/board/update/"+board.getBoard_no();
+				return "redirect:/board/modify/"+board.getBoard_no();
 			}			
 		}else{
 			return "redirect:/users/login.do";

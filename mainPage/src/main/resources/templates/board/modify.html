@@ -56,7 +56,7 @@
 		    <tr>
 		      <th style="width: 100px;" class="bg-light align-middle">작성자</th>
 		      <td style="width: 900px;">
-		      	<input name="users.userid" class="form-control" id="userId" th:value="${board.users.userid}" readonly>
+		      	<input name="users.userid" class="form-control" id="userId" th:value="${session.loginUsers.userid}" readonly>
 		      </td>
 		    </tr>
 		    <tr>
@@ -72,7 +72,7 @@
 		    <tr>
 		      <th style="width: 100px;" class="bg-light align-middle">장소명</th>
 		      <td style="width: 600px;">
-		      	<input name="userId" class="form-control" id="userId" th:value="${board.users.userid}" onkeyup="noSpace(this)" onchange="noSpace(this)">
+		      	<input name="userId" class="form-control" id="userId" th:value="${session.loginUsers.userid}" onkeyup="noSpace(this)" onchange="noSpace(this)">
 		      </td>
 		    </tr>
 		    <tr>
@@ -131,6 +131,8 @@
 		<div class="d-flex">
 			<div class="ms-auto">
 				<button class="btn btn-outline-warning btn-lg" type="reset">초기화</button>
+				<!-- board_no 넘겨야 해서 hidden으로 넘길게요! 확인하시면 주석 지우셔도 됩니다. (민경) -->
+				<input type="hidden" name="board_no" th:value="${board.board_no}">
 				<button class="btn btn-outline-success btn-lg" type="submit" style="margin-left: 8px; margin-right: 8px;">수정</button>
 				<a th:href="@{/board/delete/{boardNo}/{userId}(boardNo=${board.board_no}, userId=${board.users.userid})}" 
 				   class="btn btn-outline-danger btn-lg" style="margin-right: 8px;">
