@@ -192,7 +192,7 @@ public class QaBoardController {
 		if(insert > 0) {
 			System.out.println("qaBoard 답변 등록 성공! : " + insert);
 			System.out.println("qaBoard 답변 여부 1로 바꾸기 성공! : " + update);
-			return "redirect:/qaboard/list/1";
+			return "redirect:/qaboard/detail/" + page;
 		}else {
 			System.out.println("qaBoard 답변 등록 실패! : " + insert);
 			System.out.println("qaBoard 답변 여부 1로 바꾸기 성공! : " + update);

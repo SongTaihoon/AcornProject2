@@ -54,8 +54,8 @@ public class UsersController {
 	@GetMapping("/login.do")
 		public void login() {};
 		
-	//회원 로그인
-	@PostMapping("/login.do")
+//	회원 로그인
+	@PostMapping("/login.do") 
 		public String login(
 				@RequestParam(value="userid") String userId, 
 				@RequestParam(value="userpw") String userPw,
@@ -67,39 +67,41 @@ public class UsersController {
 			
 			if(users != null) {
 				session.setAttribute("loginUsers", users);
+				Object redirectPage = session.getAttribute("redirectPage");
+				session.removeAttribute("redirectPage");
 				System.out.println("로그인 성공! " + users);
-				return "redirect:/";
+				if(redirectPage != null) {
+					return "redirect:" + redirectPage;
+				} else {
+					return "redirect:/";
+				}
 			}else {
 				return "redirect:/users/login.do";				
 			}
 	}
 	
-	//회원 로그아웃
+//	회원 로그아웃
 	@GetMapping("/logout.do")
 	public String logout(HttpSession session) {
-		session.removeAttribute("loginUsers");
-		System.out.println("로그아웃 성공");
+		session.invalidate();
 		return "redirect:/";
 	}
 	
-	//회원가입
+//	회원가입 페이지
 	@GetMapping("/signup.do")
 	public void signup() {}
+	
+//	회원가입
 	@PostMapping("/signup.do")
 	public String signup(UsersDto user) {
-//		String rawPw = "";            // 인코딩 전 비밀번호
-//        String encodePw = "";        // 인코딩 후 비밀번호
-		int insert=0;
+		int insert = 0;
 		System.out.println(user);
 		try {
-//			rawPw = user.getUserpw();            // 비밀번호 데이터 얻음
-//		    encodePw = passwordEncoder.encode(rawPw);        // 비밀번호 인코딩
-//		    user.setUserpw(encodePw);               // 인코딩된 비밀번호 user객체에 다시 저장
-			insert=usersMapper.insertOne(user); // 회원가입 쿼리실행
+			insert = usersMapper.insertOne(user); // 회원가입 쿼리 실행
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if(insert>0) {
+		if(insert > 0) {
 			return "redirect:/users/list/1";
 		}else {
 			return "redirect:/users/signup.do";

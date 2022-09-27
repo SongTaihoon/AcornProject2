@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<p style="font-size: 30px; margin-top: 8px; margin-bottom: 0">댓글 수정/삭제</p>	
-
-<th:block th:if="${session.loginUsers?.userid != reply.users?.userid}">
-<!--///////////////////////////////////// 로그인 안된 유저의 리플 ///////////////////////////////////////////////////////////////// -->	
 <th:block th:if="${(session.loginUsers == null) || ((session.loginUsers?.userid != reply.users?.userid) && (session.loginUsers?.adminCk == 0))}">
+<p style="font-size: 30px; margin-top: 8px; margin-bottom: 0">댓글 수정/삭제</p>	
 <!--///////////////////////////////////// 로그인 안 된 유저 or 다른 유저가 보는 리플 ///////////////////////////////////////////////////////////////// -->	
 		<table class="mt-5 mb-3 table align-middle table-bordered">
 			<tbody>
@@ -29,7 +26,7 @@
 				<tr>
 					<th class="table-light">사진</th>
 					<td>
-						<th:block th:if="${reply.img_path!=null}">
+						<th:block th:if="${reply.img_path != null}">
 				      	  <img alt="댓글 이미지" class="img-thumbnail" style="height:50px; width:100%; object-fit: cover;"
 				      	 	   th:src="@{/public/img/{file}(file=${reply.img_path})}">
 				        </th:block>
@@ -72,10 +69,10 @@
 			</div> 	
 		</div>	
 		<!-- reply.prefer_active : 
-				(null-아무도 좋아요를 안누름/insert)  
-				(true-좋아요를 누름/좋아요:delete,싫어요:update)  
-				(false-싫어요를 누름/좋아요:update,싫어요:delete)
-				reply_prefer을 reply_no+user_id 로 수정 삭제
+				(null - 아무도 좋아요를 안누름/insert)  
+				(true - 좋아요를 누름/좋아요:delete, 싫어요:update)  
+				(false - 싫어요를 누름/좋아요:update, 싫어요:delete)
+				reply_prefer을 reply_no + user_id 로 수정 삭제
 		-->
     </th:block>
   	<th:block th:if="${(session.loginUsers?.userid == reply.users?.userid) || (session.loginUsers?.adminCk == 1)}">
@@ -127,8 +124,8 @@
 								        class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 								      </div>
 								      <div class="modal-body">
-				   									<img alt="댓글 이미지"  class="img-thumbnail"  style="width:100%;"
-										th:src="@{/public/img/{file}(file=${reply.img_path})}">  
+				   						<img alt="댓글 이미지"  class="img-thumbnail"  style="width:100%;"
+											 th:src="@{/public/img/{file}(file=${reply.img_path})}">  
 								      </div>
 								    </div>
 								  </div>
@@ -169,7 +166,7 @@
 				    					}"
 				    	class="btn btn-sm btn-outline-danger rounded-pill bi border-0" 
 				    	th:text="${reply.bad}" 
-				    	th:href="|javascript:replyPreferHandler( ${reply.reply_no},${reply.prefer_active},'bad')|">
+				    	th:href="|javascript:replyPreferHandler(${reply.reply_no},${reply.prefer_active},'bad')|">
 				    </a>
 				</div>						
   				<div class="ms-auto">
