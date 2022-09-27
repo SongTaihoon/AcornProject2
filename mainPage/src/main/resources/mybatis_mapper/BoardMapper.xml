@@ -32,29 +32,24 @@
 					<id column="reply_userid" property="userid"/>
  					<result column="reply_username" property="username"/>
 				</association>
-				
 				<collection property="good_prefers" ofType="ReplyPrefer" javaType="java.util.ArrayList">
 					<id column="rp_good_reply_prefer_no" property="reply_prefer_no"/>
 					<result column="rp_good_reply_no" property="reply_no"/>
 					<result column="rp_good_prefer" property="prefer"/>
 					<result column="rp_good_userid" property="userid"/>
 				</collection>
-				
 				<collection property="bad_prefers" ofType="ReplyPrefer" javaType="java.util.ArrayList">
 					<id column="rp_bad_reply_prefer_no" property="reply_prefer_no"/>
 					<result column="rp_bad_reply_no" property="reply_no"/>
 					<result column="rp_bad_prefer" property="prefer"/>
 					<result column="rp_bad_userid" property="userid"/>
 				</collection>
-				
 		</collection>
-		
 		<collection property="boardImgs" javaType="java.util.ArrayList" ofType="BoardImg">
 			<id column="iboard_img_no" property="board_img_no"/>
 			<result column="iimg_path" property="img_path"/>
 		</collection>
 	</resultMap>
-
 	<!-- list 페이지  -->
 	<select id="selectPageAll" resultType="Board">
 		SELECT
@@ -120,27 +115,40 @@
 			(SELECT COUNT(*) FROM BOARD_PREFER WHERE board_no=b.board_no AND prefer=true) prefer_good,
 			(SELECT COUNT(*) FROM BOARD_PREFER WHERE board_no=b.board_no AND prefer=false) prefer_bad,
 			<if test="loginUsersId!=null">
-				(SELECT prefer FROM BOARD_PREFER WHERE board_no=b.board_no AND userid=#{loginUsersId}) 	as prefer_active,
+				(SELECT prefer FROM BOARD_PREFER WHERE board_no=b.board_no AND userid = #{loginUsersId}) as prefer_active,
 			</if>
-						
-			u.userid,
-			u.username,
-			u.email,
-			
-			i.board_img_no 	as iboard_img_no,
-			i.img_path 		as iimg_path			
-			
-			FROM BOARD b INNER JOIN USERS u
-			USING (userid)		
-						
-			LEFT JOIN BOARD_IMG i
-			USING (board_no)
-			
-			LEFT JOIN REPLY r
-			USING (board_no)
-			
-			WHERE b.board_no=#{boardNo}
-			ORDER BY reply_no DESC
+			u.userid, u.username, u.email, u.birth,
+		    r.reply_no, 
+		    r.title reply_title,
+		    r.contents reply_contents, 
+		    r.post_time reply_post_time, 
+		    r.img_path reply_img_path, 
+		    r.good reply_good,
+		    r.bad reply_bad,
+		    r.userid reply_userid,
+		    i.board_img_no iboard_img_no,
+		    i.img_path iimg_path,
+		    rp_good.userid rp_good_userid,
+		    rp_good.reply_prefer_no rp_good_reply_prefer_no,
+		    rp_good.reply_no rp_good_reply_no,
+		    rp_good.prefer rp_good_prefer,
+		    rp_bad.userid rp_bad_userid,
+		    rp_bad.reply_prefer_no rp_bad_reply_prefer_no,
+		    rp_bad.reply_no rp_bad_reply_no,
+		    rp_bad.prefer rp_bad_prefer
+		    FROM BOARD b INNER JOIN USERS u USING(userid) 
+		    
+		    LEFT JOIN BOARD_IMG i USING(board_no)
+		    
+		    LEFT JOIN REPLY r USING(board_no) 
+		    
+		    LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = true) rp_good
+		    ON r.reply_no = rp_good.reply_no
+		    
+		    LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = false) rp_bad
+		    ON r.reply_no = rp_bad.reply_no
+		    
+		    WHERE b.board_no = #{boardNo}	
 	</select>
 	<update id="detailUpdateViews" parameterType="int">
 		UPDATE BOARD SET 

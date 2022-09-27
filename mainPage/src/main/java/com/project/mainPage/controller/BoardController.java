@@ -13,9 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -39,6 +41,7 @@ import com.project.mainPage.mapper.BoardMapper;
 
 import com.project.mainPage.mapper.BoardPreferMapper;
 import com.project.mainPage.mapper.ReplyMapper;
+import com.project.mainPage.mapper.ReplyPreferMapper;
 import com.project.mainPage.mapper.UsersMapper;
 
 
@@ -66,6 +69,9 @@ public class BoardController {
 	
 	@Autowired
 	private ReplyMapper replyMapper;
+	
+	@Autowired
+	private ReplyPreferMapper replyPreferMapper;
 	
 	@Value("${spring.servlet.multipart.location}") //파일이 임시저장되는 경로+파일을 저장할 경로
 	private String savePath;
@@ -106,9 +112,22 @@ public class BoardController {
 		String loginUsersId=null;
 		try {
 			if(loginUsers != null) {
-				loginUsersId=loginUsers.getUserid();
-				board = boardService.boardUpdateView(boardNo,loginUsers.getUserid());
-				boardPrefer = boardPreferMapper.selectFindUserIdAndBoardNo(loginUsers.getUserid(),boardNo);
+				loginUsersId = loginUsers.getUserid();
+				board = boardService.boardUpdateView(boardNo, loginUsers.getUserid());
+				boardPrefer = boardPreferMapper.selectFindUserIdAndBoardNo(loginUsers.getUserid(), boardNo);
+//				좋아요 싫어요를 한 번도 안 했으면 null
+				for(Reply reply : board.getReplys()) {
+					for (ReplyPrefer prefer : reply.getGood_prefers()) {
+						if(prefer.getUserid().equals(loginUsers.getUserid())) {
+							reply.setPrefer_active(true);
+						}
+					}
+					for (ReplyPrefer prefer : reply.getBad_prefers()) {
+						if(prefer.getUserid().equals(loginUsers.getUserid())) {
+							reply.setPrefer_active(false);
+						}
+					}
+				}
 				int replySize = replyMapper.selectBoardNoCount(boardNo);
 				if(replySize>0) {
 					pagination = new Pagination(replyPage, replySize, pagingUrl, row);
@@ -330,7 +349,6 @@ public class BoardController {
 		session.setAttribute("msg", msg);
 		return "redirect:/board/detail/"+boardNo;
 	}
-
 	
 	@GetMapping("/search/{page}")
 	public String searchProduct(

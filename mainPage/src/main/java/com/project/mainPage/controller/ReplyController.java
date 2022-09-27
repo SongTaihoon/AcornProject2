@@ -37,29 +37,29 @@ public class ReplyController {
 	private ReplyPreferMapper replyPreferMapper;
 	
 //	댓글 리스트 페이지
-	@RequestMapping("/list/{boardNo}/{page}")
-	public String list(
-			@PathVariable int boardNo,
-			@PathVariable int page,
-			@SessionAttribute(required = false) UsersDto loginUsers,
-			Model model) {
-		int row = 5;
-		int startRow = (page - 1) * row;
-		String url = "/reply/list/" + boardNo;
-		List<Reply> replys = null;
-		String loginUserId = (loginUsers != null) ? loginUsers.getUserid() : null;
-		try {
-			int rowCount = replyMapper.selectBoardNoCount(boardNo);
-			Pagination pagination = new Pagination(page, rowCount, url, row);
-			replys = replyMapper.selectBoardNoPage(boardNo, startRow, row, loginUserId);
-			model.addAttribute("pagination", pagination);
-			System.out.println(pagination);
-			model.addAttribute("replys", replys);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}	
-		return "/board/replyList";
-	}
+//	@RequestMapping("/list/{boardNo}/{page}")
+//	public String list(
+//			@PathVariable int boardNo,
+//			@PathVariable int page,
+//			@SessionAttribute(required = false) UsersDto loginUsers,
+//			Model model) {
+//		int row = 5;
+//		int startRow = (page - 1) * row;
+//		String url = "/reply/list/" + boardNo;
+//		List<Reply> replys = null;
+//		String loginUserId = (loginUsers != null) ? loginUsers.getUserid() : null;
+//		try {
+//			int rowCount = replyMapper.selectBoardNoCount(boardNo);
+//			Pagination pagination = new Pagination(page, rowCount, url, row);
+//			replys = replyMapper.selectBoardNoPage(boardNo, startRow, row, loginUserId);
+//			model.addAttribute("pagination", pagination);
+//			System.out.println(pagination);
+//			model.addAttribute("replys", replys);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}	
+//		return "/board/replyList";
+//	}
 	
 //	댓글 등록
 	@PostMapping("/insert.do")
@@ -196,7 +196,7 @@ public class ReplyController {
 			
 			reply = replyMapper.selectOneJoinPrefers(reply_no);
 			
-			model.addAttribute("replies" , reply);
+			model.addAttribute("reply", reply);
 			if(insert > 0) {
 				System.out.println("댓글 좋아요 등록 성공! : " + insert);
 				reply.setPrefer_active(prefer);
@@ -228,9 +228,13 @@ public class ReplyController {
 			update = replyPreferMapper.updateOne(replyPrefer);
 			
 			reply = replyMapper.selectOneJoinPrefers(reply_no);
+			
 			model.addAttribute("reply", reply);
 			if(update > 0) {
+				System.out.println("댓글 좋아요 수정 성공! : " + update);
 				reply.setPrefer_active(prefer);
+			} else {
+				System.out.println("댓글 좋아요 수정 실패! : " + update);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -255,7 +259,13 @@ public class ReplyController {
 			delete = replyPreferMapper.deleteOne(replyPrefer);
 			
 			reply = replyMapper.selectOneJoinPrefers(reply_no);
+			
 			model.addAttribute("reply", reply);
+			if(delete > 0) {
+				System.out.println("댓글 좋아요 삭제 성공! : " + delete);
+			} else {
+				System.out.println("댓글 좋아요 삭제 실패! : " + delete);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

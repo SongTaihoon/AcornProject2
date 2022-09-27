@@ -135,7 +135,7 @@
 				th:if="${session.loginUsers!=null}">
 					<p style="font-size: 30px; margin-top: 8px;">댓글 등록</p>
 <!--///////////////////////////////////// 리플 등록 폼 ///////////////////////////////////////////////////////////////// -->				
-					<form action="/reply/insert.do" method="post" enctype="multipart/form-data">
+					<form action="/reply/insert.do" method="post" enctype="multipart/form-data" name="replyInsertForm">
 						<table class="table table-bordered table align-middle mb-3" style="height: 100%;">
 							<tbody>
 								<tr>
@@ -159,7 +159,8 @@
 								<tr>
 									<th class="table-light">내용</th>
 									<td>
-										<textarea name="contents" class="form-control" id="inputContents"></textarea>
+										<textarea name="contents" class="form-control" id="contents" 
+												  onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
 									</td>	
 								</tr>
 							</tbody>
@@ -180,9 +181,15 @@
 	 <footer class="footer" th:insert="/NewFooter"></footer> 
 	</div>
 </body>
-<script type="text/javascript">
-const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+<script>
+var replyInsertForm = document.forms.replyInsertForm;
+var replyTitle = replyInsertForm.title;
+var replyContents = replyInsertForm.contents;
+replyInsertForm.addEventListener("submit", (event) => {
+	if(!(replyTitle.value) || !(replyContents.value)) {
+		event.preventDefault();		
+	}
+});
 function noSpace(obj) { // 공백사용못하게
     var str = /\s/;  // 공백체크
     if(str.exec(obj.value.trim)) { //공백 체크

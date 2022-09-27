@@ -70,38 +70,38 @@
 			</tbody>
 		</table>
 		<div class="d-flex mb-2">
-			<div class="ms-auto">
+			<div>
 			    <a th:classappend="${
-			    		(reply.prefer_active!=null&&reply.prefer_active)
+			    		(reply.prefer_active!=null && reply.prefer_active)
 		  						?'bi-hand-thumbs-up-fill' 
 		  						: 'bi-hand-thumbs-up'
 			    					}" 
 			    	class="btn btn-sm btn-outline-primary rounded-pill bi border-0" 
 			    	th:text="${reply.good}"
-			    	th:href="|javascript:replyPreferHandler(${reply.reply_no},${reply.prefer_active},'good')|">
+			    	th:href="|javascript:replyPreferHandler(${reply.reply_no}, ${reply.prefer_active}, 'good')|">
 			    </a>
 		 		<a th:classappend="${
-			    		(reply.prefer_active!=null&&!reply.prefer_active)
+			    		(reply.prefer_active!=null && !reply.prefer_active)
 		  						?'bi-hand-thumbs-down-fill' 
 		  						: 'bi-hand-thumbs-down'
 			    					}"
 			    	class="btn btn-sm btn-outline-danger rounded-pill bi border-0" 
 			    	th:text="${reply.bad}" 
-			    	th:href="|javascript:replyPreferHandler( ${reply.reply_no},${reply.prefer_active},'bad')|">
+			    	th:href="|javascript:replyPreferHandler(${reply.reply_no}, ${reply.prefer_active}, 'bad')|">
 			    </a>
 			</div> 	
 		</div>	
 		<!-- reply.prefer_active : 
-				(null - 아무도 좋아요를 안누름/insert)  
-				(true - 좋아요를 누름/좋아요:delete, 싫어요:update)  
-				(false - 싫어요를 누름/좋아요:update, 싫어요:delete)
-				reply_prefer을 reply_no + user_id 로 수정 삭제
+			(null - 아무도 좋아요를 안 누름 / insert)  
+			(true - 좋아요를 누름 / 좋아요 : delete, 싫어요 : update)  
+			(false - 싫어요를 누름 / 좋아요 : update, 싫어요 : delete)
+			reply_prefer을 reply_no + user_id 로 수정 삭제
 		-->
     </th:block>
   	<th:block th:if="${(session.loginUsers?.userid == reply.users?.userid) || (session.loginUsers?.adminCk == 1)}">
   	<p style="font-size: 30px; margin-top: 8px;">댓글 수정/삭제</p>	
 <!--///////////////////////////////////// 로그인된 유저 or 관리자가 보는 리플 ///////////////////////////////////////////////////////////////// -->				
-  		<form action="/reply/update.do" method="post" enctype="multipart/form-data" style="width: 100%">
+  		<form action="/reply/update.do" method="post" enctype="multipart/form-data" style="width: 100%" name="replyUpdate">
 	  		<table class="mb-3 table align-middle table-bordered">
 				<tbody>
 					<tr>
@@ -121,7 +121,8 @@
 					<tr>
 						<th class="table-light">제목</th>
 						<td>
-							<input name="title" type="text" class="form-control" th:value="${reply.title}" onkeyup="noSpace(this);" onchange="noSpace(this);">
+							<input name="title" type="text" class="form-control" th:value="${reply.title}" 
+								   onkeyup="noSpace(this);" onchange="noSpace(this);">
 						</td>
 					</tr>
 					<tr>
@@ -162,7 +163,8 @@
 					<tr>
 						<th class="table-light">내용</th>
 						<td>
-							<textarea name="contents" class="form-control" th:text="${reply.contents}" onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
+							<textarea name="contents" class="form-control" th:text="${reply.contents}" 
+									  onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
 						</td>	
 					</tr>
 					<tr>
@@ -176,16 +178,16 @@
   			<div class="d-flex mb-2 align-items-center">
 				<div>
 				    <a th:classappend="${
-				    		(reply.prefer_active!=null&&reply.prefer_active)
+				    		(reply.prefer_active != null && reply.prefer_active)
 			  						?'bi-hand-thumbs-up-fill' 
 			  						: 'bi-hand-thumbs-up'
 				    					}"
 				    	class="btn btn-sm btn-outline-primary rounded-pill bi border-0" 
 				    	th:text="${reply.good}"
-				    	th:href="|javascript:replyPreferHandler(${reply.reply_no},${reply.prefer_active},'good')|">
+				    	th:href="|javascript:replyPreferHandler(${reply.reply_no}, ${reply.prefer_active}, 'good')|">
 				    </a>
 			 		<a th:classappend="${
-				    		(reply.prefer_active!=null&&!reply.prefer_active)
+				    		(reply.prefer_active!=null && !reply.prefer_active)
 			  						?'bi-hand-thumbs-down-fill' 
 			  						: 'bi-hand-thumbs-down'
 				    					}"
@@ -205,4 +207,24 @@
 			</div>
   		</form>
   	</th:block>
+<script>
+var replyUpdate = document.forms.replyUpdate;
+var title = replyUpdate.title;
+var contents = replyUpdate.contents;
+document.forms.replyUpdate.addEventListener("submit", (event) => {
+	if(!(title.value) || !(contents.value)) {
+		
+		event.preventDefault();		
+	}
+});
+function noSpace(obj) { // 공백사용못하게
+    var str = /\s/;  // 공백체크
+    if(str.exec(obj.value.trim)) { //공백 체크
+        //alert("해당 항목에는 첫 글자 공백을 사용할수 없습니다.");
+        obj.focus();
+        obj.value = obj.value.replace(/^ +/,''); // 공백제거
+        return false;
+    }
+}
+</script>
 </html>
