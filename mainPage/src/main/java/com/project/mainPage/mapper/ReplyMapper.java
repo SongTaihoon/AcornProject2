@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.project.mainPage.dto.Reply;
 @Mapper
 public interface ReplyMapper {
+	public Reply selectOneJoinPrefers(int reply_no);
 	public Reply selectOne(int reply_no);
 	public List<Reply> selectBoardNo(int board_no);
 	int selectBoardNoCount(int boardNo);
