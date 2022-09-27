@@ -21,6 +21,7 @@ public class InterceptorConfig implements WebMvcConfigurer{
 				.addPathPatterns("/**/insert/**")
 				.addPathPatterns("/**/delete/**")
 				.addPathPatterns("/**/update/**")
+				.addPathPatterns("/**/prefer/**")
 				.addPathPatterns("/users/list/**")
 				.addPathPatterns("/users/detail/**")
 				.addPathPatterns("/qaboard/insert.do")

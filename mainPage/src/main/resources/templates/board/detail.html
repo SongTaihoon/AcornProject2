@@ -141,7 +141,7 @@
 								<tr>
 									<th class="table-light">작성자</th>
 									<td>
-										<input name="userId" class="form-control" id="userId" th:value="${session.loginUsers?.userid}" readonly>
+										<input name="users.userid" class="form-control" id="userId" th:value="${session.loginUsers?.userid}" readonly>
 									</td>
 								</tr>
 								<tr>
@@ -153,7 +153,7 @@
 								<tr>
 									<th class="table-light">사진</th>
 									<td>
-										<input name="imgFiles" class="form-control mb-1 form-control-lg" type="file">
+										<input name="imgFile" class="form-control mb-1 form-control-lg" type="file">
 									</td>
 								</tr>
 								<tr>
@@ -168,6 +168,7 @@
 							<div class="ms-auto">
 								<button class="btn btn-outline-warning btn-lg" type="reset" style="margin-right: 8px;">초기화</button>
 								<button class="btn btn-outline-primary btn-lg" type="submit">등록</button>
+								<input type="hidden" name="board_no" th:value="${board.board_no}">
 							</div>
 						</div>
 					</form>

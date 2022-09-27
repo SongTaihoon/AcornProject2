@@ -27,8 +27,8 @@
 					<th class="table-light">사진</th>
 					<td>
 						<th:block th:if="${reply.img_path != null}">
-				      	  <img alt="댓글 이미지" class="img-thumbnail" style="height:50px; width:100%; object-fit: cover;"
-				      	 	   th:src="@{/public/img/{file}(file=${reply.img_path})}">
+				      	  <img alt="댓글 이미지" class="img-thumbnail" style="height:100%; width:40%; object-fit: cover;"
+				      	 	   th:src="@{/img/{file}(file=${reply.img_path})}">
 				        </th:block>
 					</td>
 				</tr>
@@ -125,7 +125,7 @@
 								      </div>
 								      <div class="modal-body">
 				   						<img alt="댓글 이미지"  class="img-thumbnail"  style="width:100%;"
-											 th:src="@{/public/img/{file}(file=${reply.img_path})}">  
+											 th:src="@{/img/{file}(file=${reply.img_path})}">  
 								      </div>
 								    </div>
 								  </div>
