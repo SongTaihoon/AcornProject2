@@ -70,7 +70,7 @@
 			</tbody>
 		</table>
 		<div class="d-flex mb-2">
-			<div>
+			<th:block th:if="${session.loginUsers.userid != null}">
 			    <a th:classappend="${
 			    		(reply.prefer_active!=null && reply.prefer_active)
 		  						?'bi-hand-thumbs-up-fill' 
@@ -89,7 +89,25 @@
 			    	th:text="${reply.bad}" 
 			    	th:href="|javascript:replyPreferHandler(${reply.reply_no}, ${reply.prefer_active}, 'bad')|">
 			    </a>
-			</div> 	
+			</th:block>
+			<th:block th:unless="${session.loginUsers.userid != null}">
+			    <a th:classappend="${
+			    		(reply.prefer_active!=null && reply.prefer_active)
+		  						?'bi-hand-thumbs-up-fill' 
+		  						: 'bi-hand-thumbs-up'
+			    					}" 
+			    	class="btn btn-sm btn-outline-primary rounded-pill bi border-0" 
+			    	th:text="${reply.good}">
+			    </a>
+		 		<a th:classappend="${
+			    		(reply.prefer_active!=null && !reply.prefer_active)
+		  						?'bi-hand-thumbs-down-fill' 
+		  						: 'bi-hand-thumbs-down'
+			    					}"
+			    	class="btn btn-sm btn-outline-danger rounded-pill bi border-0" 
+			    	th:text="${reply.bad}">
+			    </a>
+			</th:block>  	
 		</div>	
 		<!-- reply.prefer_active : 
 			(null - 아무도 좋아요를 안 누름 / insert)  
@@ -176,7 +194,7 @@
 				</tbody>
 			</table>
   			<div class="d-flex mb-2 align-items-center">
-				<div>
+				<th:block th:if="${session.loginUsers.userid != reply.users.userid}">
 				    <a th:classappend="${
 				    		(reply.prefer_active != null && reply.prefer_active)
 			  						?'bi-hand-thumbs-up-fill' 
@@ -187,15 +205,33 @@
 				    	th:href="|javascript:replyPreferHandler(${reply.reply_no}, ${reply.prefer_active}, 'good')|">
 				    </a>
 			 		<a th:classappend="${
-				    		(reply.prefer_active!=null && !reply.prefer_active)
+				    		(reply.prefer_active != null && !reply.prefer_active)
 			  						?'bi-hand-thumbs-down-fill' 
 			  						: 'bi-hand-thumbs-down'
 				    					}"
 				    	class="btn btn-sm btn-outline-danger rounded-pill bi border-0" 
 				    	th:text="${reply.bad}" 
-				    	th:href="|javascript:replyPreferHandler(${reply.reply_no},${reply.prefer_active},'bad')|">
+				    	th:href="|javascript:replyPreferHandler(${reply.reply_no}, ${reply.prefer_active}, 'bad')|">
 				    </a>
-				</div>						
+				</th:block>	
+				<th:block th:unless="${session.loginUsers.userid != reply.users.userid}">
+				    <a th:classappend="${
+				    		(reply.prefer_active != null && reply.prefer_active)
+			  						?'bi-hand-thumbs-up-fill' 
+			  						: 'bi-hand-thumbs-up'
+				    					}"
+				    	class="btn btn-sm btn-outline-primary rounded-pill bi border-0" 
+				    	th:text="${reply.good}">
+				    </a>
+			 		<a th:classappend="${
+				    		(reply.prefer_active != null && !reply.prefer_active)
+			  						?'bi-hand-thumbs-down-fill' 
+			  						: 'bi-hand-thumbs-down'
+				    					}"
+				    	class="btn btn-sm btn-outline-danger rounded-pill bi border-0" 
+				    	th:text="${reply.bad}">
+				    </a>
+				</th:block>						
   				<div class="ms-auto">
 					<button type="reset" class="btn btn-lg btn-outline-warning">초기화</button>
 					<button type="submit" class="btn btn-lg btn-outline-success" style="margin-left: 8px; margin-right: 8px;">수정</button>

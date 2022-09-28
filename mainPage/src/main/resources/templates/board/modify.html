@@ -35,17 +35,15 @@
 				</i>
 				<a style="margin-right: 4px; margin-left: 4px;"
 			 	data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="좋아요!"
-				th:href="@{/board/prefer/{no}/{prefer}(no=${board.board_no},prefer=${true})}" 
 				class="btn btn-outline-primary border-0 rounded-pill">
-					<i th:classappend="${(board.prefer_active!=null && board.prefer_active)?'bi-hand-thumbs-up-fill':'bi-hand-thumbs-up'}" class="bi "></i>				
+					<i th:classappend="${(board.prefer_active != null && board.prefer_active) ? 'bi-hand-thumbs-up-fill' : 'bi-hand-thumbs-up'}" class="bi "></i>				
 					<span th:text="${board.good}"></span>
 				</a> 
 				<a style="margin-right: 8px;"
 			 	data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="싫어요!"
-				th:href="@{/board/prefer/{no}/{prefer}(no=${board.board_no},prefer=${false})}"  
 				class="btn btn-outline-danger border-0 rounded-pill">
-					<i th:classappend="${(board.prefer_active!=null && !board.prefer_active)?'bi-hand-thumbs-down-fill':'bi-hand-thumbs-down'}" class="bi "></i>				
-					 <span th:text="${board.bad}"></span>
+					<i th:classappend="${(board.prefer_active != null && !board.prefer_active) ? 'bi-hand-thumbs-down-fill' : 'bi-hand-thumbs-down'}" class="bi "></i>				
+					<span th:text="${board.bad}"></span>
 				</a>
 			</div>
 	  </div>
@@ -62,7 +60,7 @@
 		    <tr>
 		      <th style="width: 100px;" class="bg-light align-middle">작성자</th>
 		      <td style="width: 900px;">
-		      	<input name="users.userid" class="form-control" id="userId" th:value="${session.loginUsers.userid}" readonly>
+		      	<input name="users.userid" class="form-control" id="userId" th:value="${board.users.userid}" readonly>
 		      </td>
 		    </tr>
 		    <tr>

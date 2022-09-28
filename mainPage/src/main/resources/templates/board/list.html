@@ -35,8 +35,7 @@
 					<th>작성자</th>
 					<th>카테고리</th>
 					<th>장소</th>
-					<th>별점</th>
-					<th>사진</th>							
+					<th>별점</th>					
 					<th>제목</th>
 					<th>댓글</th>
 					<th>좋아요</th>
@@ -51,11 +50,6 @@
 						<td th:text="${board.board_no}"></td>
 						<td th:text="${board.board_no}"></td>
 						<td th:text="${board.board_no}"></td>
-						<td>
-							<img alt="게시글 이미지" 
-								 th:src="@{/img/{file}(file=${board.boardImgs?.img_path})}" 
-								 class="img-thumbnail" width="200">
-						</td>
 						<td th:text="${board.title}"></td>
 						<td th:text="${board.replys_size}"></td>
 						<td th:text="${board.good}"></td>

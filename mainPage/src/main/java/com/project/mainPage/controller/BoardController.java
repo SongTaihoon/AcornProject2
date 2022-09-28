@@ -352,14 +352,14 @@ public class BoardController {
 		try {
 			BoardPrefer boardPrefer = boardPreferMapper.selectFindUserIdAndBoardNo(loginUsers.getUserid(), boardNo);
 			
-			if(boardPrefer == null) { //좋아요 싫어요를 한 번도 한 적이 없을 때
+			if(boardPrefer == null) { // 좋아요 싫어요를 한 번도 한 적이 없을 때
 				msg += " 등록";
 				boardPrefer = new BoardPrefer();
 				boardPrefer.setBoard_no(boardNo);
 				boardPrefer.setPrefer(prefer);
 				boardPrefer.setUserid(loginUsers.getUserid());
 				modify = boardPreferMapper.insertOne(boardPrefer);
-			}else if(prefer == boardPrefer.isPrefer()) { // 좋아요 싫어요를 삭제할 때
+			}else if(prefer == boardPrefer.isPrefer()) { // 좋아요 싫어요를 한 번 더 눌러서 삭제할 때
 				msg += " 삭제";
 				boardPrefer.setPrefer(prefer);
 				modify = boardPreferMapper.deleteOne(boardPrefer.getBoard_prefer_no());
