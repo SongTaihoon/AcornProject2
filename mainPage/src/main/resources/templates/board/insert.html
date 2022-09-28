@@ -26,13 +26,13 @@
 		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
 		    <span style="font-size: 35px;">후기 작성</span>
 	    </h1>	
-		<form action="/board/insert.do" method="post" enctype="multipart/form-data">
+		<form action="/board/insert.do" method="post" enctype="multipart/form-data" name="boardInsertForm">
 			<table class="mt-5 mb-5 table align-middle table-bordered">
 				<tbody>
 					<tr>
 						<th class="table-light">작성자</th>
 						<td>
-							<input name="userId" class="form-control" id="userId" th:value="${session.loginUsers.userid}" readonly>
+							<input name="users.userid" class="form-control" id="userId" th:value="${session.loginUsers.userid}" readonly>
 						</td>
 					</tr>
 					<tr>
@@ -50,7 +50,7 @@
 					<tr>
 						<th class="table-light">장소명</th>
 						<td>
-							<input name="place" class="form-control" id="place" onkeyup="noSpace(this);" onchange="noSpace(this);" required>
+							<input name="place" class="form-control" id="place" onkeyup="noSpace(this);" onchange="noSpace(this);">
 						</td>
 					</tr>
 					<tr>
@@ -74,19 +74,23 @@
 					<tr>
 						<th class="table-light">사진</th>
 						<td>
-							<input name="imgFiles" class="form-control mb-1  form-control-lg" type="file">
+							<input name="imgFile" class="form-control mb-1 form-control-lg" type="file">
+							<input name="imgFile" class="form-control mb-1 form-control-lg" type="file">
+							<input name="imgFile" class="form-control mb-1 form-control-lg" type="file">
 						</td>
 					</tr>
 					<tr>
 						<th class="table-light">제목</th>
 						<td>
-							<input name="title" class="form-control" id="title" onkeyup="noSpace(this);" onchange="noSpace(this);" required>
+							<input name="title" class="form-control" id="title" 
+								   onkeyup="noSpace(this);" onchange="noSpace(this);">
 						</td>
 					</tr>
 					<tr>
 						<th class="table-light">내용</th>
 						<td>
-							<textarea name="contents" class="form-control" id="inputContents" required></textarea>
+							<textarea name="contents" class="form-control" id="contents" 
+									  onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
 						</td>	
 					</tr>
 				</tbody>
@@ -112,5 +116,14 @@ function noSpace(obj) { // 공백사용못하게
         return false;
     }
 }
+//값이 없을 때 submit 불가
+var boardInsertForm = document.forms.boardInsertForm;
+var title = boardInsertForm.title;
+var contents = boardInsertForm.contents;
+boardInsertForm.addEventListener("submit", (event) => {
+	if(!title.value || !contents.value) {
+		event.preventDefault();		
+	}
+});
 </script>
 </html>
