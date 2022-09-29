@@ -4,6 +4,7 @@
      align-items: center;
      padding: 40px;
      min-width: 1200px;
+     background-color: #f8f9fa;
 }
 #header #headerLeft h1 a {
 	text-decoration: none;
@@ -22,6 +23,7 @@
 }
 #header #headerCenter #searchBox #searchForm button {
  	 border: 1px solid #1E96C4;
+ 	 background-color: white;
 }
 #header #headerCenter #searchBox #searchForm button:hover {
  	 background-color: #1E96C4;

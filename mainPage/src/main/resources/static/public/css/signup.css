@@ -52,6 +52,7 @@
 	height: 50px;
 	width: 454px;    	
 	background-color: #1E96C4;
+	border: 1px solid #1E96C4;
 }
 html, body {
     height: 100%
@@ -59,7 +60,7 @@ html, body {
 #wrapper {
     min-height: 100%;
     position: relative;
-    padding-bottom: 330px;
+    padding-bottom: 370px;
 }
 .footer {
     bottom: 0;
