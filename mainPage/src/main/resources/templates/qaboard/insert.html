@@ -2,72 +2,74 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>고객문의등록</title>
-<style type="text/css">
-.width{
-	display:inline-block;
-	width:66px;
-}
-</style>
+<title>문의하기</title>
+<link rel="stylesheet" href="/public/css/board/insert.css">
 </head>
 <body>
 	<header th:insert="/NewHeader"></header>
-		<h1 class="m-5 d-flex justify-content-center align-items-center" >
-			<span>고객 문의 등록</span>
-		</h1>
-	<main class="d-flex justify-content-center" >
-		<form action="/qaboard/insert.do" name="insertForm" method="post">
-		<div class="row mb-3 g-3 align-items-center">
-			<div class="col-auto">
-				<label for="inputId" class="form-label">작성자</label>
-				<input name="users.userid" id="inputId" class="form-control"  placeholder="" required readonly th:value="${session.loginUsers?.userid}">
-			</div>
-		</div>
-		<div class="row mb-3 g-3 align-items-center">
-			<div class="col-auto">
-				<label for="inputKind" class="col-form-label"><span class="width">유형</span></label>
-			</div>
-			<div class="col-auto">
-				<select id="inputKind" class="form-control" name="qaBoardKind" 
-				aria-describedby="idHelp" required>
-					<option value="상품">상품</option>
-					<option value="주문/결제">주문/결제</option>
-					<option value="취소/반품/교환/환불">취소/반품/교환/환불</option>
-					<option value="배송">배송</option>
-					<option value="기타">기타</option>
-				</select>
-			</div>
-		</div>
-			<div class="row mb-3 g-3 align-items-center">
-				<div class="col-auto labelSize">
-					<label for ="inputTitle" class="col-form-label"><span class="width">제목</span></label>
-				</div>
-				<div class="col-auto d-flex justify-content-between">
-					<input id="inputTitle" class="form-control" name="qaBoardTitle" 
-					onkeyup="noSpace(this);" onchange="noSpace(this);" 
-					type="text" required>
-				</div>
-			</div>
-			<div class="row mb-3 g-3 align-items-center">
-				<div class="col-auto">
-					<label for="inputInfo" class="col-form-label"><span class="width">내용</span></label>
-				</div>
-				<div class="col-auto">
-					<textarea name="qaBoardContents" id="inputInfo" class="form-control" required></textarea>
-				</div>
-			</div>
-			<div class="row mb-3 g-3 align-items-center">
-				<div class="col-auto">
-					<button type="reset" class="btn btn-light">초기화</button>
-				</div>
-				<div class="col-auto">
-					<button type="submit" class="btn btn-primary">등록</button>
+	<div id="wrapper">
+	  <main class="container-xl">
+	    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" id="path">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item">
+		    	<a href="/">홈</a>
+		    </li>
+		    <li class="breadcrumb-item">
+		    	<a href="#">고객 센터</a>
+		    </li>
+		    <li class="breadcrumb-item" aria-current="page">
+		    	<a href="/qaboard/list/1" class="breadcrumb-item active">고객 문의</a>
+		    </li>
+		  </ol>
+		</nav>
+		<h1 class="pb-4 d-flex justify-content-between align-items-center" 
+		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
+		    <span style="font-size: 35px;">문의하기</span>
+	    </h1>	
+		<form action="/qaboard/insert.do" method="post" enctype="multipart/form-data" name="qaInsertForm">
+			<table class="mt-5 mb-5 table align-middle table-bordered">
+				<tbody>
+					<tr>
+						<th class="table-light">작성자</th>
+						<td>
+							<input name="users.userid" class="form-control" id="userId" th:value="${session.loginUsers.userid}" readonly>
+						</td>
+					</tr>
+					<tr>
+						<th class="table-light">유형</th>
+						<td>
+							<select name="qaBoardKind" class="form-select" id="qaBoardKind">
+								<option value="관광지">관광지</option>
+								<option value="음식">음식</option>
+								<option value="숙박">숙박</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th class="table-light">제목</th>
+						<td>
+							<input name="qaBoardTitle" class="form-control" id="qaBoardTitle" onkeyup="noSpace(this);" onchange="noSpace(this);">
+						</td>
+					</tr>
+					<tr>
+						<th class="table-light">내용</th>
+						<td>
+							<textarea name="qaBoardContents" class="form-control" id="qaBoardContents" onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
+						</td>	
+					</tr>
+				</tbody>
+			</table>
+			<div class="d-flex">
+				<div class="ms-auto">
+					<button class="btn btn-outline-primary btn-lg" type="submit" style="margin-right: 8px;">등록</button>
+					<a class="btn btn-outline-dark btn-lg" href="/qaboard/list/1">목록</a>
 				</div>
 			</div>
 		</form>
-	</main>
+	  </main>
+	<footer class="footer" th:insert="/NewFooter"></footer>
+	</div>
 </body>
-<footer class="footer" th:insert="/NewFooter"></footer>
 <script>
 function noSpace(obj) { // 공백사용못하게
     var str = /\s/;  // 공백체크
@@ -78,5 +80,13 @@ function noSpace(obj) { // 공백사용못하게
         return false;
     }
 }
+const qaInsertForm = document.forms.qaInsertForm;
+const qaBoardTitle = qaInsertForm.qaBoardTitle;
+const qaBoardContents = qaInsertForm.qaBoardContents;
+qaInsertForm.addEventListener("submit", (event) => {
+	if(!qaBoardTitle.value || !qaBoardContents.value) {
+		event.preventDefault();		
+	}
+});
 </script>
 </html>

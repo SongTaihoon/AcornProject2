@@ -1,13 +1,13 @@
 const replyList=document.getElementById("replyList");
-setPageLing();
-
+//setPageLing();
+/*
 function setPageLing(){
 	const pageLinkList=pageAjax.querySelectorAll("#pageAjax .page-link");
 	pageLinkList.forEach((item)=>{
 		item.addEventListener("click",replyListHadler);
 	})	
 }
-
+*/
 async function replyListHadler(e){
 
 	let url=e.target.dataset.url;
