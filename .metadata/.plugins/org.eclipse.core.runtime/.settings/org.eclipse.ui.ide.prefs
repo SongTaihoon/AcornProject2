@@ -1,6 +1,16 @@
+<<<<<<< HEAD
 IMPORT_FILES_AND_FOLDERS_RELATIVE=true
 IMPORT_FILES_AND_FOLDERS_TYPE=23,1
 eclipse.preferences.version=1
 platformState=1658710664957
+=======
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=origin/\u00EB\u00B0\u0095\u00EA\u00B7\u009C\u00EB\u00B9\u0088
+IMPORT_FILES_AND_FOLDERS_RELATIVE=true
+IMPORT_FILES_AND_FOLDERS_TYPE=23,1
+eclipse.preferences.version=1
+platformState=1658709931754
+>>>>>>> db0ab2d97818107d0690c3dc897092decc6eafb1
 quickStart=false
 tipsAndTricks=true

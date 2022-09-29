@@ -1,7 +1,6 @@
 package com.project.mainPage.controller;
-
 import java.util.List;
-
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
-
+import com.project.mainPage.dto.Board;
 import com.project.mainPage.dto.Criteria;
 import com.project.mainPage.dto.Pagination;
 import com.project.mainPage.dto.Product;
@@ -21,26 +20,29 @@ import com.project.mainPage.dto.UsersDto;
 import com.project.mainPage.mapper.ProductMapper;
 import com.project.mainPage.mapper.QaBoardMapper;
 import com.project.mainPage.mapper.QaReplyMapper;
-
 @Controller
 @RequestMapping("/qaboard")
 public class QaBoardController {
 	@Autowired
 	private QaBoardMapper qaBoardMapper;
+	
 	@Autowired
 	private QaReplyMapper qaReplyMapper;
+	
 	@Autowired
 	private ProductMapper productMapper;
 	
+//	고객 문의 리스트 페이지
 	@GetMapping("/list/{page}")
-	public String list(@PathVariable int page, Model model) {
-		int row =10;
-		int startRow = (page-1)*row;
+	public String list(
+			@PathVariable int page, 
+			Model model) {
+		int row = 10;
+		int startRow = (page - 1) * row;
 		List<QaBoard> list = qaBoardMapper.selectPageAll(startRow, row);
 		int count = qaBoardMapper.selectPageAllCount();
 		
 		Pagination pagination = new Pagination(page, count, "/qaboard/list/", row);
-		System.out.println(pagination);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("list", list);
 		model.addAttribute("row", row);
@@ -48,91 +50,216 @@ public class QaBoardController {
 		model.addAttribute("page", page);
 		return "/qaboard/list";
 	}
-	@GetMapping("/detail/{qaBoardno}")
-	public String detail(@PathVariable int qaBoardno, Model model,
-			@SessionAttribute(required = false) UsersDto loginUsers) {
-		QaBoard qaBoard = qaBoardMapper.selectOne(qaBoardno);
-		System.out.println("qaBoard"+qaBoard);
-		model.addAttribute("qaBoard",qaBoard);
-		return "/qaboard/detail";
-	}
-	@GetMapping("/insert.do")
-	public String insert(Model model,
-			@SessionAttribute(required = false) UsersDto loginUsers) {
-		List<Product> qList=productMapper.selectAllProduct();
-		System.out.println(qList);
-		model.addAttribute("qList", qList);
-		return "/qaboard/insert";
-	}
-	@PostMapping("/insert.do")
-	public String insert(QaBoard qaBoard) {
-		int insert=0;
-		System.out.println(qaBoard);
-		try {
-			insert=qaBoardMapper.insertOne(qaBoard);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		if(insert>0) {
-			return "redirect:/qaboard/list/1";
-		}else {
-			return "redirect:/qaboard/insert.do";
-		}
-	}
-	@GetMapping("/delete/{qaBoardNo}")
-	public String delete(@PathVariable int qaBoardNo) {
-		int delete=0;
-		delete=qaBoardMapper.deleteOne(qaBoardNo);
-		if(delete>0) {
-			return "redirect:/qaboard/list/1";
-		}else {
-			return "redirect:/qaboard/detail/"+qaBoardNo;
-		}
-	} 
-	@GetMapping("/answer.do")
-	public void replyInsert() {}
-	@PostMapping("/answer.do")
-	public String replyInsert(QaReply qaReply,QaBoard qaBoard ) {
-		int insert=0;
-		int answer=0;
-		int page=qaBoard.getQaBoardNo();
-		System.out.println(page);
-		
-		try {
-			answer=qaReplyMapper.insertOne(qaReply);
-			insert=qaBoardMapper.answerOne(qaBoard);
-			System.out.println(insert);
-			System.out.println(answer);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		if(answer>0) {
-			return "redirect:/qaboard/list/1";
-		}else {
-			return "redirect:/qaboard/detail/"+page;
-		}
-	}
+	
+//	고객 문의 리스트 검색 페이지
 	@GetMapping("/search/{page}")
 	public String searchProduct(
+			@PathVariable int page,
 			@RequestParam(value = "type") String type,
 			@RequestParam(value = "keyword") String keyword,
-			@PathVariable int page, Criteria cri, Model model) {
+			Criteria cri, 
+			Model model) {
 		int row = 10;
 		int startRow = (page - 1) * row;
 		cri.setAmount(row);
 		cri.setSkip(startRow);
-		List<QaBoard> list= qaBoardMapper.searchQaBoard(cri);
+		List<QaBoard> list = qaBoardMapper.searchQaBoard(cri);
 		int count = qaBoardMapper.QaBoardGetTotal(cri);
-		  if(!list.isEmpty()) { model.addAttribute("list",list);
-		  }else { model.addAttribute("listCheck","empty"); return "/qaboard/search"; }
+		  if(!list.isEmpty()) { 
+			  model.addAttribute("list", list);
+		  } else { 
+			  model.addAttribute("listCheck","empty"); 
+			  return "/qaboard/search"; 
+		  }
 		Pagination pagination = new Pagination(page, count, "/qaboard/search/", row);
-		System.out.println(pagination);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("list", list);
-		System.out.println("list : "+list);
+		System.out.println("list : " + list);
 		model.addAttribute("row", row);
 		model.addAttribute("count", count);
 		model.addAttribute("page", page);
 		return "/qaboard/search";
+	}
+	
+//	고객 문의 상세 페이지
+	@GetMapping("/detail/{qaBoardno}")
+	public String detail(
+			@PathVariable int qaBoardno, 
+			Model model,
+			@SessionAttribute(required = false) UsersDto loginUsers) {
+		QaBoard qaBoard = qaBoardMapper.selectOne(qaBoardno);
+		System.out.println("qaBoard" + qaBoard);
+		model.addAttribute("qaBoard", qaBoard);
+		return "/qaboard/detail";
+	}
+	
+//	고객 문의 등록 페이지
+	@GetMapping("/insert.do")
+	public String insert(
+			Model model,
+			@SessionAttribute(required = false) UsersDto loginUsers) {
+		List<Product> qList = productMapper.selectAllProduct();
+		System.out.println(qList);
+		model.addAttribute("qList", qList);
+		return "/qaboard/insert";
+	}
+	
+//	고객 문의 등록
+	@PostMapping("/insert.do")
+	public String insert(QaBoard qaBoard) {
+		int insert = 0;
+		try {
+			insert = qaBoardMapper.insertOne(qaBoard);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(insert > 0) {
+			System.out.println("qaBoard 등록 성공! : " + insert);
+			return "redirect:/qaboard/list/1";
+		}else {
+			System.out.println("qaBoard 등록 실패! : " + insert);
+			return "redirect:/qaboard/insert.do";
+		}
+	}
+	
+//	고객 문의 삭제
+	@GetMapping("/delete/{qaBoardNo}")
+	public String delete(@PathVariable int qaBoardNo) {
+		int delete = 0;
+		try {
+			delete=qaBoardMapper.deleteOne(qaBoardNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(delete > 0) {
+			System.out.println("qaBoard 삭제 성공! : " + delete);
+			return "redirect:/qaboard/list/1";
+		}else {
+			System.out.println("qaBoard 삭제 실패! : " + delete);
+			return "redirect:/qaboard/detail/"+qaBoardNo;
+		}
+	} 
+	
+//	고객 문의 수정 페이지
+	@GetMapping("/update/{qaBoardNo}")
+	public String update(
+			@PathVariable int qaBoardNo, 
+			Model model, 
+			HttpSession session) {
+		QaBoard qaBoard = null;
+		qaBoard = qaBoardMapper.selectOne(qaBoardNo);
+		Object loginUsers_obj = session.getAttribute("loginUsers");
+		if(qaBoard.getUsers().getUserid().equals(((UsersDto)loginUsers_obj).getUserid()) || (((UsersDto)loginUsers_obj).getAdminCk() == 1)) {
+			model.addAttribute("qaBoard", qaBoard);
+			return "/qaboard/modify";			
+		} else {
+			return "redirect:/users/login.do";
+		}
+	}
+	
+//	고객 문의 수정
+	@PostMapping("/update.do")
+	public String update(QaBoard qaBoard) {
+		int update = 0;
+		try {
+			update = qaBoardMapper.updateOne(qaBoard);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(update > 0) {
+			System.out.println("qaBoard 수정 성공! : " + update);
+			return "redirect:/qaboard/detail/" + qaBoard.getQaBoardNo();
+		} else {
+			System.out.println("qaBoard 수정 실패! : " + update);
+			return "redirect:/qaboard/update/" + qaBoard.getQaBoardNo();
+		}
+	}
+	
+//	고객 문의 답변 등록(관리자)
+	@PostMapping("/replyInsert.do")
+	public String replyInsert(
+			QaReply qaReply, 
+			QaBoard qaBoard) {
+		int insert = 0;
+		int update = 0; // 답변 여부 1로 바꾸기
+		int page = qaBoard.getQaBoardNo();
+		try {
+			insert = qaReplyMapper.insertOne(qaReply);
+			update = qaBoardMapper.answerOne(qaBoard);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(insert > 0) {
+			System.out.println("qaBoard 답변 등록 성공! : " + insert);
+			System.out.println("qaBoard 답변 여부 1로 바꾸기 성공! : " + update);
+			return "redirect:/qaboard/detail/" + page;
+		}else {
+			System.out.println("qaBoard 답변 등록 실패! : " + insert);
+			System.out.println("qaBoard 답변 여부 1로 바꾸기 성공! : " + update);
+			return "redirect:/qaboard/detail/" + page;
+		}
+	}
+	
+//	고객 문의 답변 수정 페이지(관리자)
+	@GetMapping("/replyUpdate/{qaBoardNo}")
+	public String replyUpdate(
+			@PathVariable int qaBoardNo, 
+			Model model, 
+			HttpSession session) {
+		Object loginUsers_obj = session.getAttribute("loginUsers");
+		QaBoard qaBoard = null;
+		try {
+			qaBoard = qaBoardMapper.selectOne(qaBoardNo);	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if((((UsersDto)loginUsers_obj).getAdminCk() == 1)) { 
+			model.addAttribute("qaBoard", qaBoard);
+			return "/qaboard/modifyReply";			
+		} else { 
+			return "redirect:/users/login.do";
+		}
+	}
+	
+//	고객 문의 답변 수정(관리자)
+	@PostMapping("/replyUpdate.do")
+	public String replyUpdate(QaReply qaReply) {
+		int update = 0;
+		try {
+			update = qaReplyMapper.updateOne(qaReply);
+		} catch (Exception e) {
+			e.printStackTrace(); 
+		}
+		if(update > 0) {
+			System.out.println("qaBoard 답변 수정 성공! : " + update);
+			return "redirect:/qaboard/detail/" + qaReply.getQaBoardNo();
+		} else {
+			System.out.println("qaBoard 답변 수정 실패! : " + update);
+			return "redirect:/qaboard/replyUpdate/" + qaReply.getQaBoardNo();
+		}
+	}
+	
+//	고객 문의 답변 삭제(관리자)
+	@GetMapping("/replyDelete/{qaBoardNo}")
+	public String replyDelete(
+			@PathVariable int qaBoardNo, 
+			QaBoard qaBoard) {
+		int delete = 0;
+		int update = 0; // 답변 여부 다시 0으로 바꿔서 새로 등록할 수 있게 하기
+		try {
+			delete = qaReplyMapper.deleteOne(qaBoardNo);
+			update = qaBoardMapper.answerOne(qaBoard);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(delete > 0) {
+			System.out.println("qaBoard 답변 삭제 성공! : " + delete);
+			System.out.println("qaBoard 답변 여부 다시 0으로 바꾸기 성공! : " + update);
+			return "redirect:/qaboard/detail/" + qaBoardNo;
+		} else {
+			System.out.println("qaBoard 답변 삭제 실패! : " + delete);
+			System.out.println("qaBoard 답변 여부 다시 0으로 바꾸기 실패! : " + update);
+			return "redirect:/qaboard/replyUpdate/" + qaBoardNo;
+		}
 	}
 }

@@ -1,14 +1,9 @@
 package com.project.mainPage.dto;
-
 import java.util.Date;
 import java.util.List;
-
 import org.springframework.format.annotation.DateTimeFormat;
-
 import lombok.Data;
-
 /*
- * mysql> desc board;
 +-----------+--------------+------+-----+-------------------+-------------------+
 | Field     | Type         | Null | Key | Default           | Extra             |
 +-----------+--------------+------+-----+-------------------+-------------------+
@@ -22,7 +17,6 @@ import lombok.Data;
 | views     | int          | NO   |     | 0                 |                   |
 +-----------+--------------+------+-----+-------------------+-------------------+
 */
-
 @Data
 public class Board {
 	private int board_no;
@@ -30,11 +24,11 @@ public class Board {
 	private String contents;
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date post_time;
-	private UsersDto users;  // UsersDto.userid : fk 
+	private UsersDto users; // UsersDto.userid : fk 
 	private int good;
 	private int bad;
 	private int views;
-	private List<Reply> replys;  // 1:N Reply.board_no  : fk
+	private List<Reply> replys; // 1:N Reply.board_no  : fk
 	private List<BoardImg> boardImgs; // 1:N  BOARD_IMG.board_no fk
 	private int replys_size;
 	private Boolean prefer_active; 

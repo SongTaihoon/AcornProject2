@@ -9,7 +9,7 @@
 		<result column="qaBoardContents" property="qaBoardContents"/>
 		<result column="qaBoardAnswer" property="qaBoardAnswer"/>
 		<result column="qaBoardDate" property="qaBoardDate"/>
-		<!-- Board : UsersDto = 1 : 1   -->	
+		<!-- Board : UsersDto = 1 : 1 -->	
 		<association property="users" javaType="UsersDto"  foreignColumn="userid">
 			<id column="userid" property="userid"/>
 			<result column="username" property="username"/>
@@ -33,17 +33,20 @@
 			</association>
 		</collection>
 	</resultMap>
-	
-	
 	<select id="selectPageAll" resultMap="QaBoardMap">
-		SELECT q.*,u.userid FROM QABOARD q 
+		SELECT q.*, u.userid FROM QABOARD q 
 		LEFT JOIN USERS u USING(userid)
 		ORDER BY q.qaBoardNo 
-			LIMIT #{startRow},#{pageSize}
+			LIMIT #{startRow}, #{pageSize}
 	</select>
 	<select id="selectPageAllCount" resultType="int">
 		SELECT COUNT(*) FROM QABOARD
 	</select>
+	<update id="answerOne" parameterType="QaBoard">
+ 		UPDATE QABOARD SET 
+ 			qaBoardAnswer = #{qaBoardAnswer}
+ 			WHERE qaBoardNo = #{qaBoardNo}
+ 	</update>
 	<select id="selectOne" resultMap="QaBoardMap" parameterType="int">
 		SELECT q.*,
 		u.userid,
@@ -61,22 +64,23 @@
 		LEFT JOIN USERS u USING(userid)
 		LEFT JOIN PRODUCT p USING(productid)
 		LEFT JOIN QAREPLY r USING(qaboardno)
-		WHERE qaBoardNo=#{qaBoardNo}
+		WHERE qaBoardNo = #{qaBoardNo}
 	</select>
-	<update id="answerOne" parameterType="QaBoard">
- 		UPDATE QABOARD SET 
- 			qaBoardAnswer=#{qaBoardAnswer}
- 			WHERE qaBoardNo=#{qaBoardNo}
- 	</update>
 	<insert id="insertOne" parameterType="QaBoard"
 	 useGeneratedKeys="true" keyProperty="qaBoardNo">
-		INSERT INTO QABOARD (qaBoardKind,productid,qaBoardTitle,qaBoardContents,userid)
-		VALUES (#{qaBoardKind},#{product.productid},#{qaBoardTitle},#{qaBoardContents},#{users.userid})
+		INSERT INTO QABOARD (qaBoardKind, qaBoardTitle, qaBoardContents, userid)
+			VALUES (#{qaBoardKind}, #{qaBoardTitle}, #{qaBoardContents}, #{users.userid})
 	</insert>
+	<update id="updateOne" parameterType="QaBoard">
+		UPDATE QABOARD SET 
+			qaBoardKind = #{qaBoardKind},
+			qaBoardTitle = #{qaBoardTitle},
+			qaBoardContents = #{qaBoardContents}
+				WHERE qaBoardNo=#{qaBoardNo} 
+	</update>
 	<delete id="deleteOne" parameterType="int">
-		DELETE FROM QABOARD WHERE qaBoardNo=#{qaBoardNo}
+		DELETE FROM QABOARD WHERE qaBoardNo = #{qaBoardNo}
 	</delete>
-	
 	<!-- criteria(검색조건) -->
 	<sql id="criteria">
 		    <trim prefix="WHERE (" suffix=")" prefixOverrides="AND">
@@ -119,5 +123,4 @@
   		SELECT COUNT(*) FROM QABOARD
 		<include refid="criteria"></include>
 	</select>
-	
 </mapper>

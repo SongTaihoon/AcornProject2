@@ -17,17 +17,28 @@ public class InterceptorConfig implements WebMvcConfigurer{
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 				registry.addInterceptor(loginCheckInterceptor)
-				.addPathPatterns("/users/**")
 				.addPathPatterns("/search/**")
-				.addPathPatterns("/**/insert/**")
-				.addPathPatterns("/**/delete/**")
-				.addPathPatterns("/**/update/**")
+				.addPathPatterns("/board/insert/**")
+				.addPathPatterns("/board/delete/**")
+				.addPathPatterns("/board/update/**")
+				.addPathPatterns("/board/prefer/**")
+				.addPathPatterns("/reply/insert/**")
+				.addPathPatterns("/reply/delete/**")
+				.addPathPatterns("/reply/update/**")
+				.addPathPatterns("/qaboard/insert/**")
+				.addPathPatterns("/qaboard/delete/**")
+				.addPathPatterns("/qaboard/update/**")
+				.addPathPatterns("/users/list/**")
+				.addPathPatterns("/users/detail/**")
+				.addPathPatterns("/users/update/**")
+				.addPathPatterns("/users/delete/**")
+				.addPathPatterns("/**/insert.do")
+				.addPathPatterns("/**/update.do")
 				.excludePathPatterns("/users/signup.do")
 				.excludePathPatterns("/users/login.do")
 				.excludePathPatterns("/users/privacy")
 				.excludePathPatterns("/users/emailRejection")
 				.excludePathPatterns("/users/agreement")
-				.addPathPatterns("/qaboard/insert.do")
 				// 추가하거나 예외처리할 주소
 				.addPathPatterns("/ /**")		
 				.excludePathPatterns("/ / ")
@@ -35,11 +46,16 @@ public class InterceptorConfig implements WebMvcConfigurer{
 				registry.addInterceptor(adminInterceptor)
 				.addPathPatterns("/admin/**")
 				.addPathPatterns("/users/list/**")
+				.addPathPatterns("/notice/update/**")
+				.addPathPatterns("/notice/delete/**")
 				.addPathPatterns("/notice/insert.do")
-				.addPathPatterns("/notice/delete.do")
+				.addPathPatterns("/notice/update.do")
+				.addPathPatterns("/qaboard/replyUpdate/**")
+				.addPathPatterns("/qaboard/replyInsert.do")
+				.addPathPatterns("/qaboard/replyUpdate.do")
+				.addPathPatterns("/qaboard/replyDelete/**")
 				.addPathPatterns("/product/insert.do")
 				.addPathPatterns("/product/update.do")
 				.addPathPatterns("/product/delete.do");
-	}
-	
-}
+	} 
+} 
