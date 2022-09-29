@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<th:block th:if="${(session.loginUsers == null) || ((session.loginUsers?.userid != reply.users?.userid) && (session.loginUsers?.adminCk == 0))}">
+<th:block th:if="${(session.loginUsers?.userid == null) || ((session.loginUsers?.userid != reply.users?.userid) && (session.loginUsers?.adminCk == 0))}">
 <!--///////////////////////////////////// 로그인 안 된 유저 or 다른 유저가 보는 리플 ///////////////////////////////////////////////////////////////// -->	
 		<table class="mt-5 mb-3 table align-middle table-bordered">
 			<tbody>
@@ -13,7 +13,7 @@
 				<tr>
 					<th class="table-light">작성자</th>
 					<td>
-						<th:block th:text="${reply.users.userid}"></th:block>
+						<th:block th:text="${reply.users?.userid}"></th:block>
 					</td>
 				</tr>
 				<tr>
@@ -70,9 +70,9 @@
 			</tbody>
 		</table>
 		<div class="d-flex mb-2">
-			<th:block th:if="${session.loginUsers.userid != null}">
+			<th:block th:if="${session.loginUsers?.userid != null}">
 			    <a th:classappend="${
-			    		(reply.prefer_active!=null && reply.prefer_active)
+			    		(reply.prefer_active !=null && reply.prefer_active)
 		  						?'bi-hand-thumbs-up-fill' 
 		  						: 'bi-hand-thumbs-up'
 			    					}" 
@@ -81,7 +81,7 @@
 			    	th:href="|javascript:replyPreferHandler(${reply.reply_no}, ${reply.prefer_active}, 'good')|">
 			    </a>
 		 		<a th:classappend="${
-			    		(reply.prefer_active!=null && !reply.prefer_active)
+			    		(reply.prefer_active != null && !reply.prefer_active)
 		  						?'bi-hand-thumbs-down-fill' 
 		  						: 'bi-hand-thumbs-down'
 			    					}"
@@ -90,9 +90,9 @@
 			    	th:href="|javascript:replyPreferHandler(${reply.reply_no}, ${reply.prefer_active}, 'bad')|">
 			    </a>
 			</th:block>
-			<th:block th:unless="${session.loginUsers.userid != null}">
+			<th:block th:unless="${session.loginUsers?.userid != null}">
 			    <a th:classappend="${
-			    		(reply.prefer_active!=null && reply.prefer_active)
+			    		(reply.prefer_active != null && reply.prefer_active)
 		  						?'bi-hand-thumbs-up-fill' 
 		  						: 'bi-hand-thumbs-up'
 			    					}" 
@@ -100,7 +100,7 @@
 			    	th:text="${reply.good}">
 			    </a>
 		 		<a th:classappend="${
-			    		(reply.prefer_active!=null && !reply.prefer_active)
+			    		(reply.prefer_active != null && !reply.prefer_active)
 		  						?'bi-hand-thumbs-down-fill' 
 		  						: 'bi-hand-thumbs-down'
 			    					}"
@@ -194,7 +194,7 @@
 				</tbody>
 			</table>
   			<div class="d-flex mb-2 align-items-center">
-				<th:block th:if="${session.loginUsers.userid != reply.users.userid}">
+				<th:block th:if="${session.loginUsers?.userid != reply.users?.userid}">
 				    <a th:classappend="${
 				    		(reply.prefer_active != null && reply.prefer_active)
 			  						?'bi-hand-thumbs-up-fill' 
@@ -214,7 +214,7 @@
 				    	th:href="|javascript:replyPreferHandler(${reply.reply_no}, ${reply.prefer_active}, 'bad')|">
 				    </a>
 				</th:block>	
-				<th:block th:unless="${session.loginUsers.userid != reply.users.userid}">
+				<th:block th:unless="${session.loginUsers?.userid != reply.users?.userid}">
 				    <a th:classappend="${
 				    		(reply.prefer_active != null && reply.prefer_active)
 			  						?'bi-hand-thumbs-up-fill' 
