@@ -1,0 +1,30 @@
+#path {
+    display: flex;
+    margin: 20px 0;
+    min-width: 1200px;
+}
+#path ol {
+    margin-left: auto;      
+}
+#path ol li a {   
+    text-decoration: none;
+    vertical-align: middle;
+}
+#detail:hover{
+	cursor: Pointer;
+}
+html, body {
+	height: 100%;
+}
+#wrapper {	
+	min-height: 100%;
+	min-width: 1200px;
+    position: relative;
+    padding-bottom: 330px;
+}
+table th, table td {
+	text-align: center;
+}
+.footer {
+    bottom: 0;
+}

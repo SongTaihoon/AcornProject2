@@ -105,14 +105,14 @@ public class CategoryController {
 			  try {
 				  update = categoryMapper.updateOne(category);
 				  System.out.println(update);
-				  System.out.println(category.getCategoryName());
+				  System.out.println(category.getCategory_name());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			  if (update>0) {
 				   return "redirect:/category/list/1";
 			  } else {
-				  return "redirect:/category/detail/"+category.getCategoryId();
+				  return "redirect:/category/detail/"+category.getCategory_id();
 			  }
 			 
 		  }

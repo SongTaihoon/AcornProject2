@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:if="${(session.loginUsers?.userid == null) || ((session.loginUsers?.userid != reply.users?.userid) && (session.loginUsers?.adminCk == 0))}">
+<!--///////////////////////////////////// 로그인 안 된 유저 or 다른 유저가 보는 리플 ///////////////////////////////////////////////////////////////// -->	
+		<table class="mt-5 mb-3 table align-middle table-bordered">
+			<tbody>
+				<tr>
+					<th class="table-light">글 번호</th>
+					<td>
+						<th:block th:text="${reply.reply_no}"></th:block>
+					</td>
+				</tr>
+				<tr>
+					<th class="table-light">작성자</th>
+					<td>
+						<th:block th:text="${reply.users?.userid}"></th:block>
+					</td>
+				</tr>
+				<tr>
+					<th class="table-light">제목</th>
+					<td>
+						<th:block th:text="${reply.title}"></th:block>
+					</td>
+				</tr>
+				<tr>
+					<th class="table-light">사진</th>
+					<td>
+						<div class="mb-1" th:if="${reply.img_path != null}">
+							<!-- Button trigger modal -->
+							<button type="button" class="btn border-0" data-bs-toggle="modal"
+								style="padding: 0" 
+								th:data-bs-target="'#replyImgModal' + ${reply.reply_no}">
+								<img alt="댓글 이미지" class="img-thumbnail" style="height:100%; width:40%; object-fit: cover;"
+				      	 	   		 th:src="@{/img/{file}(file=${reply.img_path})}">
+							</button>			
+							<!-- Modal -->
+							<div class="modal fade"
+								th:id="'replyImgModal' + ${reply.reply_no}" >
+							  <div class="modal-dialog modal-dialog-centered modal-lg">
+							    <div class="modal-content" 
+							    style="background-color: rgba(255,255,255,0)">
+							      <!-- 
+							      <div class="modal-header" style="border: none">
+							        <button type="button" 
+							        class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							      </div>
+							       -->
+							      <div class="modal-body">
+			   						<img alt="댓글 이미지" class="img-thumbnail"
+										 th:src="@{/img/{file}(file=${reply.img_path})}">  
+							      </div>
+							    </div>
+							  </div>
+							</div>							
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th class="table-light">내용</th>
+					<td>
+						<th:block th:text="${reply.contents}"></th:block>	
+					</td>	
+				</tr>
+				<tr>
+					<th class="table-light">등록일</th>
+					<td>
+						<span th:text="${#dates.format(reply.post_time,'yyyy-MM-dd HH:mm:ss')}"></span>
+					</td>	
+				</tr>
+			</tbody>
+		</table>
+		<div class="d-flex mb-2">
+			<th:block th:if="${session.loginUsers?.userid != null}">
+			    <a th:classappend="${
+			    		(reply.prefer_active !=null && reply.prefer_active)
+		  						?'bi-hand-thumbs-up-fill' 
+		  						: 'bi-hand-thumbs-up'
+			    					}" 
+			    	class="btn btn-sm btn-outline-primary rounded-pill bi border-0" 
+			    	th:text="${reply.good}"
+			    	th:href="|javascript:replyPreferHandler(${reply.reply_no}, ${reply.prefer_active}, 'good')|">
+			    </a>
+		 		<a th:classappend="${
+			    		(reply.prefer_active != null && !reply.prefer_active)
+		  						?'bi-hand-thumbs-down-fill' 
+		  						: 'bi-hand-thumbs-down'
+			    					}"
+			    	class="btn btn-sm btn-outline-danger rounded-pill bi border-0" 
+			    	th:text="${reply.bad}" 
+			    	th:href="|javascript:replyPreferHandler(${reply.reply_no}, ${reply.prefer_active}, 'bad')|">
+			    </a>
+			</th:block>
+			<th:block th:unless="${session.loginUsers?.userid != null}">
+			    <a th:classappend="${
+			    		(reply.prefer_active != null && reply.prefer_active)
+		  						?'bi-hand-thumbs-up-fill' 
+		  						: 'bi-hand-thumbs-up'
+			    					}" 
+			    	class="btn btn-sm btn-outline-primary rounded-pill bi border-0" 
+			    	th:text="${reply.good}">
+			    </a>
+		 		<a th:classappend="${
+			    		(reply.prefer_active != null && !reply.prefer_active)
+		  						?'bi-hand-thumbs-down-fill' 
+		  						: 'bi-hand-thumbs-down'
+			    					}"
+			    	class="btn btn-sm btn-outline-danger rounded-pill bi border-0" 
+			    	th:text="${reply.bad}">
+			    </a>
+			</th:block>  	
+		</div>	
+		<!-- reply.prefer_active : 
+			(null - 아무도 좋아요를 안 누름 / insert)  
+			(true - 좋아요를 누름 / 좋아요 : delete, 싫어요 : update)  
+			(false - 싫어요를 누름 / 좋아요 : update, 싫어요 : delete)
+			reply_prefer을 reply_no + user_id 로 수정 삭제
+		-->
+    </th:block>
+  	<th:block th:if="${(session.loginUsers?.userid == reply.users?.userid) || (session.loginUsers?.adminCk == 1)}">
+  	<p style="font-size: 30px; margin-top: 8px;">댓글 수정/삭제</p>	
+<!--///////////////////////////////////// 로그인된 유저 or 관리자가 보는 리플 ///////////////////////////////////////////////////////////////// -->				
+  		<form action="/reply/update.do" method="post" enctype="multipart/form-data" style="width: 100%" name="replyUpdate">
+	  		<table class="mb-3 table align-middle table-bordered">
+				<tbody>
+					<tr>
+						<th class="table-light">글 번호</th>
+						<td>
+							<input name="reply_no" th:value="${reply.reply_no}" 
+								   type="text" class="form-control" readonly>
+						</td>
+					</tr>
+					<tr>
+						<th class="table-light">작성자</th>
+						<td>
+							<input name="users.userid" th:value="${reply.users?.userid}" 
+								   type="text" class="form-control" readonly>
+						</td>
+					</tr>
+					<tr>
+						<th class="table-light">제목</th>
+						<td>
+							<input name="title" type="text" class="form-control" th:value="${reply.title}" 
+								   onkeyup="noSpace(this);" onchange="noSpace(this);">
+						</td>
+					</tr>
+					<tr>
+						<th class="table-light">사진</th>
+						<td>
+							<div class="mb-1" th:if="${reply.img_path != null}">
+								<!-- Button trigger modal -->
+								<button type="button" class="btn border-0" data-bs-toggle="modal"
+									style="padding: 0" 
+									th:data-bs-target="'#replyImgModal' + ${reply.reply_no}">
+									<img alt="댓글 이미지" class="img-thumbnail" 
+									 style="height:100%; width:40%; object-fit: cover;"
+									th:src="@{/img/{file}(file=${reply.img_path})}">
+								</button>			
+								<!-- Modal -->
+								<div class="modal fade"
+									th:id="'replyImgModal' + ${reply.reply_no}" >
+								  <div class="modal-dialog modal-dialog-centered modal-lg">
+								    <div class="modal-content" 
+								    style="background-color: rgba(255,255,255,0)">
+								      <!-- 
+								      <div class="modal-header" style="border: none">
+								        <button type="button" 
+								        class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								      </div>
+								       -->
+								      <div class="modal-body">
+				   						<img alt="댓글 이미지" class="img-thumbnail"
+											 th:src="@{/img/{file}(file=${reply.img_path})}">  
+								      </div>
+								    </div>
+								  </div>
+								</div>							
+							</div>
+							<input name="imgFile" type="file" class="form-control form-control-lg">
+						</td>
+					</tr>
+					<tr>
+						<th class="table-light">내용</th>
+						<td>
+							<textarea name="contents" class="form-control" th:text="${reply.contents}" 
+									  onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
+						</td>	
+					</tr>
+					<tr>
+						<th class="table-light">등록일</th>
+						<td>
+							<input name="post_time" type="text" class="form-control" th:value="${#dates.format(reply.post_time,'yyyy-MM-dd HH:mm:ss')}" readonly>
+						</td>	
+					</tr>
+				</tbody>
+			</table>
+  			<div class="d-flex mb-2 align-items-center">
+				<th:block th:if="${session.loginUsers?.userid != reply.users?.userid}">
+				    <a th:classappend="${
+				    		(reply.prefer_active != null && reply.prefer_active)
+			  						?'bi-hand-thumbs-up-fill' 
+			  						: 'bi-hand-thumbs-up'
+				    					}"
+				    	class="btn btn-sm btn-outline-primary rounded-pill bi border-0" 
+				    	th:text="${reply.good}"
+				    	th:href="|javascript:replyPreferHandler(${reply.reply_no}, ${reply.prefer_active}, 'good')|">
+				    </a>
+			 		<a th:classappend="${
+				    		(reply.prefer_active != null && !reply.prefer_active)
+			  						?'bi-hand-thumbs-down-fill' 
+			  						: 'bi-hand-thumbs-down'
+				    					}"
+				    	class="btn btn-sm btn-outline-danger rounded-pill bi border-0" 
+				    	th:text="${reply.bad}" 
+				    	th:href="|javascript:replyPreferHandler(${reply.reply_no}, ${reply.prefer_active}, 'bad')|">
+				    </a>
+				</th:block>	
+				<th:block th:unless="${session.loginUsers?.userid != reply.users?.userid}">
+				    <a th:classappend="${
+				    		(reply.prefer_active != null && reply.prefer_active)
+			  						?'bi-hand-thumbs-up-fill' 
+			  						: 'bi-hand-thumbs-up'
+				    					}"
+				    	class="btn btn-sm btn-outline-primary rounded-pill bi border-0" 
+				    	th:text="${reply.good}">
+				    </a>
+			 		<a th:classappend="${
+				    		(reply.prefer_active != null && !reply.prefer_active)
+			  						?'bi-hand-thumbs-down-fill' 
+			  						: 'bi-hand-thumbs-down'
+				    					}"
+				    	class="btn btn-sm btn-outline-danger rounded-pill bi border-0" 
+				    	th:text="${reply.bad}">
+				    </a>
+				</th:block>						
+  				<div class="ms-auto">
+					<button type="reset" class="btn btn-lg btn-outline-warning">초기화</button>
+					<button type="submit" class="btn btn-lg btn-outline-success" style="margin-left: 8px; margin-right: 8px;">수정</button>
+					<a th:href="@{/reply/delete/{reply_no}(reply_no=${reply.reply_no})}"
+						class="btn btn-lg btn-outline-danger">삭제</a>
+					<input type="hidden" name="board_no" th:value="${reply.board_no}">
+					<input type="hidden" name="img_path" th:value="${reply.img_path}">
+				</div>
+			</div>
+  		</form>
+  	</th:block>
+<script>
+//값이 없을 때 submit 불가
+var replyUpdate = document.forms.replyUpdate;
+var title = replyUpdate.title;
+var contents = replyUpdate.contents;
+document.forms.replyUpdate.addEventListener("submit", (event) => {
+	if(!(title.value) || !(contents.value)) {
+		
+		event.preventDefault();		
+	}
+});
+function noSpace(obj) { // 공백사용못하게
+    var str = /\s/;  // 공백체크
+    if(str.exec(obj.value.trim)) { //공백 체크
+        //alert("해당 항목에는 첫 글자 공백을 사용할수 없습니다.");
+        obj.focus();
+        obj.value = obj.value.replace(/^ +/,''); // 공백제거
+        return false;
+    }
+}
+</script>
+</html>

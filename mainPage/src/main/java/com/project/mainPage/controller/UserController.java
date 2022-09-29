@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.project.mainPage.dto.Criteria;
 import com.project.mainPage.dto.EmailCheck;
@@ -21,6 +22,7 @@ import com.project.mainPage.dto.Pagination;
 import com.project.mainPage.dto.PhoneCheck;
 import com.project.mainPage.dto.UserDto;
 import com.project.mainPage.mapper.UserMapper;
+import com.project.mainPage.service.UserService;
 
 
 @Controller
@@ -28,6 +30,9 @@ import com.project.mainPage.mapper.UserMapper;
 public class UserController {
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private UserService userService;
 	
 	//회원 리스트
 	@GetMapping("/list/{page}")
@@ -64,18 +69,23 @@ public class UserController {
 			
 			if(user != null) {
 				session.setAttribute("loginUser", user);
+				Object redirectPage = session.getAttribute("redirectPage");
+				session.removeAttribute("redirectPage");
 				System.out.println("로그인 성공! " + user);
-				return "redirect:/";
+				if(redirectPage != null) {
+					return "redirect:" + redirectPage;
+				} else {
+					return "redirect:/";
+				}
 			}else {
-				return "redirect:/user/login.do";				
+				return "redirect:/user/login.do";					
 			}
 	}
 	
-	//회원 로그아웃
+//	회원 로그아웃
 	@GetMapping("/logout.do")
 	public String logout(HttpSession session) {
-		session.removeAttribute("loginUser");
-		System.out.println("로그아웃 성공");
+		session.invalidate();
 		return "redirect:/";
 	}
 	
@@ -92,11 +102,13 @@ public class UserController {
 			e.printStackTrace();
 		}
 		if(insert>0) {
-			return "redirect:/";
+			System.out.println("회원가입 성공! : " + insert);
+			return "redirect:/user/list/1";
 		}else {
 			return "redirect:/user/signup.do";
 		}
 	}
+	
 	
 	//회원 상세 페이지
 	@GetMapping("/detail/{userId}")
@@ -108,6 +120,7 @@ public class UserController {
 		Object loginUsers_obj = session.getAttribute("loginUser");
 		if(user.getUser_id().equals(((UserDto)loginUsers_obj).getUser_id()) || (((UserDto)loginUsers_obj).getAdminCk() == 1)) {
 			model.addAttribute("user", user);
+			System.out.println(user);
 			return "user/detail";
 		}else {
 			return "redirect:/user/login.do";			
@@ -131,26 +144,27 @@ public class UserController {
 		}	
 	}
 	
-	//회원 정보 수정
+//	회원 정보 수정
 	@PostMapping("/update.do")
 	public String update(UserDto user) {
-		int update=0;
+		int update = 0;
 		try {
-			update=userMapper.updateOne(user);
+			update = userMapper.updateOne(user);
 			System.out.println(user);
 			System.out.println(update);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if(update>0) {
-			System.out.println("수정 성공 : "+ user);
-			return "redirect:/user/list/1";
+		if(update > 0) {
+			System.out.println("회원 수정 성공! : " + update);
+			return "redirect:/user/detail/" + user.getUser_id();
 		}else {
-			return "redirect:/user/detail/"+user.getUser_id();
+			System.out.println("회원 수정 실패! : " + update);
+			return "redirect:/user/update/"+ user.getUser_id();
 		}
 	}
 	
-	//회원가입 중복 체크 (id)
+//	회원가입 중복 체크 (id)
 	@GetMapping("/idCheck/{userId}")
 	//ResponseBody가 들어가야 ajax가 작동한다
 	@ResponseBody public IdCheck idCheck(@PathVariable String userId) {
@@ -163,7 +177,7 @@ public class UserController {
 		return idCheck;
 	}
 	
-	//회원가입 중복 체크 (email)
+//	회원가입 중복 체크 (email)
 	@GetMapping("/emailCheck/{userEmail}")
 	@ResponseBody public EmailCheck emailCheck(@PathVariable String userEmail) {
 		EmailCheck emailCheck = new EmailCheck();
@@ -187,16 +201,35 @@ public class UserController {
 		return phoneCheck;	
 	}
 	
-	//회원 삭제
+//	회원 삭제
 	@GetMapping("/delete/{userId}")
-	public String delete(@PathVariable String userId) {
-		int delete=0;
-		delete=userMapper.deleteOne(userId);
-		if(delete>0) {
-			System.out.println("삭제성공하였습니다.");
-			return "redirect:/user/list/1";
-		}else {
-			return "redirect:/user/detail/"+userId;
+	public String delete(
+			@PathVariable String userId,
+			@SessionAttribute(required = false) UserDto loginUser, 
+			HttpSession session) {
+		int delete = 0;
+		if(loginUser.getAdminCk() == 1 && !loginUser.getUser_id().equals(userId)) { // 관리자가 본인이 아닌 다른 회원을 삭제 성공 시 로그아웃되지 않고 회원 리스트로 이동
+			delete = userService.removeUser(userId);
+			if(delete > 0) {
+				System.out.println("회원 삭제 성공!(관리자) : " + delete);
+				return "redirect:/user/list/1";
+			} else {
+				System.out.println("회원 삭제 실패!(관리자) : " + delete);
+				return "redirect:/user/update/" + userId;
+			}
+		} else if(loginUser.getAdminCk() == 0 && loginUser.getUser_id().equals(userId)) { // 일반 회원이 본인을 삭제 성공 시 로그아웃되면서 메인 화면으로 이동
+			delete = userService.removeUser(userId);
+			if(delete > 0) {
+				System.out.println("회원 삭제 성공!(일반 회원) : " + delete);
+				session.invalidate(); // 세션 강제 만료
+				return "redirect:/";
+			} else {
+				System.out.println("회원 삭제 실패!(일반 회원) : " + delete);
+				return "redirect:/user/update/" + userId;
+			}
+		} else { // 관리자는 본인을 삭제할 수 없음
+			System.out.println("회원 삭제 불가");
+			return "redirect:/user/update/" + userId;
 		}
 	} 
 	
@@ -224,11 +257,14 @@ public class UserController {
 		return "/user/search";
 	}
 	
-	//푸터 연결용
+
+//	푸터 연결용
 	@GetMapping("/agreement")
 	public void agreement() {};
+	
 	@GetMapping("/privacy")
 	public void privacy() {};
+
 	@GetMapping("/emailRejection")
 	public void emailRejection() {};	
 }

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>문의하기</title>
+<link rel="stylesheet" href="/public/css/board/insert.css">
+</head>
+<body>
+	<header th:insert="/NewHeader"></header>
+	<div id="wrapper">
+	  <main class="container-xl">
+	    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" id="path">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item">
+		    	<a href="/">홈</a>
+		    </li>
+		    <li class="breadcrumb-item">
+		    	<a href="#">고객 센터</a>
+		    </li>
+		    <li class="breadcrumb-item" aria-current="page">
+		    	<a href="/qaboard/list/1" class="breadcrumb-item active">고객 문의</a>
+		    </li>
+		  </ol>
+		</nav>
+		<h1 class="pb-4 d-flex justify-content-between align-items-center" 
+		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
+		    <span style="font-size: 35px;">문의하기</span>
+	    </h1>	
+		<form action="/qaboard/insert.do" method="post" enctype="multipart/form-data" name="qaInsertForm">
+			<table class="mt-5 mb-5 table align-middle table-bordered">
+				<tbody>
+					<tr>
+						<th class="table-light">작성자</th>
+						<td>
+							<input name="user.user_id" class="form-control" id="userId" th:value="${session.loginUser.user_id}" readonly>
+						</td>
+					</tr>
+					<tr>
+						<th class="table-light">유형</th>
+						<td>
+							<select name="qaBoardKind" class="form-select" id="qaBoardKind">
+								<option value="관광지">관광지</option>
+								<option value="음식">음식</option>
+								<option value="숙박">숙박</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th class="table-light">제목</th>
+						<td>
+							<input name="qaBoardTitle" class="form-control" id="qaBoardTitle" onkeyup="noSpace(this);" onchange="noSpace(this);">
+						</td>
+					</tr>
+					<tr>
+						<th class="table-light">내용</th>
+						<td>
+							<textarea name="qaBoardContents" class="form-control" id="qaBoardContents" onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
+						</td>	
+					</tr>
+				</tbody>
+			</table>
+			<div class="d-flex">
+				<div class="ms-auto">
+					<button class="btn btn-outline-primary btn-lg" type="submit" style="margin-right: 8px;">등록</button>
+					<a class="btn btn-outline-dark btn-lg" href="/qaboard/list/1">목록</a>
+				</div>
+			</div>
+		</form>
+	  </main>
+	<footer class="footer" th:insert="/NewFooter"></footer>
+	</div>
+</body>
+<script>
+function noSpace(obj) { // 공백사용못하게
+    var str = /\s/;  // 공백체크
+    if(str.exec(obj.value.trim)) { //공백 체크
+        //alert("해당 항목에는 첫 글자 공백을 사용할수 없습니다.");
+        obj.focus();
+        obj.value = obj.value.replace(/^ +/,''); // 공백제거
+        return false;
+    }
+}
+const qaInsertForm = document.forms.qaInsertForm;
+const qaBoardTitle = qaInsertForm.qaBoardTitle;
+const qaBoardContents = qaInsertForm.qaBoardContents;
+qaInsertForm.addEventListener("submit", (event) => {
+	if(!qaBoardTitle.value || !qaBoardContents.value) {
+		event.preventDefault();		
+	}
+});
+</script>
+</html>

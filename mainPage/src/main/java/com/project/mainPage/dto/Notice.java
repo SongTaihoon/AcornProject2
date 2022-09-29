@@ -7,17 +7,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 /*
- * mysql> desc notice;
+ *  desc notice;
 +-----------+--------------+------+-----+-------------------+-------------------+
 | Field     | Type         | Null | Key | Default           | Extra             |
 +-----------+--------------+------+-----+-------------------+-------------------+
 | notice_no | int          | NO   | PRI | NULL              | auto_increment    |
 | title     | varchar(255) | NO   |     | NULL              |                   |
-| contents  | varchar(255) | YES  |     |                   |                   |
+| contents  | text         | NO   |     | NULL              |                   |
 | post_time | datetime     | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
-| userid    | varchar(255) | NO   | MUL | NULL              |                   |
-| good      | int          | NO   |     | 0                 |                   |
-| bad       | int          | NO   |     | 0                 |                   |
+| user_id   | varchar(255) | NO   | MUL | NULL              |                   |
 | views     | int          | NO   |     | 0                 |                   |
 +-----------+--------------+------+-----+-------------------+-------------------+
  * */
@@ -28,7 +26,7 @@ public class Notice {
 	private String contents;
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date post_time;
-	private UserDto users;
+	private UserDto user;
 	private int views;
 	private List<NoticeImg> noticeImgs;
 	private int notreplys_size;
