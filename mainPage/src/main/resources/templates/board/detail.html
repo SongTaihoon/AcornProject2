@@ -71,15 +71,41 @@
 		    <tr>
 		      <th style="width: 100px; border-left: none;" class="bg-light">작성자</th>
 		      <td style="width: 800px;" th:text="${board.user?.user_id}"></td>
-		      <td style="width: 400px; border-right: none;" rowspan="5">
+		      <td style="width: 400px; border-right: none;" rowspan="6">
 		      	<div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel" 
 		      		style="width: 400px; height: 400px;">
 				  <div class="carousel-inner">
 				  	<th:block th:each="boardImg : ${board.boardImgs}">
 				  		<div class="carousel-item active">
-				  			<img th:src="@{/img/{fileName}(fileName=${boardImg.img_path})}" alt="후기 이미지" 
-				  				style="width: 400px; height: 400px;">
+					      	<div class="mb-1" th:if="${boardImg != null}">
+								<!-- Button trigger modal -->
+								<button type="button" class="btn border-0" data-bs-toggle="modal"
+									style="padding: 0" 
+									th:data-bs-target="'#boardImgModal' + ${boardImg.board_img_no}">
+									<img th:src="@{/img/{fileName}(fileName=${boardImg.img_path})}" alt="후기 이미지" 
+				  						 style="width: 400px; height: 400px;">
+								</button>			
+							</div>
 				  		</div>
+						<!-- Modal -->
+						<div class="modal fade"
+							th:id="'boardImgModal' + ${boardImg.board_img_no}" >
+						  <div class="modal-dialog modal-dialog-centered modal-lg">
+						    <div class="modal-content" 
+						    style="background-color: rgba(255,255,255,0)">
+						      <!-- 
+						      <div class="modal-header" style="border: none">
+						        <button type="button" 
+						        class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						      </div>
+						       -->
+						      <div class="modal-body">
+		   						<img th:src="@{/img/{fileName}(fileName=${boardImg.img_path})}" alt="후기 이미지"
+		   						width="760"> 
+						      </div>
+						    </div>
+						  </div>
+						</div>							
 				  	</th:block>
 				  </div>
 				  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -95,14 +121,26 @@
 		    </tr>
 		    <tr>
 		      <th style="width: 100px; border-left: none;" class="bg-light">카테고리</th>
-		      <td style="width: 600px;" th:text="${board.category.category_name}"></td>
+		      <th:block th:if="${board.category.category_id == '1'}">
+				  <td style="width: 600px;">관광지</td> 
+			  </th:block>
+			  <th:block th:if="${board.category.category_id == '2'}">
+				  <td style="width: 600px;">숙박</td> 
+			  </th:block>
+			  <th:block th:if="${board.category.category_id == '3'}">
+				  <td style="width: 600px;">맛집</td> 
+			  </th:block>
 		    </tr>
 		    <tr>
 		      <th style="width: 100px; border-left: none;" class="bg-light">장소명</th>
 		      <td style="width: 600px;" th:text="${board.place_name}"></td>
 		    </tr>
 		    <tr>
-		      <th style="width: 100px; border-left: none;" class="bg-light">별점</th>
+		      <th style="width: 100px; border-left: none;" class="bg-light">주소</th>
+		      <td style="width: 600px;" th:text="${board.place_name}"></td>
+		    </tr>
+		    <tr>
+		      <th style="width: 100px; border-left: none;" class="bg-light">평점</th>
 		      <td style="width: 600px;" th:text="${board.rating}"></td>
 		    </tr>
 		    <tr>

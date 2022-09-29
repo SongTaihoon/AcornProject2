@@ -32,25 +32,23 @@
 					<tr>
 						<th class="table-light">작성자</th>
 						<td>
-							<input name="user.user_id" class="form-control" id="userId" th:value="${session.loginUser.user_id}" readonly>
+							<input name="user.user_id" class="form-control" id="user.user_id" th:value="${session.loginUser.user_id}" readonly>
 						</td>
 					</tr>
 					<tr>
 						<th class="table-light">카테고리</th>
 						<td>
-							<select name="category" class="form-select" id="category">
-								<option></option>
-								<option></option>
-								<option></option>
-								<option></option>
-								<option></option>
+							<select name="category_id" class="form-select" id="category_id">
+									<option value="1">관광지</option>
+									<option value="2">숙박</option>
+									<option value="3">맛집</option>
 							</select>
 						</td>
 					</tr>
 					<tr>
 						<th class="table-light">장소명</th>
 						<td>
-							<input name="place" class="form-control" id="place" onkeyup="noSpace(this);" onchange="noSpace(this);">
+							<input name="place_name" class="form-control" id="place_name" onkeyup="noSpace(this);" onchange="noSpace(this);">
 						</td>
 					</tr>
 					<tr>
@@ -97,6 +95,7 @@
 			</table>
 			<div class="d-flex">
 				<div class="ms-auto">
+					<button class="btn btn-outline-warning btn-lg" type="reset" style="margin-right: 8px;">초기화</button>
 					<button class="btn btn-outline-primary btn-lg" type="submit" style="margin-right: 8px;">등록</button>
 					<a class="btn btn-outline-dark btn-lg" href="/board/list/1">목록</a>
 				</div>
@@ -120,8 +119,9 @@ function noSpace(obj) { // 공백사용못하게
 var boardInsertForm = document.forms.boardInsertForm;
 var title = boardInsertForm.title;
 var contents = boardInsertForm.contents;
+var place = boardInsertForm["place_name"];
 boardInsertForm.addEventListener("submit", (event) => {
-	if(!title.value || !contents.value) {
+	if(!title.value || !contents.value || !place.value) {
 		event.preventDefault();		
 	}
 });

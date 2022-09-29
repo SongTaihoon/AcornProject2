@@ -127,7 +127,8 @@ public class BoardController {
 		Board board = null;		
 		BoardPrefer boardPrefer = null;  // 로그인이 안 되면 null
 		
-		System.out.println(replyPage);
+		//System.out.println(replyPage);
+		System.out.println(board);
 		
 		int row = 5;
 		int startRow = (replyPage - 1) * row;
@@ -200,8 +201,6 @@ public class BoardController {
 				@RequestParam(name = "imgFile", required = false) MultipartFile [] imgFiles,
 				@SessionAttribute(required = false) UserDto loginUser,
 				HttpSession session) {
-		System.out.println(board);
-		System.out.println(savePath);
 		int insert = 0;
 		try {
 			//이미지 저장 및 처리
@@ -210,7 +209,6 @@ public class BoardController {
 				// imgFiles가 null이면 여기서 오류 발생!! 
 				for(MultipartFile imgFile : imgFiles) {		
 					String type = imgFile.getContentType();
-					System.out.println(imgFile.getContentType());
 					if(type.split("/")[0].equals("image")) {
 						// 새로운 이미지 등록 
 						String newFileName = "board_" + System.nanoTime() + "." + type.split("/")[1]; // {"image", "jpeg"}
@@ -227,6 +225,7 @@ public class BoardController {
 				}
 			}
 			insert = boardService.registBoard(board); // DB에 후기 등록
+			System.out.println(board);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -293,7 +292,6 @@ public class BoardController {
  			HttpSession session
 			) { 
 		int update = 0; 
-		System.out.println(board);
 		if((loginUser != null && loginUser.getUser_id().equals(board.getUser().getUser_id())) || ((loginUser).getAdminCk() == 1)) {
 			try {
 				int boardImgCount = boardImgMapper.selectCountBoardNo(board.getBoard_no());  // baordImg 등록된 개수 
@@ -303,7 +301,6 @@ public class BoardController {
 					List<BoardImg> boardImgs = new ArrayList<BoardImg>();
 					for(MultipartFile imgFile : imgFiles) { 
 						String[] types = imgFile.getContentType().split("/");
-						System.out.println("types : " + types);
 						if(types[0].equals("image")) {
 							// 새로운 이미지 등록 
 							String newFileName = "board_" + System.nanoTime() + "." + types[1];
@@ -333,7 +330,7 @@ public class BoardController {
 				System.out.println("후기 수정 성공! : " + update);
 				return "redirect:/board/update/" + board.getBoard_no();
 			}				
-		}else{
+		} else{ 
 			return "redirect:/user/login.do";
 		}     
 	}

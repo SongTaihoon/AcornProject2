@@ -60,59 +60,59 @@
 		    <tr>
 		      <th style="width: 100px;" class="bg-light align-middle">작성자</th>
 		      <td style="width: 900px;">
-		      	<input name="users.userid" class="form-control" id="userId" th:value="${board.users.userid}" readonly>
+		      	<input name="user.user_id" class="form-control" id="user.user_id" th:value="${board.user?.user_id}" readonly>
 		      </td>
 		    </tr>
 		    <tr>
 		      <th style="width: 100px;" class="bg-light align-middle">카테고리</th>
 		      <td style="width: 600px;">
-		      	<select name="category" class="form-select" id="category">
-					<option value="관광지">관광지</option>
-					<option value="음식">음식</option>
-					<option value="숙박">숙박</option>
+		      	<select name="category_id" class="form-select" id="category_id" th:value="${board.category.category_id}">
+					<option value="1" th:selected="${board.category.category_id} == '1'">관광지</option>
+					<option value="2" th:selected="${board.category.category_id} == '2'">숙박</option>
+					<option value="3" th:selected="${board.category.category_id} == '3'">맛집</option>
 				</select>
 		      </td>
 		    </tr>
 		    <tr>
 		      <th style="width: 100px;" class="bg-light align-middle">장소명</th>
 		      <td style="width: 600px;">
-		      	<input name="userId" class="form-control" id="userId" th:value="${session.loginUsers.userid}" onkeyup="noSpace(this)" onchange="noSpace(this)">
+		      	<input name="place_name" class="form-control" id="place_name" th:value="${board.place_name}" onkeyup="noSpace(this)" onchange="noSpace(this)">
 		      </td>
 		    </tr>
 		    <tr>
-		      <th style="width: 100px;" class="bg-light align-middle">별점</th>
+		      <th style="width: 100px;" class="bg-light align-middle">평점</th>
 		      <td style="width: 600px;">
-		      	<select name="rating" class="form-select" id="rating">
-					<option value="0.0">0.0</option>
-					<option value="0.5">0.5</option>
-					<option value="1.0">1.0</option>
-					<option value="1.5">1.5</option>
-					<option value="2.0">2.0</option>
-					<option value="2.5">2.5</option>
-					<option value="3.0">3.0</option>
-					<option value="3.5">3.5</option>
-					<option value="4.0">4.0</option>
-					<option value="4.5">4.5</option>
-					<option value="5.0">5.0</option>
+		      	<select name="rating" class="form-select" id="rating" th:value="${board.rating}">
+					<option value="0.0" th:selected="${board.rating} == '0.0'">0.0</option>
+					<option value="0.5" th:selected="${board.rating} == '0.5'">0.5</option>
+					<option value="1.0" th:selected="${board.rating} == '1.0'">1.0</option>
+					<option value="1.5" th:selected="${board.rating} == '1.5'">1.5</option>
+					<option value="2.0" th:selected="${board.rating} == '2.0'">2.0</option>
+					<option value="2.5" th:selected="${board.rating} == '2.5'">2.5</option>
+					<option value="3.0" th:selected="${board.rating} == '3.0'">3.0</option>
+					<option value="3.5" th:selected="${board.rating} == '3.5'">3.5</option>
+					<option value="4.0" th:selected="${board.rating} == '4.0'">4.0</option>
+					<option value="4.5" th:selected="${board.rating} == '4.5'">4.5</option>
+					<option value="5.0" th:selected="${board.rating} == '5.0'">5.0</option>
 				</select>
 		      </td>
 		    </tr>
 		    <tr>
 		    	<th style="width: 100px;" class="bg-light align-middle">사진</th>
 		    	<td>
-					<div>
+					<div class="mb-3">
 						<p>삭제할 사진 선택</p>
 						<th:block th:each="boardImg : ${board.boardImgs}">
 							<label>
 								<input name="boardImgNo" type="checkbox"
 									   class="form-check-input" th:value="${boardImg.board_img_no}">
-								<img alt="게시글 이미지" 
+								<img alt="후기 이미지" 
 									 th:src="@{/img/{file}(file=${boardImg.img_path})}" 
 									 class="img-thumbnail" width="200">
 							</label>
 						</th:block>
 					</div>
-				    <div class="mb-3">
+				    <div>
 						<input name="imgFile" class="form-control mb-1 form-control-lg" type="file">
 						<input name="imgFile" class="form-control mb-1 form-control-lg" type="file">
 						<input name="imgFile" class="form-control mb-1 form-control-lg" type="file">
@@ -138,14 +138,14 @@
 			<div class="ms-auto">
 				<button class="btn btn-outline-warning btn-lg" type="reset">초기화</button>
 				<button class="btn btn-outline-success btn-lg" type="submit" style="margin-left: 8px; margin-right: 8px;">수정</button>
-				<th:block th:if="${session.loginUsers?.adminCk == 1}">
-					<a th:href="@{/board/delete/{boardNo}/{userId}(boardNo=${board.board_no}, userId=${session.loginUsers.userid})}" 
+				<th:block th:if="${session.loginUser?.adminCk == 1}">
+					<a th:href="@{/board/delete/{boardNo}/{userId}(boardNo=${board.board_no}, userId=${session.loginUser?.user_id})}" 
 					   class="btn btn-outline-danger btn-lg" style="margin-right: 8px;">
 						삭제
 					</a>
 				</th:block>
-				<th:block th:unless="${session.loginUsers?.adminCk == 1}">
-					<a th:href="@{/board/delete/{boardNo}/{userId}(boardNo=${board.board_no}, userId=${board.users.userid})}" 
+				<th:block th:unless="${session.loginUser?.adminCk == 1}">
+					<a th:href="@{/board/delete/{boardNo}/{userId}(boardNo=${board.board_no}, userId=${board.user?.user_id})}" 
 					   class="btn btn-outline-danger btn-lg" style="margin-right: 8px;">
 						삭제
 					</a>
@@ -173,8 +173,9 @@ function noSpace(obj) { // 공백사용못하게
 var boardUpdateForm = document.forms.boardUpdateForm;
 var title = boardUpdateForm.title;
 var contents = boardUpdateForm.contents;
+var place = boardUpdateForm["place_name"];
 boardUpdateForm.addEventListener("submit", (event) => {
-	if(!title.value || !contents.value) {
+	if(!title.value || !contents.value || !place.value) {
 		event.preventDefault();		
 	}
 });
