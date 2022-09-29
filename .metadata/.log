@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 !ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-09-29 12:16:05.250
 !MESSAGE Entering DelegatingStreamConnectionProvider()
@@ -472,3 +473,8 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-09-29 12:42:21.099
 !MESSAGE executing callback sts4.classpath.klESmMjc SUCCESS [done]
+=======
+>>>>>>> aa238bf22edc9702220a661b8e3afd7738421cd9
+
+!ENTRY org.eclipse.ui 2 2 2022-09-29 12:45:04.970
+!MESSAGE Invalid property category path: org.springframework.ide.eclipse.beans.ui.properties.ProjectPropertyPage (bundle: org.springframework.ide.eclipse.xml.namespaces, propertyPage: org.springframework.ide.eclipse.beans.ui.namespaces.projectPropertyPage)
