@@ -60,7 +60,7 @@
 		    <tr>
 		      <th style="width: 100px;" class="bg-light align-middle">작성자</th>
 		      <td style="width: 900px;">
-		      	<input name="users.userid" class="form-control" id="userId" th:value="${board.users.userid}" readonly>
+		      	<input name="user.user_id" class="form-control" id="userId" th:value="${board.user.user_id}" readonly>
 		      </td>
 		    </tr>
 		    <tr>
@@ -76,7 +76,7 @@
 		    <tr>
 		      <th style="width: 100px;" class="bg-light align-middle">장소명</th>
 		      <td style="width: 600px;">
-		      	<input name="userId" class="form-control" id="userId" th:value="${session.loginUsers.userid}" onkeyup="noSpace(this)" onchange="noSpace(this)">
+		      	<input name="userId" class="form-control" id="userId" th:value="${session.loginUser.user_id}" onkeyup="noSpace(this)" onchange="noSpace(this)">
 		      </td>
 		    </tr>
 		    <tr>
@@ -139,13 +139,13 @@
 				<button class="btn btn-outline-warning btn-lg" type="reset">초기화</button>
 				<button class="btn btn-outline-success btn-lg" type="submit" style="margin-left: 8px; margin-right: 8px;">수정</button>
 				<th:block th:if="${session.loginUsers?.adminCk == 1}">
-					<a th:href="@{/board/delete/{boardNo}/{userId}(boardNo=${board.board_no}, userId=${session.loginUsers.userid})}" 
+					<a th:href="@{/board/delete/{boardNo}/{userId}(boardNo=${board.board_no}, userId=${session.loginUser.user_id})}" 
 					   class="btn btn-outline-danger btn-lg" style="margin-right: 8px;">
 						삭제
 					</a>
 				</th:block>
 				<th:block th:unless="${session.loginUsers?.adminCk == 1}">
-					<a th:href="@{/board/delete/{boardNo}/{userId}(boardNo=${board.board_no}, userId=${board.users.userid})}" 
+					<a th:href="@{/board/delete/{boardNo}/{userId}(boardNo=${board.board_no}, userId=${board.user.user_id})}" 
 					   class="btn btn-outline-danger btn-lg" style="margin-right: 8px;">
 						삭제
 					</a>

@@ -1,0 +1,18 @@
+@charset "EUC-KR";
+
+/*footer css 하단고정  */
+html, body {
+    height: 100%
+}
+#wrapper {
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 325px;
+}
+.footer {
+    bottom: 0;
+}
+
+.container{
+	border: 2px solid;
+}

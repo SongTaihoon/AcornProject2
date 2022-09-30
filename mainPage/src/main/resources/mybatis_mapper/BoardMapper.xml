@@ -4,14 +4,20 @@
 <mapper namespace="com.project.mainPage.mapper.BoardMapper">
 	<resultMap type="Board" id="BoardMap">
 		<id column="board_no" property="board_no"/>
+		<result column="place_name" property="place_name"/>
+		<result column="rating" property="rating"/>
 		<result column="title" property="title"/>
 		<result column="contents" property="contents"/>
 		<result column="post_time" property="post_time"/>
+		<result column="address1" property="address1"/>
+		<result column="address2" property="address2"/>
+		<result column="address3" property="address3"/>
 		<result column="prefer_good" property="good"/>
 		<result column="prefer_bad" property="bad"/>
 		<result column="prefer_active" property="prefer_active"/>
 		<result column="replys_size" property="replys_size"/>
 		<result column="views" property="views"/>
+
 		<!-- Board : UsersDto = N : 1   -->	
 		<association property="user" javaType="UserDto" foreignColumn="user_id">
 			<id column="user_id" property="user_id"/>
@@ -185,8 +191,8 @@
 	</select>
 	<insert id="insertOne" parameterType="Board"
 	 useGeneratedKeys="true" keyProperty="board_no">
-		INSERT INTO BOARD (title, contents, user_id)
-			VALUES (#{title}, #{contents}, #{user.user_id})
+		INSERT INTO BOARD (place_name,rating,title, contents, user_id)
+			VALUES (#{place_name},#{rating},#{title}, #{contents}, #{user.user_id})
 	</insert>
 	<update id="updateOne" parameterType="Board">
 		UPDATE BOARD SET 
