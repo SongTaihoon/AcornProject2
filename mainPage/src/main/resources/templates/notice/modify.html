@@ -25,9 +25,15 @@
 	<h1 class="pb-4 d-flex justify-content-between align-items-center" 
 	    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
 	    <span style="font-size: 35px;">공지 사항</span>
-    </h1>	
+    </h1>
+    <div class="mt-3 d-flex">
+		<i class="bi bi-eye" style="margin-right: 4px;"
+			data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="조회수">
+			<span th:text="${notice.views}"></span>
+		</i>
+    </div>	
     <form action="/notice/update.do" method="post" name="noticeUpdateForm">
-		<table class="mt-5 mb-5 table align-middle table-bordered">
+		<table class="mt-3 mb-5 table align-middle table-bordered">
 			<tbody>
 				<tr>
 					<th class="table-light" style="border-left: none;">글 번호</th>
@@ -38,7 +44,7 @@
 				<tr>
 					<th class="table-light" style="border-left: none;">작성자</th>
 					<td>
-						<input name="users.userid" class="form-control" id="userId" th:value="${notice.user.user_id}" readonly>
+						<input name="user.userid" class="form-control" id="userId" th:value="${notice.user?.user_id}" readonly>
 					</td>
 				</tr>
 				<tr>
@@ -61,19 +67,14 @@
 						<input name="post_time" class="form-control" id="post_time" th:value="${#dates.format(notice.post_time,'yyyy-MM-dd HH:mm:ss')}" readonly>
 					</td>
 				</tr>
-				<tr>
-					<th class="table-light" style="border-left: none;">조회수</th>
-					<td>
-						<input name="views" class="form-control" id="views" th:value="${notice.views}" readonly>
-					</td>
-				</tr>
 			</tbody>
 		</table>
 		<div class="d-flex">
 			<div class="ms-auto">
+				<button class="btn btn-outline-warning btn-lg" type="reset" style="margin-right: 8px;">초기화</button>
 				<button class="btn btn-outline-success btn-lg" type="submit" style="margin-right: 8px;">수정</button>
-				<a th:href="@{/notice/delete/{noticeNo}/{userId}(noticeNo=${noticeNo}, userId=${notice.user.user_id})}" class="btn btn-outline-danger btn-lg" style="margin-right: 8px;">삭제</a>
-				<a th:href="@{/notice/detail/{noticeNo}(noticeNo=${notice_no})}" class="btn btn-outline-dark btn-lg">취소</a>
+				<a th:href="@{/notice/delete/{noticeNo}/{userId}(noticeNo=${noticeNo}, userId=${notice.user?.user_id})}" class="btn btn-outline-danger btn-lg" style="margin-right: 8px;">삭제</a>
+				<a th:href="@{/notice/detail/{noticeNo}(noticeNo=${noticeNo})}" class="btn btn-outline-dark btn-lg">취소</a>
 			</div>		
 		</div>
     </form>

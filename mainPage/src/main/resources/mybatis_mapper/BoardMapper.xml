@@ -15,9 +15,7 @@
 		<result column="prefer_good" property="good"/>
 		<result column="prefer_bad" property="bad"/>
 		<result column="prefer_active" property="prefer_active"/>
-		<result column="replys_size" property="replys_size"/>
 		<result column="views" property="views"/>
-		<!-- Board : UsersDto = N : 1   -->	
 		<association property="user" javaType="UserDto" foreignColumn="user_id">
 			<id column="user_id" property="user_id"/>
 			<result column="user_name" property="user_name"/>
@@ -27,7 +25,6 @@
 		<association property="category" javaType="Category" foreignColumn="category_id">
 				<id column="category_id" property="category_id"/>
 		</association>
-		<!-- Board : Reply = 1 : N  -->
 		<collection property="replys" javaType="java.util.ArrayList" ofType="Reply">
 			<id column="reply_no" property="reply_no"/>
 			<result column="reply_title" property="title"/>
@@ -36,10 +33,9 @@
 			<result column="reply_img_path" property="img_path"/>
 			<result column="reply_good" property="good"/>
 			<result column="reply_bad" property="bad"/>
-			<!-- Reply : UsersDto = N : 1 -->
 				<association property="user" javaType="UserDto">
 					<id column="reply_user_id" property="user_id"/>
- 					<result column="reply_user_name" property="user_name"/>
+						<result column="reply_user_name" property="user_name"/>
 				</association>
 				<collection property="good_prefers" ofType="ReplyPrefer" javaType="java.util.ArrayList">
 					<id column="rp_good_reply_prefer_no" property="reply_prefer_no"/>
@@ -59,11 +55,10 @@
 			<result column="iimg_path" property="img_path"/>
 		</collection>
 	</resultMap>
-	<!-- list 페이지  -->
 	<select id="selectPageAll" resultMap="BoardMap">
 		SELECT b.*,
-			(SELECT COUNT(*) FROM BOARD_PREFER WHERE board_no = b.board_no AND prefer = true) prefer_good,
-			(SELECT COUNT(*) FROM BOARD_PREFER WHERE board_no = b.board_no AND prefer = false) prefer_bad,
+			(SELECT COUNT(*) FROM BOARD_PREFER WHERE board_no = b.board_no AND prefer = 1) prefer_good,
+			(SELECT COUNT(*) FROM BOARD_PREFER WHERE board_no = b.board_no AND prefer = 0) prefer_bad,
 
 			u.user_id, 
 			u.user_name, 
@@ -108,10 +103,10 @@
 		    LEFT JOIN CATEGORY c 
 		    USING(category_id) 
 		    
-		    LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = true) rp_good
+		    LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = 1) rp_good
 		    ON r.reply_no = rp_good.reply_no
 		    
-		    LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = false) rp_bad
+		    LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = 0) rp_bad
 		    ON r.reply_no = rp_bad.reply_no
 		    
 			ORDER BY board_no DESC
@@ -122,8 +117,8 @@
 	</select>
 	<select id="selectDetailOneAll" resultMap="BoardMap" parameterType="int">
 		SELECT b.*,
-			(SELECT COUNT(*) FROM BOARD_PREFER WHERE board_no = b.board_no AND prefer = true) prefer_good,
-			(SELECT COUNT(*) FROM BOARD_PREFER WHERE board_no = b.board_no AND prefer = false) prefer_bad,
+			(SELECT COUNT(*) FROM BOARD_PREFER WHERE board_no = b.board_no AND prefer = 1) prefer_good,
+			(SELECT COUNT(*) FROM BOARD_PREFER WHERE board_no = b.board_no AND prefer = 0) prefer_bad,
 			u.user_id, 
 			u.user_name, 
 			u.user_email,
@@ -164,10 +159,10 @@
 			LEFT JOIN CATEGORY c 
 			USING(category_id) 
 			
-			LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = true) rp_good
+			LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = 1) rp_good
 			ON r.reply_no = rp_good.reply_no
 			
-			LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = false) rp_bad
+			LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = 0) rp_bad
 			ON r.reply_no = rp_bad.reply_no
 			
 			WHERE b.board_no = #{boardNo}
@@ -175,8 +170,8 @@
 	</select>
 	<select id="selectOne" resultMap="BoardMap" parameterType="int">
 		SELECT b.*,
-			(SELECT COUNT(*) FROM BOARD_PREFER WHERE board_no = b.board_no AND prefer = true) prefer_good,
-			(SELECT COUNT(*) FROM BOARD_PREFER WHERE board_no = b.board_no AND prefer = false) prefer_bad,
+			(SELECT COUNT(*) FROM BOARD_PREFER WHERE board_no = b.board_no AND prefer = 1) prefer_good,
+			(SELECT COUNT(*) FROM BOARD_PREFER WHERE board_no = b.board_no AND prefer = 0) prefer_bad,
 			<if test="loginUsersId != null">
 				(SELECT prefer FROM BOARD_PREFER WHERE board_no = b.board_no AND user_id = #{loginUsersId}) as prefer_active,
 			</if>
@@ -223,21 +218,19 @@
 		    LEFT JOIN CATEGORY c 
 		    USING(category_id) 
 		    
-		    LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = true) rp_good
+		    LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = 1) rp_good
 		    ON r.reply_no = rp_good.reply_no
 		    
-		    LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = false) rp_bad
+		    LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = 0) rp_bad
 		    ON r.reply_no = rp_bad.reply_no
 		    
 		    WHERE b.board_no = #{boardNo}	
 	</select>
 	<insert id="insertOne" parameterType="Board"
-	 useGeneratedKeys="true" keyProperty="board_no">
+	 		useGeneratedKeys="true" keyProperty="board_no">
 		INSERT INTO BOARD 
-			(place_name, rating, 
-			 title, contents, user_id, category_id)
-				VALUES (#{place_name}, #{rating}, 
-						#{title}, #{contents}, #{user.user_id}, #{category_id})
+			(place_name, rating, title, contents, user_id, category_id)
+				VALUES (#{place_name}, #{rating}, #{title}, #{contents}, #{user.user_id}, #{category_id})
 	</insert>
 	<update id="updateOne" parameterType="Board">
 		UPDATE BOARD SET 
@@ -249,7 +242,8 @@
 				WHERE board_no = #{board_no}
 	</update>
 	<delete id="deleteOne" parameterType="int">
-		DELETE FROM BOARD WHERE board_no = #{boardNo}
+		DELETE FROM BOARD 
+			WHERE board_no = #{boardNo}
 	</delete>
 	<update id="detailUpdateViews" parameterType="int">
 		UPDATE BOARD SET 
@@ -286,27 +280,129 @@
 	  	</trim>
 	</sql>
 	<select id="searchBoard" resultMap="BoardMap">
-		SELECT b.*, u.user_id
-			FROM BOARD b 
-				LEFT JOIN USER u USING(user_id)
-				<include refid="criteria"></include>
-					ORDER BY board_no DESC 
-						LIMIT #{skip}, #{amount}	
+		SELECT b.*,
+			(SELECT COUNT(*) FROM BOARD_PREFER WHERE board_no = b.board_no AND prefer = 1) prefer_good,
+			(SELECT COUNT(*) FROM BOARD_PREFER WHERE board_no = b.board_no AND prefer = 0) prefer_bad,
+
+			u.user_id, 
+			u.user_name, 
+			u.user_email, 
+			u.birth,
+			
+		    r.reply_no, 
+		    r.title AS reply_title,
+		    r.contents AS reply_contents, 
+		    r.post_time AS reply_post_time, 
+		    r.img_path AS reply_img_path, 
+		    r.good AS reply_good,
+		    r.bad AS reply_bad, 
+		    r.user_id AS reply_user_id,
+		    
+		    i.board_img_no AS iboard_img_no,
+		    i.img_path AS iimg_path,
+		    
+		    c.category_id,
+		     
+		    rp_good.user_id AS rp_good_user_id,
+		    rp_good.reply_prefer_no AS rp_good_reply_prefer_no,
+		    rp_good.reply_no AS rp_good_reply_no,
+		    rp_good.prefer AS rp_good_prefer,
+		    
+		    rp_bad.user_id AS rp_bad_user_id,
+		    rp_bad.reply_prefer_no AS rp_bad_reply_prefer_no,
+		    rp_bad.reply_no AS rp_bad_reply_no,
+		    rp_bad.prefer AS rp_bad_prefer
+		    
+		    FROM BOARD b 
+		    
+		    INNER JOIN USER u 
+		    USING(user_id) 
+		    
+		    LEFT JOIN BOARD_IMG i 
+		    USING(board_no)
+		    
+		    LEFT JOIN REPLY r 
+		    USING(board_no) 
+	
+		    LEFT JOIN CATEGORY c 
+		    USING(category_id) 
+		    
+		    LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = 1) rp_good
+		    ON r.reply_no = rp_good.reply_no
+		    
+		    LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = 0) rp_bad
+		    ON r.reply_no = rp_bad.reply_no
+		    
+			<include refid="criteria"></include>
+				ORDER BY board_no DESC 
+					LIMIT #{skip}, #{amount}	
 	</select>
 	<select id="boardGetTotal" resultType="int">
   		SELECT COUNT(*) FROM BOARD b 
-  			LEFT JOIN USER u using(user_id)
+  			LEFT JOIN USER u 
+  			USING(user_id)
 		<include refid="criteria"></include>
 	</select>
 	<select id="searchAllBoard" resultMap="BoardMap">
-		SELECT  b.*, u.user_id
-			FROM BOARD b 
-				LEFT JOIN USER u USING(user_id)
-					WHERE title LIKE CONCAT ('%', #{keyword}, '%') OR
-						  contents LIKE CONCAT ('%', #{keyword}, '%') OR
-						  u.user_id LIKE CONCAT ('%', #{keyword}, '%')
-							ORDER BY board_no DESC 
-								LIMIT #{skip}, #{amount}	
+		SELECT b.*,
+			(SELECT COUNT(*) FROM BOARD_PREFER WHERE board_no = b.board_no AND prefer = 1) prefer_good,
+			(SELECT COUNT(*) FROM BOARD_PREFER WHERE board_no = b.board_no AND prefer = 0) prefer_bad,
+
+			u.user_id, 
+			u.user_name, 
+			u.user_email, 
+			u.birth,
+			
+		    r.reply_no, 
+		    r.title AS reply_title,
+		    r.contents AS reply_contents, 
+		    r.post_time AS reply_post_time, 
+		    r.img_path AS reply_img_path, 
+		    r.good AS reply_good,
+		    r.bad AS reply_bad, 
+		    r.user_id AS reply_user_id,
+		    
+		    i.board_img_no AS iboard_img_no,
+		    i.img_path AS iimg_path,
+		    
+		    c.category_id,
+		     
+		    rp_good.user_id AS rp_good_user_id,
+		    rp_good.reply_prefer_no AS rp_good_reply_prefer_no,
+		    rp_good.reply_no AS rp_good_reply_no,
+		    rp_good.prefer AS rp_good_prefer,
+		    
+		    rp_bad.user_id AS rp_bad_user_id,
+		    rp_bad.reply_prefer_no AS rp_bad_reply_prefer_no,
+		    rp_bad.reply_no AS rp_bad_reply_no,
+		    rp_bad.prefer AS rp_bad_prefer
+		    
+		    FROM BOARD b 
+		    
+		    INNER JOIN USER u 
+		    USING(user_id) 
+		    
+		    LEFT JOIN BOARD_IMG i 
+		    USING(board_no)
+		    
+		    LEFT JOIN REPLY r 
+		    USING(board_no) 
+	
+		    LEFT JOIN CATEGORY c 
+		    USING(category_id) 
+		    
+		    LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = 1) rp_good
+		    ON r.reply_no = rp_good.reply_no
+		    
+		    LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = 0) rp_bad
+		    ON r.reply_no = rp_bad.reply_no
+		    
+			WHERE title LIKE CONCAT ('%', #{keyword}, '%') OR
+				  contents LIKE CONCAT ('%', #{keyword}, '%') OR
+				  u.user_id LIKE CONCAT ('%', #{keyword}, '%')
+				  
+					ORDER BY board_no DESC 
+						LIMIT #{skip}, #{amount}	
 	</select>
 	<select id="boardAllGetTotal" resultType="int">
   		SELECT COUNT(*) FROM BOARD b 

@@ -26,7 +26,7 @@ CONSTRAINT UNIQUE KEY(user_phone),
 CONSTRAINT UNIQUE KEY(user_email)
 );
 
-INSERT INTO USER (user_id, user_name, user_pw, user_phone, user_email, birth, add2,add1) VALUES
+INSERT INTO USER (user_id, user_name, user_pw, user_phone, user_email, birth, add2, add1) VALUES
 ('64843719','박연희','1234','010-8180-4086','degeke8358@chimpad.com','1983-10-01','서울 강남구 학동로 338 강남파라곤S동 103호1F','02-106'),
 ('84815852','정재한','1234','010-6614-6211','mcha@nate.com','1974-09-05','서울 서초구 서래로 5길 30 2층','02-106'),
 ('hjh2651','박선웅','1234','010-0276-8643','seungkii@naver.com','1986-01-02','서울 강남구 도산대로 27길 16 효정빌딩','02-106'),
@@ -88,10 +88,10 @@ INSERT INTO USER (user_id, user_name, user_pw, user_phone, user_email, birth, ad
 ('sharon7472','윤현숙','1234','010-1120-5658','user38@gmail.com','1992-11-28','서울 강남구 논현로30길 52','02-106'),
 ('48907711','하늘미','1234','010-2374-0406','user39@gmail.com','1962-11-29','서울 강남구 언주로93길 22-5 도영빌딩 1층','02-106');
 
-INSERT INTO USER (user_id, user_name, user_pw, user_phone, user_email, birth, add2,add1,adminCk) VALUES
-('admin','admin','1234','010-7777-7777','admin@gmail.com','1999-11-11','서울 강남구 언주로93길 22-5','02-106','1');
+INSERT INTO USER (user_id, user_name, user_pw, user_phone, user_email, birth, add2, add1, adminCk) VALUES
+('admin','admin','Gyubin98A!','010-6737-3912','kvpark98@naver.com','1998-09-12','서울 강남구 언주로93길 22-5','02-106','1');
 
-INSERT INTO USER (user_id, user_name, user_pw, user_phone, user_email, birth, add2,add1) VALUES
+INSERT INTO USER (user_id, user_name, user_pw, user_phone, user_email, birth, add2, add1) VALUES
 ('awriter','awriter','1234','011-0000-0000','awriter@gmail.com','1990-01-01','광주 광산구 풍영로101번길 22 104동','02-106');
 
 CREATE TABLE NOTICE(
@@ -100,13 +100,13 @@ title VARCHAR(255) NOT NULL,
 contents TEXT NOT NULL,
 post_time DATETIME DEFAULT CURRENT_TIMESTAMP(),
 user_id VARCHAR(255) NOT NULL,
-views INT NOT NULL DEFAULT 0 ,
+views INT NOT NULL DEFAULT 0,
 PRIMARY KEY(notice_no),
 FOREIGN KEY(user_id) REFERENCES USER(user_id)
 ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-INSERT INTO NOTICE(title, contents, user_id ) VALUES
+INSERT INTO NOTICE(title, contents, user_id) VALUES
 ('도내 관광지 입장 요금(2022.8. 22)', 
 '안녕하세요, 제주관광공사 입니다! 2022년 8월 22일 현재 도내 주요관광지 입장 요금입니다. 아래 페이지를 통해 확인해보세요!
 http://www.visitjeju.or.kr/web/bbs/bbsDtl.do?pageIndex=1&sBbsId=TOURPAY&bbsId=TOURPAY¬iceNum=121&authNum=&sKeyOpt=1&sKey=
@@ -138,7 +138,7 @@ FOREIGN KEY(notice_no) REFERENCES NOTICE(notice_no)
 ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE CATEGORY (
+CREATE TABLE CATEGORY(
 category_id VARCHAR(45) NOT NULL,
 category_name VARCHAR(45) NOT NULL,
 PRIMARY KEY(category_id)
@@ -195,13 +195,13 @@ contents  TEXT NOT NULL,
 address1 VARCHAR(255),
 address2 VARCHAR(255),
 address3 VARCHAR(255),
-views INT  NOT NULL DEFAULT 0 ,
-good INT NOT NULL DEFAULT 0 ,
-bad INT  NOT NULL DEFAULT 0 ,
+views INT NOT NULL DEFAULT 0,
+good INT NOT NULL DEFAULT 0,
+bad INT  NOT NULL DEFAULT 0,
 user_id VARCHAR(45) NOT NULL,
 category_id VARCHAR(45) NOT NULL,
 PRIMARY KEY(board_no),
-FOREIGN KEY(user_id) REFERENCES USER(user_id )
+FOREIGN KEY(user_id) REFERENCES USER(user_id)
 ON UPDATE CASCADE ON DELETE CASCADE,
 FOREIGN KEY(category_id) REFERENCES CATEGORY(category_id)
 ON UPDATE CASCADE ON DELETE CASCADE,
@@ -211,21 +211,6 @@ FOREIGN KEY(address2) REFERENCES RESTAURANT(rest_rank)
 ON UPDATE CASCADE ON DELETE CASCADE,
 FOREIGN KEY(address3) REFERENCES TOUR(tour_rank)
 ON UPDATE CASCADE ON DELETE CASCADE
-);
-
-CREATE TABLE PRODUCT(
-    productid INT NOT NULL AUTO_INCREMENT,
-    productName VARCHAR(45) NOT NULL,
-    productSize VARCHAR(45) NOT NULL,
-    productColor VARCHAR(45) NOT NULL,
-    productInfo TEXT,
-    productStock INT,
-    productDate DATE,
-    price INT NOT NULL,
-    category_id VARCHAR(45), 
-    PRIMARY KEY(productid),
-    FOREIGN KEY(category_id) REFERENCES CATEGORY(category_id)
-    ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE BOARD_IMG(
@@ -245,8 +230,9 @@ post_time DATETIME DEFAULT CURRENT_TIMESTAMP(),
 img_path VARCHAR(255),
 board_no INT NOT NULL,
 user_id VARCHAR(255) NOT NULL,
-good INT NOT NULL DEFAULT 0 ,
-bad INT  NOT NULL DEFAULT 0 ,
+remove_img_check INT DEFAULT 0,
+good INT NOT NULL DEFAULT 0,
+bad INT  NOT NULL DEFAULT 0,
 PRIMARY KEY(reply_no),
 FOREIGN KEY(user_id) REFERENCES USER(user_id)
 ON UPDATE CASCADE ON DELETE CASCADE,
@@ -264,7 +250,7 @@ FOREIGN KEY (user_id) REFERENCES USER(user_id)
 ON UPDATE CASCADE ON DELETE CASCADE,
 FOREIGN KEY (board_no) REFERENCES BOARD(board_no)
 ON UPDATE CASCADE ON DELETE CASCADE,
-UNIQUE KEY (board_no,user_id)
+UNIQUE KEY (board_no, user_id)
 );
 
 CREATE TABLE REPLY_PREFER(
@@ -288,26 +274,24 @@ INSERT INTO BOARD(category_id, place_name, rating, title, user_id, contents) VAL
 
 CREATE TABLE QABOARD(
 qaBoardNo INT AUTO_INCREMENT,
-qaBoardKind VARCHAR(255) NOT NULL,
 qaBoardTitle VARCHAR(255) NOT NULL,
 qaBoardContents TEXT,
 qaBoardAnswer boolean DEFAULT FALSE,
 qaBoardDate DATETIME DEFAULT CURRENT_TIMESTAMP(),
+category_id VARCHAR(45) NOT NULL,
 user_id VARCHAR(45),
-productid INT ,
+views INT NOT NULL DEFAULT 0,
 CONSTRAINT PRIMARY KEY(qaBoardNo),
-FOREIGN KEY(user_id) REFERENCES USER(user_id)
+FOREIGN KEY(category_id) REFERENCES CATEGORY(category_id)
 ON UPDATE CASCADE ON DELETE CASCADE,
-FOREIGN KEY(productid) REFERENCES PRODUCT(productid)
+FOREIGN KEY(user_id) REFERENCES USER(user_id)
 ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 insert into qaboard
-(qaBoardKind,qaBoardTitle,qaBoardContents,qaBoardAnswer,user_id)
-values ('상품','test','test','1','admin');
-insert into qaboard
-(qaBoardKind,qaBoardTitle,qaBoardContents,qaBoardAnswer,user_id)
-values ('상품','test','test','0','admin');
+(qaBoardTitle, qaBoardContents, qaBoardAnswer, category_id, user_id) VALUES 
+('test', 'test', '0', '1', 'admin'),
+('test', 'test', '0', '2', 'admin');
 
 CREATE TABLE QAREPLY(
 qaReplyNo INT AUTO_INCREMENT,

@@ -126,6 +126,17 @@ function phoneAutoComplete(e) {
         e.value = phone;
 }
 
+//첫 공백만 차단
+function noSpace(obj) { // 공백사용못하게
+    var str = /\s/;  // 공백체크
+    if(str.exec(obj.value.trim)) { //공백 체크
+        //alert("해당 항목에는 첫 글자 공백을 사용할수 없습니다.");
+        obj.focus();
+        obj.value = obj.value.replace(/^ +/,''); // 공백제거
+        return false;
+    }
+}
+
 // 잘라내기, 복사, 붙여넣기 차단
 document.querySelectorAll("input").forEach((input) => {
 	input.addEventListener("cut", (event) => {
@@ -484,15 +495,15 @@ signupForm["birth"].addEventListener("change", (event) => {
 
 // 우편번호 버튼 클릭 시 우편번호와 메인 주소의 '필수 정보입니다.' 문구 삭제 이벤트
 signupForm["user_addr_postcode_btn"].addEventListener("click", (event) => {
-	signupForm["user_addr_postcode"].classList.remove("is-invalid");
+	signupForm["add1"].classList.remove("is-invalid");
 	addPostCodeHelp.classList.remove("is-invalid");
-	signupForm["user_addr_main"].classList.remove("is-invalid");
+	signupForm["add2"].classList.remove("is-invalid");
 	addMainHelp.classList.remove("is-invalid");
 }); 
 
 // 우편번호나 메인 주소 값이 있을 시 상세 주소에 마우스를 올리면 readonly가 삭제되는 이벤트
 signupForm["add3"].addEventListener("mouseover", (event) => {
-	if(signupForm["add2"].value || signupForm["add1"].value) {
+	if(signupForm["add1"].value || signupForm["add2"].value) {
 		event.target.removeAttribute("readonly");
 	}
 }); 

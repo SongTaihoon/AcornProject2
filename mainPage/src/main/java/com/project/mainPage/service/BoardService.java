@@ -27,9 +27,9 @@ public class BoardService {
 	String savePath;
 	
 //	후기 조회수 수정
-	public Board boardUpdateView(int boardNo, String userId) throws Exception{
+	public Board boardUpdateView(int boardNo) throws Exception{
 		boardMapper.detailUpdateViews(boardNo);
-		return boardMapper.selectOne(boardNo, userId);
+		return boardMapper.selectOne(boardNo);
 	}
 		
 //	후기 삭제

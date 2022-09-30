@@ -46,4 +46,5 @@ html, body {
     color: #ff8400;
     display: block;
     font-size: 1.3em;
+    text-shadow: 5px 5px 0 gray;
 }

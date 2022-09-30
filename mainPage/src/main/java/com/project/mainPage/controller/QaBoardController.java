@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import com.project.mainPage.dto.Criteria;
 import com.project.mainPage.dto.Pagination;
-import com.project.mainPage.dto.Product;
 import com.project.mainPage.dto.QaBoard;
 import com.project.mainPage.dto.QaReply;
 import com.project.mainPage.dto.UserDto;
-import com.project.mainPage.mapper.ProductMapper;
 import com.project.mainPage.mapper.QaBoardMapper;
 import com.project.mainPage.mapper.QaReplyMapper;
+import com.project.mainPage.service.QaBoardService;
 @Controller
 @RequestMapping("/qaboard")
 public class QaBoardController {
@@ -29,7 +28,7 @@ public class QaBoardController {
 	private QaReplyMapper qaReplyMapper;
 	
 	@Autowired
-	private ProductMapper productMapper;
+	private QaBoardService qaBoardService;
 	
 //	고객 문의 리스트 페이지
 	@GetMapping("/list/{page}")
@@ -86,7 +85,12 @@ public class QaBoardController {
 			@PathVariable int qaBoardno, 
 			Model model,
 			@SessionAttribute(required = false) UserDto loginUser) {
-		QaBoard qaBoard = qaBoardMapper.selectOne(qaBoardno);
+		QaBoard qaBoard = null;
+		try {
+			qaBoard = qaBoardService.qaBoardUpdateView(qaBoardno);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		System.out.println("detail_qaBoard" + qaBoard);
 		model.addAttribute("qaBoard", qaBoard);
 		return "/qaboard/detail";
@@ -97,9 +101,6 @@ public class QaBoardController {
 	public String insert(
 			Model model,
 			@SessionAttribute(required = false) UserDto loginUser) {
-		List<Product> qList = productMapper.selectAllProduct();
-		System.out.println(qList);
-		model.addAttribute("qList", qList);
 		return "/qaboard/insert";
 	}
 	

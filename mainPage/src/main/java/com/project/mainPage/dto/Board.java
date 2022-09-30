@@ -43,7 +43,6 @@ public class Board {
 	private String category_id;
 	private List<Reply> replys; // 1:N Reply.board_no  : fk
 	private List<BoardImg> boardImgs; // 1:N  BOARD_IMG.board_no fk
-	private int replys_size;
 	private List<BoardPrefer> good_Prefers;
-	private Boolean prefer_active; 
+	private Boolean prefer_active = null; 	
 }

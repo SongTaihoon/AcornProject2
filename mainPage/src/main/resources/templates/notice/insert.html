@@ -32,7 +32,7 @@
 					<tr>
 						<th class="table-light">작성자</th>
 						<td>
-							<input name="user.user_id" class="form-control" id="userId" th:value="${session.loginUser.user_id}" readonly>
+							<input name="user.user_id" class="form-control" id="userId" th:value="${session.loginUser?.user_id}" readonly>
 						</td>
 					</tr>
 					<tr>
@@ -51,6 +51,7 @@
 			</table>
 			<div class="d-flex">
 				<div class="ms-auto">
+					<button class="btn btn-outline-warning btn-lg" type="reset" style="margin-right: 8px;">초기화</button>
 					<button class="btn btn-outline-primary btn-lg" type="submit" style="margin-right: 8px;">등록</button>
 					<a class="btn btn-outline-dark btn-lg" href="/notice/list/1">목록</a>
 				</div>

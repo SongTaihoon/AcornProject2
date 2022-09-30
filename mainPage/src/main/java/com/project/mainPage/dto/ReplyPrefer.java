@@ -1,8 +1,6 @@
 package com.project.mainPage.dto;
-
 import lombok.Data;
 /*
- *desc reply_prefer;
 +-----------------+--------------+------+-----+---------+----------------+
 | Field           | Type         | Null | Key | Default | Extra          |
 +-----------------+--------------+------+-----+---------+----------------+
@@ -11,11 +9,11 @@ import lombok.Data;
 | prefer          | tinyint(1)   | YES  |     | NULL    |                |
 | user_id         | varchar(255) | NO   | MUL | NULL    |                |
 +-----------------+--------------+------+-----+---------+----------------+
- * */
+*/
 @Data
 public class ReplyPrefer {
 	private int reply_prefer_no; 
-	private int reply_no;		// 댓글 번호
-	private boolean prefer;		// 좋아요 : 1 , 싫어요 : 0 
+	private int reply_no; // 댓글 번호
+	private boolean prefer; // 좋아요 : 1, 싫어요 : 0 
 	private String user_id;		
 }

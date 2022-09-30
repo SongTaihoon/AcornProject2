@@ -147,6 +147,10 @@
 						<th class="table-light">사진</th>
 						<td>
 							<div class="mt-2 mb-3" th:if="${reply.img_path != null}">
+								<p> 삭제하기
+									<input name="remove_img_check" type="checkbox"
+								   		   class="form-check-input ms-1" value="1">
+								</p>
 								<!-- Button trigger modal -->
 								<button type="button" class="btn border-0" data-bs-toggle="modal"
 									style="padding: 0" 
@@ -154,7 +158,7 @@
 									<img alt="댓글 이미지" class="img-thumbnail" 
 									 style="height:100%; width:40%; object-fit: cover;"
 									th:src="@{/img/{file}(file=${reply.img_path})}">
-								</button>			
+								</button>	
 								<!-- Modal -->
 								<div class="modal fade"
 									th:id="'replyImgModal' + ${reply.reply_no}" >

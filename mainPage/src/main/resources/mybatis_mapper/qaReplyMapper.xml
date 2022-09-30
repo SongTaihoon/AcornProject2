@@ -23,9 +23,11 @@
 				WHERE qaBoardNo = #{qaBoardNo}
 	</update>
 	<delete id="deleteOne" parameterType="int">
-		DELETE FROM QAREPLY WHERE qaBoardNo = #{qaBoardNo}
+		DELETE FROM QAREPLY 
+			WHERE qaBoardNo = #{qaBoardNo}
 	</delete>
 	<select id="selectOne" resultType="QaReply" parameterType="int">
-		SELECT * FROM QAREPLY WHERE qaBoardNo = #{qaBoardNo}
+		SELECT * FROM QAREPLY 
+			WHERE qaBoardNo = #{qaBoardNo}
 	</select>
 </mapper>

@@ -8,7 +8,12 @@
 }
 #header #headerLeft h1 a {
 	text-decoration: none;
-	color: #1E96C4;
+	color: black;
+}
+#headerId{
+	margin-bottom: 0;
+    font-size: 40px;
+    text-shadow: 5px 5px 0 gray;
 }
 #header #headerCenter #searchBox {
      width: 520px;

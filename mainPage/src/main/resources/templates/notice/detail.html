@@ -26,7 +26,13 @@
 	    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
 	    <span style="font-size: 35px;">공지 사항</span>
     </h1>	
-	<table class="mt-5 mb-5 table align-middle table-bordered">
+    <div class="mt-3 d-flex">
+		<i class="bi bi-eye" style="margin-right: 4px;"
+			data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="조회수">
+			<span th:text="${notice.views}"></span>
+		</i>
+    </div>
+	<table class="mt-3 mb-5 table align-middle table-bordered">
 		<tbody>
 			<tr>
 				<th class="table-light" style="border-left: none;">글 번호</th>
@@ -34,7 +40,7 @@
 			</tr>
 			<tr>
 				<th class="table-light" style="border-left: none;">작성자</th>
-				<td style="border-right: none;" th:text="${notice.user.user_id}"></td>	
+				<td style="border-right: none;" th:text="${notice.user?.user_id}"></td>	
 			</tr>
 			<tr>
 				<th class="table-light" style="border-left: none;">제목</th>
@@ -47,10 +53,6 @@
 			<tr>
 				<th class="table-light" style="border-left: none;">등록일</th>
 				<td style="border-right: none;" th:text="${#dates.format(notice.post_time,'yyyy-MM-dd HH:mm:ss')}"></td>
-			</tr>
-			<tr>
-				<th class="table-light" style="border-left: none;">조회수</th>
-				<td style="border-right: none;" th:text="${notice.views}"></td>		
 			</tr>
 		</tbody>
 	</table>
