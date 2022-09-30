@@ -13,6 +13,25 @@ html, body {
     bottom: 0;
 }
 
-.container{
-	border: 2px solid;
+/* Ȩ > TOP 10 CSS  */
+#path {
+    display: flex;
+    margin: 20px 0;
+    min-width: 1200px;
 }
+#path ol {
+    margin-left: auto;      
+}
+#path ol li a {   
+    text-decoration: none;
+    vertical-align: middle;
+}
+
+#viz1664438063428{
+	box-shadow: 0 0 50px rgba(0, 60, 255, 0.485);
+	border-radius: 20px;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	resize: both;
+}
+ 

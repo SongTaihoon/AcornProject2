@@ -82,8 +82,7 @@
 								<button type="button" class="btn border-0" data-bs-toggle="modal"
 									style="padding: 0" 
 									th:data-bs-target="'#boardImgModal' + ${boardImg.board_img_no}">
-									<img th:src="@{/img/{fileName}(fileName=${boardImg.img_path})}" alt="후기 이미지" 
-				  						 style="width: 400px; height: 400px;">
+     								<img th:src="@{/img/{fileName}(fileName=${boardImg.img_path})}" alt="후기 이미지"  style="width: 400px; height: 400px;">
 								</button>			
 							</div>
 				  		</div>
@@ -93,15 +92,8 @@
 						  <div class="modal-dialog modal-dialog-centered modal-lg">
 						    <div class="modal-content" 
 						    style="background-color: rgba(255,255,255,0)">
-						      <!-- 
-						      <div class="modal-header" style="border: none">
-						        <button type="button" 
-						        class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						      </div>
-						       -->
 						      <div class="modal-body">
-		   						<img th:src="@{/img/{fileName}(fileName=${boardImg.img_path})}" alt="후기 이미지"
-		   						width="760"> 
+		   						<img th:src="@{/img/{fileName}(fileName=${boardImg.img_path})}" alt="후기 이미지" width="760"> 
 						      </div>
 						    </div>
 						  </div>

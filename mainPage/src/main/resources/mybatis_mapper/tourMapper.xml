@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.project.mainPage.mapper.TourMapper">
+	<!--  tour List  -->
+	<select id="selectListAll" resultType="Tour">
+		SELECT * FROM TOUR ORDER BY search DESC LIMIT #{startRow}, #{pageSize}
+	</select>
+	<select id="selectPageAllCount" resultType="int">
+		SELECT COUNT(*) FROM TOUR
+	</select>
+	<!-- tour Detail  -->
+	<select id="selectDetailOne" resultType="Tour">
+		SELECT * FROM TOUR
+	</select>
+ </mapper>

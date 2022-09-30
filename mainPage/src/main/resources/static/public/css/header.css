@@ -8,7 +8,7 @@
 }
 #header #headerLeft h1 a {
 	text-decoration: none;
-	color: #1E96C4;
+	color: black;
 }
 #header #headerCenter #searchBox {
      width: 520px;
@@ -92,3 +92,10 @@
 #nav #navBox .dropdown:hover .dropdown-submenu {
      display: block;
 }
+
+#headerId{
+    font-size: 40px;
+    text-shadow:  5px 5px 0 gray;
+}
+
+
