@@ -234,16 +234,11 @@
 	</select>
 	<insert id="insertOne" parameterType="Board"
 	 useGeneratedKeys="true" keyProperty="board_no">
-<<<<<<< HEAD
-		INSERT INTO BOARD (place_name,rating,title, contents, user_id)
-			VALUES (#{place_name},#{rating},#{title}, #{contents}, #{user.user_id})
-=======
 		INSERT INTO BOARD 
 			(place_name, rating, 
 			 title, contents, user_id, category_id)
 				VALUES (#{place_name}, #{rating}, 
 						#{title}, #{contents}, #{user.user_id}, #{category_id})
->>>>>>> origin/규빈
 	</insert>
 	<update id="updateOne" parameterType="Board">
 		UPDATE BOARD SET 
