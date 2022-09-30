@@ -41,7 +41,7 @@
 							    style="background-color: rgba(255,255,255,0)">
 							      <div class="modal-body">
 			   						<img alt="댓글 이미지" class="img-thumbnail"
-										 th:src="@{/img/{file}(file=${reply.img_path})}">  
+										 th:src="@{/img/{file}(file=${reply.img_path})}" width="760">  
 							      </div>
 							    </div>
 							  </div>
@@ -134,7 +134,7 @@
 					<tr>
 						<th class="table-light">사진</th>
 						<td>
-							<div class="mb-1" th:if="${reply.img_path != null}">
+							<div class="mt-2 mb-3" th:if="${reply.img_path != null}">
 								<!-- Button trigger modal -->
 								<button type="button" class="btn border-0" data-bs-toggle="modal"
 									style="padding: 0" 
@@ -151,7 +151,7 @@
 								    style="background-color: rgba(255,255,255,0)">
 								      <div class="modal-body">
 				   						<img alt="댓글 이미지" class="img-thumbnail"
-											 th:src="@{/img/{file}(file=${reply.img_path})}">  
+											 th:src="@{/img/{file}(file=${reply.img_path})}" width="760">  
 								      </div>
 								    </div>
 								  </div>
@@ -232,7 +232,6 @@ var title = replyUpdate.title;
 var contents = replyUpdate.contents;
 document.forms.replyUpdate.addEventListener("submit", (event) => {
 	if(!(title.value) || !(contents.value)) {
-		
 		event.preventDefault();		
 	}
 });

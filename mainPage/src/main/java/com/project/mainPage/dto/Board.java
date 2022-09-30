@@ -4,26 +4,24 @@ import java.util.List;
 import org.springframework.format.annotation.DateTimeFormat;
 import lombok.Data;
 /*
-  desc board;
-+---------------+--------------+------+-----+-------------------+-------------------+
-| Field         | Type         | Null | Key | Default           | Extra             |
-+---------------+--------------+------+-----+-------------------+-------------------+
-| board_no      | int          | NO   | PRI | NULL              | auto_increment    |
-| place_name    | varchar(45)  | NO   |     | NULL              |                   |
-| rating        | float        | NO   |     | NULL              |                   |
-| title         | varchar(255) | NO   |     | NULL              |                   |
-| post_time     | datetime     | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
-| contents      | text         | NO   |     | NULL              |                   |
-| address1      | varchar(255) | YES  | MUL | NULL              |                   |
-| address2      | varchar(255) | YES  | MUL | NULL              |                   |
-| address3      | varchar(255) | YES  | MUL | NULL              |                   |
-| views         | int          | NO   |     | 0                 |                   |
-| good          | int          | NO   |     | 0                 |                   |
-| bad           | int          | NO   |     | 0                 |                   |
-| user_id       | varchar(45)  | NO   | MUL | NULL              |                   |
-| category_id   | varchar(45)  | NO   | MUL | NULL              |                   |
-| category_name | varchar(45)  | NO   |     | NULL              |                   |
-+---------------+--------------+------+-----+-------------------+-------------------+
++-------------+--------------+------+-----+-------------------+-------------------+
+| Field       | Type         | Null | Key | Default           | Extra             |
++-------------+--------------+------+-----+-------------------+-------------------+
+| board_no    | int          | NO   | PRI | NULL              | auto_increment    |
+| place_name  | varchar(45)  | NO   |     | NULL              |                   |
+| rating      | float        | NO   |     | NULL              |                   |
+| title       | varchar(255) | NO   |     | NULL              |                   |
+| post_time   | datetime     | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
+| contents    | text         | NO   |     | NULL              |                   |
+| address1    | varchar(255) | YES  | MUL | NULL              |                   |
+| address2    | varchar(255) | YES  | MUL | NULL              |                   |
+| address3    | varchar(255) | YES  | MUL | NULL              |                   |
+| views       | int          | NO   |     | 0                 |                   |
+| good        | int          | NO   |     | 0                 |                   |
+| bad         | int          | NO   |     | 0                 |                   |
+| user_id     | varchar(45)  | NO   | MUL | NULL              |                   |
+| category_id | varchar(45)  | NO   | MUL | NULL              |                   |
++-------------+--------------+------+-----+-------------------+-------------------+
 */
 @Data
 public class Board {
@@ -42,7 +40,7 @@ public class Board {
 	private int views;
 	private UserDto user; // UsersDto.userid : fk 
 	private Category category;
-	private String category_name;
+	private String category_id;
 	private List<Reply> replys; // 1:N Reply.board_no  : fk
 	private List<BoardImg> boardImgs; // 1:N  BOARD_IMG.board_no fk
 	private int replys_size;

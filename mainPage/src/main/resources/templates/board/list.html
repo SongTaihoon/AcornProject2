@@ -35,7 +35,7 @@
 					<th>작성자</th>
 					<th>카테고리</th>
 					<th>장소</th>
-					<th>별점</th>					
+					<th>평점</th>					
 					<th>제목</th>
 					<th>댓글</th>
 					<th>좋아요</th>
@@ -46,13 +46,21 @@
 				<th:block th:each="board : ${boardList}">
 					<tr th:onclick="location.href='/board/detail/[[${board.board_no}]]'">
 						<td th:text="${board.board_no}"></td>
-						<td th:text="${board.user.user_id}"></td>
-						<td th:text="${board.category_name}"></td> 
+						<td th:text="${board.user?.user_id}"></td>
+						<th:block th:if="${board.category.category_id == '1'}">
+							<td>관광지</td> 
+						</th:block>
+						<th:block th:if="${board.category.category_id == '2'}">
+							<td>숙박</td> 
+						</th:block>
+						<th:block th:if="${board.category.category_id == '3'}">
+							<td>맛집</td> 
+						</th:block>
 						<td th:text="${board.place_name}"></td>
 						<td th:text="${board.rating}"></td>
 						<td th:text="${board.title}"></td>
-						<td th:text="${board.title}"></td>
 						<td th:text="${board.replys_size}"></td>
+						<td th:text="${board.good}"></td>
 						<td th:text="${board.views}"></td>
 					</tr>					
 				</th:block>
