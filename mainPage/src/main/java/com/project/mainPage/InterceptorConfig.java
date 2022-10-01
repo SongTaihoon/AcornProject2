@@ -1,19 +1,18 @@
-package com.project.mainPage;
-
+package com.project.mainPage; 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 import com.project.mainPage.interceptor.AdminInterceptor;
 import com.project.mainPage.interceptor.LoginCheckInterceptor;
-
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer{
 	@Autowired
 	LoginCheckInterceptor loginCheckInterceptor;
+	
 	@Autowired
 	AdminInterceptor adminInterceptor;
+	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 			registry.addInterceptor(loginCheckInterceptor)
@@ -29,22 +28,25 @@ public class InterceptorConfig implements WebMvcConfigurer{
 			.addPathPatterns("/qaboard/delete/**")
 			.addPathPatterns("/qaboard/update/**")
 			.addPathPatterns("/user/list/**")
+			.addPathPatterns("/user/search/**")
 			.addPathPatterns("/user/detail/**")
 			.addPathPatterns("/user/update/**")
+			.addPathPatterns("/user/delete/**")
 			.addPathPatterns("/**/insert.do")
 			.addPathPatterns("/**/update.do")
+			.addPathPatterns("/ /**")		
+			// 추가하거나 예외처리할 주소
 			.excludePathPatterns("/user/signup.do")
 			.excludePathPatterns("/user/login.do")
 			.excludePathPatterns("/user/privacy")
 			.excludePathPatterns("/user/emailRejection")
 			.excludePathPatterns("/user/agreement")
-			// 추가하거나 예외처리할 주소
-			.addPathPatterns("/ /**")		
 			.excludePathPatterns("/ / ")
 			.excludePathPatterns("/ / ");
 			registry.addInterceptor(adminInterceptor)
 			.addPathPatterns("/admin/**")
 			.addPathPatterns("/user/list/**")
+			.addPathPatterns("/user/search/**")
 			.addPathPatterns("/notice/update/**")
 			.addPathPatterns("/notice/delete/**")
 			.addPathPatterns("/notice/insert.do")
@@ -52,10 +54,6 @@ public class InterceptorConfig implements WebMvcConfigurer{
 			.addPathPatterns("/qaboard/replyUpdate/**")
 			.addPathPatterns("/qaboard/replyInsert.do")
 			.addPathPatterns("/qaboard/replyUpdate.do")
-			.addPathPatterns("/qaboard/replyDelete/**")
-			.addPathPatterns("/product/insert.do")
-			.addPathPatterns("/product/update.do")
-			.addPathPatterns("/product/delete.do");
+			.addPathPatterns("/qaboard/replyDelete/**");
 	}
-	
 }

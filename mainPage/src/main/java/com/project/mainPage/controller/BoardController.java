@@ -251,7 +251,7 @@ public class BoardController {
 			@PathVariable String userId,
 			@SessionAttribute(name ="loginUser", required = false) UserDto loginUser,
 			HttpSession session) {
-		if(loginUser != null && loginUser.getUser_id().equals(userId)) {
+		if((loginUser != null && loginUser.getUser_id().equals(userId)) || loginUser.getAdminCk() == 1) {
 			int delete = 0;
 			try {
 				delete = boardService.removeBoard(boardNo); // DB에서 후기 삭제

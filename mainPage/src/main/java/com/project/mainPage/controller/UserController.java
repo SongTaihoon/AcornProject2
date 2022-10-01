@@ -53,6 +53,8 @@ public class UserController {
 			@RequestParam(value = "type") String type,
 			@RequestParam(value = "keyword") String keyword,
 			@PathVariable int page, 
+			@SessionAttribute(required = false) UserDto loginUser,
+			HttpSession session,
 			Criteria cri, 
 			Model model) {
 		int row = 10;
@@ -78,7 +80,18 @@ public class UserController {
 	
 //	로그인 페이지
 	@GetMapping("/login.do")
-		public void login() {};
+		public String loginPage(
+				@SessionAttribute(required = false) UserDto loginUser,
+				HttpSession session) {
+		System.out.println("loginUser : " + loginUser);
+		if(loginUser != null) {
+			System.out.println("이미 로그인되어 있기 때문에 로그인 페이지로 이동 불가");
+			return "redirect:/";
+		} else {
+			System.out.println("로그인되어 있지 않기 때문에 로그인 페이지로 이동 가능");
+			return "user/login";
+		}
+	};
 		
 //	로그인
 	@PostMapping("/login.do")
@@ -96,7 +109,7 @@ public class UserController {
 				session.setAttribute("loginUser", user);
 				Object redirectPage = session.getAttribute("redirectPage"); // 이전 페이지
 				session.removeAttribute("redirectPage");
-				System.out.println("로그인 성공! " + user);
+				System.out.println("로그인 성공! " + user); 
 				if(redirectPage != null) {
 					return "redirect:" + redirectPage; // 이전 페이지로 이동
 				} else {
@@ -116,7 +129,18 @@ public class UserController {
 	
 //	회원가입 페이지
 	@GetMapping("/signup.do")
-	public void signup() {}
+	public String signupPage(
+			@SessionAttribute(required = false) UserDto loginUser,
+			HttpSession session) {
+		System.out.println("loginUser : " + loginUser);
+		if(loginUser != null) {
+			System.out.println("이미 로그인되어 있기 때문에 회원가입 페이지로 이동 불가");
+			return "redirect:/";
+		} else {
+			System.out.println("로그인되어 있지 않기 때문에 회원가입 페이지로 이동 가능");
+			return "user/signup";
+		}
+	}
 	
 //	회원가입
 	@PostMapping("/signup.do")
@@ -147,12 +171,17 @@ public class UserController {
 			@SessionAttribute(required = false) UserDto loginUser, 
 			HttpSession session) {
 		UserDto user = userMapper.selectId(userId);
-		if(user.getUser_id().equals(loginUser.getUser_id()) || (loginUser.getAdminCk() == 1)) {
+		if(loginUser == null) { // 로그인이 안 되어 있는 경우
+			System.out.println("로그인하세요.");
+			return "redirect:/user/login.do";			
+		} else if(user.getUser_id().equals(loginUser.getUser_id()) || (loginUser.getAdminCk() == 1)) { // 로그인된 일반 회원이 본인의 상세 페이지로 이동 / 관리자는 모든 회원 조회 가능
+			System.out.println("회원 상세 페이지로 이동 성공!");
 			model.addAttribute("user", user);
 			System.out.println(user);
-			return "user/detail";
-		}else {
-			return "redirect:/user/login.do";			
+			return "/user/detail";	
+		} else { // 로그인된 일반 회원이 다른 회원의 상세 페이지로 이동할 수 없음
+			System.out.println("다른 회원의 정보를 조회할 수 없습니다.");
+			return "redirect:/";	
 		}	
 	} 
 	
@@ -165,13 +194,18 @@ public class UserController {
 			HttpSession session
 			) {
 		UserDto user = userMapper.selectId(userId); 
-		if(user.getUser_id().equals(loginUser.getUser_id()) || (loginUser.getAdminCk() == 1)) {
+		if(loginUser == null) { // 로그인이 안 되어 있는 경우
+			System.out.println("로그인하세요.");
+			return "redirect:/user/login.do";			
+		} else if(user.getUser_id().equals(loginUser.getUser_id()) || (loginUser.getAdminCk() == 1)) { // 로그인된 일반 회원이 본인의 수정 페이지로 이동 / 관리자는 모든 회원 수정 가능
+			System.out.println("회원 수정 페이지로 이동 성공!");
 			model.addAttribute("user", user);
 			System.out.println(user);
 			return "/user/update";	
-		}else {
-			return "redirect:/user/login.do";			
-		}	
+		} else { // 로그인된 일반 회원이 다른 회원의 수정 페이지로 이동할 수 없음
+			System.out.println("다른 회원의 정보를 수정할 수 없습니다.");
+			return "redirect:/";	
+		}
 	}
 	
 //	회원 정보 수정
@@ -255,7 +289,7 @@ public class UserController {
 				System.out.println("회원 삭제 실패!(일반 회원) : " + delete);
 				return "redirect:/user/update/" + userId;
 			}
-		} else { // 관리자는 본인을 삭제할 수 없음
+		} else { // 관리자가 본인을 삭제하거나 일반 회원이 다른 회원을 삭제하는 것 불가
 			System.out.println("회원 삭제 불가");
 			return "redirect:/user/update/" + userId;
 		}
