@@ -8,7 +8,6 @@
 		<result column="contents" property="contents"/>
 		<result column="post_time" property="post_time"/>
 		<result column="views" property="views"/>
-		<result column="notreplys_size" property="notreplys_size"/>	
 		<association property="user" javaType="UserDto" foreignColumn="user_id">
 			<id column="user_id" property="user_id"/>
 			<id column="user_name" property="user_name"/>
@@ -19,24 +18,30 @@
 			<id column="iimg_path" property="img_path"/>
 		</collection>
 	</resultMap>	
-	<select id="selectPageAll" resultType="Notice">
-		SELECT *, notice_no noticeNo,
-			n.user_id as 'user.user_id' 
+	<select id="selectPageAll" resultMap="NoticeMap">
+		SELECT *, 
+			notice_no AS noticeNo,
+			
+			n.user_id AS 'user.user_id' 
+			
 			FROM NOTICE n
-			ORDER BY n.notice_no
+			
+			ORDER BY n.notice_no DESC
 			LIMIT #{startRow}, #{pageSize}
 	</select>
-	<select id="selectPageAllCount" resultType = "int">
+	<select id="selectPageAllCount" resultType="int">
 		SELECT COUNT(*) FROM NOTICE
 	</select>
 	<select id="selectDetailOne" resultMap="NoticeMap">
 		SELECT n.*,
-			u.user_id,
-			u.user_name,
-			i.notice_img_no as inotice_img_no,
-			i.img_path as iimg_path
+		
+			u.*,
 			
-			FROM NOTICE n INNER JOIN USER u
+			i.*
+			
+			FROM NOTICE n 
+			
+			INNER JOIN USER u
 			USING(user_id)
 			
 			LEFT JOIN NOTICE_IMG i 
@@ -44,15 +49,15 @@
 		
 			WHERE n.notice_no = #{noticeNo}
 	</select>
-	
 	<!-- 조회수 -->
 	<update id="updateViews" parameterType="int">
 		UPDATE NOTICE SET 
 			views = views + 1
-			WHERE notice_no = #{noticeNo}
+				WHERE notice_no = #{noticeNo}
 	</update>
 	<!-- 공지사항 등록 -->
-	<insert id="insertOne" parameterType="Notice" useGeneratedKeys="true" keyProperty="notice_no">
+	<insert id="insertOne" parameterType="Notice" 
+			useGeneratedKeys="true" keyProperty="notice_no">
 		INSERT INTO NOTICE (title, contents, user_id) 
 			VALUE (#{title}, #{contents}, #{user.user_id})
 	</insert>
@@ -61,11 +66,12 @@
 		UPDATE NOTICE SET 
 			title = #{title},
 			contents = #{contents}
-			WHERE notice_no = #{notice_no}
+				WHERE notice_no = #{notice_no}
 	</update>
 	<!-- 공지사항 삭제 -->
 	<delete id="deleteOne" parameterType="int">
-		DELETE FROM NOTICE WHERE notice_no = #{noticeNo}
+		DELETE FROM NOTICE 
+			WHERE notice_no = #{noticeNo}
 	</delete>
 	<!-- criteria(검색조건) -->
 	<sql id="criteria">
@@ -94,28 +100,25 @@
 	  	</trim>
 	</sql>
 	<select id="searchNotice" resultType="Notice">
-			SELECT  *
-			FROM NOTICE
-			<include refid="criteria"></include>
+		SELECT * FROM NOTICE
+		<include refid="criteria"></include>
 			ORDER BY notice_no DESC 
 			LIMIT #{skip}, #{amount}	
 	</select>
 	<select id="noticeGetTotal" resultType="int">
   		SELECT COUNT(*) FROM NOTICE
 		<include refid="criteria"></include>
-	</select>
-	
+	</select>	
 	<select id="searchAllNotice" resultType="Notice">
-			SELECT  *
-			FROM NOTICE
+		SELECT * FROM NOTICE
 			WHERE title LIKE CONCAT ('%', #{keyword}, '%') 
-			OR contents LIKE CONCAT ('%', #{keyword}, '%')
-			ORDER BY notice_no desc 
-			LIMIT #{skip}, #{amount}	
+				OR contents LIKE CONCAT ('%', #{keyword}, '%')
+					ORDER BY notice_no DESC 
+					LIMIT #{skip}, #{amount}	
 	</select>
 	<select id="noticeAllGetTotal" resultType="int">
   		SELECT COUNT(*) FROM NOTICE
 			WHERE title LIKE CONCAT ('%', #{keyword}, '%') 
-			OR contents LIKE CONCAT ('%', #{keyword}, '%')
+				OR contents LIKE CONCAT ('%', #{keyword}, '%')
 	</select>
 </mapper>

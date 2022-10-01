@@ -1,9 +1,6 @@
 package com.project.mainPage.controller;
-
 import java.util.List;
-
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
-
 import com.project.mainPage.dto.Criteria;
 import com.project.mainPage.dto.EmailCheck;
 import com.project.mainPage.dto.IdCheck;
@@ -23,8 +19,6 @@ import com.project.mainPage.dto.PhoneCheck;
 import com.project.mainPage.dto.UserDto;
 import com.project.mainPage.mapper.UserMapper;
 import com.project.mainPage.service.UserService;
-
-
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -34,29 +28,59 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	//회원 리스트
+//	회원 리스트
 	@GetMapping("/list/{page}")
-	public String list(@PathVariable int page, Model model) {
-		int row = 8;
-		int startRow = (page - 1)*row;
-		List<UserDto> userList = userMapper.selectPageAll(startRow,row);
+	public String list(
+			@PathVariable int page, 
+			Model model) {
+		int row = 10;
+		int startRow = (page - 1) * row;
+		List<UserDto> userList = userMapper.selectPageAll(startRow, row);
 		int count = userMapper.selectPageAllCount();
 		
 		Pagination pagination = new Pagination(page, count, "/user/list/", row);
-		System.out.println(pagination);
-		model.addAttribute("pagination",pagination);
-		model.addAttribute("userList",userList);
-		model.addAttribute("row",row);
-		model.addAttribute("count",count);
-		model.addAttribute("page",page);	
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("userList", userList);
+		model.addAttribute("row", row);
+		model.addAttribute("count", count);
+		model.addAttribute("page", page);	
 		return "/user/list";
 	}	
 	
-	//회원 로그인 페이지
+//	회원 검색 페이지
+	@GetMapping("/search/{page}")
+	public String searchProduct(
+			@RequestParam(value = "type") String type,
+			@RequestParam(value = "keyword") String keyword,
+			@PathVariable int page, 
+			Criteria cri, 
+			Model model) {
+		int row = 10;
+		int startRow = (page - 1) * row;
+		cri.setAmount(row);
+		cri.setSkip(startRow);
+		List<UserDto> list = userMapper.searchUser(cri);
+		int count = userMapper.userGetTotal(cri);
+		if(!list.isEmpty()) { 
+			model.addAttribute("list", list);
+		} else {
+			model.addAttribute("listCheck", "empty"); 
+			return "/user/search";
+		}
+		Pagination pagination = new Pagination(page, count, "/user/search/", row);
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("list", list);
+		model.addAttribute("row", row);
+		model.addAttribute("count", count);
+		model.addAttribute("page", page);
+		return "/user/search";
+	}
+	
+//	로그인 페이지
 	@GetMapping("/login.do")
 		public void login() {};
 		
-	//회원 로그인
+//	로그인
 	@PostMapping("/login.do")
 		public String login(
 				@RequestParam(value="user_id") String userId, 
@@ -65,15 +89,16 @@ public class UserController {
 			UserDto user = null;
 			try {
 				user = userMapper.selectIdPwOne(userId, userPw);
-			}catch(Exception e) {e.printStackTrace();}
-			
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
 			if(user != null) {
 				session.setAttribute("loginUser", user);
-				Object redirectPage = session.getAttribute("redirectPage");
+				Object redirectPage = session.getAttribute("redirectPage"); // 이전 페이지
 				session.removeAttribute("redirectPage");
 				System.out.println("로그인 성공! " + user);
 				if(redirectPage != null) {
-					return "redirect:" + redirectPage;
+					return "redirect:" + redirectPage; // 이전 페이지로 이동
 				} else {
 					return "redirect:/";
 				}
@@ -89,36 +114,40 @@ public class UserController {
 		return "redirect:/";
 	}
 	
-	//회원가입
+//	회원가입 페이지
 	@GetMapping("/signup.do")
 	public void signup() {}
+	
+//	회원가입
 	@PostMapping("/signup.do")
-	public String signup(UserDto user) {
-		int insert=0;
+	public String signup(
+			UserDto user,
+			HttpSession session) {
+		int insert = 0;
 		System.out.println(user);
 		try {
-			insert=userMapper.insertOne(user); // 회원가입 쿼리실행
+			insert = userMapper.insertOne(user); // 회원가입 쿼리 실행
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if(insert>0) {
+		if(insert > 0) {
 			System.out.println("회원가입 성공! : " + insert);
-			return "redirect:/user/list/1";
+			session.setAttribute("loginUser", user); // 회원가입하면 로그인되어 있도록 설정
+			return "redirect:/";
 		}else {
 			return "redirect:/user/signup.do";
 		}
 	}
 	
-	
-	//회원 상세 페이지
+//	회원 상세 페이지
 	@GetMapping("/detail/{userId}")
 	public String detail(
 			@PathVariable String userId, 
 			Model model,
+			@SessionAttribute(required = false) UserDto loginUser, 
 			HttpSession session) {
 		UserDto user = userMapper.selectId(userId);
-		Object loginUsers_obj = session.getAttribute("loginUser");
-		if(user.getUser_id().equals(((UserDto)loginUsers_obj).getUser_id()) || (((UserDto)loginUsers_obj).getAdminCk() == 1)) {
+		if(user.getUser_id().equals(loginUser.getUser_id()) || (loginUser.getAdminCk() == 1)) {
 			model.addAttribute("user", user);
 			System.out.println(user);
 			return "user/detail";
@@ -127,17 +156,18 @@ public class UserController {
 		}	
 	} 
 	
-	//회원 수정 페이지
+//	회원 수정 페이지
 	@GetMapping("/update/{userId}")
 	public String update(
 			@PathVariable String userId,
 			Model model,
+			@SessionAttribute(required = false) UserDto loginUser, 
 			HttpSession session
 			) {
 		UserDto user = userMapper.selectId(userId); 
-		Object loginUser_obj = session.getAttribute("loginUser");
-		if(user.getUser_id().equals(((UserDto)loginUser_obj).getUser_id()) || (((UserDto)loginUser_obj).getAdminCk() == 1)) {
+		if(user.getUser_id().equals(loginUser.getUser_id()) || (loginUser.getAdminCk() == 1)) {
 			model.addAttribute("user", user);
+			System.out.println(user);
 			return "/user/update";	
 		}else {
 			return "redirect:/user/login.do";			
@@ -150,8 +180,6 @@ public class UserController {
 		int update = 0;
 		try {
 			update = userMapper.updateOne(user);
-			System.out.println(user);
-			System.out.println(update);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -169,10 +197,10 @@ public class UserController {
 	//ResponseBody가 들어가야 ajax가 작동한다
 	@ResponseBody public IdCheck idCheck(@PathVariable String userId) {
 		IdCheck idCheck = new IdCheck();
-		UserDto user=userMapper.selectId(userId);
+		UserDto user = userMapper.selectId(userId);
 		if(user != null) { // 중복된 아이디가 있다
-			idCheck.idCheck=true;
-			idCheck.user=user;
+			idCheck.idCheck = true;
+			idCheck.user = user;
 		}
 		return idCheck;
 	}
@@ -189,7 +217,7 @@ public class UserController {
 		return emailCheck;	
 	}
 	
-	//회원가입 중복 체크 (phone)
+//	회원가입 중복 체크 (phone)
 	@GetMapping("/phoneCheck/{userPhone}")
 	@ResponseBody public PhoneCheck phoneCheck(@PathVariable String userPhone) {
 		PhoneCheck phoneCheck = new PhoneCheck();
@@ -233,31 +261,6 @@ public class UserController {
 		}
 	} 
 	
-	@GetMapping("/search/{page}")
-	public String searchProduct(
-			@RequestParam(value = "type") String type,
-			@RequestParam(value = "keyword") String keyword,
-			@PathVariable int page, Criteria cri, Model model) {
-		int row = 10;
-		int startRow = (page - 1) * row;
-		cri.setAmount(row);
-		cri.setSkip(startRow);
-		List<UserDto> list= userMapper.searchUser(cri);
-		int count = userMapper.userGetTotal(cri);
-		  if(!list.isEmpty()) { model.addAttribute("list",list);
-		  }else { model.addAttribute("listCheck","empty"); return "/user/search"; }
-		Pagination pagination = new Pagination(page, count, "/user/search/", row);
-		System.out.println(pagination);
-		model.addAttribute("pagination", pagination);
-		model.addAttribute("list", list);
-		System.out.println("list : "+list);
-		model.addAttribute("row", row);
-		model.addAttribute("count", count);
-		model.addAttribute("page", page);
-		return "/user/search";
-	}
-	
-
 //	푸터 연결용
 	@GetMapping("/agreement")
 	public void agreement() {};

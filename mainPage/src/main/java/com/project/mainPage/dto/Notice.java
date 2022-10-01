@@ -1,5 +1,4 @@
 package com.project.mainPage.dto;
-
 import java.util.Date;
 import java.util.List;
 
@@ -7,7 +6,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 /*
- *  desc notice;
 +-----------+--------------+------+-----+-------------------+-------------------+
 | Field     | Type         | Null | Key | Default           | Extra             |
 +-----------+--------------+------+-----+-------------------+-------------------+
@@ -18,7 +16,7 @@ import lombok.Data;
 | user_id   | varchar(255) | NO   | MUL | NULL              |                   |
 | views     | int          | NO   |     | 0                 |                   |
 +-----------+--------------+------+-----+-------------------+-------------------+
- * */
+*/
 @Data
 public class Notice {
 	private int notice_no;
@@ -29,5 +27,4 @@ public class Notice {
 	private UserDto user;
 	private int views;
 	private List<NoticeImg> noticeImgs;
-	private int notreplys_size;
 }

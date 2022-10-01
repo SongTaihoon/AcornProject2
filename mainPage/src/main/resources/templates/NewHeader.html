@@ -11,15 +11,16 @@
 </head>
 <body>
     <div id="header">
-        <div id="headerLeft">
+
+        <div id="headerLeft" style="min-width: 335px;">
             <h1 id="headerId">
             	<a href="/">
-           			<img src="/img/logo.png" style="width: 50px; height: 60px;">
-           			JEJU THE BEST
+           			<img class="align-baseline" src="/img/logo.png" style="width: 50px; height: 50px;">
+           			<span class="align-top" >JEJU THE BEST</span>
             	</a>		
             </h1>
         </div>
-        <div id="headerCenter">
+        <div id="headerCenter" style="min-width: 550px;">
         	<div class="container-fluid" id="searchBox">
 			  <form class="d-flex" action="/search/1" id="searchForm" name="searchForm" method="get">
 			    <input class="form-control me-2" type="text" name="keyword" id="searchInput" onkeyup="noSpace(this);" onchange="noSpace(this);" maxlength="50">
@@ -29,8 +30,8 @@
 			  </form>
 			</div>
         </div>
-        <div id="headerRight">
-	        <nav style="--bs-breadcrumb-divider: '|';" aria-label="breadcrumb">
+        <div id="headerRight" style="min-width: 300px;">
+	        <nav style="--bs-breadcrumb-divider: '|';" aria-label="breadcrumb" class="d-flex justify-content-center">
 			  <ol class="breadcrumb">
 			  	<th:block th:if="${session.loginUser == null}">
 			    	<li class="breadcrumb-item">
@@ -99,8 +100,8 @@
     	<div class="dropdown" id="dropdown4">
 	        <button class="dropdown-btn">고객 센터</button>
 	        <div class="dropdown-submenu">
-	            <a href="/notice/list/1">공지 사항</a>
 	            <a href="/qaboard/list/1">고객 문의</a>
+	            <a href="/notice/list/1">공지 사항</a>
 	        </div>
     	</div>
 	  </div>

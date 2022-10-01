@@ -31,54 +31,54 @@
 				<tbody>
 					<tr>
 						<th class="table-light">아이디</th>
-						<td th:text="${user.user_id}"></td>
+						<td th:text="${user?.user_id}"></td>
 					</tr>
 					<tr>
 						<th class="table-light">이름</th>
-						<td th:text="${user.user_name}"></td>
+						<td th:text="${user?.user_name}"></td>
 					</tr>
 					<tr>
 						<th class="table-light">비밀번호</th>
-						<td th:text="${user.user_pw}"></td>
+						<td th:text="${user?.user_pw}"></td>
 					</tr>
 					<tr>
 						<th class="table-light">전화번호</th>
-						<td th:text="${user.user_phone}"></td>
+						<td th:text="${user?.user_phone}"></td>
 					</tr>
 					<tr>
 						<th class="table-light">이메일</th>
-						<td th:text="${user.user_email}"></td>
+						<td th:text="${user?.user_email}"></td>
 					</tr>
 					<tr>
 						<th class="table-light">생일</th>
-						<td th:text="${#dates.format(user.birth, 'yyyy-MM-dd')}"></td>
+						<td th:text="${#dates.format(user?.birth, 'yyyy-MM-dd')}"></td>
 					</tr>
 					<tr>
 						<th class="table-light">우편번호</th>
-						<td th:text="${user.add1}"></td>
+						<td th:text="${user?.add1}"></td>
 					</tr>
 					<tr>
 						<th class="table-light">주소</th>
-						<td th:text="${user.add2}"></td>
+						<td th:text="${user?.add2}"></td>
 					</tr>
 					<tr>
 						<th class="table-light">상세 주소</th>
-						<td th:text="${user.add3}"></td>
+						<td th:text="${user?.add3}"></td>
 					</tr>
 					<tr>
 						<th class="table-light">참고 항목</th>
-						<td th:text="${user.add3}"></td>
+						<td th:text="${user?.add4}"></td>
 					</tr>
 					<tr>
 						<th class="table-light">가입일</th>
-						<td th:text="${#dates.format(user.signup, 'yyyy-MM-dd HH:mm:ss')}"></td>
+						<td th:text="${#dates.format(user?.signup, 'yyyy-MM-dd HH:mm:ss')}"></td>
 					</tr>
 				</tbody>
 			</table>
 			<th:block th:if="${session.loginUser?.adminCk == 1}">
 				<div class="d-flex mb-3 g-3">
 					<div class="ms-auto">
-						<a class="btn btn-outline-info btn-lg" th:href="@{/user/update/{userId}(userId=${user.user_id})}">수정</a>
+						<a class="btn btn-outline-info btn-lg" th:href="@{/user/update/{userId}(userId=${user?.user_id})}">수정</a>
 						<a class="btn btn-outline-dark btn-lg" href="/user/list/1">목록</a>
 					</div>
 				</div>
@@ -86,7 +86,7 @@
 			<th:block th:unless="${session.loginUser?.adminCk == 1}">
 				<div class="d-flex mb-3 g-3">
 					<div class="ms-auto">
-						<a class="btn btn-outline-info btn-lg" th:href="@{/user/update/{userId}(userId=${user.user_id})}">수정</a>
+						<a class="btn btn-outline-info btn-lg" th:href="@{/user/update/{userId}(userId=${user?.user_id})}">수정</a>
 					</div>
 				</div>
 			</th:block>

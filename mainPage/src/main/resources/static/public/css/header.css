@@ -10,6 +10,11 @@
 	text-decoration: none;
 	color: black;
 }
+#headerId{
+	margin-bottom: 0;
+    font-size: 40px;
+    text-shadow: 5px 5px 0 gray;
+}
 #header #headerCenter #searchBox {
      width: 520px;
      height: 45px;
@@ -93,9 +98,6 @@
      display: block;
 }
 
-#headerId{
-    font-size: 40px;
-    text-shadow:  5px 5px 0 gray;
-}
+
 
 

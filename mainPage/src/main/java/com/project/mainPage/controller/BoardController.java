@@ -26,7 +26,6 @@ import com.project.mainPage.dto.Board;
 import com.project.mainPage.dto.BoardPrefer;
 import com.project.mainPage.dto.Criteria;
 import com.project.mainPage.dto.Pagination;
-import com.project.mainPage.dto.Product;
 import com.project.mainPage.dto.Reply;
 import com.project.mainPage.dto.ReplyPrefer;
 import com.project.mainPage.dto.UserDto;
@@ -121,14 +120,14 @@ public class BoardController {
 			@PathVariable int boardNo,
 			Model model,
 			@SessionAttribute(required = false) UserDto loginUser, 
-			@RequestParam( defaultValue = "1") int replyPage,
+			@RequestParam(defaultValue = "1") int replyPage,
 			HttpServletRequest req,
 			HttpServletResponse resp) {
 		Board board = null;		
 		BoardPrefer boardPrefer = null;  // 로그인이 안 되면 null
 		
 		//System.out.println(replyPage);
-		System.out.println(board);
+		//System.out.println(board);
 		
 		int row = 5;
 		int startRow = (replyPage - 1) * row;
@@ -139,9 +138,16 @@ public class BoardController {
 		try {
 			if(loginUser != null) {
 				loginUsersId = loginUser.getUser_id();
-				board = boardService.boardUpdateView(boardNo, loginUser.getUser_id());
+				board = boardService.boardUpdateView(boardNo);
 				boardPrefer = boardPreferMapper.selectFindUserIdAndBoardNo(loginUser.getUser_id(), boardNo);
-//				좋아요 싫어요를 한 번도 안 했으면 null
+				System.out.println(boardPrefer);
+				if(boardPrefer != null && boardPrefer.getUser_id().equals(loginUser.getUser_id())) {
+					if(boardPrefer.isPrefer()) {
+						board.setPrefer_active(true);
+					} else {
+						board.setPrefer_active(false);
+					}
+				}
 				for(Reply reply : board.getReplys()) {
 					for (ReplyPrefer prefer : reply.getGood_prefers()) {
 						if(prefer.getUser_id().equals(loginUser.getUser_id())) {
@@ -162,7 +168,7 @@ public class BoardController {
 					model.addAttribute("pagination", pagination);
 				}
 			} else {
-				board = boardMapper.selectOne(boardNo);
+				board = boardService.boardUpdateView(boardNo);
 				int replySize = replyMapper.selectBoardNoCount(boardNo);
 				if(replySize > 0) {
 					pagination = new Pagination(replyPage, replySize, pagingUrl, row);
@@ -343,37 +349,30 @@ public class BoardController {
 			@PathVariable boolean prefer,
 			@SessionAttribute(required = false) UserDto loginUser,
 			HttpSession session) {
-		String msg = (prefer) ? "좋아요" : "싫어요";
-		Board board = boardMapper.selectOne(boardNo, loginUser.getUser_id());
 		int modify = 0;
 		try {
 			BoardPrefer boardPrefer = boardPreferMapper.selectFindUserIdAndBoardNo(loginUser.getUser_id(), boardNo);
 			if(boardPrefer == null) { // 좋아요 싫어요를 한 번도 한 적이 없을 때
-				msg += " 등록";
 				boardPrefer = new BoardPrefer();
 				boardPrefer.setBoard_no(boardNo);
 				boardPrefer.setPrefer(prefer);
 				boardPrefer.setUser_id(loginUser.getUser_id());
 				modify = boardPreferMapper.insertOne(boardPrefer);
 			}else if(prefer == boardPrefer.isPrefer()) { // 좋아요 싫어요를 한 번 더 눌러서 삭제할 때
-				msg += " 삭제";
 				boardPrefer.setPrefer(prefer);
 				modify = boardPreferMapper.deleteOne(boardPrefer.getBoard_prefer_no());
 			}else if(prefer != boardPrefer.isPrefer()) { // 좋아요에서 싫어요로 바꿀 때 or 싫어요에서 좋아요로 바꿀 때
-				msg += " 수정";
 				boardPrefer.setPrefer(prefer);
 				modify = boardPreferMapper.updateOne(boardPrefer);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			msg += " (db오류)";
 		}
 		if(modify > 0) {
-			msg += " 성공!";
+			System.out.println("성공!");
 		}else {
-			msg += " 실패!";
+			System.out.println("실패!");
 		}
-		session.setAttribute("msg", msg);
 		return "redirect:/board/detail/" + boardNo;
 	}
 }

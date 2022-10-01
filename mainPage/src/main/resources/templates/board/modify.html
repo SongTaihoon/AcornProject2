@@ -101,7 +101,7 @@
 		    <tr>
 		    	<th style="width: 100px;" class="bg-light align-middle">사진</th>
 		    	<td>
-					<div class="mb-3">
+					<div class="mt-2 mb-3">
 						<p>삭제할 사진 선택</p>
 						<th:block th:each="boardImg : ${board.boardImgs}">
 							<label>
@@ -114,6 +114,8 @@
 						</th:block>
 					</div>
 				    <div>
+						<input name="imgFile" class="form-control mb-1 form-control-lg" type="file">
+						<input name="imgFile" class="form-control mb-1 form-control-lg" type="file">
 						<input name="imgFile" class="form-control mb-1 form-control-lg" type="file">
 						<input name="imgFile" class="form-control mb-1 form-control-lg" type="file">
 						<input name="imgFile" class="form-control mb-1 form-control-lg" type="file">
