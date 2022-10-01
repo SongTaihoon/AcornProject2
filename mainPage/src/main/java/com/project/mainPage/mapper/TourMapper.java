@@ -17,3 +17,4 @@ public interface TourMapper {
 	// 조회수 
 	int updateViews(String tourRank);
 }
+

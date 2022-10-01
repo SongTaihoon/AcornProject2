@@ -56,7 +56,7 @@ public class TopController {
 		System.out.println("tour" + tour);
 		if(tour != null) {
 			model.addAttribute(tour);
-			return "/tour/detail";
+			return "/tour/detail/"+tourRank;
 		}else {
 			return "redirect:/top/tour/1";	
 		}
