@@ -12,13 +12,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.project.mainPage.dto.Pagination;
 import com.project.mainPage.dto.Tour;
 import com.project.mainPage.mapper.TourMapper;
+import com.project.mainPage.service.TourService;
 
 @Controller
 @RequestMapping("/top")
 public class TopController {
 
 	@Autowired
-	TourMapper tourMapper;
+	private TourMapper tourMapper;
+	@Autowired
+	private TourService tourService;
 	
 	// 관광지 TOP 10 LIST
 	@GetMapping("/tour/{page}")
@@ -44,6 +47,20 @@ public class TopController {
 			@PathVariable String tourRank,
 			Model model
 			) {
+		Tour tour = null; 
+		try {
+			tour = tourService.tourUpdateView(tourRank);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("tour" + tour);
+		if(tour != null) {
+			model.addAttribute(tour);
+			return "/tour/detail";
+		}else {
+			return "redirect:/top/tour/1";	
+		}
+		
 		
 	}
 	

@@ -12,4 +12,8 @@ import com.project.mainPage.dto.Tour;
 public interface TourMapper {
 	List<Tour> selectListAll(int startRow, int pageSize);
 	int selectPageAllCount();
+	// detail 
+	Tour selectDetailOne(String tourRank);
+	// 조회수 
+	int updateViews(String tourRank);
 }

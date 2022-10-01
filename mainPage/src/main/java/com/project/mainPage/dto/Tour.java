@@ -3,7 +3,7 @@ package com.project.mainPage.dto;
 import lombok.Data;
 
 /*
- * desc tour;
+ *  desc tour;
 +-----------+--------------+------+-----+---------+-------+
 | Field     | Type         | Null | Key | Default | Extra |
 +-----------+--------------+------+-----+---------+-------+
@@ -15,6 +15,9 @@ import lombok.Data;
 | tours     | varchar(255) | NO   |     | NULL    |       |
 | category  | varchar(255) | NO   |     | NULL    |       |
 | search    | int          | NO   |     | NULL    |       |
+| views     | int          | NO   |     | 0       |       |
+| good      | int          | NO   |     | 0       |       |
+| bad       | int          | NO   |     | 0       |       |
 +-----------+--------------+------+-----+---------+-------+
  * */
 @Data
@@ -26,5 +29,8 @@ public class Tour {
 	 private String address3;
 	 private String tours;
 	 private String category;
+	 private int good;
+	 private int bad;
+	 private int views;
 	 private int search;
 }
