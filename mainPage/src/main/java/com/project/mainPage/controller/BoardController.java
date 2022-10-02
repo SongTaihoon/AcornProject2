@@ -149,6 +149,7 @@ public class BoardController {
 					}
 				}
 				for(Reply reply : board.getReplys()) {
+					System.out.println(reply);
 					for (ReplyPrefer prefer : reply.getGood_prefers()) {
 						if(prefer.getUser_id().equals(loginUser.getUser_id())) {
 							reply.setPrefer_active(true);

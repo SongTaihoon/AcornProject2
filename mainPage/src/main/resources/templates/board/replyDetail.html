@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:if="${(session.loginUser?.user_id == null) || ((session.loginUser?.user_id != reply.user?.user_id) && (session.loginUser?.adminCk == 0))}">
 <!--///////////////////////////////////// 로그인 안 된 유저 or 다른 유저가 보는 리플 ///////////////////////////////////////////////////////////////// -->	
-		<table class="mt-5 mb-3 table align-middle table-bordered">
+		<table class="mt-2 mb-3 table align-middle table-bordered">
 			<tbody>
 				<tr>
 					<th class="table-light">글 번호</th>
@@ -22,7 +22,7 @@
 						<th:block th:text="${reply.title}"></th:block>
 					</td>
 				</tr>
-				<tr>
+				<tr th:if="${reply.img_path != null}">
 					<th class="table-light">사진</th>
 					<td>
 						<div class="mb-1" th:if="${reply.img_path != null}">
@@ -116,11 +116,10 @@
 			reply_prefer을 reply_no + user_id 로 수정 삭제
 		-->
     </th:block>
-  	<th:block th:if="${(session.loginUser?.user_id == reply.user?.user_id) || (session.loginUser?.adminCk == 1)}">
-  	<p style="font-size: 30px; margin-top: 8px;">댓글 수정/삭제</p>	
-<!--///////////////////////////////////// 로그인된 유저 or 관리자가 보는 리플 ///////////////////////////////////////////////////////////////// -->				
-  		<form action="/reply/update.do" method="post" enctype="multipart/form-data" style="width: 100%" name="replyUpdate">
-	  		<table class="mb-3 table align-middle table-bordered">
+  	<th:block th:if="${(session.loginUser?.adminCk == 1)}">
+<!--///////////////////////////////////// 관리자가 보는 리플 ///////////////////////////////////////////////////////////////// -->				
+  		<form action="/reply/update.do" method="post" enctype="multipart/form-data" style="width: 100%" name="replyUpdateForm1">
+	  		<table class="mb-3 mt-2 table align-middle table-bordered">
 				<tbody>
 					<tr>
 						<th class="table-light">글 번호</th>
@@ -146,7 +145,7 @@
 					<tr>
 						<th class="table-light">사진</th>
 						<td>
-							<div class="mt-2 mb-3" th:if="${reply.img_path != null}">
+							<div class="mt-2 mb-3" th:if="${reply.img_path != null && reply.img_path != ''}">
 								<p> 삭제하기
 									<input name="remove_img_check" type="checkbox"
 								   		   class="form-check-input ms-1" value="1">
@@ -249,11 +248,12 @@
   	</th:block>
 <script>
 //값이 없을 때 submit 불가
-var replyUpdate = document.forms.replyUpdate;
-var title = replyUpdate.title;
-var contents = replyUpdate.contents;
-document.forms.replyUpdate.addEventListener("submit", (event) => {
-	if(!(title.value) || !(contents.value)) {
+const replyUpdateForm1 = document.forms.replyUpdateForm1;
+console.log(replyUpdateForm1);
+const titl = replyUpdateForm1.title;
+const content = replyUpdateForm1.contents;
+replyUpdateForm1.addEventListener("submit", (event) => {
+	if(!(titl.value) || !(content.value)) {
 		event.preventDefault();		
 	}
 });

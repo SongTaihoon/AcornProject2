@@ -163,18 +163,26 @@
 	  </div>
 	  	<h1 class="pb-4 d-flex justify-content-between align-items-center" 
 		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
-		    <span style="font-size: 35px;">댓글 리스트 : <strong th:text="${board.replys?.size}"></strong></span>
+		    <span style="font-size: 35px;">댓글 : <strong th:text="${board.replys?.size}"></strong></span>
 		    <button class="btn btn-lg btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#replyCollapse">
     			토글
   			</button>
 	    </h1>
 		<div class="mt-3">
 			<ul class="list-group collapse show mt-3" id="replyCollapse">
-				<li class="list-group-item" 
+<!--///////////////////////////////////// 리플 등록 폼 ///////////////////////////////////////////////////////////////// -->	
+				<li class="list-group-item fixed-bottom" 
 				th:if="${session.loginUser?.user_id != null}">
-					<p style="font-size: 30px; margin-top: 8px;">댓글 등록</p>
-<!--///////////////////////////////////// 리플 등록 폼 ///////////////////////////////////////////////////////////////// -->				
-					<form action="/reply/insert.do" method="post" enctype="multipart/form-data" name="replyInsertForm">
+					<div class="d-flex align-items-center">
+						<p style="font-size: 30px; margin-top: 8px;">댓글 등록</p>
+						<p class="ms-auto mb-0">
+						  <button class="btn btn-lg btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#replyInsertCollapse" aria-expanded="false" aria-controls="collapseExample">
+						    토글
+						  </button>
+						</p>
+					</div>
+					<div class="collapse" id="replyInsertCollapse">
+					  	<form action="/reply/insert.do" method="post" enctype="multipart/form-data" name="replyInsertForm">
 						<table class="table table-bordered table align-middle mb-3" style="height: 100%;">
 							<tbody>
 								<tr>
@@ -192,7 +200,7 @@
 								<tr>
 									<th class="table-light">사진</th>
 									<td>
-										<input name="imgFile" class="form-control mb-1 form-control-lg" type="file">
+										<input name="imgFile" class="form-control form-control-lg" type="file">
 									</td>
 								</tr>
 								<tr>
@@ -212,6 +220,7 @@
 							</div>
 						</div>
 					</form>
+				</div>							
 				</li>
 				<th:block th:insert="/board/replyList" th:with="replys=${board.replys}" id="replyList"></th:block>
 			</ul>
