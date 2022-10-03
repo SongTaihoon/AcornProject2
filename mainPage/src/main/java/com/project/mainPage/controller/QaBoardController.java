@@ -167,7 +167,7 @@ public class QaBoardController {
 			return "redirect:/user/login.do";			
 		} else if(qaBoard.getUser().getUser_id().equals(loginUser.getUser_id()) || (loginUser.getAdminCk() == 1)) { // 로그인된 일반 회원이 본인이 작성한 고객 문의 수정 페이지로 이동 / 관리자는 모든 글 조회 가능
 			System.out.println("고객 문의 수정 페이지로 이동 성공!");
-			model.addAttribute("qaBoard : ", qaBoard);
+			model.addAttribute("qaBoard", qaBoard);
 			System.out.println(qaBoard);
 			return "/qaboard/modify";	
 		} else { // 로그인된 일반 회원이 다른 회원이 작성한 고객 문의 수정 페이지로 이동할 수 없음
@@ -182,7 +182,7 @@ public class QaBoardController {
 		int update = 0;
 		try {
 			update = qaBoardMapper.updateOne(qaBoard);
-			System.out.println("postUpdate_qaBoard : "+qaBoard);
+			System.out.println("postUpdate_qaBoard : " + qaBoard);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
