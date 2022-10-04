@@ -48,7 +48,7 @@
 					<th class="table-light">답변일</th>
 					<td>
 						<input name="qaReplyDate" class="form-control" th:value="${#dates.format(qaBoard.qaReply?.qaReplyDate, 'yyyy-MM-dd HH:mm:ss')}"
-							   type="text">
+							   type="text" readonly>
 					</td>
 				</tr>
 			</tbody>

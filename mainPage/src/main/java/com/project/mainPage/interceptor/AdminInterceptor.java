@@ -5,16 +5,16 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import com.project.mainPage.dto.UsersDto;
+import com.project.mainPage.dto.UserDto;
 @Component
 public class AdminInterceptor implements HandlerInterceptor{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		HttpSession session = request.getSession();
-		UsersDto adminCheck = (UsersDto)session.getAttribute("loginUsers");
-		if(adminCheck == null || adminCheck.getAdminCk() == 0) { // 관리자 아닐 경우
-			response.sendRedirect("/"); // 메인으로
+		UserDto adminCheck = (UserDto)session.getAttribute("loginUser");
+		if(adminCheck == null || adminCheck.getAdminCk() == 0) { // 관리자가 아닐 경우
+			response.sendRedirect("/"); // 홈 화면으로
 			return false;
 		}else {
 			return true;
@@ -30,5 +30,4 @@ public class AdminInterceptor implements HandlerInterceptor{
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
 	}
-
 }

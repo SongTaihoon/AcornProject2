@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>관광지 여행</title>
+<link rel="stylesheet" href="/public/css/tour/detail.css">
+</head>
+<body>
+<header th:insert="/NewHeader"></header>
+<div id="wrapper">
+	<main class="container-xl">
+		<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" id="path">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item">
+		    	<a href="/">홈</a>
+		    </li>
+		    <li class="breadcrumb-item">
+		    	<a href="#">Top 10</a>
+		    </li>
+		    <li class="breadcrumb-item" aria-current="page">
+		    	<a href="/top/tour/1" class="breadcrumb-item active">관광지</a>
+		    </li>
+		    <li class="breadcrumb-item" aria-current="page">
+		    	<a th:href="@{/top/tour/detail/{tourRank}(tourRank=${tour.tour_rank})}" class="breadcrumb-item active">관광지 정보</a>
+		    </li>
+		  </ol>
+		</nav>
+		 <h1 class="pb-4 d-flex justify-content-between align-items-center" 
+		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
+		    <span style="font-size: 35px;" th:text="${tour.tour_rank}"></span>
+	    </h1>	
+		<div class="mt-3 d-flex">
+			<div class="d-flex align-items-center">
+				<i class="bi bi-eye" style="margin-right: 4px;"
+					data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="조회수">
+					<span th:text="${tour.views}"></span>
+				</i>
+			</div>
+	  </div>
+	  <div class="mt-3 mb-3">
+	 	<table class="table table-bordered table align-middle">
+		  <tbody>
+		    <!-- <tr>
+		      <td style="width: 400px; border-right: none;" rowspan="6">
+		      	<div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel" 
+		      		style="width: 400px; height: 400px;">
+				  <div class="carousel-inner">
+				  	<th:block th:each="boardImg : ${board.boardImgs}">
+				  		<div class="carousel-item active">
+					      	<div class="mb-1" th:if="${boardImg != null}">
+								Button trigger modal
+								<button type="button" class="btn border-0" data-bs-toggle="modal"
+									style="padding: 0" 
+									th:data-bs-target="'#boardImgModal' + ${boardImg.board_img_no}">
+     								<img th:src="@{/img/{fileName}(fileName=${boardImg.img_path})}" alt="후기 이미지"  style="width: 400px; height: 400px;">
+								</button>			
+							</div>
+				  		</div>
+						Modal
+						<div class="modal fade"
+							th:id="'boardImgModal' + ${boardImg.board_img_no}" >
+						  <div class="modal-dialog modal-dialog-centered modal-lg">
+						    <div class="modal-content" 
+						    style="background-color: rgba(255,255,255,0)">
+						      <div class="modal-body">
+		   						<img th:src="@{/img/{fileName}(fileName=${boardImg.img_path})}" alt="후기 이미지" width="760"> 
+						      </div>
+						    </div>
+						  </div>
+						</div>							
+				  	</th:block>
+				  </div>
+				  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+				    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				    <span class="visually-hidden">Previous</span>
+				  </button>
+				  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+				    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+				    <span class="visually-hidden">Next</span>
+				  </button>
+				 </div>
+		      </td>
+		    </tr> -->
+		    <!-- 보류 <tr> 
+		      <th style="width: 100px; border-left: none;" class="bg-light">카테고리</th>
+		      <th:block th:if="${board.category.category_id == '1'}">
+				  <td style="width: 600px;">관광지</td> 
+			  </th:block>
+			  <th:block th:if="${board.category.category_id == '2'}">
+				  <td style="width: 600px;">숙박</td> 
+			  </th:block>
+			  <th:block th:if="${board.category.category_id == '3'}">
+				  <td style="width: 600px;">맛집</td> 
+			  </th:block>
+		    </tr> -->
+		    <tr>
+		      <th style="width: 100px; border-left: none;" class="bg-light">관광지명</th>
+		      <td style="width: 600px;" th:text="${tour.tourist}"></td>
+		    </tr>
+		    <tr>
+		      <th style="width: 100px; border-left: none;" class="bg-light">서귀포/제주도</th>
+		      <td style="width: 600px;" th:text="${tour.city}"></td>
+		    </tr>
+		    <tr>
+		      <th style="width: 100px; border-left: none;" class="bg-light">주소</th>
+		      <td style="width: 600px;" th:text="${tour.address3}"></td>
+		    </tr>
+		    <tr>
+		      <th style="width: 100px; border-left: none;" class="bg-light">검색수</th>
+		      <td style="width: 600px;" th:text="${tour.search}"></td>
+		    </tr>
+		  </tbody>
+		</table>
+	  </div>	
+	  <!-- <div class="d-flex mb-5">
+			<div th:if="${(session.loginUser?.user_id == board.user?.user_id) || (session.loginUser?.adminCk == 1)}" class="ms-auto">
+				<a th:href="@{/board/update/{boardNo}(boardNo = ${board.board_no})}" class="btn btn-outline-info btn-lg" style="margin-right: 8px;">
+					수정
+				</a>
+				<a href="/board/list/1" class="btn btn-outline-dark btn-lg">목록</a>
+			</div>
+			<div th:unless="${(session.loginUser?.user_id == board.user?.user_id) || (session.loginUser?.adminCk == 1)}" class="ms-auto">
+				<a href="/board/list/1" class="btn btn-outline-dark btn-lg">목록</a>
+			</div>
+	  </div> -->
+	</main>	
+	 <footer class="footer" th:insert="/NewFooter"></footer> 
+	</div>
+</body>
+</html>

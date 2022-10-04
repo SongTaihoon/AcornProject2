@@ -1,14 +1,11 @@
 package com.project.mainPage.interceptor;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-
-@Component
+@Component 
 public class LoginCheckInterceptor implements HandlerInterceptor{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -17,12 +14,12 @@ public class LoginCheckInterceptor implements HandlerInterceptor{
 		String prevPage = request.getHeader("Referer"); // 요청한 페이지의 이전 페이지 (로그인하면 되돌아갈 페이지)
 		System.out.println("prevPage : " + prevPage);
 		HttpSession session = request.getSession();
-		Object loginCheck_obj = session.getAttribute("loginUsers");
+		Object loginCheck_obj = session.getAttribute("loginUser");
 		if(loginCheck_obj != null) {
-			return true;
+			return true; 
 		}else {
 			session.setAttribute("redirectPage", prevPage); // 로그인 성공 시 이동할 페이지
-			response.sendRedirect("/users/login.do");
+			response.sendRedirect("/user/login.do");
 			return false;
 		}
 	}

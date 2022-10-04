@@ -11,14 +11,16 @@
 </head>
 <body>
     <div id="header">
-        <div id="headerLeft">
-            <h1>
+
+        <div id="headerLeft" style="min-width: 335px;">
+            <h1 id="headerId">
             	<a href="/">
-            		<img src="/img/logo.png" style="width: 160px; height: 60px;">
+           			<img class="align-baseline" src="/img/logo.png" style="width: 50px; height: 50px;">
+           			<span class="align-top" >JEJU THE BEST</span>
             	</a>		
             </h1>
         </div>
-        <div id="headerCenter">
+        <div id="headerCenter" style="min-width: 550px;">
         	<div class="container-fluid" id="searchBox">
 			  <form class="d-flex" action="/search/1" id="searchForm" name="searchForm" method="get">
 			    <input class="form-control me-2" type="text" name="keyword" id="searchInput" onkeyup="noSpace(this);" onchange="noSpace(this);" maxlength="50">
@@ -28,40 +30,40 @@
 			  </form>
 			</div>
         </div>
-        <div id="headerRight">
-	        <nav style="--bs-breadcrumb-divider: '|';" aria-label="breadcrumb">
+        <div id="headerRight" style="min-width: 300px;">
+	        <nav style="--bs-breadcrumb-divider: '|';" aria-label="breadcrumb" class="d-flex justify-content-center">
 			  <ol class="breadcrumb">
-			  	<th:block th:if="${session.loginUsers == null}">
+			  	<th:block th:if="${session.loginUser == null}">
 			    	<li class="breadcrumb-item">
-			    		<a href="/users/login.do">로그인</a>
+			    		<a href="/user/login.do">로그인</a>
 			    	</li>
 			    	<li class="breadcrumb-item">
-			    		<a href="/users/signup.do">회원가입</a>
+			    		<a href="/user/signup.do">회원가입</a>
 			    	</li>
 			    </th:block>
-			    <th:block th:if="${session.loginUsers?.adminCk == 1}">
+			    <th:block th:if="${session.loginUser?.adminCk == 1}">
 			    	<li class="breadcrumb-item">
-			    		<a th:href="@{/users/detail/{userid}(userid=${session.loginUsers.userid})}">
-	     					<span th:text="${session.loginUsers.username}"></span>
-							(<span th:text="${session.loginUsers.userid}"></span>)
+			    		<a th:href="@{/user/detail/{userId}(userId=${session.loginUser.user_id})}">
+	     					<span th:text="${session.loginUser.user_name}"></span>
+							(<span th:text="${session.loginUser.user_id}"></span>)
 						</a> 
 					</li>
 					<li class="breadcrumb-item">
-			    		<a href="/users/list/1">회원 리스트</a>
+			    		<a href="/user/list/1">회원 리스트</a>
 			    	</li>
 			    	<li class="breadcrumb-item">
-			    		<a href="/users/logout.do">로그아웃</a>
+			    		<a href="/user/logout.do">로그아웃</a>
 			    	</li>
 			    </th:block>
-			    <th:block th:if="${(session.loginUsers != null) && (session.loginUsers?.adminCk == 0)}">
+			    <th:block th:if="${(session.loginUser != null) && (session.loginUser?.adminCk == 0)}">
 			    	<li class="breadcrumb-item">
-			    		<a th:href="@{/users/detail/{userid}(userid=${session.loginUsers.userid})}">
-	     					<span th:text="${session.loginUsers.username}"></span>
-							(<span th:text="${session.loginUsers.userid}"></span>)
+			    		<a th:href="@{/user/detail/{userId}(userId=${session.loginUser.user_id})}">
+	     					<span th:text="${session.loginUser.user_name}"></span>
+							(<span th:text="${session.loginUser.user_id}"></span>)
 						</a> 
 					</li>
 			    	<li class="breadcrumb-item">
-			    		<a href="/users/logout.do">로그아웃</a>
+			    		<a href="/user/logout.do">로그아웃</a>
 			    	</li>
 			    </th:block>
 			  </ol>
@@ -76,9 +78,9 @@
 	  	<div class="dropdown" id="dropdown1">
 	        <button class="dropdown-btn">Top 10</button>
 	        <div class="dropdown-submenu">
-	            <a href="/top/tour">관광지</a>
-	            <a href="/top/rest">음식</a>
-	            <a href="/top/acco">숙박</a>
+	            <a href="/top/tour/1">관광지</a>
+	            <a href="/top/rest/1">음식</a>
+	            <a href="/top/acco/1">숙박</a>
 	        </div>
     	</div>
         <div class="dropdown" id="dropdown2">

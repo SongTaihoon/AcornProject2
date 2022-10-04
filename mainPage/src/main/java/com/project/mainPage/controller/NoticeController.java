@@ -23,7 +23,7 @@ import com.project.mainPage.dto.Criteria;
 import com.project.mainPage.dto.Notice;
 import com.project.mainPage.dto.NoticeImg;
 import com.project.mainPage.dto.Pagination;
-import com.project.mainPage.dto.UsersDto;
+import com.project.mainPage.dto.UserDto;
 import com.project.mainPage.mapper.NoticeImgMapper;
 import com.project.mainPage.mapper.NoticeMapper;
 import com.project.mainPage.service.NoticeService;
@@ -112,10 +112,10 @@ public class NoticeController {
 //	공지 사항 등록 페이지(관리자)
 	@GetMapping("/insert.do")
 	public String insert(HttpSession session) {
-		if(session.getAttribute("loginUsers") != null) {
+		if(session.getAttribute("loginUser") != null) {
 			return "/notice/insert";
 		}else {
-			return "redirect:/users/login.do";
+			return "redirect:/user/login.do";
 		}
 	}
 	
@@ -164,10 +164,10 @@ public class NoticeController {
 	public String delete(
 			@PathVariable int noticeNo,
 			@PathVariable String userId,
-			@SessionAttribute(name="loginUsers", required = false) UsersDto loginUsers
+			@SessionAttribute(name="loginUser", required = false) UserDto loginUser
 			) {
 		// loginUsers null이 아니고 관리자일 때 삭제 가능 
-			if(loginUsers != null  && (loginUsers.getAdminCk() == 1)) {
+			if(loginUser != null  && (loginUser.getAdminCk() == 1)) {
 				int delete = 0;
 				try {
 					delete = noticeService.removeNotice(noticeNo);
@@ -182,7 +182,7 @@ public class NoticeController {
 					return "redirect:/notice/update/" + noticeNo;
 				}
 			}else {
-				return "redirect:/users/login.do";				
+				return "redirect:/user/login.do";				
 			}	
 	}
 	
@@ -192,14 +192,14 @@ public class NoticeController {
 			@PathVariable int noticeNo,
 			Model model,
 			HttpSession session,
-			@SessionAttribute(name="loginUsers", required = false) UsersDto loginUsers
+			@SessionAttribute(name="loginUser", required = false) UserDto loginUser
 			) {
 		Notice notice = noticeMapper.selectDetailOne(noticeNo); 
-		if(loginUsers != null && (loginUsers.getAdminCk() == 1)) {
+		if(loginUser != null && (loginUser.getAdminCk() == 1)) {
 			model.addAttribute(notice);
 			return "/notice/modify";	
 		}else {
-			return "redirect:/users/login.do";			
+			return "redirect:/user/login.do";			
 		}	
 	}
 	
@@ -211,7 +211,7 @@ public class NoticeController {
 			@RequestParam(name = "imgFile", required = false) MultipartFile[]imgFiles,
 			HttpSession session) {
 		int update = 0;
-		Object loginUser_obj=session.getAttribute("loginUsers");
+		Object loginUser_obj=session.getAttribute("loginUser");
 		System.out.println(Arrays.toString(noticeImgNos)); //삭제할 이미지 번호들
 		System.out.println(Arrays.toString(imgFiles)); //등록할 이미지 파일 (blob)
 		System.out.println(notice);
@@ -251,7 +251,7 @@ public class NoticeController {
 					return "redirect:/notice/update/" + notice.getNotice_no();
 				}
 			}else {
-				return "redirect:/users/login.do";
+				return "redirect:/user/login.do";
 			}	
 	}
 }

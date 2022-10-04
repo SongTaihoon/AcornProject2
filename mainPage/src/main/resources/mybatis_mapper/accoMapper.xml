@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.project.mainPage.mapper.AccoMapper">
+ 	<resultMap type="Acco" id="AccoMap">
+		<id column="acco_rank" property="acco_rank"/>
+		<result column="tourist" property="tourist"/>
+		<result column="province" property="province"/>
+		<result column="city" property="city"/>
+		<result column="address1" property="address1"/>
+		<result column="acco" property="acco"/>		
+		<result column="search" property="search"/>	
+	</resultMap>
+	<!--  acco List  -->
+	<select id="selectListAll" resultType="Acco">
+		SELECT * FROM ACCOMMODATE ORDER BY search DESC LIMIT #{startRow}, #{pageSize}
+	</select>
+	<select id="selectPageAllCount" resultType="int">
+		SELECT COUNT(*) FROM ACCOMMODATE
+	</select>
+	<!-- acco Detail  -->
+	<select id="selectDetailOne" resultType="Acco">
+		SELECT * FROM ACCOMMODATE WHERE acco_rank = #{accoRank}
+	</select>
+	<!-- 조회수 -->
+	<update id="updateViews" parameterType="int">
+		UPDATE ACCOMMODATE SET 
+			views = views + 1
+			WHERE acco_rank = #{accoRank}
+	</update>
+ </mapper>

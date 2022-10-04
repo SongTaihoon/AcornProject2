@@ -1,25 +1,17 @@
 package com.project.mainPage.dto;
-
 import java.util.List;
 
 import lombok.Data;
 /*
- 
-+--------------+-------------+------+-----+---------+-------+
-| Field        | Type        | Null | Key | Default | Extra |
-+--------------+-------------+------+-----+---------+-------+
-| categoryid   | int         | NO   | PRI | NULL    |       |
-| categoryName | varchar(45) | YES  |     | NULL    |       |
-| productid    | int         | YES  | MUL | NULL    |       |
-+--------------+-------------+------+-----+---------+-------+
-  
- */
-
-
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| category_id   | varchar(45) | NO   | PRI | NULL    |       |
+| category_name | varchar(45) | NO   |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+  
+*/
 @Data
 public class Category {
-	private int categoryId;
-	private String categoryName;
-	private List<Product> products; 
-	private List<ProductImg> productImgs;
+	private String category_id;
+	private String category_name;
 }

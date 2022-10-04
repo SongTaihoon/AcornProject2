@@ -25,7 +25,7 @@
 		<h1 class="pb-4 d-flex justify-content-between align-items-center" 
 			style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
 			<span style="font-size: 35px;">공지 사항</span>
-			<th:block th:if="${session.loginUsers?.adminCk==1}">
+			<th:block th:if="${session.loginUser?.adminCk==1}">
 				<a href="/notice/insert.do" class="btn btn-secondary">공지 사항 등록</a>
 			</th:block>
 		</h1>
@@ -36,18 +36,18 @@
 					<th>글 번호</th>
 					<th>작성자</th>
 					<th>제목</th>
-					<th>등록일</th>
 					<th>조회수</th>
+					<th>등록일</th>
 				</tr>
 			</thead>
 			<tbody>
 				<th:block th:each="notice : ${noticeList}" >
 					<tr th:onclick="location.href='/notice/detail/[[${notice.notice_no}]]'">
 						<td th:text="${notice.notice_no}"></td>
-						<td th:text="${notice.users?.userid}"></td>
+						<td th:text="${notice.user?.user_id}"></td>
 						<td th:text="${notice.title}"></td>
-						<td th:text="${#dates.format(notice.post_time,'yyyy-MM-dd HH:mm:ss')}"></td>
 						<td th:text="${notice.views}"></td>
+						<td th:text="${#dates.format(notice.post_time,'yyyy-MM-dd HH:mm:ss')}"></td>
 					</tr>				
 				</th:block>
 			</tbody>

@@ -126,6 +126,17 @@ function phoneAutoComplete(e) {
         e.value = phone;
 }
 
+//첫 공백만 차단
+function noSpace(obj) { // 공백사용못하게
+    var str = /\s/;  // 공백체크
+    if(str.exec(obj.value.trim)) { //공백 체크
+        //alert("해당 항목에는 첫 글자 공백을 사용할수 없습니다.");
+        obj.focus();
+        obj.value = obj.value.replace(/^ +/,''); // 공백제거
+        return false;
+    }
+}
+
 // 잘라내기, 복사, 붙여넣기 차단
 document.querySelectorAll("input").forEach((input) => {
 	input.addEventListener("cut", (event) => {
@@ -484,29 +495,29 @@ signupForm["birth"].addEventListener("change", (event) => {
 
 // 우편번호 버튼 클릭 시 우편번호와 메인 주소의 '필수 정보입니다.' 문구 삭제 이벤트
 signupForm["user_addr_postcode_btn"].addEventListener("click", (event) => {
-	signupForm["user_addr_postcode"].classList.remove("is-invalid");
+	signupForm["add1"].classList.remove("is-invalid");
 	addPostCodeHelp.classList.remove("is-invalid");
-	signupForm["user_addr_main"].classList.remove("is-invalid");
+	signupForm["add2"].classList.remove("is-invalid");
 	addMainHelp.classList.remove("is-invalid");
 }); 
 
 // 우편번호나 메인 주소 값이 있을 시 상세 주소에 마우스를 올리면 readonly가 삭제되는 이벤트
-signupForm["user_addr_detail"].addEventListener("mouseover", (event) => {
-	if(signupForm["user_addr_main"].value || signupForm["user_addr_postcode"].value) {
+signupForm["add3"].addEventListener("mouseover", (event) => {
+	if(signupForm["add1"].value || signupForm["add2"].value) {
 		event.target.removeAttribute("readonly");
 	}
 }); 
 
 // 상세 주소 입력 이벤트
-signupForm["user_addr_detail"].addEventListener("input", (event) => {
+signupForm["add3"].addEventListener("input", (event) => {
 	let value = event.target.value;
 	if(value && value.trim()) {
-		signupForm["user_addr_detail"].classList.remove("is-invalid");
+		signupForm["add3"].classList.remove("is-invalid");
 		addDetailHelp.classList.remove("is-invalid");
 		adressSubmit = true;
 	} else {
 		addDetailHelpInvalid.innerText = "상세 주소를 입력하세요.";
-		signupForm["user_addr_detail"].classList.add("is-invalid");
+		signupForm["add3"].classList.add("is-invalid");
 		addDetailHelp.classList.add("is-invalid");
 		adressSubmit = false;
 	}
@@ -514,8 +525,8 @@ signupForm["user_addr_detail"].addEventListener("input", (event) => {
 });
 
 // 우편번호나 메인 주소 값이 없을 시 상세 주소 입력 차단
-signupForm["user_addr_detail"].addEventListener("keydown", (event) => {
-	if(!signupForm["user_addr_postcode"].value || !signupForm["user_addr_main"].value) {
+signupForm["add3"].addEventListener("keydown", (event) => {
+	if(!signupForm["add1"].value || !signupForm["add2"].value) {
 		event.preventDefault();
 	}	
 });
@@ -572,24 +583,24 @@ signupForm.addEventListener("submit", (event) => {
 		birthHelp.classList.remove("is-valid");
 		birthHelp.classList.add("is-invalid");
 	}
-	if(!signupForm["user_addr_postcode"].value) {
+	if(!signupForm["add1"].value) {
 		addPostCodeHelpInvalid.innerText = "필수 정보입니다.";
-		signupForm["user_addr_postcode"].classList.remove("is-valid");
-		signupForm["user_addr_postcode"].classList.add("is-invalid");
+		signupForm["add1"].classList.remove("is-valid");
+		signupForm["add1"].classList.add("is-invalid");
 		addPostCodeHelp.classList.remove("is-valid");
 		addPostCodeHelp.classList.add("is-invalid");
 	}
-	if(!signupForm["user_addr_main"].value) {
+	if(!signupForm["add2"].value) {
 		addMainHelpInvalid.innerText = "필수 정보입니다.";
-		signupForm["user_addr_main"].classList.remove("is-valid");
-		signupForm["user_addr_main"].classList.add("is-invalid");
+		signupForm["add2"].classList.remove("is-valid");
+		signupForm["add2"].classList.add("is-invalid");
 		addMainHelp.classList.remove("is-valid");
 		addMainHelp.classList.add("is-invalid");
 	}
-	if(!signupForm["user_addr_detail"].value || !signupForm["user_addr_detail"].value.trim()) {
+	if(!signupForm["add3"].value || !signupForm["add3"].value.trim()) {
 		addDetailHelpInvalid.innerText = "필수 정보입니다.";
-		signupForm["user_addr_detail"].classList.remove("is-valid");
-		signupForm["user_addr_detail"].classList.add("is-invalid");
+		signupForm["add3"].classList.remove("is-valid");
+		signupForm["add3"].classList.add("is-invalid");
 		addDetailHelp.classList.remove("is-valid");
 		addDetailHelp.classList.add("is-invalid");
 	}

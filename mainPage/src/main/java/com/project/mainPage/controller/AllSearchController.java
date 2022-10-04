@@ -1,7 +1,6 @@
 package com.project.mainPage.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,17 +13,13 @@ import com.project.mainPage.dto.Board;
 import com.project.mainPage.dto.Criteria;
 import com.project.mainPage.dto.Notice;
 import com.project.mainPage.dto.Pagination;
-import com.project.mainPage.dto.Product;
+
 import com.project.mainPage.mapper.BoardMapper;
 import com.project.mainPage.mapper.CategoryMapper;
 import com.project.mainPage.mapper.NoticeMapper;
-import com.project.mainPage.mapper.ProductMapper;
 import com.project.mainPage.mapper.ReplyMapper;
-
 @Controller
 public class AllSearchController {
-	@Autowired
-	private ProductMapper productMapper;
 	@Autowired
 	private BoardMapper boardMapper;
 	@Autowired
@@ -41,17 +36,11 @@ public class AllSearchController {
 		int startRow = (page - 1) * row;
 		cri.setAmount(row);
 		cri.setSkip(startRow);
-		List<Product> productList=productMapper.searchAllProduct(cri);
-		int productCount = productMapper.productsAllGetTotal(cri);
 		List<Board> boardList= boardMapper.searchAllBoard(cri);
 		int boardCount = boardMapper.boardAllGetTotal(cri);
 		List<Notice> noticeList= noticeMapper.searchAllNotice(cri);
 		int noticeCount = noticeMapper.noticeAllGetTotal(cri);
-		if(!productList.isEmpty()) {
-			model.addAttribute("productList",productList);
-			model.addAttribute("productCount", productCount);
-			model.addAttribute("page", page);
-		}if(!boardList.isEmpty()) {
+		if(!boardList.isEmpty()) {
 			model.addAttribute("boardList",boardList);
 			model.addAttribute("boardCount", boardCount);
 			model.addAttribute("page", page);
@@ -62,28 +51,6 @@ public class AllSearchController {
 		}else {
 			return "/search"; }
 		return "/search";
-	}
-	@GetMapping("/search/product/{page}")
-	public String searchProduct(
-			@RequestParam(defaultValue = "search") String keyword,
-			@PathVariable int page, Criteria cri, Model model) {
-		int row = 10;
-		int startRow = (page - 1) * row;
-		cri.setAmount(row);
-		cri.setSkip(startRow);
-		Pagination pagination;
-		List<Product> productList=productMapper.searchAllProduct(cri);
-		int productCount = productMapper.productsAllGetTotal(cri);
-		if(!productList.isEmpty()) {
-			model.addAttribute("productList",productList);
-			model.addAttribute("row", row);
-			model.addAttribute("productCount", productCount);
-			model.addAttribute("page", page);
-			pagination = new Pagination(page, productCount, "/search/product/", row);
-			model.addAttribute("pagination", pagination);
-		}else {
-			return "/search/product"; }
-		return "/search/product";
 	}
 	@GetMapping("/search/board/{page}")
 	public String searchBoard(

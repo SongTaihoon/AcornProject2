@@ -10,16 +10,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import com.project.mainPage.dto.Board;
 import com.project.mainPage.dto.Criteria;
 import com.project.mainPage.dto.Pagination;
-import com.project.mainPage.dto.Product;
 import com.project.mainPage.dto.QaBoard;
 import com.project.mainPage.dto.QaReply;
-import com.project.mainPage.dto.UsersDto;
-import com.project.mainPage.mapper.ProductMapper;
+import com.project.mainPage.dto.UserDto;
 import com.project.mainPage.mapper.QaBoardMapper;
 import com.project.mainPage.mapper.QaReplyMapper;
+import com.project.mainPage.service.QaBoardService;
 @Controller
 @RequestMapping("/qaboard")
 public class QaBoardController {
@@ -30,7 +28,7 @@ public class QaBoardController {
 	private QaReplyMapper qaReplyMapper;
 	
 	@Autowired
-	private ProductMapper productMapper;
+	private QaBoardService qaBoardService;
 	
 //	고객 문의 리스트 페이지
 	@GetMapping("/list/{page}")
@@ -86,9 +84,14 @@ public class QaBoardController {
 	public String detail(
 			@PathVariable int qaBoardno, 
 			Model model,
-			@SessionAttribute(required = false) UsersDto loginUsers) {
-		QaBoard qaBoard = qaBoardMapper.selectOne(qaBoardno);
-		System.out.println("qaBoard" + qaBoard);
+			@SessionAttribute(required = false) UserDto loginUser) {
+		QaBoard qaBoard = null;
+		try {
+			qaBoard = qaBoardService.qaBoardUpdateView(qaBoardno);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("detail_qaBoard" + qaBoard);
 		model.addAttribute("qaBoard", qaBoard);
 		return "/qaboard/detail";
 	}
@@ -97,10 +100,7 @@ public class QaBoardController {
 	@GetMapping("/insert.do")
 	public String insert(
 			Model model,
-			@SessionAttribute(required = false) UsersDto loginUsers) {
-		List<Product> qList = productMapper.selectAllProduct();
-		System.out.println(qList);
-		model.addAttribute("qList", qList);
+			@SessionAttribute(required = false) UserDto loginUser) {
 		return "/qaboard/insert";
 	}
 	
@@ -124,10 +124,23 @@ public class QaBoardController {
 	
 //	고객 문의 삭제
 	@GetMapping("/delete/{qaBoardNo}")
-	public String delete(@PathVariable int qaBoardNo) {
+	public String delete(
+			@PathVariable int qaBoardNo,
+			HttpSession session,
+			@SessionAttribute(required = false) UserDto loginUser) {
 		int delete = 0;
+		QaBoard qaBoard = qaBoardMapper.selectOne(qaBoardNo);
 		try {
-			delete=qaBoardMapper.deleteOne(qaBoardNo);
+			if(loginUser == null) { // 로그인이 안 되어 있는 경우
+				System.out.println("로그인하세요.");
+				return "redirect:/user/login.do";			
+			} else if(qaBoard.getUser().getUser_id().equals(loginUser.getUser_id()) || (loginUser.getAdminCk() == 1)) { // 로그인된 일반 회원이 본인이 작성한 고객 문의 글을 삭제 / 관리자는 모든 글 삭제 가능
+				delete = qaBoardMapper.deleteOne(qaBoardNo);
+				return "/qaboard/modify";	
+			} else { // 로그인된 일반 회원이 다른 회원이 작성한 고객 문의 글을 삭제할 수 없음
+				System.out.println("다른 회원이 작성한 고객 문의 글을 삭제할 수 없습니다.");
+				return "redirect:/";	
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -141,19 +154,25 @@ public class QaBoardController {
 	} 
 	
 //	고객 문의 수정 페이지
-	@GetMapping("/update/{qaBoardNo}")
+	@GetMapping("/update/{qaBoardno}")
 	public String update(
-			@PathVariable int qaBoardNo, 
+			@PathVariable int qaBoardno, 
 			Model model, 
-			HttpSession session) {
+			HttpSession session,
+			@SessionAttribute(required = false) UserDto loginUser) {
 		QaBoard qaBoard = null;
-		qaBoard = qaBoardMapper.selectOne(qaBoardNo);
-		Object loginUsers_obj = session.getAttribute("loginUsers");
-		if(qaBoard.getUsers().getUserid().equals(((UsersDto)loginUsers_obj).getUserid()) || (((UsersDto)loginUsers_obj).getAdminCk() == 1)) {
+		qaBoard = qaBoardMapper.selectOne(qaBoardno);
+		if(loginUser == null) { // 로그인이 안 되어 있는 경우
+			System.out.println("로그인하세요.");
+			return "redirect:/user/login.do";			
+		} else if(qaBoard.getUser().getUser_id().equals(loginUser.getUser_id()) || (loginUser.getAdminCk() == 1)) { // 로그인된 일반 회원이 본인이 작성한 고객 문의 수정 페이지로 이동 / 관리자는 모든 글 조회 가능
+			System.out.println("고객 문의 수정 페이지로 이동 성공!");
 			model.addAttribute("qaBoard", qaBoard);
-			return "/qaboard/modify";			
-		} else {
-			return "redirect:/users/login.do";
+			System.out.println(qaBoard);
+			return "/qaboard/modify";	
+		} else { // 로그인된 일반 회원이 다른 회원이 작성한 고객 문의 수정 페이지로 이동할 수 없음
+			System.out.println("다른 회원이 작성한 고객 문의 글을 수정할 수 없습니다.");
+			return "redirect:/";	
 		}
 	}
 	
@@ -163,6 +182,7 @@ public class QaBoardController {
 		int update = 0;
 		try {
 			update = qaBoardMapper.updateOne(qaBoard);
+			System.out.println("postUpdate_qaBoard : " + qaBoard);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -206,18 +226,18 @@ public class QaBoardController {
 			@PathVariable int qaBoardNo, 
 			Model model, 
 			HttpSession session) {
-		Object loginUsers_obj = session.getAttribute("loginUsers");
+		Object loginUser_obj = session.getAttribute("loginUser");
 		QaBoard qaBoard = null;
 		try {
 			qaBoard = qaBoardMapper.selectOne(qaBoardNo);	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if((((UsersDto)loginUsers_obj).getAdminCk() == 1)) { 
+		if((((UserDto)loginUser_obj).getAdminCk() == 1)) { 
 			model.addAttribute("qaBoard", qaBoard);
 			return "/qaboard/modifyReply";			
 		} else { 
-			return "redirect:/users/login.do";
+			return "redirect:/user/login.do";
 		}
 	}
 	

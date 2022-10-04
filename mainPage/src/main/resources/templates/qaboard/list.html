@@ -32,26 +32,36 @@
 			<thead class="table-light">
 				<tr>
 					<th>글 번호</th>
+					<th>작성자</th>
 					<th>유형</th>
 					<th>제목</th>
-					<th>작성자</th>
-					<th>등록일</th>
 					<th>답변 여부</th>
+					<th>조회수</th>
+					<th>등록일</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr id="detail" th:each="q : ${list}" th:onclick="location.href='/qaboard/detail/[[${q.qaBoardNo}]]'">
 					<td th:text="${q.qaBoardNo}"></td>
-					<td th:text="${q.qaBoardKind}"></td>
+					<td th:text="${q.user?.user_id}"></td>
+					<th:block th:if="${q.category.category_id == '1'}">
+						<td>관광지</td>
+					</th:block>
+					<th:block th:if="${q.category.category_id == '2'}">
+						<td>숙박</td>
+					</th:block>
+					<th:block th:if="${q.category.category_id == '3'}">
+						<td>맛집</td>
+					</th:block>
 					<td th:text="${q.qaBoardTitle}"></td>
-					<td th:text="${q.users?.userid}"></td>
-					<td th:text="${#dates.format(q.qaBoardDate,'yyyy-MM-dd')}"></td>
 					<th:block th:if=${q.qaBoardAnswer==0}>
 						<td>미답변</td>
 					</th:block>
 					<th:block th:if=${q.qaBoardAnswer==1}>
 						<td>답변 완료</td>
 					</th:block>
+					<td th:text="${q.views}"></td>
+					<td th:text="${#dates.format(q.qaBoardDate,'yyyy-MM-dd HH:mm:ss')}"></td>
 				</tr>
 			</tbody>
 		</table>

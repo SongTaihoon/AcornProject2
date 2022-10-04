@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<th:block th:if="${(session.loginUsers?.userid == null) || ((session.loginUsers?.userid != reply.users?.userid) && (session.loginUsers?.adminCk == 0))}">
+<th:block th:if="${(session.loginUser?.user_id == null) || ((session.loginUser?.user_id != reply.user?.user_id) && (session.loginUser?.adminCk == 0))}">
 <!--///////////////////////////////////// 로그인 안 된 유저 or 다른 유저가 보는 리플 ///////////////////////////////////////////////////////////////// -->	
-		<table class="mt-5 mb-3 table align-middle table-bordered">
+		<table class="mt-2 mb-3 table align-middle table-bordered">
 			<tbody>
 				<tr>
 					<th class="table-light">글 번호</th>
@@ -13,7 +13,7 @@
 				<tr>
 					<th class="table-light">작성자</th>
 					<td>
-						<th:block th:text="${reply.users?.userid}"></th:block>
+						<th:block th:text="${reply.user?.user_id}"></th:block>
 					</td>
 				</tr>
 				<tr>
@@ -22,7 +22,7 @@
 						<th:block th:text="${reply.title}"></th:block>
 					</td>
 				</tr>
-				<tr>
+				<tr th:if="${reply.img_path != null}">
 					<th class="table-light">사진</th>
 					<td>
 						<div class="mb-1" th:if="${reply.img_path != null}">
@@ -39,15 +39,9 @@
 							  <div class="modal-dialog modal-dialog-centered modal-lg">
 							    <div class="modal-content" 
 							    style="background-color: rgba(255,255,255,0)">
-							      <!-- 
-							      <div class="modal-header" style="border: none">
-							        <button type="button" 
-							        class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-							      </div>
-							       -->
 							      <div class="modal-body">
 			   						<img alt="댓글 이미지" class="img-thumbnail"
-										 th:src="@{/img/{file}(file=${reply.img_path})}">  
+										 th:src="@{/img/{file}(file=${reply.img_path})}" width="760">  
 							      </div>
 							    </div>
 							  </div>
@@ -70,7 +64,7 @@
 			</tbody>
 		</table>
 		<div class="d-flex mb-2">
-			<th:block th:if="${session.loginUsers?.userid != null}">
+			<th:block th:if="${session.loginUser?.user_id != null}">
 			    <a th:classappend="${
 			    		(reply.prefer_active !=null && reply.prefer_active)
 		  						?'bi-hand-thumbs-up-fill' 
@@ -90,7 +84,7 @@
 			    	th:href="|javascript:replyPreferHandler(${reply.reply_no}, ${reply.prefer_active}, 'bad')|">
 			    </a>
 			</th:block>
-			<th:block th:unless="${session.loginUsers?.userid != null}">
+			<th:block th:unless="${session.loginUser?.user_id != null}">
 			    <a th:classappend="${
 			    		(reply.prefer_active != null && reply.prefer_active)
 		  						?'bi-hand-thumbs-up-fill' 
@@ -109,18 +103,11 @@
 			    </a>
 			</th:block>  	
 		</div>	
-		<!-- reply.prefer_active : 
-			(null - 아무도 좋아요를 안 누름 / insert)  
-			(true - 좋아요를 누름 / 좋아요 : delete, 싫어요 : update)  
-			(false - 싫어요를 누름 / 좋아요 : update, 싫어요 : delete)
-			reply_prefer을 reply_no + user_id 로 수정 삭제
-		-->
     </th:block>
-  	<th:block th:if="${(session.loginUsers?.userid == reply.users?.userid) || (session.loginUsers?.adminCk == 1)}">
-  	<p style="font-size: 30px; margin-top: 8px;">댓글 수정/삭제</p>	
-<!--///////////////////////////////////// 로그인된 유저 or 관리자가 보는 리플 ///////////////////////////////////////////////////////////////// -->				
-  		<form action="/reply/update.do" method="post" enctype="multipart/form-data" style="width: 100%" name="replyUpdate">
-	  		<table class="mb-3 table align-middle table-bordered">
+  	<th:block th:if="${(session.loginUser?.adminCk == 1)}">
+<!--///////////////////////////////////// 관리자가 보는 리플 ///////////////////////////////////////////////////////////////// -->				
+  		<form action="/reply/update.do" method="post" enctype="multipart/form-data" style="width: 100%" name="replyUpdateForm1">
+	  		<table class="mb-3 mt-2 table align-middle table-bordered">
 				<tbody>
 					<tr>
 						<th class="table-light">글 번호</th>
@@ -132,7 +119,7 @@
 					<tr>
 						<th class="table-light">작성자</th>
 						<td>
-							<input name="users.userid" th:value="${reply.users?.userid}" 
+							<input name="user.user_id" th:value="${reply.user?.user_id}" 
 								   type="text" class="form-control" readonly>
 						</td>
 					</tr>
@@ -146,7 +133,11 @@
 					<tr>
 						<th class="table-light">사진</th>
 						<td>
-							<div class="mb-1" th:if="${reply.img_path != null}">
+							<div class="mt-2 mb-3" th:if="${reply.img_path != null && reply.img_path != ''}">
+								<p> 삭제하기
+									<input name="remove_img_check" type="checkbox"
+								   		   class="form-check-input ms-1" value="1">
+								</p>
 								<!-- Button trigger modal -->
 								<button type="button" class="btn border-0" data-bs-toggle="modal"
 									style="padding: 0" 
@@ -154,22 +145,16 @@
 									<img alt="댓글 이미지" class="img-thumbnail" 
 									 style="height:100%; width:40%; object-fit: cover;"
 									th:src="@{/img/{file}(file=${reply.img_path})}">
-								</button>			
+								</button>	
 								<!-- Modal -->
 								<div class="modal fade"
 									th:id="'replyImgModal' + ${reply.reply_no}" >
 								  <div class="modal-dialog modal-dialog-centered modal-lg">
 								    <div class="modal-content" 
 								    style="background-color: rgba(255,255,255,0)">
-								      <!-- 
-								      <div class="modal-header" style="border: none">
-								        <button type="button" 
-								        class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-								      </div>
-								       -->
 								      <div class="modal-body">
 				   						<img alt="댓글 이미지" class="img-thumbnail"
-											 th:src="@{/img/{file}(file=${reply.img_path})}">  
+											 th:src="@{/img/{file}(file=${reply.img_path})}" width="760">  
 								      </div>
 								    </div>
 								  </div>
@@ -194,7 +179,7 @@
 				</tbody>
 			</table>
   			<div class="d-flex mb-2 align-items-center">
-				<th:block th:if="${session.loginUsers?.userid != reply.users?.userid}">
+				<th:block th:if="${session.loginUser?.user_id != reply.user?.user_id}">
 				    <a th:classappend="${
 				    		(reply.prefer_active != null && reply.prefer_active)
 			  						?'bi-hand-thumbs-up-fill' 
@@ -214,7 +199,7 @@
 				    	th:href="|javascript:replyPreferHandler(${reply.reply_no}, ${reply.prefer_active}, 'bad')|">
 				    </a>
 				</th:block>	
-				<th:block th:unless="${session.loginUsers?.userid != reply.users?.userid}">
+				<th:block th:unless="${session.loginUser?.user_id != reply.user?.user_id}">
 				    <a th:classappend="${
 				    		(reply.prefer_active != null && reply.prefer_active)
 			  						?'bi-hand-thumbs-up-fill' 
@@ -245,12 +230,12 @@
   	</th:block>
 <script>
 //값이 없을 때 submit 불가
-var replyUpdate = document.forms.replyUpdate;
-var title = replyUpdate.title;
-var contents = replyUpdate.contents;
-document.forms.replyUpdate.addEventListener("submit", (event) => {
-	if(!(title.value) || !(contents.value)) {
-		
+const replyUpdateForm1 = document.forms.replyUpdateForm1;
+console.log(replyUpdateForm1);
+const titl = replyUpdateForm1.title;
+const content = replyUpdateForm1.contents;
+replyUpdateForm1.addEventListener("submit", (event) => {
+	if(!(titl.value) || !(content.value)) {
 		event.preventDefault();		
 	}
 });

@@ -26,7 +26,13 @@
 		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
 		    <span style="font-size: 35px;">고객 문의 내역</span>
 	    </h1>	
-		<table class="mt-5 mb-5 table align-middle table-bordered">
+	    <div class="mt-3 d-flex">
+			<i class="bi bi-eye" style="margin-right: 4px;"
+				data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="조회수">
+				<span th:text="${qaBoard.views}"></span>
+			</i>
+	    </div>
+		<table class="mt-3 mb-5 table align-middle table-bordered">
 			<tbody>
 				<tr>
 					<th class="table-light">글 번호</th>
@@ -34,11 +40,19 @@
 				</tr>
 				<tr>
 					<th class="table-light">아이디</th>
-					<td th:text="${qaBoard.users?.username+'('+qaBoard.users?.userid+')'}"></td>
+					<td th:text="${qaBoard.user?.user_name+'('+qaBoard.user?.user_id+')'}"></td>
 				</tr>
 				<tr>
 					<th class="table-light">유형</th>
-					<td th:text="${qaBoard.qaBoardKind}"></td>
+					<th:block th:if="${qaBoard.category.category_id == '1'}">
+						<td>관광지</td>
+					</th:block>
+					<th:block th:if="${qaBoard.category.category_id == '2'}">
+						<td>숙박</td>
+					</th:block>
+					<th:block th:if="${qaBoard.category.category_id == '3'}">
+						<td>맛집</td>
+					</th:block>
 				</tr>
 				<tr>
 					<th class="table-light">제목</th>
@@ -56,17 +70,17 @@
 		</table>
 		<div class="d-flex">
 			<div class="ms-auto">
-				<th:block th:if="${(session.loginUsers?.adminCk == 1) || (session.loginUsers?.userid == qaBoard.users.userid)}">
+				<th:block th:if="${(session.loginUser?.adminCk == 1) || (session.loginUser?.user_id == qaBoard.user?.user_id)}">
 					<a class="btn btn-outline-info btn-lg" th:href="@{/qaboard/update/{qaBoardNo}(qaBoardNo=${qaBoard.qaBoardNo})}">수정</a>
 					<a class="btn btn-outline-dark btn-lg" href="/qaboard/list/1">목록</a>
 				</th:block>
-				<th:block th:unless="${(session.loginUsers?.adminCk == 1) || (session.loginUsers?.userid == qaBoard.users.userid)}">
+				<th:block th:unless="${(session.loginUser?.adminCk == 1) || (session.loginUser?.user_id == qaBoard.user?.user_id)}">
 					<a class="btn btn-outline-dark btn-lg" href="/qaboard/list/1">목록</a>
 				</th:block>
 			</div>
 		</div>
 		<div class="mt-5">
-			<th:block th:if="${(session.loginUsers?.adminCk == 1) && (qaBoard.qaBoardAnswer == 0)}">
+			<th:block th:if="${(qaBoard.qaReply == null) && (session.loginUser?.adminCk == 1) && (qaBoard.qaBoardAnswer == 0)}">
 				<h1 class="pb-4 d-flex justify-content-between align-items-center" 
 				    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
 				    <span style="font-size: 35px;">답변 등록</span>
@@ -93,6 +107,7 @@
 				</table>
 				<div class="d-flex">
 					<div class="ms-auto">
+						<button class="btn btn-outline-warning btn-lg" type="reset" style="margin-right: 8px;">초기화</button>
 						<button type="submit" class="btn btn-outline-primary btn-lg">등록</button>
 						<input name="qaBoardNo"  
 							type="hidden" th:value=${qaBoard.qaBoardNo}>
@@ -102,7 +117,7 @@
 				</div>		
 				</form>
 			</th:block>
-			<th:block th:if="${qaBoard.qaBoardAnswer == 1}">
+			<th:block th:if="${(qaBoard.qaReply != null) && (qaBoard.qaBoardAnswer == 1)}">
 				 <h1 class="pb-4 d-flex justify-content-between align-items-center" 
 					 style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
 					 <span style="font-size: 35px;">답변</span>
@@ -125,7 +140,7 @@
 				 </table>
 				 <div class="d-flex">
 					 <div class="ms-auto">
-					 	<th:block th:if="${session.loginUsers?.adminCk == 1}">
+					 	<th:block th:if="${session.loginUser?.adminCk == 1}">
 					 		<a class="btn btn-outline-info btn-lg" th:href="@{/qaboard/replyUpdate/{qaBoardNo}(qaBoardNo=${qaBoard.qaBoardNo})}">수정</a>
 					 	</th:block>
 					 </div>
@@ -137,6 +152,8 @@
 </div>
 </body>
 <script type="text/javascript">
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 function noSpaceForm(obj) { // 공백 사용 못하게
    var str_space = /\s/;  // 공백 체크
    if(str_space.exec(obj.value.trim)) { //공백 체크

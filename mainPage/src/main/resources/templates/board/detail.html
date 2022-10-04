@@ -23,7 +23,7 @@
 		    </li>
 		  </ol>
 		</nav>
-		<h1 class="pb-4 d-flex justify-content-between align-items-center" 
+		 <h1 class="pb-4 d-flex justify-content-between align-items-center" 
 		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
 		    <span style="font-size: 35px;" th:text="${board.title}"></span>
 	    </h1>	
@@ -33,7 +33,7 @@
 					data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="조회수">
 					<span th:text="${board.views}"></span>
 				</i>
-				<th:block th:if="${(session.loginUsers?.userid != null) && (session.loginUsers?.userid != board.users?.userid)}">
+				<th:block th:if="${(session.loginUser?.user_id != null) && (session.loginUser?.user_id != board.user?.user_id)}">
 					<a style="margin-right: 4px; margin-left: 4px;"
 				 	data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="좋아요!"
 					th:href="@{/board/prefer/{no}/{prefer}(no=${board.board_no}, prefer=${true})}" 
@@ -49,7 +49,7 @@
 						<span th:text="${board.bad}"></span>
 					</a>
 				</th:block>
-				<th:block th:unless="${(session.loginUsers?.userid != null) && (session.loginUsers?.userid != board.users?.userid)}">
+				<th:block th:unless="${(session.loginUser?.user_id != null) && (session.loginUser?.user_id != board.user?.user_id)}">
 					<a style="margin-right: 4px; margin-left: 4px;"
 				 	data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="좋아요!"
 					class="btn btn-outline-primary border-0 rounded-pill">
@@ -65,32 +65,41 @@
 				</th:block>
 			</div>
 	  </div>
-	  <div class="mt-3 mb-3">
+	  <div class="mt-3 mb-5">
 	 	<table class="table table-bordered table align-middle">
 		  <tbody>
 		    <tr>
 		      <th style="width: 100px; border-left: none;" class="bg-light">작성자</th>
-		      <td style="width: 800px;" th:text="${board.users?.userid}"></td>
-		      <td style="width: 400px; border-right: none;" rowspan="5">
+		      <td style="width: 800px;" th:text="${board.user?.user_id}"></td>
+		      <td style="width: 400px; border-right: none;" rowspan="6">
 		      	<div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel" 
 		      		style="width: 400px; height: 400px;">
 				  <div class="carousel-inner">
 				  	<th:block th:each="boardImg : ${board.boardImgs}">
 				  		<div class="carousel-item active">
-				  			<img th:src="@{/img/{fileName}(fileName=${boardImg.img_path})}" alt="후기 이미지" 
-				  				style="width: 400px; height: 400px;">
+					      	<div class="mb-1" th:if="${boardImg != null}">
+								<!-- Button trigger modal -->
+								<button type="button" class="btn border-0" data-bs-toggle="modal"
+									style="padding: 0" 
+									th:data-bs-target="'#boardImgModal' + ${boardImg.board_img_no}">
+     								<img th:src="@{/img/{fileName}(fileName=${boardImg.img_path})}" alt="후기 이미지"  style="width: 400px; height: 400px;">
+								</button>			
+							</div>
 				  		</div>
+						<!-- Modal -->
+						<div class="modal fade"
+							th:id="'boardImgModal' + ${boardImg.board_img_no}" >
+						  <div class="modal-dialog modal-dialog-centered modal-lg">
+						    <div class="modal-content" 
+						    style="background-color: rgba(255,255,255,0)">
+						      <div class="modal-body">
+		   						<img th:src="@{/img/{fileName}(fileName=${boardImg.img_path})}" alt="후기 이미지" width="760"> 
+						      </div>
+						    </div>
+						  </div>
+						</div>							
 				  	</th:block>
 				  </div>
-				   <!--<div class="carousel-item active">
-				      <img src="/img/knit.jpg" class="d-block w-100" alt="...">
-				    </div>
-				    <div class="carousel-item">
-				      <img src="/img/hat.jpg" class="d-block w-100" alt="...">
-				    </div>
-				    <div class="carousel-item">
-				      <img src="/img/dress.jpg" class="d-block w-100" alt="...">
-				    </div>  --> 
 				  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
 				    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 				    <span class="visually-hidden">Previous</span>
@@ -100,25 +109,31 @@
 				    <span class="visually-hidden">Next</span>
 				  </button>
 				 </div>
-				<!--  
-				<th:block th:if="${board.img_path!=null}">
-		      	  <img alt="이미지" class="img-thumbnail" style="width:300px; height:300px; object-fit: cover;"
-		      	 	   th:src="@{/public/img/{file}(file=${reply.img_path})}">
-		        </th:block>
-		        -->
 		      </td>
 		    </tr>
 		    <tr>
 		      <th style="width: 100px; border-left: none;" class="bg-light">카테고리</th>
-		      <td style="width: 600px;" th:text="${board.users?.userid}"></td>
+		      <th:block th:if="${board.category.category_id == '1'}">
+				  <td style="width: 600px;">관광지</td> 
+			  </th:block>
+			  <th:block th:if="${board.category.category_id == '2'}">
+				  <td style="width: 600px;">숙박</td> 
+			  </th:block>
+			  <th:block th:if="${board.category.category_id == '3'}">
+				  <td style="width: 600px;">맛집</td> 
+			  </th:block>
 		    </tr>
 		    <tr>
 		      <th style="width: 100px; border-left: none;" class="bg-light">장소명</th>
-		      <td style="width: 600px;" th:text="${board.users?.userid}"></td>
+		      <td style="width: 600px;" th:text="${board.place_name}"></td>
 		    </tr>
 		    <tr>
-		      <th style="width: 100px; border-left: none;" class="bg-light">별점</th>
-		      <td style="width: 600px;" th:text="${board.users?.userid}"></td>
+		      <th style="width: 100px; border-left: none;" class="bg-light">주소</th>
+		      <td style="width: 600px;" th:text="${board.place_name}"></td>
+		    </tr>
+		    <tr>
+		      <th style="width: 100px; border-left: none;" class="bg-light">평점</th>
+		      <td style="width: 600px;" th:text="${board.rating}"></td>
 		    </tr>
 		    <tr>
 		      <th style="width: 100px; border-left: none;" class="bg-light">내용</th>
@@ -128,36 +143,44 @@
 		</table>
 	  </div>	
 	  <div class="d-flex mb-5">
-			<div th:if="${(session.loginUsers?.userid == board.users?.userid) || (session.loginUsers?.adminCk == 1)}" class="ms-auto">
+			<div th:if="${(session.loginUser?.user_id == board.user?.user_id) || (session.loginUser?.adminCk == 1)}" class="ms-auto">
 				<a th:href="@{/board/update/{boardNo}(boardNo = ${board.board_no})}" class="btn btn-outline-info btn-lg" style="margin-right: 8px;">
 					수정
 				</a>
 				<a href="/board/list/1" class="btn btn-outline-dark btn-lg">목록</a>
 			</div>
-			<div th:unless="${(session.loginUsers?.userid == board.users?.userid) || (session.loginUsers?.adminCk == 1)}" class="ms-auto">
+			<div th:unless="${(session.loginUser?.user_id == board.user?.user_id) || (session.loginUser?.adminCk == 1)}" class="ms-auto">
 				<a href="/board/list/1" class="btn btn-outline-dark btn-lg">목록</a>
 			</div>
 	  </div>
 	  	<h1 class="pb-4 d-flex justify-content-between align-items-center" 
 		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
-		    <span style="font-size: 35px;">댓글 리스트 : <strong th:text="${board.replys?.size}"></strong></span>
+		    <span style="font-size: 35px;">댓글 : <strong th:text="${board.replys?.size}"></strong></span>
 		    <button class="btn btn-lg btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#replyCollapse">
     			토글
   			</button>
 	    </h1>
 		<div class="mt-3">
 			<ul class="list-group collapse show mt-3" id="replyCollapse">
-				<li class="list-group-item" 
-				th:if="${session.loginUsers?.userid != null}">
-					<p style="font-size: 30px; margin-top: 8px;">댓글 등록</p>
-<!--///////////////////////////////////// 리플 등록 폼 ///////////////////////////////////////////////////////////////// -->				
-					<form action="/reply/insert.do" method="post" enctype="multipart/form-data" name="replyInsertForm">
+<!--///////////////////////////////////// 리플 등록 폼 ///////////////////////////////////////////////////////////////// -->	
+				<li class="list-group-item fixed-bottom" 
+				th:if="${session.loginUser?.user_id != null}">
+					<div class="d-flex align-items-center">
+						<p style="font-size: 30px; margin-top: 8px;">댓글 등록</p>
+						<p class="ms-auto mb-0">
+						  <button class="btn btn-lg btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#replyInsertCollapse" aria-expanded="false" aria-controls="collapseExample">
+						    토글
+						  </button>
+						</p>
+					</div>
+					<div class="collapse" id="replyInsertCollapse">
+					  	<form action="/reply/insert.do" method="post" enctype="multipart/form-data" name="replyInsertForm">
 						<table class="table table-bordered table align-middle mb-3" style="height: 100%;">
 							<tbody>
 								<tr>
 									<th class="table-light">작성자</th>
 									<td>
-										<input name="users.userid" class="form-control" id="userId" th:value="${session.loginUsers?.userid}" readonly>
+										<input name="user.user_id" class="form-control" id="userId" th:value="${session.loginUser?.user_id}" readonly>
 									</td>
 								</tr>
 								<tr>
@@ -169,7 +192,7 @@
 								<tr>
 									<th class="table-light">사진</th>
 									<td>
-										<input name="imgFile" class="form-control mb-1 form-control-lg" type="file">
+										<input name="imgFile" class="form-control form-control-lg" type="file">
 									</td>
 								</tr>
 								<tr>
@@ -189,6 +212,7 @@
 							</div>
 						</div>
 					</form>
+				</div>							
 				</li>
 				<th:block th:insert="/board/replyList" th:with="replys=${board.replys}" id="replyList"></th:block>
 			</ul>
