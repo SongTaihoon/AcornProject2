@@ -271,7 +271,11 @@ public class UserController {
 			HttpSession session) {
 		int delete = 0;
 		if(loginUser.getAdminCk() == 1 && !loginUser.getUser_id().equals(userId)) { // 관리자가 본인이 아닌 다른 회원을 삭제 성공 시 로그아웃되지 않고 회원 리스트로 이동
-			delete = userService.removeUser(userId);
+			try {
+				delete = userService.removeUser(userId);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			if(delete > 0) {
 				System.out.println("회원 삭제 성공!(관리자) : " + delete);
 				return "redirect:/user/list/1";
@@ -280,7 +284,11 @@ public class UserController {
 				return "redirect:/user/update/" + userId;
 			}
 		} else if(loginUser.getAdminCk() == 0 && loginUser.getUser_id().equals(userId)) { // 일반 회원이 본인을 삭제 성공 시 로그아웃되면서 메인 화면으로 이동
-			delete = userService.removeUser(userId);
+			try {
+				delete = userService.removeUser(userId);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			if(delete > 0) {
 				System.out.println("회원 삭제 성공!(일반 회원) : " + delete);
 				session.invalidate(); // 세션 강제 만료
@@ -290,7 +298,7 @@ public class UserController {
 				return "redirect:/user/update/" + userId;
 			}
 		} else { // 관리자가 본인을 삭제하거나 일반 회원이 다른 회원을 삭제하는 것 불가
-			System.out.println("회원 삭제 불가");
+			System.out.println("관리자는 본인 삭제 불가");
 			return "redirect:/user/update/" + userId;
 		}
 	} 

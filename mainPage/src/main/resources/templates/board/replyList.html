@@ -1,165 +1,193 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <script src="/public/js/board/replyList.js" defer="defer"></script>
-	<div th:if="${(session.loginUser?.user_id != null)}" class="list-group-item bg-light">
-	<div class="d-flex align-items-center">
-		<p style="font-size: 30px; margin-top: 8px;">내가 작성한 댓글</p>
-		<p class="ms-auto mb-0">
-		  <button class="btn btn-lg btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#replyUpdateCollapse" 
-		  		  aria-expanded="false" aria-controls="collapseExample">
-		    토글
-		  </button>
-		</p>
-	</div>
-	<div class="collapse collapse show" id="replyUpdateCollapse">
-		<ul class="list-group">	
-			<th:block th:each="reply : ${replys}">
-				<th:block th:if="${(session.loginUser?.user_id == reply.user?.user_id)}">
-			  		<li th:id="${'replyLi' + reply.reply_no}"
-			  			class="list-group-item">	
-			  		  <form action="/reply/update.do" method="post" enctype="multipart/form-data" style="width: 100%" name="replyUpdate">
-				  		<table class="mb-3 table align-middle table-bordered">
-							<tbody>
-								<tr>
-									<th class="table-light">글 번호</th>
-									<td>
-										<input name="reply_no" th:value="${reply.reply_no}" 
-											   type="text" class="form-control" readonly>
-									</td>
-								</tr>
-								<tr>
-									<th class="table-light">작성자</th>
-									<td>
-										<input name="user.user_id" th:value="${reply.user?.user_id}" 
-											   type="text" class="form-control" readonly>
-									</td>
-								</tr>
-								<tr>
-									<th class="table-light">제목</th>
-									<td>
-										<input name="title" type="text" class="form-control" th:value="${reply.title}" 
-											   onkeyup="noSpace(this);" onchange="noSpace(this);">
-									</td>
-								</tr>
-								<tr>
-									<th class="table-light">사진</th>
-									<td>
-										<div class="mt-2 mb-3" th:if="${reply.img_path != null && reply.img_path != ''}">
-											<p> 삭제하기
-												<input name="remove_img_check" type="checkbox"
-											   		   class="form-check-input ms-1" value="1">
-											</p>
-											<!-- Button trigger modal -->
-											<button type="button" class="btn border-0" data-bs-toggle="modal"
-												style="padding: 0" 
-												th:data-bs-target="'#replyImgModal' + ${reply.reply_no}">
-												<img alt="댓글 이미지" class="img-thumbnail" 
-												 style="height:100%; width:40%; object-fit: cover;"
-												th:src="@{/img/{file}(file=${reply.img_path})}">
-											</button>	
-											<!-- Modal -->
-											<div class="modal fade"
-												th:id="'replyImgModal' + ${reply.reply_no}" >
-											  <div class="modal-dialog modal-dialog-centered modal-lg">
-											    <div class="modal-content" 
-											    style="background-color: rgba(255,255,255,0)">
-											      <!-- 
-											      <div class="modal-header" style="border: none">
-											        <button type="button" 
-											        class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-											      </div>
-											       -->
-											      <div class="modal-body">
-							   						<img alt="댓글 이미지" class="img-thumbnail"
-														 th:src="@{/img/{file}(file=${reply.img_path})}" width="760">  
-											      </div>
-											    </div>
-											  </div>
-											</div>							
-										</div>
-										<input name="imgFile" type="file" class="form-control form-control-lg">
-									</td>
-								</tr>
-								<tr>
-									<th class="table-light">내용</th>
-									<td>
-										<textarea name="contents" class="form-control" th:text="${reply.contents}" 
-												  onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
-									</td>	
-								</tr>
-								<tr>
-									<th class="table-light">등록일</th>
-									<td>
-										<input name="post_time" type="text" class="form-control" th:value="${#dates.format(reply.post_time,'yyyy-MM-dd HH:mm:ss')}" readonly>
-									</td>	
-								</tr>
-							</tbody>
-						</table>
-			  			<div class="d-flex mb-2 align-items-center">
-							<th:block th:if="${session.loginUser?.user_id != reply.user?.user_id}">
-							    <a th:classappend="${
-							    		(reply.prefer_active != null && reply.prefer_active)
-						  						?'bi-hand-thumbs-up-fill' 
-						  						: 'bi-hand-thumbs-up'
-							    					}"
-							    	class="btn btn-sm btn-outline-primary rounded-pill bi border-0" 
-							    	th:text="${reply.good}"
-							    	th:href="|javascript:replyPreferHandler(${reply.reply_no}, ${reply.prefer_active}, 'good')|">
-							    </a>
-						 		<a th:classappend="${
-							    		(reply.prefer_active != null && !reply.prefer_active)
-						  						?'bi-hand-thumbs-down-fill' 
-						  						: 'bi-hand-thumbs-down'
-							    					}"
-							    	class="btn btn-sm btn-outline-danger rounded-pill bi border-0" 
-							    	th:text="${reply.bad}" 
-							    	th:href="|javascript:replyPreferHandler(${reply.reply_no}, ${reply.prefer_active}, 'bad')|">
-							    </a>
-							</th:block>	
-							<th:block th:unless="${session.loginUser?.user_id != reply.user?.user_id}">
-							    <a th:classappend="${
-							    		(reply.prefer_active != null && reply.prefer_active)
-						  						?'bi-hand-thumbs-up-fill' 
-						  						: 'bi-hand-thumbs-up'
-							    					}"
-							    	class="btn btn-sm btn-outline-primary rounded-pill bi border-0" 
-							    	th:text="${reply.good}">
-							    </a>
-						 		<a th:classappend="${
-							    		(reply.prefer_active != null && !reply.prefer_active)
-						  						?'bi-hand-thumbs-down-fill' 
-						  						: 'bi-hand-thumbs-down'
-							    					}"
-							    	class="btn btn-sm btn-outline-danger rounded-pill bi border-0" 
-							    	th:text="${reply.bad}">
-							    </a>
-							</th:block>						
-			  				<div class="ms-auto">
-								<button type="reset" class="btn btn-lg btn-outline-warning">초기화</button>
-								<button type="submit" class="btn btn-lg btn-outline-success" style="margin-left: 8px; margin-right: 8px;">수정</button>
-								<a th:href="@{/reply/delete/{reply_no}(reply_no=${reply.reply_no})}"
-									class="btn btn-lg btn-outline-danger">삭제</a>
-								<input type="hidden" name="board_no" th:value="${reply.board_no}">
-								<input type="hidden" name="img_path" th:value="${reply.img_path}">
+<div th:if="${(session.loginUser?.user_id != null)}" class="list-group-item bg-light d-flex justify-content-between align-items-center">
+<div class="accordion accordion-flush" id="accordionExample" style="width: 100%;">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        내가 작성한 댓글
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+		 <div>
+			<ul class="list-group">	
+				<th:block th:each="reply : ${replys}">
+					<th:block th:if="${(session.loginUser?.user_id == reply.user?.user_id)}">
+				  		<li th:id="${'replyLi' + reply.reply_no}"
+				  			class="list-group-item">	
+				  		  <form action="/reply/update.do" method="post" enctype="multipart/form-data" style="width: 100%" name="replyUpdate">
+					  		<table class="mt-2 mb-3 table align-middle table-bordered">
+								<tbody>
+									<tr>
+										<th class="table-light">글 번호</th>
+										<td>
+											<input name="reply_no" th:value="${reply.reply_no}" 
+												   type="text" class="form-control" readonly>
+										</td>
+									</tr>
+									<tr>
+										<th class="table-light">작성자</th>
+										<td>
+											<input name="user.user_id" th:value="${reply.user?.user_id}" 
+												   type="text" class="form-control" readonly>
+										</td>
+									</tr>
+									<tr>
+										<th class="table-light">제목</th>
+										<td>
+											<input name="title" type="text" class="form-control" th:value="${reply.title}" 
+												   onkeyup="noSpace(this);" onchange="noSpace(this);">
+										</td>
+									</tr>
+									<tr>
+										<th class="table-light">사진</th>
+										<td>
+											<div class="mb-2" th:if="${reply.img_path != null}">
+												<p class="mb-2"> 삭제하기
+													<input name="remove_img_check" type="checkbox"
+												   		   class="form-check-input ms-1" value="1">
+												</p>
+												<!-- Button trigger modal -->
+												<button type="button" class="btn border-0" data-bs-toggle="modal"
+													style="padding: 0" 
+													th:data-bs-target="'#replyImgModal' + ${reply.reply_no}">
+													<img alt="댓글 이미지" class="img-thumbnail" 
+													 style="height:100%; width:40%; object-fit: cover;"
+													th:src="@{/img/{file}(file=${reply.img_path})}">
+												</button>	
+												<!-- Modal -->
+												<div class="modal fade"
+													th:id="'replyImgModal' + ${reply.reply_no}" >
+												  <div class="modal-dialog modal-dialog-centered modal-lg">
+												    <div class="modal-content" 
+												    style="background-color: rgba(255,255,255,0)">
+												      <!-- 
+												      <div class="modal-header" style="border: none">
+												        <button type="button" 
+												        class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												      </div>
+												       -->
+												      <div class="modal-body">
+								   						<img alt="댓글 이미지" class="img-thumbnail"
+															 th:src="@{/img/{file}(file=${reply.img_path})}" width="760">  
+												      </div>
+												    </div>
+												  </div>
+												</div>							
+											</div>
+											<input name="imgFile" type="file" class="form-control form-control-lg">
+										</td>
+									</tr>
+									<tr>
+										<th class="table-light">내용</th>
+										<td>
+											<textarea name="contents" class="form-control" th:text="${reply.contents}" 
+													  onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
+										</td>	
+									</tr>
+									<tr>
+										<th class="table-light">등록일</th>
+										<td>
+											<input name="post_time" type="text" class="form-control" th:value="${#dates.format(reply.post_time,'yyyy-MM-dd HH:mm:ss')}" readonly>
+										</td>	
+									</tr>
+								</tbody>
+							</table>
+				  			<div class="d-flex mb-2 align-items-center">
+								<th:block th:if="${session.loginUser?.user_id != reply.user?.user_id}">
+								    <a th:classappend="${
+								    		(reply.prefer_active != null && reply.prefer_active)
+							  						?'bi-hand-thumbs-up-fill' 
+							  						: 'bi-hand-thumbs-up'
+								    					}"
+								    	class="btn btn-sm btn-outline-primary rounded-pill bi border-0" 
+								    	th:text="${reply.good}"
+								    	th:href="|javascript:replyPreferHandler(${reply.reply_no}, ${reply.prefer_active}, 'good')|">
+								    </a>
+							 		<a th:classappend="${
+								    		(reply.prefer_active != null && !reply.prefer_active)
+							  						?'bi-hand-thumbs-down-fill' 
+							  						: 'bi-hand-thumbs-down'
+								    					}"
+								    	class="btn btn-sm btn-outline-danger rounded-pill bi border-0" 
+								    	th:text="${reply.bad}" 
+								    	th:href="|javascript:replyPreferHandler(${reply.reply_no}, ${reply.prefer_active}, 'bad')|">
+								    </a>
+								</th:block>	
+								<th:block th:unless="${session.loginUser?.user_id != reply.user?.user_id}">
+								    <a th:classappend="${
+								    		(reply.prefer_active != null && reply.prefer_active)
+							  						?'bi-hand-thumbs-up-fill' 
+							  						: 'bi-hand-thumbs-up'
+								    					}"
+								    	class="btn btn-sm btn-outline-primary rounded-pill bi border-0" 
+								    	th:text="${reply.good}">
+								    </a>
+							 		<a th:classappend="${
+								    		(reply.prefer_active != null && !reply.prefer_active)
+							  						?'bi-hand-thumbs-down-fill' 
+							  						: 'bi-hand-thumbs-down'
+								    					}"
+								    	class="btn btn-sm btn-outline-danger rounded-pill bi border-0" 
+								    	th:text="${reply.bad}">
+								    </a>
+								</th:block>						
+				  				<div class="ms-auto">
+									<button type="reset" class="btn btn-lg btn-outline-warning">초기화</button>
+									<button type="submit" class="btn btn-lg btn-outline-success" style="margin-left: 8px; margin-right: 8px;">수정</button>
+									<!-- Button trigger modal -->
+									<button type="button" class="btn btn-outline-danger btn-lg" 
+										    style="margin-right: 8px;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+									  삭제
+									</button>
+									<!-- Modal -->
+									<div class="modal fade" id="staticBackdrop" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+									  <div class="modal-dialog">
+									    <div class="modal-content">
+									      <div class="modal-header border-0">
+									        <h1 class="modal-title fs-5" id="staticBackdropLabel">경고</h1>
+									        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									      </div>
+									      <div class="modal-body">
+									        한 번 삭제하면 복구할 수 없습니다. 정말 삭제하시겠습니까?
+									      </div>
+									      <div class="modal-footer border-0">
+									        <button type="button" class="btn btn-outline-dark btn-lg" data-bs-dismiss="modal" style="margin-right: 8px;">취소</button>
+											<a th:href="@{/reply/delete/{reply_no}(reply_no=${reply.reply_no})}"
+											   class="btn btn-lg btn-outline-danger">삭제</a>
+									      </div>
+									    </div>
+									  </div>
+									</div>
+									<input type="hidden" name="board_no" th:value="${reply.board_no}">
+									<input type="hidden" name="img_path" th:value="${reply.img_path}">
+								</div>
 							</div>
-						</div>
-		  			</form>
-				</li>
-			</th:block>
-		  </th:block>		  
-		</ul>	
-	</div>
-	</div>
-	<th:block th:each="reply : ${replys}">
-		<th:block th:if="${(session.loginUser?.user_id == null) || (session.loginUser?.user_id != reply.user?.user_id)}">
-	  		<li th:id="${'replyLi' + reply.reply_no}"
-	  			class="list-group-item"
-	  			th:insert="/board/replyDetail">	
-			</li>
-		</th:block>
+			  			</form>
+					</li>
+				</th:block>
+			  </th:block>		  
+			</ul>	
+		</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<th:block th:each="reply : ${replys}">
+	<th:block th:if="${(session.loginUser?.user_id == null) || (session.loginUser?.user_id != reply.user?.user_id)}">
+  		<li th:id="${'replyLi' + reply.reply_no}"
+  			class="list-group-item"
+  			th:insert="/board/replyDetail">	
+		</li>
 	</th:block>
+</th:block>
 <!-- <div class="m-2 d-flex justify-content-center" th:insert="/pagination.html"></div> -->
 <script>
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 //값이 없을 때 submit 불가
 var replyUpdate = document.forms.replyUpdate;
 var title = replyUpdate.title;

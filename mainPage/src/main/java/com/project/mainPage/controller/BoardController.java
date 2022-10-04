@@ -252,22 +252,26 @@ public class BoardController {
 			@PathVariable String userId,
 			@SessionAttribute(name ="loginUser", required = false) UserDto loginUser,
 			HttpSession session) {
-		if((loginUser != null && loginUser.getUser_id().equals(userId)) || loginUser.getAdminCk() == 1) {
-			int delete = 0;
+		int delete = 0;
+		if(loginUser == null) { // 로그인이 안 되어 있는 경우
+			System.out.println("로그인하세요.");
+			return "redirect:/user/login.do";
+		} else if((loginUser != null && loginUser.getUser_id().equals(userId)) || loginUser.getAdminCk() == 1) { // 로그인된 일반 회원이 본인의 후기 삭제 / 관리자는 모든 회원 후기 삭제 가능
 			try {
 				delete = boardService.removeBoard(boardNo); // DB에서 후기 삭제
-			} catch(Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			if(delete > 0) {
 				System.out.println("후기 삭제 성공! : " + delete);
 				return "redirect:/board/list/1";
-			}else {
-				System.out.println("후기 삭제 성공! : " + delete);
+			} else {
+				System.out.println("후기 삭제 실패! : " + delete);
 				return "redirect:/board/update/" + boardNo;			
-			}			
-		}else {
-			return "redirect:/user/login.do";
+			}
+		} else { // 로그인된 일반 회원이 다른 회원의 후기를 삭제할 수 없음
+			System.out.println("다른 회원이 작성한 후기 글을 삭제할 수 없습니다.");
+			return "redirect:/";	
 		}
 	}
 	
@@ -280,11 +284,15 @@ public class BoardController {
 			HttpSession session) {
 		Board board = null;
 		board = boardMapper.selectDetailOneAll(boardNo);
-		if((loginUser != null && loginUser.getUser_id().equals(board.getUser().getUser_id())) || ((loginUser).getAdminCk() == 1)) {
-			model.addAttribute("board", board);
-			return "/board/modify";			
-		} else {
+		if(loginUser == null) { // 로그인이 안 되어 있는 경우
+			System.out.println("로그인하세요.");
 			return "redirect:/user/login.do";
+		} else if((loginUser != null && loginUser.getUser_id().equals(board.getUser().getUser_id())) || ((loginUser).getAdminCk() == 1)) { // 로그인된 일반 회원이 본인의 후기 수정 페이지로 이동 / 관리자는 모든 회원 후기 수정 가능
+			model.addAttribute("board", board);
+			return "/board/modify";		
+		} else { // 로그인된 일반 회원이 다른 회원의 후기 수정 페이지로 이동할 수 없음
+			System.out.println("다른 회원이 작성한 후기 글을 수정할 수 없습니다.");
+			return "redirect:/";	
 		}
 	}
 	

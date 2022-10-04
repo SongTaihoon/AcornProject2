@@ -38,8 +38,8 @@
 					<th>작성자</th>
 					<th>유형</th>
 					<th>제목</th>
-					<th>답변 여부</th>
 					<th>조회수</th>
+					<th>답변 여부</th>
 					<th>등록일</th>
 				</tr>
 			</thead>
@@ -56,6 +56,7 @@
 					<th:block th:if="${q.category.category_id == '3'}">
 						<td>맛집</td>
 					</th:block>
+					<td th:text="${q.views}"></td>
 					<td th:text="${q.qaBoardTitle}"></td>
 					<th:block th:if=${q.qaBoardAnswer==0}>
 						<td>미답변</td>
@@ -63,7 +64,6 @@
 					<th:block th:if=${q.qaBoardAnswer==1}>
 						<td>답변 완료</td>
 					</th:block>
-					<td th:text="${q.views}"></td>
 					<td th:text="${#dates.format(q.qaBoardDate,'yyyy-MM-dd HH:mm:ss')}"></td>
 				</tr>
 			</tbody>

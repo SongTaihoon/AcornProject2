@@ -130,26 +130,25 @@ public class QaBoardController {
 			@SessionAttribute(required = false) UserDto loginUser) {
 		int delete = 0;
 		QaBoard qaBoard = qaBoardMapper.selectOne(qaBoardNo);
-		try {
-			if(loginUser == null) { // 로그인이 안 되어 있는 경우
-				System.out.println("로그인하세요.");
-				return "redirect:/user/login.do";			
-			} else if(qaBoard.getUser().getUser_id().equals(loginUser.getUser_id()) || (loginUser.getAdminCk() == 1)) { // 로그인된 일반 회원이 본인이 작성한 고객 문의 글을 삭제 / 관리자는 모든 글 삭제 가능
+		if(loginUser == null) { // 로그인이 안 되어 있는 경우
+			System.out.println("로그인하세요.");
+			return "redirect:/user/login.do";			
+		} else if(qaBoard.getUser().getUser_id().equals(loginUser.getUser_id()) || (loginUser.getAdminCk() == 1)) { // 로그인된 일반 회원이 본인이 작성한 고객 문의 글을 삭제 / 관리자는 모든 글 삭제 가능
+			try {
 				delete = qaBoardMapper.deleteOne(qaBoardNo);
-				return "/qaboard/modify";	
-			} else { // 로그인된 일반 회원이 다른 회원이 작성한 고객 문의 글을 삭제할 수 없음
-				System.out.println("다른 회원이 작성한 고객 문의 글을 삭제할 수 없습니다.");
-				return "redirect:/";	
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		if(delete > 0) {
-			System.out.println("qaBoard 삭제 성공! : " + delete);
-			return "redirect:/qaboard/list/1";
-		}else {
-			System.out.println("qaBoard 삭제 실패! : " + delete);
-			return "redirect:/qaboard/detail/"+qaBoardNo;
+			if(delete > 0) {
+				System.out.println("qaBoard 삭제 성공! : " + delete);
+				return "redirect:/qaboard/list/1";
+			}else {
+				System.out.println("qaBoard 삭제 실패! : " + delete);
+				return "redirect:/qaboard/detail/"+qaBoardNo;
+			}
+		} else { // 로그인된 일반 회원이 다른 회원이 작성한 고객 문의 글을 삭제할 수 없음
+			System.out.println("다른 회원이 작성한 고객 문의 글을 삭제할 수 없습니다.");
+			return "redirect:/";	
 		}
 	} 
 	
@@ -202,7 +201,6 @@ public class QaBoardController {
 			QaBoard qaBoard) {
 		int insert = 0;
 		int update = 0; // 답변 여부 1로 바꾸기
-		int page = qaBoard.getQaBoardNo();
 		try {
 			insert = qaReplyMapper.insertOne(qaReply);
 			update = qaBoardMapper.answerOne(qaBoard);
@@ -212,11 +210,11 @@ public class QaBoardController {
 		if(insert > 0) {
 			System.out.println("qaBoard 답변 등록 성공! : " + insert);
 			System.out.println("qaBoard 답변 여부 1로 바꾸기 성공! : " + update);
-			return "redirect:/qaboard/detail/" + page;
+			return "redirect:/qaboard/detail/" + qaBoard.getQaBoardNo();
 		}else {
 			System.out.println("qaBoard 답변 등록 실패! : " + insert);
-			System.out.println("qaBoard 답변 여부 1로 바꾸기 성공! : " + update);
-			return "redirect:/qaboard/detail/" + page;
+			System.out.println("qaBoard 답변 여부 1로 바꾸기 실패! : " + update);
+			return "redirect:/qaboard/detail/" + qaBoard.getQaBoardNo();
 		}
 	}
 	

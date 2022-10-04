@@ -20,6 +20,7 @@ async function replyPreferHandler(replyNo, preferActive, btn) {
 		let res = await fetch(url, {method : method});
 		if(res.status == 200) {
 			let htmlText = await res.text();
+			console.log(htmlText);
 			document.getElementById(replyLiId).innerHTML = htmlText;
 		}else if(res.status == 400) {
 			alert('로그인 하세요.');

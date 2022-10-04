@@ -126,8 +126,11 @@ public class ReplyController {
 						
 						reply.setImg_path(newFileName); // DB에 이미지 저장
 					}
-				} 
-				System.out.println(imgFile);
+				} else {
+					if(reply.getImg_path().isEmpty()) {
+						reply.setImg_path(null);
+					}
+				}
 				System.out.println(reply.getRemove_img_check());
 				if(reply.getRemove_img_check() == 1) {
 					if(reply.getImg_path() != null) {
