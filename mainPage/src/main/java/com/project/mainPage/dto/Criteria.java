@@ -16,8 +16,6 @@ public class Criteria {
 	    private String type;
 	    /* 검색 키워드 */
 	    private String keyword;
-	    /* 상품 리스트 */
-		private String[] productArr;
 		
 		private String[] noticeArr;
 //		/* 카테고리 코드 */

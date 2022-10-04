@@ -124,10 +124,23 @@ public class QaBoardController {
 	
 //	고객 문의 삭제
 	@GetMapping("/delete/{qaBoardNo}")
-	public String delete(@PathVariable int qaBoardNo) {
+	public String delete(
+			@PathVariable int qaBoardNo,
+			HttpSession session,
+			@SessionAttribute(required = false) UserDto loginUser) {
 		int delete = 0;
+		QaBoard qaBoard = qaBoardMapper.selectOne(qaBoardNo);
 		try {
-			delete=qaBoardMapper.deleteOne(qaBoardNo);
+			if(loginUser == null) { // 로그인이 안 되어 있는 경우
+				System.out.println("로그인하세요.");
+				return "redirect:/user/login.do";			
+			} else if(qaBoard.getUser().getUser_id().equals(loginUser.getUser_id()) || (loginUser.getAdminCk() == 1)) { // 로그인된 일반 회원이 본인이 작성한 고객 문의 글을 삭제 / 관리자는 모든 글 삭제 가능
+				delete = qaBoardMapper.deleteOne(qaBoardNo);
+				return "/qaboard/modify";	
+			} else { // 로그인된 일반 회원이 다른 회원이 작성한 고객 문의 글을 삭제할 수 없음
+				System.out.println("다른 회원이 작성한 고객 문의 글을 삭제할 수 없습니다.");
+				return "redirect:/";	
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -145,17 +158,21 @@ public class QaBoardController {
 	public String update(
 			@PathVariable int qaBoardno, 
 			Model model, 
-			HttpSession session) {
+			HttpSession session,
+			@SessionAttribute(required = false) UserDto loginUser) {
 		QaBoard qaBoard = null;
 		qaBoard = qaBoardMapper.selectOne(qaBoardno);
-		Object loginUser_obj = session.getAttribute("loginUser");
-		System.out.println(loginUser_obj);
-		System.out.println("getupdate_qaBoard : "+ qaBoard);
-		if((loginUser_obj != null && qaBoard.getUser().getUser_id().equals(((UserDto)loginUser_obj).getUser_id())) || (((UserDto)loginUser_obj).getAdminCk() == 1)) {
+		if(loginUser == null) { // 로그인이 안 되어 있는 경우
+			System.out.println("로그인하세요.");
+			return "redirect:/user/login.do";			
+		} else if(qaBoard.getUser().getUser_id().equals(loginUser.getUser_id()) || (loginUser.getAdminCk() == 1)) { // 로그인된 일반 회원이 본인이 작성한 고객 문의 수정 페이지로 이동 / 관리자는 모든 글 조회 가능
+			System.out.println("고객 문의 수정 페이지로 이동 성공!");
 			model.addAttribute("qaBoard", qaBoard);
-			return "/qaboard/modify";			
-		} else {
-			return "redirect:/user/login.do";
+			System.out.println(qaBoard);
+			return "/qaboard/modify";	
+		} else { // 로그인된 일반 회원이 다른 회원이 작성한 고객 문의 수정 페이지로 이동할 수 없음
+			System.out.println("다른 회원이 작성한 고객 문의 글을 수정할 수 없습니다.");
+			return "redirect:/";	
 		}
 	}
 	
@@ -165,7 +182,7 @@ public class QaBoardController {
 		int update = 0;
 		try {
 			update = qaBoardMapper.updateOne(qaBoard);
-			System.out.println("postUpdate_qaBoard : "+qaBoard);
+			System.out.println("postUpdate_qaBoard : " + qaBoard);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
