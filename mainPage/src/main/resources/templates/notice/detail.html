@@ -2,50 +2,81 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>공지사항 게시글</title>
+<title>공지 사항</title>
+<link rel="stylesheet" href="/public/css/board/insert.css">
 </head>
 <body>
-	<header th:insert="/NewHeader"></header>
- 	<!-- <p th:text="${notice}"></p>  -->
-	<main class="container">
-			<h1 class="m-5">
-				<span th:text="${notice.notice_no}"></span>. 
-				<span th:text="${notice.title}"></span>
-			</h1>
-		<div class = "d-flex justify-content-end">
-				<th:block th:if=${session.loginUsers?.adminCk==1}>
-					<a th:href="@{/notice/update/{noticeNo}(noticeNo=${notice.notice_no})}" class="btn btn-success">
-						수정
-					</a>					
-				</th:block>
-				<a th:href="@{/notice/delete/{notice_no}/{userId}(notice_no=${notice.notice_no},userId=${notice.users.userid})}" 
-					class="btn btn-primary">
-					공지사항 삭제
-				</a>
-		</div> 	
-		<p>
-			아이디 : <strong th:text="${notice.users.userid}"></strong> 
-			<br>   
-			이름 : <strong th:text="${notice.users.username}"></strong>
-		</p>
-		<i class="bi bi-eye"
+<header th:insert="/NewHeader"></header>
+<div id="wrapper">
+<main class="container-xl">
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" id="path">
+	  <ol class="breadcrumb">
+	    <li class="breadcrumb-item">
+	    	<a href="/">홈</a>
+	    </li>
+	    <li class="breadcrumb-item">
+	    	<a href="#">고객 센터</a>
+	    </li>
+	    <li class="breadcrumb-item" aria-current="page">
+	    	<a href="/notice/list/1" class="breadcrumb-item active">공지 사항</a>
+	    </li>
+	  </ol>
+	</nav>
+	<h1 class="pb-4 d-flex justify-content-between align-items-center" 
+	    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
+	    <span style="font-size: 35px;">공지 사항</span>
+    </h1>	
+    <div class="mt-3 d-flex">
+		<i class="bi bi-eye" style="margin-right: 4px;"
 			data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="조회수">
-			views : <span th:text="${notice.views}"></span>
+			<span th:text="${notice.views}"></span>
 		</i>
-		<br>
-		<span th:text="${#dates.format(notice.post_time,'yyyy-MM-dd HH:mm:ss')}"></span>
-		
-		<div>
-			<th:block th:each="noticeImg : ${notice.noticeImgs}">
-				<img th:src="@{/public/img/{fileName}(fileName=${noticeImg.img_path})}" width="50%" class="img-thumbnail" alt="게시글 이미지">
+    </div>
+	<table class="mt-3 mb-5 table align-middle table-bordered">
+		<tbody>
+			<tr>
+				<th class="table-light" style="border-left: none;">글 번호</th>
+				<td style="border-right: none;" th:text="${noticeNo}"></td>		
+			</tr>
+			<tr>
+				<th class="table-light" style="border-left: none;">작성자</th>
+				<td style="border-right: none;" th:text="${notice.user?.user_id}"></td>	
+			</tr>
+			<tr>
+				<th class="table-light" style="border-left: none;">제목</th>
+				<td style="border-right: none;" th:text="${notice.title}"></td>		
+			</tr>
+			<tr>
+				<th class="table-light" style="border-left: none;">내용</th>
+				<td style="border-right: none;" th:text="${notice.contents}"></td>	
+			</tr>
+			<tr>
+				<th class="table-light" style="border-left: none;">등록일</th>
+				<td style="border-right: none;" th:text="${#dates.format(notice.post_time,'yyyy-MM-dd HH:mm:ss')}"></td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="d-flex">
+		<div class="ms-auto">
+			<th:block th:if="${session.loginUser?.adminCk==1}">
+				<a th:href="@{/notice/update/{noticeNo}(noticeNo=${noticeNo})}" class="btn btn-outline-info btn-lg" style="margin-right: 8px;">수정</a>
 			</th:block>
-		</div>
-		<div class="form-floating">
-			<textarea class="form-control" placeholder="Leave a comment here"
-			style="height: 100px; resize: none;" th:text="${notice.contents}" readonly="readonly" ></textarea>
-		</div>
-	</main>
-	
-</body>
+			<a href="/notice/list/1" class="btn btn-outline-dark btn-lg">목록</a>
+		</div>		
+	</div>
+</main>
 <footer class="footer" th:insert="/NewFooter"></footer>
+</div>
+</body>
+<script>
+function noSpace(obj) { // 공백사용못하게
+    var str = /\s/;  // 공백체크
+    if(str.exec(obj.value.trim)) { //공백 체크
+        //alert("해당 항목에는 첫 글자 공백을 사용할수 없습니다.");
+        obj.focus();
+        obj.value = obj.value.replace(/^ +/,''); // 공백제거
+        return false;
+    }
+}
+</script>
 </html>

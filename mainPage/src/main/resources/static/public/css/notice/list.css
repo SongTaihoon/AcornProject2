@@ -18,6 +18,7 @@ html, body {
 }
 #wrapper {
     min-height: 100%;
+    min-width: 1200px;
     position: relative;
     padding-bottom: 330px;
 }
@@ -26,4 +27,11 @@ table th, table td {
 }
 .footer {
     bottom: 0;
+}
+
+h1{
+	border-bottom: 1px solid #e8e8e8; 
+}
+h1 span{
+	font-size: 35px;
 }

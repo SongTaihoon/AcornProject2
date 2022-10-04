@@ -13,9 +13,10 @@ public interface QaBoardMapper {
 	int selectPageAllCount();
 	QaBoard selectOne(int qaBoardNo);
 	int insertOne(QaBoard qaBoard);
+	int updateOne(QaBoard qaBoard);
 	int deleteOne(int qaBoardNo);
 	int answerOne(QaBoard qaBoard);
-	
+	int detailUpdateViews(int qaBoardNo);
 	public List<QaBoard> searchQaBoard(Criteria cri);
 	public int QaBoardGetTotal(Criteria cri);
 }

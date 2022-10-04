@@ -4,17 +4,19 @@
 <mapper namespace="com.project.mainPage.mapper.QaBoardMapper">
 	<resultMap type="QaBoard" id="QaBoardMap">
 		<id column="qaBoardNo" property="qaBoardNo"/>
-		<result column="qaBoardKind" property="qaBoardKind"/>
 		<result column="qaBoardTitle" property="qaBoardTitle"/>
 		<result column="qaBoardContents" property="qaBoardContents"/>
 		<result column="qaBoardAnswer" property="qaBoardAnswer"/>
 		<result column="qaBoardDate" property="qaBoardDate"/>
-		<!-- Board : UsersDto = 1 : 1   -->	
-		<association property="users" javaType="UsersDto"  foreignColumn="userid">
-			<id column="userid" property="userid"/>
-			<result column="username" property="username"/>
-			<result column="email" property="email"/>
-			<result column="phone" property="phone"/>
+		<result column="views" property="views"/>
+		<association property="category" javaType="Category"  foreignColumn="category_id">
+			<id column="category_id" property="category_id"/>
+		</association>
+		<association property="user" javaType="UserDto"  foreignColumn="user_id">
+			<id column="user_id" property="user_id"/>
+			<result column="user_name" property="user_name"/>
+			<result column="user_email" property="user_email"/>
+			<result column="user_phone" property="user_phone"/>
 		</association>
 		<association property="qaReply" javaType="qaReply"  foreignColumn="qaBoardNo">
 			<id column="qaReplyNo" property="qaReplyNo"/>
@@ -22,61 +24,87 @@
 			<result column="qaReplyContent" property="qaReplyContent"/>
 			<result column="qaReplyDate" property="qaReplyDate"/>
 		</association>
-		<collection property="product" javaType="Product"  foreignColumn="productid">
-			<id column="productid" property="productid"/>
-			<result column="productName" property="productName"/>
-			<result column="productSize" property="productSize"/>
-			<result column="productColor" property="productColor"/>
-			<association property="category" javaType="Category" foreignColumn="categoryid">
-				<id column="categoryid" property="categoryId"/>
-				<result column="categoryName" property="categoryName"/>
-			</association>
-		</collection>
 	</resultMap>
-	
-	
 	<select id="selectPageAll" resultMap="QaBoardMap">
-		SELECT q.*,u.userid FROM QABOARD q 
-		LEFT JOIN USERS u USING(userid)
-		ORDER BY q.qaBoardNo 
-			LIMIT #{startRow},#{pageSize}
+		SELECT q.*, 
+		
+		u.user_id,
+		u.user_name,
+		u.user_email,
+		u.user_phone,
+		
+		c.category_id,
+		
+		r.*
+		
+		FROM QABOARD q 
+		
+		LEFT JOIN USER u 
+		USING(user_id)
+		
+		LEFT JOIN CATEGORY c
+		USING(category_id)
+		
+		LEFT JOIN QAREPLY r
+		USING(qaBoardNo)
+		
+		ORDER BY q.qaBoardNo DESC 
+		LIMIT #{startRow}, #{pageSize}
 	</select>
 	<select id="selectPageAllCount" resultType="int">
 		SELECT COUNT(*) FROM QABOARD
 	</select>
-	<select id="selectOne" resultMap="QaBoardMap" parameterType="int">
-		SELECT q.*,
-		u.userid,
-		u.username,
-		u.email,
-		u.phone,
-		p.productname,
-		p.productid,
-		p.productSize,
-		p.productColor,
-		r.qaReplyTitle,
-		r.qaReplyContent,
-		r.qaReplyDate
-		FROM QABOARD q 
-		LEFT JOIN USERS u USING(userid)
-		LEFT JOIN PRODUCT p USING(productid)
-		LEFT JOIN QAREPLY r USING(qaboardno)
-		WHERE qaBoardNo=#{qaBoardNo}
-	</select>
 	<update id="answerOne" parameterType="QaBoard">
  		UPDATE QABOARD SET 
- 			qaBoardAnswer=#{qaBoardAnswer}
- 			WHERE qaBoardNo=#{qaBoardNo}
+ 			qaBoardAnswer = #{qaBoardAnswer}
+ 				WHERE qaBoardNo = #{qaBoardNo}
  	</update>
+	<select id="selectOne" resultMap="QaBoardMap" parameterType="int">
+		SELECT q.*,
+		
+		u.user_id,
+		u.user_name,
+		u.user_email,
+		u.user_phone,
+		
+		c.category_id,
+		
+		r.*
+		
+		FROM QABOARD q 
+		
+		LEFT JOIN USER u 
+		USING(user_id)
+		
+		LEFT JOIN CATEGORY c
+		USING(category_id)
+		
+		LEFT JOIN QAREPLY r 
+		USING(qaBoardNo)
+		
+		WHERE qaBoardNo = #{qaBoardNo}
+	</select>
 	<insert id="insertOne" parameterType="QaBoard"
-	 useGeneratedKeys="true" keyProperty="qaBoardNo">
-		INSERT INTO QABOARD (qaBoardKind,productid,qaBoardTitle,qaBoardContents,userid)
-		VALUES (#{qaBoardKind},#{product.productid},#{qaBoardTitle},#{qaBoardContents},#{users.userid})
+	 		useGeneratedKeys="true" keyProperty="qaBoardNo">
+		INSERT INTO QABOARD (qaBoardTitle, qaBoardContents, category_id, user_id)
+			VALUES (#{qaBoardTitle}, #{qaBoardContents}, #{category_id}, #{user.user_id})
 	</insert>
+	<update id="updateOne" parameterType="QaBoard">
+		UPDATE QABOARD SET 
+			qaBoardTitle = #{qaBoardTitle},
+			qaBoardContents = #{qaBoardContents},
+			category_id = #{category_id}
+				WHERE qaBoardNo = #{qaBoardNo} 
+	</update>
 	<delete id="deleteOne" parameterType="int">
-		DELETE FROM QABOARD WHERE qaBoardNo=#{qaBoardNo}
+		DELETE FROM QABOARD 
+			WHERE qaBoardNo = #{qaBoardNo}
 	</delete>
-	
+	<update id="detailUpdateViews" parameterType="int">
+		UPDATE QABOARD SET 
+			views = views + 1
+				WHERE qaBoardNo = #{qaBoardNo}
+	</update>
 	<!-- criteria(검색조건) -->
 	<sql id="criteria">
 		    <trim prefix="WHERE (" suffix=")" prefixOverrides="AND">
@@ -96,28 +124,33 @@
 	</sql>
 	<select id="searchQaBoard" resultMap="QaBoardMap">
 			SELECT q.*,
-				u.userid,
-				u.username,
-				u.email,
-				u.phone,
-				p.productname,
-				p.productid,
-				p.productSize,
-				p.productColor,
-				r.qaReplyTitle,
-				r.qaReplyContent,
-				r.qaReplyDate
-				FROM QABOARD q 
-				LEFT JOIN USERS u USING(userid)
-				LEFT JOIN PRODUCT p USING(productid)
-				LEFT JOIN QAREPLY r USING(qaboardno)
+			
+			u.user_id,
+			u.user_name,
+			u.user_email,
+			u.user_phone,
+			
+			c.category_id,
+			
+			r.*
+			
+			FROM QABOARD q 
+			
+			LEFT JOIN USER u 
+			USING(user_id)
+			
+			LEFT JOIN CATEGORY c
+			USING(category_id)
+			
+			LEFT JOIN QAREPLY r 
+			USING(qaBoardno)
+			
 			<include refid="criteria"></include>
-			order by qaBoardNo desc 
-			limit #{skip}, #{amount}	
+			ORDER BY q.qaBoardNo DESC 
+			LIMIT #{skip}, #{amount}	
 	</select>
 	<select id="QaBoardGetTotal" resultType="int">
   		SELECT COUNT(*) FROM QABOARD
 		<include refid="criteria"></include>
 	</select>
-	
 </mapper>

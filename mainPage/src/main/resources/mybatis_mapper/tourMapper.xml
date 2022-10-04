@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.project.mainPage.mapper.TourMapper">
+ 	<resultMap type="Tour" id="TourMap">
+		<id column="tour_rank" property="tour_rank"/>
+		<result column="tourist" property="tourist"/>
+		<result column="province" property="province"/>
+		<result column="city" property="city"/>
+		<result column="address3" property="address3"/>
+		<result column="tours" property="tours"/>	
+		<result column="views" property="views"/>	
+		<result column="search" property="search"/>
+		
+		<association property="category" javaType="Category" foreignColumn="category_id">
+				<id column="category_id" property="category_id"/>
+		</association>	
+	</resultMap>
+	<!--  tour List  -->
+	<select id="selectListAll" resultMap="TourMap">
+		SELECT t.*, 
+		 	c.category_id
+		 	
+			FROM TOUR t
+			
+			LEFT JOIN CATEGORY c 
+		    USING(category_id)
+		     
+			ORDER BY search DESC LIMIT #{startRow}, #{pageSize}
+	</select>
+	<select id="selectPageAllCount" resultType="int">
+		SELECT COUNT(*) FROM TOUR
+	</select>
+	<!-- tour Detail  -->
+	<select id="selectDetailOne" resultMap="TourMap">
+		SELECT t.*, 
+		 	c.category_id
+		 	
+		 	FROM TOUR t
+		 	
+		 	LEFT JOIN CATEGORY c 
+		    USING(category_id)
+		 	
+		 	WHERE tour_rank = #{tourRank}
+	</select>
+	<!-- 조회수 -->
+	<update id="updateViews" parameterType="int">
+		UPDATE TOUR SET 
+			views = views + 1
+			WHERE tour_rank = #{tourRank}
+	</update>
+	<insert id="insertOne" parameterType="Tour"
+	 		useGeneratedKeys="true" keyProperty="tour_rank">
+		INSERT INTO TOUR 
+			( tourist, address3,province,city,category_id,search)
+				VALUES (#{tourist}, #{address3},#{province},#{city},#{category.category_id},#{search})
+	</insert>
+ </mapper>

@@ -12,17 +12,22 @@
 			<result column="qaBoardAnswer" property="qaBoardAnswer"/>
 		</association>
 	</resultMap>
-	
 	<insert id="insertOne" parameterType="QaReply">
-		INSERT INTO QAREPLY (qaReplyTitle,qaReplyContent,qaBoardNo)
-		VALUES (#{qaReplyTitle},#{qaReplyContent},#{qaBoardNo})
+		INSERT INTO QAREPLY (qaReplyTitle, qaReplyContent, qaBoardNo)
+			VALUES (#{qaReplyTitle}, #{qaReplyContent}, #{qaBoardNo})
 	</insert>
+	<update id="updateOne" parameterType="QaReply">
+		UPDATE QAREPLY SET 
+			qaReplyTitle = #{qaReplyTitle},
+			qaReplyContent = #{qaReplyContent}
+				WHERE qaBoardNo = #{qaBoardNo}
+	</update>
 	<delete id="deleteOne" parameterType="int">
-		DELETE FROM QAREPLY WHERE qaReplyNo=#{qaReplyNo}
+		DELETE FROM QAREPLY 
+			WHERE qaBoardNo = #{qaBoardNo}
 	</delete>
 	<select id="selectOne" resultType="QaReply" parameterType="int">
-		SELECT *
-		FROM QAREPLY 
-		WHERE qaBoardNo=#{qaBoardNo}
+		SELECT * FROM QAREPLY 
+			WHERE qaBoardNo = #{qaBoardNo}
 	</select>
 </mapper>

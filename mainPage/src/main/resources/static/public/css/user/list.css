@@ -1,26 +1,30 @@
-@charset "UTF-8";
-
+#path {
+    display: flex;
+    margin: 20px 0;
+    min-width: 1200px;
+}
+#path ol {
+    margin-left: auto;      
+}
+#path ol li a {   
+    text-decoration: none;
+    vertical-align: middle;
+}
 html, body {
     height: 100%;
 }
-
+table th, table td {
+	text-align: center;
+}
+.table-hover{
+	cursor: pointer;
+}
 #wrapper {
     min-height: 100%;
+    min-width: 1200px;
     position: relative;
-    padding-bottom: 300px;
+    padding-bottom: 350px;
 }
-
 .footer {
     bottom: 0;
 }
-#searchId{
-	display: flex;
-	justify-content: center;
-	margin: 20px;
-}
-#paginationId{
-	display: flex;
-	justify-content: center;
-	margin: 30px;
-}
-
