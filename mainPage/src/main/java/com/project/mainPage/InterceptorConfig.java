@@ -52,10 +52,7 @@ public class InterceptorConfig implements WebMvcConfigurer{
 			.addPathPatterns("/qaboard/replyUpdate/**")
 			.addPathPatterns("/qaboard/replyInsert.do")
 			.addPathPatterns("/qaboard/replyUpdate.do")
-			.addPathPatterns("/qaboard/replyDelete/**")
-			.addPathPatterns("/product/insert.do")
-			.addPathPatterns("/product/update.do")
-			.addPathPatterns("/product/delete.do");
+			.addPathPatterns("/qaboard/replyDelete/**");
 	}
 	
 }

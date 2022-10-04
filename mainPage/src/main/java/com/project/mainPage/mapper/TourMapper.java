@@ -13,8 +13,8 @@ public interface TourMapper {
 	List<Tour> selectListAll(int startRow, int pageSize);
 	int selectPageAllCount();
 	// detail 
-	Tour selectDetailOne(String tourRank);
+	Tour selectDetailOne(int tourRank);
 	// 조회수 
-	int updateViews(String tourRank);
+	int updateViews(int tourRank);
 }
 

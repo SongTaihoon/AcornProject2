@@ -44,7 +44,7 @@ public class TopController {
 	// 관광지 TOP Detail 
 	@GetMapping("/detail/{tourRank}")
 	public String detail(
-			@PathVariable String tourRank,
+			@PathVariable int tourRank,
 			Model model
 			) {
 		Tour tour = null; 
@@ -56,7 +56,7 @@ public class TopController {
 		System.out.println("tour" + tour);
 		if(tour != null) {
 			model.addAttribute(tour);
-			return "/tour/detail/"+tourRank;
+			return "/top/detail";
 		}else {
 			return "redirect:/top/tour/1";	
 		}

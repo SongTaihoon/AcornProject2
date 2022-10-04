@@ -22,7 +22,7 @@ import lombok.Data;
  * */
 @Data
 public class Tour {
-	 private String tour_rank;
+	 private int tour_rank;
 	 private String tourist;
 	 private String province;
 	 private String city;

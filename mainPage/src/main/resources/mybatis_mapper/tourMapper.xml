@@ -21,11 +21,11 @@
 		SELECT COUNT(*) FROM TOUR
 	</select>
 	<!-- tour Detail  -->
-	<select id="selectDetailOne" resultMap="TourMap" >
+	<select id="selectDetailOne" resultType="Tour">
 		SELECT * FROM TOUR WHERE tour_rank = #{tourRank}
 	</select>
 	<!-- 조회수 -->
-	<update id="updateViews" parameterType="String" >
+	<update id="updateViews" parameterType="int">
 		UPDATE TOUR SET 
 			views = views + 1
 			WHERE tour_rank = #{tourRank}

@@ -11,7 +11,7 @@ public class TourService {
 	@Autowired
 	private TourMapper tourMapper;
 	
-	public Tour tourUpdateView(String tourRank) throws Exception{
+	public Tour tourUpdateView(int tourRank) throws Exception{
 		tourMapper.updateViews(tourRank);
 		return tourMapper.selectDetailOne(tourRank);
 	}

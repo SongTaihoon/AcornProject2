@@ -31,7 +31,7 @@
 					<tr id="detail" th:each="board : ${boardList}" th:onclick="location.href='/board/detail/[[${board.board_no}]]'">
 						<td th:text="${board.board_no}"></td>
 						<td th:text="${board.title}"></td>
-						<td th:text="${board.users?.userid}"></td>
+						<td th:text="${board.user?.user_id}"></td>
 						<td th:text="${#dates.format(board.post_time,'yyyy-MM-dd HH:mm:ss')}"></td>
 						<td th:text="${board.views}"></td>
 						<td th:text="${board.good}"></td>
