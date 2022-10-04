@@ -1,0 +1,103 @@
+#header {
+     display: flex;
+     justify-content: space-around;
+     align-items: center;
+     padding: 40px;
+     min-width: 1200px;
+     background-color: #f8f9fa;
+}
+#header #headerLeft h1 a {
+	text-decoration: none;
+	color: black;
+}
+#headerId{
+	margin-bottom: 0;
+    font-size: 40px;
+    text-shadow: 5px 5px 0 gray;
+}
+#header #headerCenter #searchBox {
+     width: 520px;
+     height: 45px;
+     box-sizing: border-box;
+}
+#header #headerCenter #searchBox #searchForm #searchInput {
+     height: 45px;
+     line-height: 45px;
+     box-sizing: border-box;
+     border: 1px solid #1E96C4;
+}
+#header #headerCenter #searchBox #searchForm button {
+ 	 border: 1px solid #1E96C4;
+ 	 background-color: white;
+}
+#header #headerCenter #searchBox #searchForm button:hover {
+ 	 background-color: #1E96C4;
+}
+#header #headerCenter #searchBox #searchForm button img {
+ 	 width: 28px;
+ 	 height: 28px;
+}
+#header #headerRight ol {
+	margin: 8px 0;
+}
+#header #headerRight nav ol li a {
+     text-decoration: none;
+     color: black;
+     vertical-align: middle;
+}
+#header #headerRight nav ol li a:hover {
+     color: #1E96C4;
+     text-decoration: underline;
+}
+#nav {
+ 	 padding: 0;
+}
+#nav #navBox {
+     display: flex;
+     justify-content: space-around;
+     min-width: 1200px;
+}
+#nav #navBox a {
+     text-decoration: none;
+     padding: 10px;
+     color: white;
+}
+#nav #navBox .dropdown {
+     display: inline-block;
+     position: relative;
+}
+#nav #navBox .dropdown .dropdown-btn {
+     width: 200px;
+     padding: 18px;
+     font-size: 18px;
+     color: #fff;
+     border: none;
+     cursor: pointer;
+     background-color: #1E96C4;
+}
+#nav #navBox .dropdown .dropdown-btn a {
+	 text-decoration: none;
+	 color: black;
+}
+#nav #navBox .dropdown .dropdown-submenu {
+     width: 200px;
+     display: none;
+     position: absolute;
+     z-index: 10;
+}
+#nav #navBox .dropdown .dropdown-submenu a {
+     display: block;
+     padding: 7px;
+     text-align: center;
+     background-color: #1E96C4;
+}
+#nav #navBox .dropdown .dropdown-submenu a:hover {
+     background-color: #d3eaf3;
+}
+#nav #navBox .dropdown:hover .dropdown-submenu {
+     display: block;
+}
+
+
+
+

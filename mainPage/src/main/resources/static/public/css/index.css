@@ -1,0 +1,53 @@
+/* footer 하단 고정 */
+html, body {
+    height: 100%
+}
+#wrapper {
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 325px;
+}
+.footer {
+    bottom: 0;
+}
+
+.jejuthebesting{
+    height: 65vh;                    
+    position: relative;            
+    overflow: hidden;         
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to left, black,  transparent);
+}
+.jejuthebesting video{
+    position: absolute;          
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;                 
+}
+.jejuthebesting .heading{
+    text-align: center;
+    width: 60%;
+    color:#fff;
+    text-shadow:  5px 5px 0 gray;
+}
+.jejuthebesting .heading h1{
+    font-weight: 500;
+    line-height: 1.6em;
+    font-size: 2em;
+    margin-bottom: 16px;
+}
+.jejuthebesting .heading h2 {
+	font-size: 1.8em;
+	margin-bottom: 16px;
+}
+.jejuthebesting .heading span{
+    color: #ff8400;
+    display: block;
+    font-size: 1.3em;
+    text-shadow: 5px 5px 0 gray;
+}

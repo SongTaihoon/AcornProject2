@@ -1,0 +1,29 @@
+@charset "EUC-KR";
+
+/* footer 하단 고정 css */
+html, body {
+    height: 100%
+}
+#wrapper {
+    min-height: 100%;
+    min-width: 1200px;
+    position: relative;
+    padding-bottom: 500px;
+}
+.footer {
+    bottom: 0;
+}
+
+/* 홈 > 고객센터 > 공지사항  */
+#path {
+    display: flex;
+    margin: 20px 0;
+    min-width: 1200px;
+}
+#path ol {
+    margin-left: auto;      
+}
+#path ol li a {   
+    text-decoration: none;
+    vertical-align: middle;
+}

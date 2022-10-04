@@ -1,0 +1,41 @@
+#path {
+    display: flex;
+    margin: 20px 0;
+    min-width: 1200px;
+}
+#path ol {
+    margin-left: auto;      
+}
+#path ol li a {   
+    text-decoration: none;
+    vertical-align: middle;
+}
+html, body {
+    height: 100%;
+}
+#wrapper {
+    min-height: 100%;
+    min-width: 1200px;
+    position: relative;
+    padding-bottom: 500px;
+}
+.footer {
+    bottom: 0;
+}
+.container-xl {
+	position: relative;
+    width: 100%;
+}
+.innerBox{
+  	margin: 20px 20px;
+}
+.title{
+	margin: 20px 0;
+	color: #333;
+    font-size: 13px;
+    font-weight: 600;
+}
+.txt{
+	color: #777;
+    font-size: 13px;
+}
