@@ -18,10 +18,10 @@
 					<a href="#">Top 10</a>
 				</li>
 				<li class="breadcrumb-item">
-					<a href="/top/tour/1">관광지</a>
+					<a href="/top/tour/list/1">관광지</a>
 				</li>
 				<li class="breadcrumb-item" aria-current="page">
-					<a href="/top/insert.do" class="breadcrumb-item active">관광지 등록</a>
+					<a href="/top/tour/insert.do" class="breadcrumb-item active">관광지 등록</a>
 				</li>
 			</ol>
 		</nav>
@@ -29,9 +29,15 @@
 		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
 		    <span style="font-size: 35px;">관광지 등록</span>
 	    </h1>
-		<form action="/top/insert.do" method="post" enctype="multipart/form-data" name="boardInsertForm">
+		<form action="/top/tour/insert.do" method="post" enctype="multipart/form-data" name="boardInsertForm">
 		<table class="mt-5 mb-5 table align-middle table-bordered">
 				<tbody>
+					<tr>
+						<th class="table-light">작성자</th>
+						<td>
+							<input name="user.user_id" class="form-control" id="user.user_id" th:value="${session.loginUser.user_id}" readonly>
+						</td>
+					</tr>
 					<tr>
 						<th class="table-light">카테고리</th>
 						<td>
@@ -91,7 +97,7 @@
 				<div class="ms-auto">
 					<button class="btn btn-outline-warning btn-lg" type="reset" style="margin-right: 8px;">초기화</button>
 					<button class="btn btn-outline-primary btn-lg" type="submit" style="margin-right: 8px;">등록</button>
-					<a class="btn btn-outline-dark btn-lg" href="/top/tour/1">목록</a>
+					<a class="btn btn-outline-dark btn-lg" href="/top/tour/list/1">목록</a>
 				</div>
 			</div>
 		</form>

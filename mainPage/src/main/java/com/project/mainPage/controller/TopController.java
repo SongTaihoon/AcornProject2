@@ -36,13 +36,17 @@ public class TopController {
 	@Autowired
 	private TourService tourService;
 	@Autowired
-	private TourImgMapper TourImgMapper;
+	private TourImgMapper tourImgMapper;
 	
 	@Value("${spring.servlet.multipart.location}") // 파일이 임시 저장되는 경로 + 파일을 저장할 경로
 	private String savePath;
 	
+
+	// Tour > tour_img 의 수를 5개로 제한 
+	private final static int TOUR_IMG_LIMIT = 5; 
+	
 	// 관광지 TOP 10 LIST
-	@GetMapping("/tour/{page}")
+	@GetMapping("/tour/list/{page}")
 	public String tour(
 			@PathVariable int page,
 			Model model){
@@ -50,17 +54,17 @@ public class TopController {
 		int startRow = (page - 1) * row;
 		List<Tour> tourList = tourMapper.selectListAll(startRow, row);
 		int count = tourMapper.selectPageAllCount();
-		Pagination pagination = new Pagination(page, count, "/top/tour/", row);
+		Pagination pagination = new Pagination(page, count, "/tour/list/", row);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("tourList",tourList);	
 		model.addAttribute("row", row);
 		model.addAttribute("count", count);
 		model.addAttribute("page", page);
-		return "top/tour";
+		return "/top/tour/list";
 	}
 	
 	// 관광지 TOP Detail 
-	@GetMapping("/detail/{tourRank}")
+	@GetMapping("/tour/detail/{tourRank}")
 	public String detail(
 			@PathVariable int tourRank,
 			Model model
@@ -74,27 +78,27 @@ public class TopController {
 		System.out.println("tour" + tour);
 		if(tour != null) {
 			model.addAttribute(tour);
-			return "/top/detail";
+			return "/top/tour/detail";
 		}else {
-			return "redirect:/top/tour/1";	
+			return "redirect:/top/tour/list/1";	
 		}
 	}
 	
 	
 	// 관광지 등록 페이지 (admin 관리자 등록하도록 설정)
-	@GetMapping("/insert.do")
+	@GetMapping("/tour/insert.do")
 	public String insert(
 			@SessionAttribute(required = false) UserDto loginUser
 			) {
 		if((loginUser).getAdminCk() == 1) {
-			return "/top/insert";
+			return "/top/tour/insert";
 		}else {
 			return "redirect:/user/login.do";
 		}
 	}
 	
 //	관광지 등록
-	@PostMapping("/insert.do")
+	@PostMapping("/tour/insert.do")
 	public String insert(
 				Tour  tour,
 				@RequestParam(name = "imgFile", required = false) MultipartFile [] imgFiles,
@@ -130,11 +134,84 @@ public class TopController {
 		}
 		if(insert > 0) {
 			System.out.println("관광지 등록 성공! : " + insert);
-			return "redirect:/top/tour/1";
+			return "redirect:/top/tour/list/1";
 		}else {
 			System.out.println("관광지 등록 실패! : " + insert);
-			return "redirect:/top/insert.do";
+			return "redirect:/top/tour/insert.do";
 		}
+	}
+	
+	// 관광지 수정 페이지 
+	@GetMapping("/tour/update/{tourRank}")
+	public String update(
+			@PathVariable int tourRank, 
+			Model model, 
+			@SessionAttribute(name ="loginUser", required = false) UserDto loginUser,
+			HttpSession session) {
+		Tour tour = null;
+		tour = tourMapper.selectDetailOne(tourRank);
+		if((loginUser).getAdminCk() == 1) {
+			model.addAttribute("tour", tour);
+			System.out.println(tour);
+			return "/top/tour/update";			
+		} else {
+			return "redirect:/user/login.do";
+		}
+	}
+	
+	@PostMapping("/tour/update.do")
+	public String update(
+			Tour tour,
+			Model model,
+			@SessionAttribute(name ="loginUser", required = false) UserDto loginUser,
+			@RequestParam(name="tourImgNo",required = false ) int [] tourImgNos,
+			@RequestParam(name = "imgFile", required = false) MultipartFile[] imgFiles,
+			HttpSession session
+			) {
+		int update = 0; 
+		if(((loginUser).getAdminCk() == 1)) {
+			try {
+				int tourImgCount = tourImgMapper.selectCountTourRank(tour.getTour_rank());
+				int insertTourImgLength = TOUR_IMG_LIMIT - tourImgCount + ((tourImgNos != null) ? tourImgNos.length : 0);
+				// 이미지 저장 
+				if(imgFiles != null && insertTourImgLength > 0) {
+					List<TourImg> tourImgs = new ArrayList<TourImg>();
+					for(MultipartFile imgFile : imgFiles) { 
+						String[] types = imgFile.getContentType().split("/");
+						if(types[0].equals("image")) {
+							// 새로운 이미지 등록 
+							String newFileName = "tour_" + System.nanoTime() + "." + types[1];
+							Path path = Paths.get(savePath + "/" + newFileName);
+							imgFile.transferTo(path); // 서버(static 내부에 있는 img 폴더)에 이미지 저장
+							
+							TourImg tourImg = new TourImg();
+							tourImg.setTour_rank(tour.getTour_rank()); 
+							tourImg.setImg_path(newFileName);
+							tourImgs.add(tourImg);
+							
+							if(-- insertTourImgLength == 0) break; // 이미지 수가 5개면 반목문 종료 
+						}
+					}
+					if(tourImgs.size() > 0) {
+						tour.setTourImgs(tourImgs);
+					}
+				}
+				update = tourService.updateTourRemoveTourImg(tour, tourImgNos); // DB에서 후기 수정
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			if(update > 0) {
+				System.out.println("관광지 수정 성공! : " + update);
+				return "redirect:/top/tour/detail/" + tour.getTour_rank();
+			}else {
+				System.out.println("관광지 수정 성공! : " + update);
+				return "redirect:/top/tour/update/" + tour.getTour_rank();
+			}	
+		}else{ 
+			return "redirect:/user/login.do";
+		}  
+		
+		
 	}
 	
 	

@@ -16,6 +16,12 @@ public interface TourMapper {
 	Tour selectDetailOne(int tourRank);
 	// 조회수 
 	int updateViews(int tourRank);
+	// 등록
 	int insertOne(Tour tour);
+	// 수정
+	int updateOne(Tour toru);
+	// 삭제 
+	int deleteOne(int tourRank);
+	
 }
 

@@ -25,7 +25,7 @@
 		DELETE FROM TOURIMG 
 			WHERE tour_img_no = #{tourImgNo}
 	</delete>
-	<select id="selectCountTourNo" parameterType="int" resultType="int">
+	<select id="selectCountTourRank" parameterType="int" resultType="int">
 		SELECT COUNT(*) FROM TOURIMG 
 			WHERE tour_rank = #{tourRank}
 	</select>

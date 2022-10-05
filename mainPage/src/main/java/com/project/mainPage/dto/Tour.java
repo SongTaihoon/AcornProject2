@@ -19,7 +19,9 @@ import lombok.Data;
 | views       | int          | NO   |     | 0       |                |
 | good        | int          | NO   |     | 0       |                |
 | bad         | int          | NO   |     | 0       |                |
+| user_id     | varchar(45)  | NO   | MUL | NULL    |                |
 +-------------+--------------+------+-----+---------+----------------+
+11 rows in set (0.00 sec)
  * */
 @Data
 public class Tour {
@@ -33,5 +35,6 @@ public class Tour {
 	 private int bad;
 	 private int views;
 	 private int search;
+	 private UserDto user; // UsersDto.userid : fk 
 	 private List<TourImg> tourImgs; // 1:N  TourImg.tour_rank fk
 }

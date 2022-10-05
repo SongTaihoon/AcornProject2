@@ -15,5 +15,5 @@ public interface TourImgMapper {
 	List<TourImg> selectUserId(String tourist);
 	TourImg selectOne(int tourImgNo);
 	int deleteOne(int tourImgNo);
-	int selectCountTourNo(int tourRank);
+	int selectCountTourRank(int tourRank);
 }
