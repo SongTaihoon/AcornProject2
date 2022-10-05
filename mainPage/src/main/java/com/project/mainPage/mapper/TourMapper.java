@@ -19,7 +19,7 @@ public interface TourMapper {
 	// 등록
 	int insertOne(Tour tour);
 	// 수정
-	int updateOne(Tour toru);
+	int updateOne(Tour tour);
 	// 삭제 
 	int deleteOne(int tourRank);
 	

@@ -142,6 +142,7 @@ public class TopController {
 	}
 	
 	// 관광지 수정 페이지 
+	@SuppressWarnings("null")
 	@GetMapping("/tour/update/{tourRank}")
 	public String update(
 			@PathVariable int tourRank, 
@@ -150,7 +151,7 @@ public class TopController {
 			HttpSession session) {
 		Tour tour = null;
 		tour = tourMapper.selectDetailOne(tourRank);
-		if((loginUser).getAdminCk() == 1) {
+		if(loginUser != null || (loginUser).getAdminCk() == 1) {
 			model.addAttribute("tour", tour);
 			System.out.println(tour);
 			return "/top/tour/update";			
@@ -169,7 +170,7 @@ public class TopController {
 			HttpSession session
 			) {
 		int update = 0; 
-		if(((loginUser).getAdminCk() == 1)) {
+		if((loginUser).getAdminCk() == 1) {
 			try {
 				int tourImgCount = tourImgMapper.selectCountTourRank(tour.getTour_rank());
 				int insertTourImgLength = TOUR_IMG_LIMIT - tourImgCount + ((tourImgNos != null) ? tourImgNos.length : 0);

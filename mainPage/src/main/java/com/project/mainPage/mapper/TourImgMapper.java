@@ -10,7 +10,7 @@ import com.project.mainPage.dto.TourImg;
 // com.project.mainPage.mapper.TourImgMapper
 @Mapper
 public interface TourImgMapper {
-	int insertOne(TourImg TourImg);
+	int insertOne(TourImg tourImg);
 	List<TourImg> selectTourRank(int tourRank);
 	List<TourImg> selectUserId(String tourist);
 	TourImg selectOne(int tourImgNo);
