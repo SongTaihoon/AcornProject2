@@ -121,11 +121,13 @@ public class BoardController {
 			Model model,
 			@SessionAttribute(required = false) UserDto loginUser, 
 			@RequestParam(defaultValue = "1") int replyPage,
+			@RequestParam(required = false) String sort,
+			@RequestParam(required = false, defaultValue = "desc") String direct,
 			HttpServletRequest req,
 			HttpServletResponse resp) {
 		Board board = null;		
 		BoardPrefer boardPrefer = null;  // 로그인이 안 되면 null
-		
+		int repl = 0;
 		//System.out.println(replyPage);
 		//System.out.println(board);
 		
@@ -139,7 +141,9 @@ public class BoardController {
 			if(loginUser != null) {
 				loginUsersId = loginUser.getUser_id();
 				board = boardService.boardUpdateView(boardNo);
+				System.out.println("board : " + board);
 				boardPrefer = boardPreferMapper.selectFindUserIdAndBoardNo(loginUser.getUser_id(), boardNo);
+				repl = replyMapper.selectBoardNoAndUserId(boardNo, loginUsersId);
 				System.out.println(boardPrefer);
 				if(boardPrefer != null && boardPrefer.getUser_id().equals(loginUser.getUser_id())) {
 					if(boardPrefer.isPrefer()) {
@@ -149,6 +153,7 @@ public class BoardController {
 					}
 				}
 				for(Reply reply : board.getReplys()) {
+					System.out.println("board 2 : " + board);
 					System.out.println(reply);
 					for (ReplyPrefer prefer : reply.getGood_prefers()) {
 						if(prefer.getUser_id().equals(loginUser.getUser_id())) {
@@ -164,18 +169,31 @@ public class BoardController {
 				int replySize = replyMapper.selectBoardNoCount(boardNo);
 				if(replySize > 0) {
 					pagination = new Pagination(replyPage, replySize, pagingUrl, row);
-					List<Reply> replies = replyMapper.selectBoardNoPage(boardNo, startRow, row, loginUsersId);
-					board.setReplys(replies);
-					model.addAttribute("pagination", pagination);
+					if(sort != null && !sort.equals("")) {
+						List<Reply> replies = replyMapper.selectBoardNoPage(boardNo, sort, direct, loginUsersId);
+						board.setReplys(replies);
+						model.addAttribute("pagination", pagination);
+					} else {
+						List<Reply> replies = replyMapper.selectBoardNoPage(boardNo, null, null, loginUsersId);
+						board.setReplys(replies);
+						model.addAttribute("pagination", pagination);
+					}
+					
 				}
 			} else {
 				board = boardService.boardUpdateView(boardNo);
 				int replySize = replyMapper.selectBoardNoCount(boardNo);
 				if(replySize > 0) {
 					pagination = new Pagination(replyPage, replySize, pagingUrl, row);
-					List<Reply> replies = replyMapper.selectBoardNoPage(boardNo, startRow, row, loginUsersId);
-					board.setReplys(replies);
-					model.addAttribute("pagination", pagination);
+					if(sort != null && !sort.equals("")) {
+						List<Reply> replies = replyMapper.selectBoardNoPage(boardNo, sort, direct, loginUsersId);
+						board.setReplys(replies);
+						model.addAttribute("pagination", pagination);
+					} else {
+						List<Reply> replies = replyMapper.selectBoardNoPage(boardNo, null, null, loginUsersId);
+						board.setReplys(replies);
+						model.addAttribute("pagination", pagination);
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -184,7 +202,8 @@ public class BoardController {
 		if(board != null) {
 			model.addAttribute("boardPrefer", boardPrefer);
 			model.addAttribute("board", board);
-			System.out.println(board);
+			model.addAttribute("repl", repl);
+			System.out.println("repl : " + repl);
 			return "/board/detail";			
 		}else {
 			return "redirect:/board/list/1";

@@ -64,8 +64,15 @@
 			   </if>	
 			   FROM REPLY 
 			   	 WHERE board_no = #{boardNo}
-			   	   ORDER BY reply_no DESC
-			  		 LIMIT #{startRow}, #{pageSize}
+			   	 <if test="sort != null">
+					ORDER BY ${sort} 
+				</if>
+				<if test="direct != null">
+					<choose>
+						<when test="direct.equals('desc')">DESC</when>
+						<otherwise>ASC</otherwise>
+					</choose>
+				</if>
 	</select>
 	<select id="selectBoardNoCount" resultType="int">
 		SELECT COUNT(*) FROM REPLY 
@@ -88,6 +95,11 @@
 			   user_id AS 'user.user_id' 
 					FROM REPLY 
 						WHERE user_id = #{user_id}
+	</select>
+	<select id="selectBoardNoAndUserId" resultType="int">
+		SELECT COUNT(*) FROM REPLY
+			WHERE board_no = #{boardNo} 
+				AND user_id = #{user_id};
 	</select>
 	<insert id="insertOne" parameterType="Reply">
 		INSERT INTO REPLY (title, img_path, contents, board_no, user_id) 

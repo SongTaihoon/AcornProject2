@@ -36,29 +36,29 @@ public class ReplyController {
 	private ReplyPreferMapper replyPreferMapper;
 	
 //	댓글 리스트 페이지
-	@RequestMapping("/list/{boardNo}/{page}")
-	public String list(
-			@PathVariable int boardNo,
-			@PathVariable int page,
-			@SessionAttribute(required = false) UserDto loginUser,
-			Model model) {
-		int row = 5;
-		int startRow = (page - 1) * row;
-		String url = "/reply/list/" + boardNo;
-		List<Reply> replys = null;
-		String loginUserId = (loginUser != null) ? loginUser.getUser_id() : null;
-		try {
-			int rowCount = replyMapper.selectBoardNoCount(boardNo);
-			Pagination pagination = new Pagination(page, rowCount, url, row);
-			replys = replyMapper.selectBoardNoPage(boardNo, startRow, row, loginUserId);
-			model.addAttribute("pagination", pagination);
-			System.out.println(pagination);
-			model.addAttribute("replys", replys);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}	
-		return "/board/replyList";
-	}
+//	@RequestMapping("/list/{boardNo}/{page}")
+//	public String list(
+//			@PathVariable int boardNo,
+//			@PathVariable int page,
+//			@SessionAttribute(required = false) UserDto loginUser,
+//			Model model) {
+//		int row = 5;
+//		int startRow = (page - 1) * row;
+//		String url = "/reply/list/" + boardNo;
+//		List<Reply> replys = null;
+//		String loginUserId = (loginUser != null) ? loginUser.getUser_id() : null;
+//		try {
+//			int rowCount = replyMapper.selectBoardNoCount(boardNo);
+//			Pagination pagination = new Pagination(page, rowCount, url, row);
+//			replys = replyMapper.selectBoardNoPage(boardNo, loginUserId);
+//			model.addAttribute("pagination", pagination);
+//			System.out.println(pagination);
+//			model.addAttribute("replys", replys);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}	
+//		return "/board/replyList";
+//	}
 	
 //	댓글 등록
 	@PostMapping("/insert.do")
