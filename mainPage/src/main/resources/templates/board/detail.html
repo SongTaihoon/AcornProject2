@@ -173,103 +173,104 @@
 			<a href="/board/list/1" class="btn btn-outline-dark btn-lg">목록</a>
 		</div>
 	  </div>
-	<div class="btn-group dropend">
-	  <button type="button" class="btn btn-lg btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-	    Dropend
-	  </button>
-	  <ul class="dropdown-menu">
-	        <li class="nav-item">
-	          	<a class="dropdown-item" th:href="@{./{boardNo}(boardNo=${board.board_no}, sort=${board.replys?.size}, direct=desc)}">인기순</a>
-	        </li>
-	        <li class="nav-item">
-	          	<a class="dropdown-item" th:href="@{./{boardNo}(boardNo=${board.board_no}, sort=post_time, direct=desc)}">최신순</a>
-	        </li>
-	        <li class="nav-item">
-	          	<a class="dropdown-item" th:href="@{./{boardNo}(boardNo=${board.board_no}, sort=post_time, direct=asc)}">오래된순</a>
-	        </li>
-	      </ul>
-	</div>
-	<nav id="productNav" class="navbar navbar-expand bg-light border">
-	  <div class="container-fluid">
-	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-	      <span class="navbar-toggler-icon"></span>
-	    </button>
-	    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-	      
-	    </div>
-	  </div>
-	</nav>
-	<div class="accordion" id="accordionFlushExample" style="min-width: 1200px;">
-	  <div class="accordion-item">
-	    <h2 class="accordion-header" id="flush-headingOne">
-	      <button class="accordion-button collapsed" type="button" 
+	  
+	<div class="accordion sticky-top" id="accordionFlushExample" style="min-width: 1200px; z-index: 1100;">
+	  <div class="accordion-item ">
+	    <h2 class="accordion-header " id="flush-headingOne">
+	      <button th:classappend="${(board.replys?.size != 0) ? '' : 'collapsed'}" class="accordion-button " type="button" 
 	      		  style="background-color: white;" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
 	         <span style="font-size: 35px;">댓글 : <strong th:text="${board.replys?.size}"></strong></span>
 	      </button>
 	    </h2>
-	    <div id="flush-collapseOne" class="accordion-collapse collapse" 
+	    <div id="flush-collapseOne"  th:classappend="${(board.replys?.size != 0) ? 'show' : ''}" class="accordion-collapse collapse " 
 	    	 style="max-height: 1200px; overflow-y: scroll;" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-	      <div class="accordion-body">
-			<div>
-				<ul class="list-group">
-	<!--///////////////////////////////////// 리플 등록 폼 ///////////////////////////////////////////////////////////////// -->	
-					<li class="list-group-item fixed-bottom"  style="min-width: 1200px;"
-					th:if="${session.loginUser?.user_id != null}">
-						<div class="accordion" id="accordionReplyInsert">
-						  <div class="accordion-item">
-						    <h2 class="accordion-header" id="headingOne">
-						      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseReplyInsert" aria-expanded="true" aria-controls="collapseReplyInsert">
-						        댓글 등록
-						      </button>
-						    </h2>
-						    <div id="collapseReplyInsert" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionReplyInsert">
-						      <div class="accordion-body">
-								 <form action="/reply/insert.do" method="post" enctype="multipart/form-data" name="replyInsertForm">
-									<table class="table table-bordered table align-middle mb-3" style="height: 100%;">
-										<tbody>
-											<tr>
-												<th class="table-light">작성자</th>
-												<td>
-													<input name="user.user_id" class="form-control" id="userId" th:value="${session.loginUser?.user_id}" readonly>
-												</td>
-											</tr>
-											<tr>
-												<th class="table-light">제목</th>
-												<td>
-													<input name="title" class="form-control" id="title" onkeyup="noSpace(this);" onchange="noSpace(this);">
-												</td>
-											</tr>
-											<tr>
-												<th class="table-light">사진</th>
-												<td>
-													<input name="imgFile" class="form-control form-control-lg" type="file">
-												</td>
-											</tr>
-											<tr>
-												<th class="table-light">내용</th>
-												<td>
-													<textarea name="contents" class="form-control" id="contents" 
-															  onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
-												</td>	
-											</tr>
-										</tbody>
-									</table>
-									<div class="d-flex">
-										<div class="ms-auto">
-											<button class="btn btn-outline-warning btn-lg" type="reset" style="margin-right: 8px;">초기화</button>
-											<button class="btn btn-outline-primary btn-lg" type="submit">등록</button>
-											<input type="hidden" name="board_no" th:value="${board.board_no}">
-										</div>
+	      <div class="accordion-body ">
+	      	<div class="list-group sticky-top">
+			 <div class="d-flex list-group-item bg-light">
+			    <th:block th:if="${session.loginUser?.user_id != null}">
+			       <a class="btn btn-lg btn-outline-secondary" th:href="@{./{boardNo}(boardNo=${board.board_no})}">분류로 보기</a>
+			    </th:block>
+				<div class="btn-group dropdown-center ms-auto">
+				   <button type="button" class="btn btn-lg btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+				     필터
+				   </button>
+				   <ul class="dropdown-menu">
+			        <li>
+			          	<a class="dropdown-item text-center ps-0 pe-0" th:href="@{./{boardNo}(boardNo=${board.board_no}, sort=good, direct=desc)}">인기순</a>
+			        </li>
+			        <li class="nav-item">
+			          	<a class="dropdown-item text-center ps-0 pe-0" th:href="@{./{boardNo}(boardNo=${board.board_no}, sort=post_time, direct=desc)}">최신순</a>
+			        </li>
+			        <li class="nav-item">
+			          	<a class="dropdown-item text-center ps-0 pe-0" th:href="@{./{boardNo}(boardNo=${board.board_no}, sort=post_time, direct=asc)}">오래된순</a>
+			        </li>
+			       </ul>
+				 </div>
+			  </div>
+			 </div>
+			<ul class="list-group mt-3">
+<!--///////////////////////////////////// 리플 등록 폼 ///////////////////////////////////////////////////////////////// -->	
+				<li class="list-group-item fixed-bottom"  style="min-width: 1200px;"
+				th:if="${session.loginUser?.user_id != null}">
+					<div class="accordion" id="accordionReplyInsert">
+					  <div class="accordion-item">
+					    <h2 class="accordion-header" id="headingOne">
+					      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseReplyInsert" aria-expanded="true" aria-controls="collapseReplyInsert">
+					        댓글 등록
+					      </button>
+					    </h2>
+					    <div id="collapseReplyInsert" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionReplyInsert">
+					      <div class="accordion-body">
+							 <form action="/reply/insert.do" method="post" enctype="multipart/form-data" name="replyInsertForm">
+								<table class="table table-bordered table align-middle mb-3" style="height: 100%;">
+									<tbody>
+										<tr>
+											<th class="table-light">작성자</th>
+											<td>
+												<input name="user.user_id" class="form-control" id="userId" th:value="${session.loginUser?.user_id}" readonly>
+											</td>
+										</tr>
+										<tr>
+											<th class="table-light">제목</th>
+											<td>
+												<input name="title" class="form-control" id="title" onkeyup="noSpace(this);" onchange="noSpace(this);">
+											</td>
+										</tr>
+										<tr>
+											<th class="table-light">사진</th>
+											<td>
+												<input name="imgFile" class="form-control form-control-lg" type="file">
+											</td>
+										</tr>
+										<tr>
+											<th class="table-light">내용</th>
+											<td>
+												<textarea name="contents" class="form-control" id="contents" 
+														  onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
+											</td>	
+										</tr>
+									</tbody>
+								</table>
+								<div class="d-flex">
+									<div class="ms-auto">
+										<button class="btn btn-outline-warning btn-lg" type="reset" style="margin-right: 8px;">초기화</button>
+										<button class="btn btn-outline-primary btn-lg" type="submit">등록</button>
+										<input type="hidden" name="board_no" th:value="${board.board_no}">
 									</div>
-								</form>
-						      </div>
-						    </div>
-						  </div>
-						</div>						
-					  </li>
-				   <th:block th:insert="/board/replyList" th:with="replys=${board.replys}" id="replyList"></th:block>
-				</ul>
-			</div>
+								</div>
+							</form>
+					      </div>
+					    </div>
+					  </div>
+					</div>						
+				  </li>
+			  <th:block th:if="${param.sort != null && param.sort != ''}">
+			   	<th:block th:insert="/board/replySortList" th:with="replys=${board.replys}" id="replyList"></th:block>
+			  </th:block>
+			  <th:block th:unless="${param.sort != null && param.sort != ''}">
+			   	<th:block th:insert="/board/replyList" th:with="replys=${board.replys}" id="replyList"></th:block>
+			  </th:block>
+			</ul>
 	      </div>
 	    </div>
 	  </div>

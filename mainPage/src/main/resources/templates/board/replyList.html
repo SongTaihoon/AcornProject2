@@ -178,11 +178,13 @@
   </div>
 </div>
 </div>
+<th:block th:if="${session.loginUser?.user_id != null}">
 <div class="list-group-item bg-light d-flex justify-content-between align-items-center">
 <div class="accordion" id="accordionFlush2" style="width: 100%;">
   <div class="accordion-item">
     <h2 class="accordion-header" id="flush-headingOne">
-      <button th:classappend="${((board.replys?.size - repl) != 0) ? '' : 'collapsed'}" class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" 
+      <button th:classappend="${((board.replys?.size - repl) != 0) ? '' : 'collapsed'}" class="accordion-button " type="button" 
+      		  data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" 
       		  aria-expanded="false" aria-controls="flush-collapseTwo">
          <span>다른 사람의 댓글 : </span>&nbsp;<strong th:text="${board.replys?.size} - ${repl}"></strong>
       </button>
@@ -205,6 +207,19 @@
   </div>
 </div>
 </div>
+</th:block>
+<th:block th:unless="${session.loginUser?.user_id!=null}">
+	 <ul class="list-group">	
+		<th:block th:each="reply : ${replys}">
+			<th:block th:if="${(session.loginUser?.user_id == null) || (session.loginUser?.user_id != reply.user?.user_id)}">
+		  		<li th:id="${'replyLi' + reply.reply_no}"
+		  			class="list-group-item"
+		  			th:insert="/board/replyDetail">	
+				</li>
+			</th:block>
+		</th:block>
+     </ul>
+</th:block>
 <!-- <div class="m-2 d-flex justify-content-center" th:insert="/pagination.html"></div> -->
 <script>
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
