@@ -11,18 +11,59 @@
 		<result column="address3" property="address3"/>
 		<result column="tours" property="tours"/>	
 		<result column="views" property="views"/>	
-		<result column="search" property="search"/>	
+		<result column="search" property="search"/>
+		<!-- Tour : UsersDto = N : 1   -->	
+		<association property="user" javaType="UserDto" foreignColumn="user_id">
+			<id column="user_id" property="user_id"/>
+			<result column="user_name" property="user_name"/>
+			<result column="user_email" property="user_email"/>
+			<result column="birth" property="birth"/>
+		</association>
+		<association property="category" javaType="Category" foreignColumn="category_id">
+			<id column="category_id" property="category_id"/>
+		</association>
+		<collection property="tourImgs" javaType="java.util.ArrayList" ofType="TourImg">
+			<id column="tour_img_no" property="tour_img_no"/>
+			<result column="img_path" property="img_path"/>
+		</collection>	
 	</resultMap>
 	<!--  tour List  -->
-	<select id="selectListAll" resultType="Tour">
-		SELECT * FROM TOUR ORDER BY search DESC LIMIT #{startRow}, #{pageSize}
+	<select id="selectListAll" resultMap="TourMap">	
+			SELECT t.*, 
+		 	c.category_id
+		 	
+			FROM TOUR t
+			
+			LEFT JOIN CATEGORY c 
+		    USING(category_id)
+		     
+			ORDER BY search DESC LIMIT #{startRow}, #{pageSize} 
 	</select>
 	<select id="selectPageAllCount" resultType="int">
 		SELECT COUNT(*) FROM TOUR
 	</select>
 	<!-- tour Detail  -->
-	<select id="selectDetailOne" resultType="Tour">
-		SELECT * FROM TOUR WHERE tour_rank = #{tourRank}
+	<select id="selectDetailOne" resultMap="TourMap">
+		SELECT t.*, 
+			u.user_id, 
+			u.user_name, 
+			i.tour_img_no AS tour_img_no,
+			i.img_path AS img_path,
+			
+		 	c.category_id
+		 	
+		 	FROM TOUR t
+		 	
+		 	INNER JOIN USER u 
+			USING(user_id)
+			
+		 	LEFT JOIN TOURIMG i 
+			USING(tour_rank)
+			
+		 	LEFT JOIN CATEGORY c 
+		    USING(category_id)
+		 	
+		 	WHERE tour_rank = #{tourRank}
 	</select>
 	<!-- 조회수 -->
 	<update id="updateViews" parameterType="int">
@@ -30,4 +71,25 @@
 			views = views + 1
 			WHERE tour_rank = #{tourRank}
 	</update>
+	<insert id="insertOne" parameterType="Tour"
+	 		useGeneratedKeys="true" keyProperty="tour_rank">
+		INSERT INTO TOUR 
+			( tourist, address3,province,city,category_id,search , user_id)
+				VALUES (#{tourist}, #{address3},#{province},#{city},#{category.category_id},#{search}, #{user.user_id})
+	</insert>
+	<!-- 수정  -->
+	<update id="updateOne" parameterType="Tour">
+		UPDATE TOUR 
+			SET 
+				tourist = #{tourist},
+				city = #{city},
+				address3 = #{address3},
+				search = #{search}
+			WHERE tour_rank = #{tourRank}
+	</update>
+	<!-- 삭제  -->
+	<delete id="deleteOne" parameterType="int">
+		DELETE FROM TOUR 
+			WHERE tour_rank = #{tourRank}
+	</delete>
  </mapper>
