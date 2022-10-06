@@ -33,6 +33,7 @@
 			SELECT t.*, 
 		 	c.category_id,
 		 	RANK() OVER(ORDER BY search DESC) AS ranking
+
 			FROM TOUR t
 			
 			LEFT JOIN CATEGORY c 
@@ -92,5 +93,6 @@
 		DELETE FROM TOUR 
 			WHERE tour_rank = #{tourRank}
 	</delete>
+	
 	
  </mapper>

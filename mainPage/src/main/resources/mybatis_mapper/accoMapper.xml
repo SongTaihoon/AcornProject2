@@ -10,6 +10,7 @@
 		<result column="city" property="city"/>
 		<result column="address1" property="address1"/>
 		<result column="acco" property="acco"/>		
+		<result column="views" property="views"/>	
 		<result column="search" property="search"/>	
 		<result column="ranking" property="ranking"/>	
 		<!-- Acco : UsersDto = N : 1   -->	

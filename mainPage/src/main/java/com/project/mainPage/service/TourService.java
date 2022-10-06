@@ -1,6 +1,7 @@
 package com.project.mainPage.service;
 
 import java.io.File;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -70,7 +71,20 @@ public class TourService {
 		return update;
 	}
 	
-	
+	public int removeTour(int tourRank) throws Exception{
+		int remove=0;
+		List<TourImg> tourImgs = tourImgMapper.selectTourRank(tourRank);
+		if(tourImgs != null ) {
+			tourImgs.stream()
+				.map(TourImg :: getImg_path)
+				.forEach((img)->{
+					File f=new File(savePath+"/"+img);
+					System.out.println("관광지 이미지 삭제:"+f.delete());
+				});
+		}
+		remove = tourMapper.deleteOne(tourRank);
+		return remove;
+	}
 	
 	
 }

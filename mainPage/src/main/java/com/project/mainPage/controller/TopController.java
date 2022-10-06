@@ -36,6 +36,7 @@ import com.project.mainPage.service.AccoService;
 import com.project.mainPage.service.RestService;
 
 
+
 @Controller
 @RequestMapping("/top")
 public class TopController {
@@ -77,7 +78,6 @@ public class TopController {
 		model.addAttribute("row", row);
 		model.addAttribute("count", count);
 		model.addAttribute("page", page);
-
 		return "/top/tour/list";
 	}
 	
@@ -214,8 +214,11 @@ public class TopController {
 					}
 				}
 				update = tourService.updateTourRemoveTourImg(tour, tourImgNos); // DB에서 후기 수정
+
+				System.out.println("update : "+update);
 			} catch (Exception e) {
 				e.printStackTrace();
+				return "redirect:/top/tour/update/" + tour.getTour_rank();
 			}
 			if(update > 0) {
 				System.out.println("관광지 수정 성공! : " + update);
@@ -228,8 +231,44 @@ public class TopController {
 			return "redirect:/user/login.do";
 		}  
 		
+	}
+	
+	// 관광지 정보 삭제 
+	@SuppressWarnings("null")
+	@GetMapping("/tour/delete/{tourRank}/{userId}")
+	public String delete(
+			@PathVariable int tourRank,
+			@PathVariable String userId,
+			@SessionAttribute(name ="loginUser",required = false) UserDto loginUser,
+			HttpSession session
+			) {
+		System.out.println("loginUser : "+loginUser);
+		String msg = "";
+		if(loginUser != null || loginUser.getAdminCk() == 1) {
+			int delete=0;
+			try {
+				delete = tourService.removeTour(tourRank);
+			} catch(Exception e) {e.printStackTrace();}
+			if(delete > 0) {
+				msg="관광지 정보 삭제 성공";
+				session.setAttribute("msg", msg);
+				System.out.println(msg);
+				return "redirect:/top/tour/list/1";
+			}else {
+				msg="관광지 정보 삭제 실패";
+				session.setAttribute("msg", msg);
+				System.out.println(msg);
+				return "redirect:/top/tour/update/" + tourRank;			
+			}	
+		}else {
+			msg="로그인 하셔야 이용가능합니다.";
+			session.setAttribute("msg", msg);
+			System.out.println(msg);
+			return "redirect:/user/login.do";
+		}
 		
 	}
+	
 	@GetMapping("/rest/{page}")
 	public String rest(
 			@PathVariable int page,
@@ -306,5 +345,4 @@ public class TopController {
 			return "redirect:/top/acco/list/1";	
 		}
 	}
-	
 }

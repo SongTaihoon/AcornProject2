@@ -29,15 +29,24 @@
 	   <form action="/top/tour/update.do" method="post" enctype="multipart/form-data" name="tourUpdateForm">
 		 <table class="mb-5 table table-bordered table">
 		  <tbody>
+<<<<<<< HEAD
 		    
 		    <tr>
 		      <th style="width: 100px;" class="bg-light align-middle"></th>
+=======
+		    <tr>
+		      <th style="width: 100px;" class="bg-light align-middle">번호</th>
+>>>>>>> 683228a46cbc0e047319d4400ad57fb5b64b8b93
 		      <td style="width: 600px;">
 		      	<input name="tour_rank" class="form-control" id="tour_rank" th:value="${tour.tour_rank}">
 		      </td>
 		    </tr>
 		    <tr>
+<<<<<<< HEAD
 		      <th style="width: 100px;" class="bg-light align-middle">장소명</th>
+=======
+		      <th style="width: 100px;" class="bg-light align-middle">관광지명</th>
+>>>>>>> 683228a46cbc0e047319d4400ad57fb5b64b8b93
 		      <td style="width: 600px;">
 		      	<input name="tourist" class="form-control" id="tourist" th:value="${tour.tourist}">
 		      </td>
@@ -79,17 +88,34 @@
 		      	<textarea name="address3" class="form-control" th:text="${tour.address3}"></textarea>
 		      </td>
 		    </tr>
+<<<<<<< HEAD
+=======
+		    <tr>
+		      <th style="width: 100px;" class="bg-light align-middle">검색수</th>
+		      <td style="width: 600px;">
+		      	<textarea name="search" class="form-control" th:text="${tour.search}"></textarea>
+		      </td>
+		    </tr>
+>>>>>>> 683228a46cbc0e047319d4400ad57fb5b64b8b93
 		  </tbody>
 		</table>
 		<div class="d-flex">
 			<div class="ms-auto">
 				<button class="btn btn-outline-warning btn-lg" type="reset">초기화</button>
 				<button class="btn btn-outline-success btn-lg" type="submit" style="margin-left: 8px; margin-right: 8px;">수정</button>
+<<<<<<< HEAD
 				<!-- <a th:href="@{/top/tour/delete/{tourRank}/{userId}(tourRank=${tour.tourRank}, userId=${session.loginUser?.user_id})}" 
 				   class="btn btn-outline-danger btn-lg" style="margin-right: 8px;">
 					삭제
 				</a> -->
 				<!-- <a th:href="@{/top/tour/detail/{tourRank}(tourRank=${tour.tour_rank})}" class="btn btn-outline-dark btn-lg ms-auto">취소</a> -->
+=======
+				<a th:href="@{/top/tour/delete/{tourRank}/{userId}(tourRank=${tour.tour_rank}, userId=${session.loginUser?.user_id})}" 
+				   class="btn btn-outline-danger btn-lg" style="margin-right: 8px;">
+					삭제
+				</a>
+				<a th:href="@{/top/tour/detail/{tourRank}(tourRank=${tour.tour_rank})}" class="btn btn-outline-dark btn-lg ms-auto">취소</a>
+>>>>>>> 683228a46cbc0e047319d4400ad57fb5b64b8b93
 			</div>
 		</div>
 	   </form>

@@ -1,6 +1,7 @@
 package com.project.mainPage.service;
 
 import java.io.File;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.mainPage.dto.Acco;
 import com.project.mainPage.dto.AccoImg;
+import com.project.mainPage.dto.TourImg;
 import com.project.mainPage.mapper.AccoImgMapper;
 import com.project.mainPage.mapper.AccoMapper;
 
@@ -68,5 +70,20 @@ public class AccoService {
 		update = accoMapper.updateOne(acco); // 관광지 수정
 		System.out.println("service update : "+update);
 		return update;
+	}
+	
+	public int removeAcco(int accoRank) throws Exception{
+		int remove=0;
+		List<AccoImg> accoImgs = accoImgMapper.selectAccoRank(accoRank);
+		if(accoImgs != null ) {
+			accoImgs.stream()
+				.map(AccoImg :: getImg_path)
+				.forEach((img)->{
+					File f=new File(savePath+"/"+img);
+					System.out.println("숙박업소 이미지 삭제:"+f.delete());
+				});
+		}
+		remove = accoMapper.deleteOne(accoRank);
+		return remove;
 	}
 }

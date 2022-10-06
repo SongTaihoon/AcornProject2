@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =\=\=\=\=\=\=
 <<<<<<<=HEAD
 >>>>>>>=3b57866d1458d6ca2a6a16b9d264cdbf9821c426
@@ -11,6 +12,8 @@ content_assist_proposals_foreground=0,0,0
 =======
 =======
 >>>>>>> 7bdac3aa9dc81b597fcc53288e08f9af247e65b5
+=======
+>>>>>>> 683228a46cbc0e047319d4400ad57fb5b64b8b93
 content_assist_completion_replacement_background=200,200,0
 content_assist_completion_replacement_foreground=200,0,0
 content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"/>
@@ -20,9 +23,12 @@ content_assist_parameters_foreground=238,238,238
 content_assist_proposals_background=52,57,61
 content_assist_proposals_foreground=238,238,238
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 86919f3cef114c17bab0c3653b4e59bc9a69365c
 =======
 >>>>>>> 7bdac3aa9dc81b597fcc53288e08f9af247e65b5
+=======
+>>>>>>> 683228a46cbc0e047319d4400ad57fb5b64b8b93
 eclipse.preferences.version=1
 java_bracket=249,250,244
 java_comment_task_tag=154,140,124

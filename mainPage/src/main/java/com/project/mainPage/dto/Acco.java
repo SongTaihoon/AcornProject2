@@ -27,7 +27,6 @@ public class Acco {
 	 private String province;
 	 private String city;
 	 private String address1;
-	 private String acco;
 	 private Category category;
 	 private int views;
 	 private int search;
