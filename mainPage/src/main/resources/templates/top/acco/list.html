@@ -15,7 +15,7 @@
 			    	<a href="/">홈</a>
 			    </li>
 			    <li class="breadcrumb-item" aria-current="page">
-			    	<a href="/top/acco/1" class="breadcrumb-item active">TOP 10 숙박업소</a>
+			    	<a href="/top/acco/list/1" class="breadcrumb-item active">TOP 10 숙박업소</a>
 			    </li>
 			  </ol>
 			</nav>
@@ -58,9 +58,18 @@
 			<tbody>
 				<th:block th:each="acco : ${accoList}" >
 					<tr th:onclick="location.href='/top/acco/detail/[[${acco.acco_rank}]]'">
-						<td th:text="${acco.acco_rank}"></td>
+						<td th:text="${acco.ranking}"></td>
 						<td th:text="${acco.tourist}"></td>
 						<td th:text="${acco.city}"></td>
+						<th:block th:if="${acco.category.category_id == '1'}">
+							<td>관광지</td> 
+						</th:block>
+						<th:block th:if="${acco.category.category_id == '2'}">
+							<td>숙박</td> 
+						</th:block>
+						<th:block th:if="${acco.category.category_id == '3'}">
+							<td>맛집</td> 
+						</th:block>					
 						<td th:text="${acco.address1}"></td>
 						<td th:text="${acco.search}"></td>
 					</tr>					

@@ -16,5 +16,12 @@ public interface AccoMapper {
 	Acco selectDetailOne(int accoRank);
 	// 조회수 
 	int updateViews(int accoRank);
+	// 등록
+	int insertOne(Acco acco);
+	// 수정
+	int updateOne(Acco acco);
+	// 삭제 
+	int deleteOne(int accoRank);
+	
 }
 

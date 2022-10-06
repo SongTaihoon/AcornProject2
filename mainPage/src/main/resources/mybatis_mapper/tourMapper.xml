@@ -44,7 +44,7 @@
 		SELECT COUNT(*) FROM TOUR
 	</select>
 	<!-- tour Detail  -->
-	<select id="selectDetailOne" resultMap="TourMap">
+	<select id="selectDetailOne" resultMap="TourMap" parameterType="int">
 		SELECT t.*, 
 			u.user_id, 
 			u.user_name, 
@@ -80,13 +80,12 @@
 	</insert>
 	<!-- 수정  -->
 	<update id="updateOne" parameterType="Tour">
-		UPDATE TOUR 
-			SET 
+		UPDATE TOUR SET 
 				tourist = #{tourist},
 				city = #{city},
 				address3 = #{address3},
 				search = #{search}
-			WHERE tour_rank = #{tourRank}
+				WHERE tour_rank = #{tour_rank}
 	</update>
 	<!-- 삭제  -->
 	<delete id="deleteOne" parameterType="int">
@@ -94,5 +93,4 @@
 			WHERE tour_rank = #{tourRank}
 	</delete>
 	
-
  </mapper>

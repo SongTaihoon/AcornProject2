@@ -122,6 +122,7 @@
 			u.user_id, 
 			u.user_name, 
 			u.user_email,
+			
 			r.reply_no,
 			r.title AS reply_title, 
 			r.contents AS reply_contents, 

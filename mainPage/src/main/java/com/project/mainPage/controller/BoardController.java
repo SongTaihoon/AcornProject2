@@ -281,6 +281,7 @@ public class BoardController {
 		Board board = null;
 		board = boardMapper.selectDetailOneAll(boardNo);
 		if((loginUser != null && loginUser.getUser_id().equals(board.getUser().getUser_id())) || ((loginUser).getAdminCk() == 1)) {
+			System.out.println("board : "+ board);
 			model.addAttribute("board", board);
 			return "/board/modify";			
 		} else {

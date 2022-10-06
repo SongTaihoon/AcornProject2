@@ -31,9 +31,15 @@
 		  <tbody>
 		    
 		    <tr>
+		      <th style="width: 100px;" class="bg-light align-middle"></th>
+		      <td style="width: 600px;">
+		      	<input name="tour_rank" class="form-control" id="tour_rank" th:value="${tour.tour_rank}">
+		      </td>
+		    </tr>
+		    <tr>
 		      <th style="width: 100px;" class="bg-light align-middle">장소명</th>
 		      <td style="width: 600px;">
-		      	<input name="tourist" class="form-control" id="tourist">
+		      	<input name="tourist" class="form-control" id="tourist" th:value="${tour.tourist}">
 		      </td>
 		    </tr>
 		    
@@ -62,13 +68,13 @@
 		    	</td>
 		    </tr>
 		    <tr>
-		      <th style="width: 100px;" class="bg-light align-middle">제목</th>
+		      <th style="width: 100px;" class="bg-light align-middle">서귀포 / 제주시</th>
 		      <td style="width: 600px;">
 		      	<input name="city" class="form-control" id="city" th:value="${tour.city}" >
 		      </td>
 		    </tr>
 		    <tr>
-		      <th style="width: 100px;" class="bg-light align-middle">내용</th>
+		      <th style="width: 100px;" class="bg-light align-middle">주소</th>
 		      <td style="width: 600px;">
 		      	<textarea name="address3" class="form-control" th:text="${tour.address3}"></textarea>
 		      </td>
@@ -83,7 +89,7 @@
 				   class="btn btn-outline-danger btn-lg" style="margin-right: 8px;">
 					삭제
 				</a> -->
-				<a th:href="@{/top/tour/detail/{tourRank}(tourRank=${tour.tour_rank})}" class="btn btn-outline-dark btn-lg ms-auto">취소</a>
+				<!-- <a th:href="@{/top/tour/detail/{tourRank}(tourRank=${tour.tour_rank})}" class="btn btn-outline-dark btn-lg ms-auto">취소</a> -->
 			</div>
 		</div>
 	   </form>

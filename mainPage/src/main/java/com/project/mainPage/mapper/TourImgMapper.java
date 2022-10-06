@@ -12,7 +12,6 @@ import com.project.mainPage.dto.TourImg;
 public interface TourImgMapper {
 	int insertOne(TourImg tourImg);
 	List<TourImg> selectTourRank(int tourRank);
-	List<TourImg> selectUserId(String tourist);
 	TourImg selectOne(int tourImgNo);
 	int deleteOne(int tourImgNo);
 	int selectCountTourRank(int tourRank);
