@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.mainPage.dto.BoardImg;
 import com.project.mainPage.dto.Tour;
 import com.project.mainPage.dto.TourImg;
 import com.project.mainPage.mapper.TourImgMapper;
@@ -67,7 +66,7 @@ public class TourService {
 			}
 		}
 		update = tourMapper.updateOne(tour); // 관광지 수정
-		System.out.println(update);
+		System.out.println("service update : "+update);
 		return update;
 	}
 	

@@ -54,7 +54,7 @@ public class TopController {
 		int startRow = (page - 1) * row;
 		List<Tour> tourList = tourMapper.selectListAll(startRow, row);
 		int count = tourMapper.selectPageAllCount();
-		Pagination pagination = new Pagination(page, count, "/tour/list/", row);
+		Pagination pagination = new Pagination(page, count, "/top/tour/list/", row);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("tourList",tourList);	
 		model.addAttribute("row", row);
@@ -75,7 +75,7 @@ public class TopController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("tour" + tour);
+		System.out.println("tour : " + tour);
 		if(tour != null) {
 			model.addAttribute(tour);
 			return "/top/tour/detail";
@@ -142,7 +142,6 @@ public class TopController {
 	}
 	
 	// 관광지 수정 페이지 
-	@SuppressWarnings("null")
 	@GetMapping("/tour/update/{tourRank}")
 	public String update(
 			@PathVariable int tourRank, 
@@ -151,9 +150,9 @@ public class TopController {
 			HttpSession session) {
 		Tour tour = null;
 		tour = tourMapper.selectDetailOne(tourRank);
-		if(loginUser != null || (loginUser).getAdminCk() == 1) {
+		if(loginUser != null || loginUser.getAdminCk() == 1) {
 			model.addAttribute("tour", tour);
-			System.out.println(tour);
+			System.out.println("getMappertour : "+tour);
 			return "/top/tour/update";			
 		} else {
 			return "redirect:/user/login.do";
@@ -198,6 +197,7 @@ public class TopController {
 					}
 				}
 				update = tourService.updateTourRemoveTourImg(tour, tourImgNos); // DB에서 후기 수정
+				System.out.println("update : "+update);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -205,7 +205,7 @@ public class TopController {
 				System.out.println("관광지 수정 성공! : " + update);
 				return "redirect:/top/tour/detail/" + tour.getTour_rank();
 			}else {
-				System.out.println("관광지 수정 성공! : " + update);
+				System.out.println("관광지 수정 실패! : " + update);
 				return "redirect:/top/tour/update/" + tour.getTour_rank();
 			}	
 		}else{ 

@@ -10,12 +10,6 @@
 		SELECT * FROM BOARD_IMG
 			WHERE board_no =  #{boardNo}
 	</select>
-	<select id="selectUserId" resultType="BoardImg" parameterType="String">
-		SELECT * FROM BOARD_IMG
-			WHERE board_no
-				IN (SELECT board_no FROM BOARD 
-						WHERE user_id = #{user_id})
-	</select> 
 	<!-- update  -->
 	<select id="selectOne" resultType="BoardImg" parameterType="int">
 		SELECT * FROM BOARD_IMG

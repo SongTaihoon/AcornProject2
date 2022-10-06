@@ -62,7 +62,7 @@
 			<tbody>
 				<th:block th:each="tour : ${tourList}" >
 					<tr th:onclick="location.href='/top/tour/detail/[[${tour.tour_rank}]]'">
-						<td th:text="${tour.tour_rank}"></td>
+						<td th:text="${tour.ranking}"></td>
 						<td th:text="${tour.tourist}"></td>
 						<td th:text="${tour.city}"></td>
 						<th:block th:if="${tour.category.category_id == '1'}">

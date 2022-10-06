@@ -12,6 +12,7 @@
 		<result column="tours" property="tours"/>	
 		<result column="views" property="views"/>	
 		<result column="search" property="search"/>
+		<result column="ranking" property="ranking"/>
 		<!-- Tour : UsersDto = N : 1   -->	
 		<association property="user" javaType="UserDto" foreignColumn="user_id">
 			<id column="user_id" property="user_id"/>
@@ -30,7 +31,8 @@
 	<!--  tour List  -->
 	<select id="selectListAll" resultMap="TourMap">	
 			SELECT t.*, 
-		 	c.category_id
+		 	c.category_id,
+		 	RANK() OVER(ORDER BY search DESC) AS ranking
 		 	
 			FROM TOUR t
 			
@@ -43,7 +45,7 @@
 		SELECT COUNT(*) FROM TOUR
 	</select>
 	<!-- tour Detail  -->
-	<select id="selectDetailOne" resultMap="TourMap">
+	<select id="selectDetailOne" resultMap="TourMap" parameterType="int">
 		SELECT t.*, 
 			u.user_id, 
 			u.user_name, 
@@ -79,13 +81,12 @@
 	</insert>
 	<!-- 수정  -->
 	<update id="updateOne" parameterType="Tour">
-		UPDATE TOUR 
-			SET 
+		UPDATE TOUR SET 
 				tourist = #{tourist},
 				city = #{city},
 				address3 = #{address3},
 				search = #{search}
-			WHERE tour_rank = #{tourRank}
+				WHERE tour_rank = #{tour_rank}
 	</update>
 	<!-- 삭제  -->
 	<delete id="deleteOne" parameterType="int">

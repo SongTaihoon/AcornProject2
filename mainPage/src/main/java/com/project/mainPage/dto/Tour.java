@@ -35,6 +35,7 @@ public class Tour {
 	 private int bad;
 	 private int views;
 	 private int search;
+	 private int ranking;
 	 private UserDto user; // UsersDto.userid : fk 
 	 private List<TourImg> tourImgs; // 1:N  TourImg.tour_rank fk
 }
