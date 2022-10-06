@@ -20,9 +20,12 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.mainPage.dto.Pagination;
+import com.project.mainPage.dto.Restaurant;
 import com.project.mainPage.dto.Tour;
 import com.project.mainPage.dto.TourImg;
 import com.project.mainPage.dto.UserDto;
+import com.project.mainPage.mapper.RestaurankMapper;
+import com.project.mainPage.mapper.RestaurantImgMapper;
 import com.project.mainPage.mapper.TourImgMapper;
 import com.project.mainPage.mapper.TourMapper;
 import com.project.mainPage.service.TourService;
@@ -41,10 +44,18 @@ public class TopController {
 	@Value("${spring.servlet.multipart.location}") // 파일이 임시 저장되는 경로 + 파일을 저장할 경로
 	private String savePath;
 	
-
+	@Autowired
+	private RestaurankMapper restaurankMapper;
+	@Autowired
+	private RestaurantImgMapper restaurantImgMapper; 
+	
+	
 	// Tour > tour_img 의 수를 5개로 제한 
 	private final static int TOUR_IMG_LIMIT = 5; 
 	
+	// RESTAURANK > RESTAURANK_IMG 의 수를 5개로 제한 
+	private final static int RESTAURANK_IMG_LIMIT = 5; 
+
 	// 관광지 TOP 10 LIST
 	@GetMapping("/tour/list/{page}")
 	public String tour(
@@ -251,7 +262,23 @@ public class TopController {
 		
 	}
 	
-	
+	// 맛집 TOP 10 LIST
+		@GetMapping("/rest/list/{page}")
+		public String list(
+				@PathVariable int page,
+				Model model){
+			int row = 20;
+			int startRow = (page - 1) * row;
+			List<Restaurant> restaurantsList = restaurankMapper.selectListAll(startRow, row);
+			int count = restaurankMapper.selectPageAllCount();
+			Pagination pagination = new Pagination(page, count, "/top/rest/list/", row);
+			model.addAttribute("pagination", pagination);
+			model.addAttribute("restaurantsList",restaurantsList);	
+			model.addAttribute("row", row);
+			model.addAttribute("count", count);
+			model.addAttribute("page", page);
+			return "/top/rest/list";
+		}
 	
 	
 }

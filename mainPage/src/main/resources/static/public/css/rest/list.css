@@ -1,0 +1,36 @@
+@charset "EUC-KR";
+
+/*footer css 하단고정  */
+html, body {
+    height: 100%
+}
+#wrapper {
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 325px;
+}
+.footer {
+    bottom: 0;
+}
+
+/* 홈 > TOP 10 CSS  */
+#path {
+    display: flex;
+    margin: 20px 0;
+    min-width: 1200px;
+}
+#path ol {
+    margin-left: auto;      
+}
+#path ol li a {   
+    text-decoration: none;
+    vertical-align: middle;
+}
+
+#viz1664518489534{
+	box-shadow: 0 0 50px rgba(0, 60, 255, 0.485);
+	border-radius: 20px;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	resize: both;
+}
