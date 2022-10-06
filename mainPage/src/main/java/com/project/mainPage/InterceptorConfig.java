@@ -57,3 +57,4 @@ public class InterceptorConfig implements WebMvcConfigurer{
 			.addPathPatterns("/qaboard/replyDelete/**");
 	}
 }
+
