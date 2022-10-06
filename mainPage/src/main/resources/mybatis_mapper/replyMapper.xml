@@ -64,15 +64,18 @@
 			   </if>	
 			   FROM REPLY 
 			   	 WHERE board_no = #{boardNo}
+			   	 <if test="writer != null">
+			   	 	AND user_id = #{writer}
+			   	 </if>
 			   	 <if test="sort != null">
 					ORDER BY ${sort} 
-				</if>
-				<if test="direct != null">
+				 </if>
+				 <if test="direct != null">
 					<choose>
 						<when test="direct.equals('desc')">DESC</when>
 						<otherwise>ASC</otherwise>
 					</choose>
-				</if>
+				 </if>
 	</select>
 	<select id="selectBoardNoCount" resultType="int">
 		SELECT COUNT(*) FROM REPLY 

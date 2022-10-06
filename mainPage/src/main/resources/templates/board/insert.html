@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>후기 작성</title>
 <link rel="stylesheet" href="/public/css/board/insert.css">
+<script src="/public/js/board/insert.js" defer="defer"></script>
 </head>
 <body>
 <header th:insert="/NewHeader"></header>
@@ -107,25 +108,4 @@
 	<footer class="footer" th:insert="/NewFooter"></footer>
 	</div>
 </body>
-<script>
-function noSpace(obj) { // 공백사용못하게
-    var str = /\s/;  // 공백체크
-    if(str.exec(obj.value.trim)) { //공백 체크
-        //alert("해당 항목에는 첫 글자 공백을 사용할수 없습니다.");
-        obj.focus();
-        obj.value = obj.value.replace(/^ +/,''); // 공백제거
-        return false;
-    }
-}
-//값이 없을 때 submit 불가
-var boardInsertForm = document.forms.boardInsertForm;
-var title = boardInsertForm.title;
-var contents = boardInsertForm.contents;
-var place = boardInsertForm["place_name"];
-boardInsertForm.addEventListener("submit", (event) => {
-	if(!title.value || !contents.value || !place.value) {
-		event.preventDefault();		
-	}
-});
-</script>
 </html>

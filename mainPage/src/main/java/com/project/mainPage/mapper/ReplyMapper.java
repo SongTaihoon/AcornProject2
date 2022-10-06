@@ -10,8 +10,16 @@ public interface ReplyMapper {
 	public List<Reply> selectBoardNo(int board_no);
 	int selectBoardNoCount(int boardNo);
 	public int selectBoardNoAndUserId(int boardNo, String user_id);
-	List<Reply> selectBoardNoPage(int boardNo, @Param(value = "sort")String sort, @Param(value = "direct")String direct);
-	List<Reply> selectBoardNoPage(int boardNo, @Param(value = "sort")String sort, @Param(value = "direct")String direct, String loginUsersId);
+	List<Reply> selectBoardNoPage(
+			int boardNo, 
+			@Param(value = "sort")String sort, 
+			@Param(value = "direct")String direct);
+	List<Reply> selectBoardNoPage(
+			int boardNo, 
+			@Param(value = "sort")String sort, 
+			@Param(value = "direct")String direct,
+			@Param(value = "writer")String writer,
+			String loginUsersId);
 	public List<Reply> selectUserId(String user_id);
 	public int insertOne(Reply reply);
 	public int updateOne(Reply reply);

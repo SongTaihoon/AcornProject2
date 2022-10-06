@@ -123,89 +123,94 @@ public class BoardController {
 			@RequestParam(defaultValue = "1") int replyPage,
 			@RequestParam(required = false) String sort,
 			@RequestParam(required = false, defaultValue = "desc") String direct,
+			@RequestParam(required = false) String writer,
 			HttpServletRequest req,
 			HttpServletResponse resp) {
-		Board board = null;		
-		BoardPrefer boardPrefer = null;  // 로그인이 안 되면 null
-		int repl = 0;
-		//System.out.println(replyPage);
-		//System.out.println(board);
-		
-		int row = 5;
-		int startRow = (replyPage - 1) * row;
-		
-		String pagingUrl = "/reply/list/" + boardNo;
-		Pagination pagination = null;
 		String loginUsersId = null;
+		
+		Board board = null;		
+		BoardPrefer boardPrefer = null; // 로그인이 안 되면 null
+		
+		int replySize = 0; // 전체 댓글 수
+		int repl = 0; // 내가 작성한 댓글 수
 		try {
-			if(loginUser != null) {
+			if(loginUser != null) { // 로그인되어 있는 상태
 				loginUsersId = loginUser.getUser_id();
+				
 				board = boardService.boardUpdateView(boardNo);
-				System.out.println("board : " + board);
 				boardPrefer = boardPreferMapper.selectFindUserIdAndBoardNo(loginUser.getUser_id(), boardNo);
-				repl = replyMapper.selectBoardNoAndUserId(boardNo, loginUsersId);
 				System.out.println(boardPrefer);
+				
+				replySize = replyMapper.selectBoardNoCount(boardNo); // 전체 댓글 수
+				repl = replyMapper.selectBoardNoAndUserId(boardNo, loginUsersId); // 내가 작성한 댓글 수
+				
+				//후기 좋아요/싫어요
 				if(boardPrefer != null && boardPrefer.getUser_id().equals(loginUser.getUser_id())) {
-					if(boardPrefer.isPrefer()) {
+					if(boardPrefer.isPrefer()) { // 좋아요
 						board.setPrefer_active(true);
-					} else {
+					} else { // 싫어요
 						board.setPrefer_active(false);
 					}
 				}
+				
+				//댓글 좋아요/싫어요
 				for(Reply reply : board.getReplys()) {
-					System.out.println("board 2 : " + board);
 					System.out.println(reply);
-					for (ReplyPrefer prefer : reply.getGood_prefers()) {
+					for (ReplyPrefer prefer : reply.getGood_prefers()) { // 좋아요
 						if(prefer.getUser_id().equals(loginUser.getUser_id())) {
 							reply.setPrefer_active(true);
 						}
 					}
-					for (ReplyPrefer prefer : reply.getBad_prefers()) {
+					for (ReplyPrefer prefer : reply.getBad_prefers()) { // 싫어요
 						if(prefer.getUser_id().equals(loginUser.getUser_id())) {
 							reply.setPrefer_active(false);
 						}
 					}
 				}
-				int replySize = replyMapper.selectBoardNoCount(boardNo);
-				if(replySize > 0) {
-					pagination = new Pagination(replyPage, replySize, pagingUrl, row);
-					if(sort != null && !sort.equals("")) {
-						List<Reply> replies = replyMapper.selectBoardNoPage(boardNo, sort, direct, loginUsersId);
+				
+				// 나의 댓글 & 댓글 정렬
+				if(writer != null && !writer.equals("")) {
+					if(sort != null && !sort.equals("")) { // 나의 댓글(o) + 정렬(o)
+						List<Reply> replies = replyMapper.selectBoardNoPage(boardNo, sort, direct, writer, loginUsersId);
 						board.setReplys(replies);
-						model.addAttribute("pagination", pagination);
-					} else {
-						List<Reply> replies = replyMapper.selectBoardNoPage(boardNo, null, null, loginUsersId);
+					} else { // 나의 댓글(o) + 정렬(x)
+						List<Reply> replies = replyMapper.selectBoardNoPage(boardNo, null, null, writer, loginUsersId);
 						board.setReplys(replies);
-						model.addAttribute("pagination", pagination);
 					}
-					
+				} else {
+					if(sort != null && !sort.equals("")) { // 나의 댓글(x) + 정렬(o)
+						List<Reply> replies = replyMapper.selectBoardNoPage(boardNo, sort, direct, null, loginUsersId);
+						board.setReplys(replies);
+					} else { // 나의 댓글(x) + 정렬(x)
+						List<Reply> replies = replyMapper.selectBoardNoPage(boardNo, null, null, null, loginUsersId);
+						board.setReplys(replies);
+					}
 				}
-			} else {
+				
+			} else { // 로그인 안 되어 있는 상태
 				board = boardService.boardUpdateView(boardNo);
-				int replySize = replyMapper.selectBoardNoCount(boardNo);
-				if(replySize > 0) {
-					pagination = new Pagination(replyPage, replySize, pagingUrl, row);
-					if(sort != null && !sort.equals("")) {
-						List<Reply> replies = replyMapper.selectBoardNoPage(boardNo, sort, direct, loginUsersId);
-						board.setReplys(replies);
-						model.addAttribute("pagination", pagination);
-					} else {
-						List<Reply> replies = replyMapper.selectBoardNoPage(boardNo, null, null, loginUsersId);
-						board.setReplys(replies);
-						model.addAttribute("pagination", pagination);
-					}
+				replySize = replyMapper.selectBoardNoCount(boardNo);
+				if(sort != null && !sort.equals("")) {
+					List<Reply> replies = replyMapper.selectBoardNoPage(boardNo, sort, direct, null, null);
+					board.setReplys(replies);
+				} else {
+					List<Reply> replies = replyMapper.selectBoardNoPage(boardNo, null, null, null, null);
+					board.setReplys(replies);
 				}
 			}
-		} catch (Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		if(board != null) {
-			model.addAttribute("boardPrefer", boardPrefer);
 			model.addAttribute("board", board);
+			model.addAttribute("boardPrefer", boardPrefer);
+			model.addAttribute("replySize", replySize);
 			model.addAttribute("repl", repl);
-			System.out.println("repl : " + repl);
+			
+			System.out.println("전체 댓글 : " + replySize);
+			System.out.println("나의 댓글 : " + repl);
 			return "/board/detail";			
-		}else {
+		} else {
 			return "redirect:/board/list/1";
 		}
 	}
@@ -354,6 +359,7 @@ public class BoardController {
 					}
 				}
 				update = boardService.modifyBoardRemoveBoardImg(board, boardImgNos); // DB에서 후기 수정
+				System.out.println("update board : " + board);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
