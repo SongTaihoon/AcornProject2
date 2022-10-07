@@ -3,6 +3,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -70,11 +72,22 @@ public class BoardController {
 	public String list(
 			@PathVariable int page, 
 			Model model, 
+			@RequestParam(required = false) String sort,
+			@RequestParam(required = false, defaultValue = "desc") String direct,
 			@SessionAttribute(required = false) UserDto loginUser) {
 		int row = 10;
 		int startRow = (page - 1) * row;
-		List<Board> boardList = boardMapper.selectPageAll(startRow, row);
-		int count = boardMapper.selectPageAllCount();
+		
+		List<Board> boardList = null;
+		int count = 0;
+		
+		if(sort != null && !sort.equals("")) { // 정렬(o)
+			boardList = boardMapper.selectPageAll(startRow, row, sort, direct);
+			count = boardMapper.selectPageAllCount(sort, direct);
+		} else { // 정렬(x)
+			boardList = boardMapper.selectPageAll(startRow, row, null, null);
+			count = boardMapper.selectPageAllCount(null, null);
+		}
 		
 		Pagination pagination = new Pagination(page, count, "/board/list/", row);
 		model.addAttribute("pagination", pagination);
@@ -117,7 +130,7 @@ public class BoardController {
 //	후기 상세 페이지
 	@GetMapping("/detail/{boardNo}")
 	public String detail(
-			@PathVariable int boardNo,
+			@PathVariable Integer boardNo,
 			Model model,
 			@SessionAttribute(required = false) UserDto loginUser, 
 			@RequestParam(defaultValue = "1") int replyPage,
@@ -125,7 +138,7 @@ public class BoardController {
 			@RequestParam(required = false, defaultValue = "desc") String direct,
 			@RequestParam(required = false) String writer,
 			HttpServletRequest req,
-			HttpServletResponse resp) {
+			HttpServletResponse resp) throws Exception {
 		String loginUsersId = null;
 		
 		Board board = null;		
@@ -133,11 +146,40 @@ public class BoardController {
 		
 		int replySize = 0; // 전체 댓글 수
 		int repl = 0; // 내가 작성한 댓글 수
+		
 		try {
+			board = boardMapper.selectOne(boardNo);
+			
+			// 후기 조회수 로직
+			Cookie oldCookie = null; // oldCookie 객체를 선언한 후 빈값으로 초기화
+			Cookie[] cookies = req.getCookies(); // request 객체에서 쿠키들을 가져와 Cookie 타입을 요소로 가지는 리스트에 담기
+			
+			if (cookies != null) { // 접속한 기록이 있을 때
+				for (Cookie cookie : cookies) { // 반복문으로 하나하나 검사
+					if (cookie.getName().equals("boardViews")) { // 쿠키의 이름이 boardViews인지 확인 
+						oldCookie = cookie; // 맞으면 oldCookie에 해당 쿠키를 저장 
+					}
+				}
+			}
+			if (oldCookie != null) { // 이름이 boardViews인 쿠키가 있을 때
+				if (!oldCookie.getValue().contains("["+ boardNo.toString() +"]")) { // 특정 후기 아이디가 oldCookie에 포함되어 있지 않을 때 (이미 포함되어 있다면 조회수 올라가지 않음)
+					this.boardService.boardUpdateView(boardNo); // 조회수 올리기
+					oldCookie.setValue(oldCookie.getValue() + "_[" + boardNo + "]"); // 조회한 후기 아이디 oldCookie에 저장
+					oldCookie.setPath("/"); // 쿠키 경로 저장
+					oldCookie.setMaxAge(60 * 60 * 24); // 쿠키 지속 시간 저장
+					resp.addCookie(oldCookie); // response에 oldCookie를 전달
+				}
+			} else { // 이름이 boardViews인 쿠키가 없을 때
+				this.boardService.boardUpdateView(boardNo); // 조회수 올리기
+				Cookie newCookie = new Cookie("boardViews", "[" + boardNo + "]"); // boardViews라는 이름으로 쿠키를 만들고 조회한 후기 아이디 저장
+				newCookie.setPath("/"); // 쿠키 경로 저장
+				newCookie.setMaxAge(60 * 60 * 24); // 쿠키 지속 시간 저장
+				resp.addCookie(newCookie); // response에 newCookie를 전달
+			}
+			
 			if(loginUser != null) { // 로그인되어 있는 상태
 				loginUsersId = loginUser.getUser_id();
 				
-				board = boardService.boardUpdateView(boardNo);
 				boardPrefer = boardPreferMapper.selectFindUserIdAndBoardNo(loginUser.getUser_id(), boardNo);
 				System.out.println(boardPrefer);
 				
@@ -188,12 +230,12 @@ public class BoardController {
 				}
 				
 			} else { // 로그인 안 되어 있는 상태
-				board = boardService.boardUpdateView(boardNo);
 				replySize = replyMapper.selectBoardNoCount(boardNo);
-				if(sort != null && !sort.equals("")) {
+				// 댓글 정렬
+				if(sort != null && !sort.equals("")) { // 정렬(o)
 					List<Reply> replies = replyMapper.selectBoardNoPage(boardNo, sort, direct, null, null);
 					board.setReplys(replies);
-				} else {
+				} else { // 정렬(x)
 					List<Reply> replies = replyMapper.selectBoardNoPage(boardNo, null, null, null, null);
 					board.setReplys(replies);
 				}
@@ -209,6 +251,7 @@ public class BoardController {
 			
 			System.out.println("전체 댓글 : " + replySize);
 			System.out.println("나의 댓글 : " + repl);
+			
 			return "/board/detail";			
 		} else {
 			return "redirect:/board/list/1";

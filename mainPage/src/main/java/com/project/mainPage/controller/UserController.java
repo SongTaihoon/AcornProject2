@@ -32,11 +32,22 @@ public class UserController {
 	@GetMapping("/list/{page}")
 	public String list(
 			@PathVariable int page, 
+			@RequestParam(required = false) String sort,
+			@RequestParam(required = false, defaultValue = "desc") String direct,
 			Model model) {
 		int row = 10;
 		int startRow = (page - 1) * row;
-		List<UserDto> userList = userMapper.selectPageAll(startRow, row);
-		int count = userMapper.selectPageAllCount();
+		
+		List<UserDto> userList = null;
+		int count = 0;
+		
+		if(sort != null && !sort.equals("")) { // 정렬(o)
+			userList = userMapper.selectPageAll(startRow, row, sort, direct);
+			count = userMapper.selectPageAllCount(sort, direct);
+		} else { // 정렬(x)
+			userList = userMapper.selectPageAll(startRow, row, null, null);
+			count = userMapper.selectPageAllCount(null, null);
+		}
 		
 		Pagination pagination = new Pagination(page, count, "/user/list/", row);
 		model.addAttribute("pagination", pagination);
@@ -50,19 +61,31 @@ public class UserController {
 //	회원 검색 페이지
 	@GetMapping("/search/{page}")
 	public String searchProduct(
-			@RequestParam(value = "type") String type,
-			@RequestParam(value = "keyword") String keyword,
 			@PathVariable int page, 
+			@RequestParam(required = false, value = "type") String type,
+			@RequestParam(required = false, value = "keyword") String keyword,
+			@RequestParam(required = false) String sort,
+			@RequestParam(required = false, defaultValue = "desc") String direct,
 			@SessionAttribute(required = false) UserDto loginUser,
 			HttpSession session,
 			Criteria cri, 
 			Model model) {
 		int row = 10;
 		int startRow = (page - 1) * row;
+		
 		cri.setAmount(row);
 		cri.setSkip(startRow);
-		List<UserDto> list = userMapper.searchUser(cri);
-		int count = userMapper.userGetTotal(cri);
+		
+		List<UserDto> list = null;
+		int count = 0;
+		
+		if(sort != null && !sort.equals("")) { // 정렬(o)
+			list = userMapper.searchUser(cri, sort, direct);
+			count = userMapper.userGetTotal(cri, sort, direct);
+		} else { // 정렬(x)
+			list = userMapper.searchUser(cri, null, null);
+			count = userMapper.userGetTotal(cri, null, null);
+		}
 		if(!list.isEmpty()) { 
 			model.addAttribute("list", list);
 		} else {

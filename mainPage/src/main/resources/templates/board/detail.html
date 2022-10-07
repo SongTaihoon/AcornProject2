@@ -76,8 +76,7 @@
 					      	<div class="mb-1" th:if="${boardImg != null}">
 								<!-- Button trigger modal -->
 								<button type="button" class="btn border-0" data-bs-toggle="modal"
-									style="padding: 0" 
-									th:data-bs-target="'#boardImgModal' + ${boardImg.board_img_no}">
+									style="padding: 0" th:data-bs-target="'#boardImgModal' + ${boardImg.board_img_no}">
 									<img th:src="@{/img/{fileName}(fileName=${boardImg.img_path})}" alt="후기 이미지" 
 				  						 style="width: 400px; height: 400px;">
 								</button>			
@@ -100,8 +99,7 @@
 				  	<th:block th:if="${#lists.isEmpty(board.boardImgs)}">
 			  			<!-- Button trigger modal -->
 						<button type="button" class="btn border-0" data-bs-toggle="modal"
-							style="padding: 0" 
-							data-bs-target="#boardImgModal">
+							style="padding: 0" data-bs-target="#boardImgModal">
 							<img src="/img/logo.png" alt="후기 이미지" 
 					  		   style="width: 400px; height: 400px;">
 						</button>	
@@ -173,7 +171,7 @@
 			<a href="/board/list/1" class="btn btn-outline-dark btn-lg">목록</a>
 		</div>
 	  </div>
-		<th:block th:if="${(param.writer != null && param.writer != '') && (#strings.equals(param.writer, session.loginUser?.user_id))}">
+	  <th:block th:if="${(param.writer != null && param.writer != '') && (#strings.equals(param.writer, session.loginUser?.user_id))}">
 		<div class="accordion " id="accordionFlushExample" style="min-width: 1200px;">
 		  <div class="accordion-item ">
 		    <h2 class="accordion-header " id="flush-headingOne">
@@ -183,7 +181,7 @@
 			            <span style="font-size: 35px;">나의 댓글 : <strong th:text="${repl}"></strong></span>
 		        </button>
 		    </h2>
-		    <div id="flush-collapseOne" th:classappend="${(replySize != 0) ? 'show' : ''}" class="accordion-collapse collapse " 
+		    <div id="flush-collapseOne" th:classappend="${(repl != 0) ? 'show' : ''}" class="accordion-collapse collapse " 
 	    	 	 style="max-height: 1200px; overflow-y: scroll;" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
 		      <div class="accordion-body">
 		      	<div class="list-group sticky-top">
@@ -201,7 +199,7 @@
 					</th:block>
 					<th:block th:if="${repl != 0}">
 					<div class="dropdown-center ms-auto">
-					   <button type="button" class="btn btn-lg btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+					   <button type="button" class="btn btn-lg btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 					     필터
 					   </button>
 					   <ul class="dropdown-menu">
@@ -347,7 +345,7 @@
 						</th:block>
 						<th:block th:if="${replySize != 0}">
 						<div class="dropdown-center ms-auto">
-						   <button type="button" class="btn btn-lg btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+						   <button type="button" class="btn btn-lg btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 						     필터
 						   </button>
 						   <ul class="dropdown-menu">

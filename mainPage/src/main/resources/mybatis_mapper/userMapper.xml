@@ -5,6 +5,15 @@
  <mapper namespace="com.project.mainPage.mapper.UserMapper">
  	<select id="selectPageAll" resultType="UserDto">
  		select * from USER 
+ 			<if test="sort != null">
+				ORDER BY ${sort} 
+			</if>
+			<if test="direct != null">
+				<choose>
+					<when test="direct.equals('desc')">desc</when>
+					<otherwise>asc</otherwise>
+				</choose>
+			</if>
  			LIMIT #{startRow}, #{pageSize}
  	</select>
  	<select id="selectPageAllCount" resultType = "int" >
@@ -73,7 +82,15 @@
 	<select id="searchUser" resultType="UserDto">
 			SELECT * FROM USER
 			<include refid="criteria"></include>
-			ORDER BY user_id DESC
+			<if test="sort != null">
+				ORDER BY ${sort} 
+			</if>
+			<if test="direct != null">
+				<choose>
+					<when test="direct.equals('desc')">desc</when>
+					<otherwise>asc</otherwise>
+				</choose>
+			</if>
 			LIMIT #{skip}, #{amount}	
 	</select>
 	<select id="userGetTotal" resultType="int">

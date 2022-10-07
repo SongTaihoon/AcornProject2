@@ -23,14 +23,14 @@
 		    </li>
 		  </ol>
 		</nav>
-		<h1 class="pb-4 d-flex justify-content-between align-items-center" 
+		<div class="pb-4 d-flex justify-content-between align-items-center" 
 		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
 		    <span class="d-flex align-items-center">
 			    <span style="font-size: 35px; margin-right: 8px;">후기 검색 결과 :</span>
 			    <span class="badge text-bg-dark" th:text="${count}" style="font-size: 23px;"></span>
 		    </span>
 		    <a href="/board/insert.do" class="btn btn-secondary">후기 작성하기</a>
-	    </h1>
+	    </div>
 		<table class="mt-5 mb-5 table table-bordered table-hover"
 		   style="min-width: 1200px;">
 			<thead class="table-light">
@@ -44,6 +44,7 @@
 					<th>댓글</th>
 					<th>좋아요</th>
 					<th>조회수</th>
+					<th>등록일</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -65,6 +66,7 @@
 					<td th:text="${board.replys?.size}"></td>
 					<td th:text="${board.good}"></td>
 					<td th:text="${board.views}"></td>
+					<td th:text="${#dates.format(board.post_time,'yyyy-MM-dd HH:mm:ss')}"></td>
 				</tr>
 			</tbody>
 		</table>
@@ -76,9 +78,10 @@
 		    <form action="/board/search/1" class="d-flex" id="reviewSearchForm" role="search" name="reviewSearchForm">
 		      <select class="form-select me-2" name="type" style="width: 100px; border: 1px solid #6c757d">
 		            <option value="N">글 번호</option>
-					<option value="T">장소</option>
-					<option value="C">제목</option>
 					<option value="U">작성자</option>
+					<option value="P">장소</option>
+					<option value="T">제목</option>
+					<option value="C">카테고리</option>
 		      </select>
 		      <input class="form-control me-2" name="keyword" id="search" size="20" 
 		      		 onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);" 
