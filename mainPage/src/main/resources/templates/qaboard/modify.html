@@ -88,8 +88,30 @@
 			<div class="ms-auto">
 				<button type="reset" class="btn btn-outline-warning btn-lg">초기화</button>
 				<button type="submit" class="btn btn-outline-success btn-lg" style="margin-left: 8px; margin-right: 8px;">수정</button>
-				<a class="btn btn-outline-danger btn-lg" th:href="@{/qaboard/delete/{no}(no=${qaBoard.qaBoardNo})}" 
-				   style="margin-right: 8px;">삭제</a>
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-outline-danger btn-lg" 
+					    style="margin-right: 8px;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+				  삭제
+				</button>
+				<!-- Modal -->
+				<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header border-0">
+				        <h1 class="modal-title fs-5" id="staticBackdropLabel">경고</h1>
+				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				      </div>
+				      <div class="modal-body">
+				        한 번 삭제하면 복구할 수 없습니다. 정말 삭제하시겠습니까?
+				      </div>
+				      <div class="modal-footer border-0">
+				        <button type="button" class="btn btn-outline-dark btn-lg" data-bs-dismiss="modal" style="margin-right: 8px;">취소</button>
+						<a class="btn btn-outline-danger btn-lg" th:href="@{/qaboard/delete/{no}(no=${qaBoard.qaBoardNo})}" 
+				   		   style="margin-right: 8px;">삭제</a>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 				<a class="btn btn-outline-dark btn-lg" th:href="@{/qaboard/detail/{no}(no=${qaBoard.qaBoardNo})}">취소</a>
 			</div>
 		</div>
@@ -99,6 +121,8 @@
 </div>
 </body>
 <script type="text/javascript">
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 function noSpace(obj) { // 공백사용못하게
     var str = /\s/;  // 공백체크
     if(str.exec(obj.value.trim)) { //공백 체크

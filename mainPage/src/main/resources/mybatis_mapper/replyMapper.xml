@@ -9,7 +9,6 @@
 		<result column="post_time" property="post_time"/>
 		<result column="img_path" property="img_path"/>
 		<result column="board_no" property="board_no"/>
-		<result column="remove_img_check" property="remove_img_check"/>
 		<association property="user" javaType="UserDto">
 			<id column="user_id" property="user_id"/>
 		</association>
@@ -56,7 +55,6 @@
 			   post_time, 
 			   img_path, 
 			   board_no,
-			   remove_img_check,
 			   reply_no	AS no,
 			   user_id AS 'user.user_id',
 			   (SELECT COUNT(*) FROM REPLY_PREFER WHERE reply_no = no AND prefer = 1) AS good,
@@ -66,8 +64,18 @@
 			   </if>	
 			   FROM REPLY 
 			   	 WHERE board_no = #{boardNo}
-			   	   ORDER BY reply_no DESC
-			  		 LIMIT #{startRow}, #{pageSize}
+			   	 <if test="writer != null">
+			   	 	AND user_id = #{writer}
+			   	 </if>
+			   	 <if test="sort != null">
+					ORDER BY ${sort} 
+				 </if>
+				 <if test="direct != null">
+					<choose>
+						<when test="direct.equals('desc')">DESC</when>
+						<otherwise>ASC</otherwise>
+					</choose>
+				 </if>
 	</select>
 	<select id="selectBoardNoCount" resultType="int">
 		SELECT COUNT(*) FROM REPLY 
@@ -91,6 +99,11 @@
 					FROM REPLY 
 						WHERE user_id = #{user_id}
 	</select>
+	<select id="selectBoardNoAndUserId" resultType="int">
+		SELECT COUNT(*) FROM REPLY
+			WHERE board_no = #{boardNo} 
+				AND user_id = #{user_id};
+	</select>
 	<insert id="insertOne" parameterType="Reply">
 		INSERT INTO REPLY (title, img_path, contents, board_no, user_id) 
 			VALUES (#{title}, #{img_path}, #{contents}, #{board_no}, #{user.user_id})
@@ -98,7 +111,6 @@
 	<update id="updateOne" parameterType="Reply">
 		UPDATE REPLY 
 			SET title = #{title}, 
-				remove_img_check = #{remove_img_check},
 				img_path = #{img_path}, 
 				contents = #{contents} 
 					WHERE reply_no = #{reply_no}

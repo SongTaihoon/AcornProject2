@@ -110,7 +110,15 @@
 		    LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = 0) rp_bad
 		    ON r.reply_no = rp_bad.reply_no
 		    
-			ORDER BY board_no DESC
+			<if test="sort != null">
+				ORDER BY ${sort} 
+			</if>
+			<if test="direct != null">
+				<choose>
+					<when test="direct.equals('desc')">desc</when>
+					<otherwise>asc</otherwise>
+				</choose>
+			</if>
 			LIMIT #{startRow}, #{pageSize}
 	</select>
 	<select id="selectPageAllCount" resultType="int">

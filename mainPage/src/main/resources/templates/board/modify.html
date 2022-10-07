@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>후기 수정</title>
 <link rel="stylesheet" href="/public/css/board/detail.css">
-<script th:src="@{/public/js/board/detail.js}" defer></script>
+<script th:src="@{/public/js/board/modify.js}" defer="defer"></script>
 </head>
 <body>
 <header th:insert="/NewHeader"></header>
@@ -34,13 +34,11 @@
 					<span th:text="${board.views}"></span>
 				</i>
 				<a style="margin-right: 4px; margin-left: 4px;"
-			 	data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="좋아요!"
 				class="btn btn-outline-primary border-0 rounded-pill">
 					<i th:classappend="${(board.prefer_active != null && board.prefer_active) ? 'bi-hand-thumbs-up-fill' : 'bi-hand-thumbs-up'}" class="bi "></i>				
 					<span th:text="${board.good}"></span>
 				</a> 
 				<a style="margin-right: 8px;"
-			 	data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="싫어요!"
 				class="btn btn-outline-danger border-0 rounded-pill">
 					<i th:classappend="${(board.prefer_active != null && !board.prefer_active) ? 'bi-hand-thumbs-down-fill' : 'bi-hand-thumbs-down'}" class="bi "></i>				
 					<span th:text="${board.bad}"></span>
@@ -101,8 +99,8 @@
 		    <tr>
 		    	<th style="width: 100px;" class="bg-light align-middle">사진</th>
 		    	<td>
-					<div class="mt-2 mb-3">
-						<p>삭제할 사진 선택</p>
+					<div>
+						<p th:unless="${#lists.isEmpty(board.boardImgs)}" class="mb-2">삭제할 사진 선택</p>
 						<th:block th:each="boardImg : ${board.boardImgs}">
 							<label>
 								<input name="boardImgNo" type="checkbox"
@@ -118,7 +116,7 @@
 						<input name="imgFile" class="form-control mb-1 form-control-lg" type="file">
 						<input name="imgFile" class="form-control mb-1 form-control-lg" type="file">
 						<input name="imgFile" class="form-control mb-1 form-control-lg" type="file">
-						<input name="imgFile" class="form-control mb-1 form-control-lg" type="file">
+						<input name="imgFile" class="form-control form-control-lg" type="file">
 					</div>
 		    	</td>
 		    </tr>
@@ -141,19 +139,40 @@
 			<div class="ms-auto">
 				<button class="btn btn-outline-warning btn-lg" type="reset">초기화</button>
 				<button class="btn btn-outline-success btn-lg" type="submit" style="margin-left: 8px; margin-right: 8px;">수정</button>
-
-				<th:block th:if="${session.loginUser?.adminCk == 1}">
-					<a th:href="@{/board/delete/{boardNo}/{userId}(boardNo=${board.board_no}, userId=${session.loginUser?.user_id})}" 
-					   class="btn btn-outline-danger btn-lg" style="margin-right: 8px;">
-						삭제
-					</a>
-				</th:block>
-				<th:block th:unless="${session.loginUser?.adminCk == 1}">
-					<a th:href="@{/board/delete/{boardNo}/{userId}(boardNo=${board.board_no}, userId=${board.user?.user_id})}" 
-					   class="btn btn-outline-danger btn-lg" style="margin-right: 8px;">
-						삭제
-					</a>
-				</th:block>
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-outline-danger btn-lg" 
+					    style="margin-right: 8px;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+				  삭제
+				</button>
+				<!-- Modal -->
+				<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header border-0">
+				        <h1 class="modal-title fs-5" id="staticBackdropLabel">경고</h1>
+				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				      </div>
+				      <div class="modal-body">
+				        한 번 삭제하면 복구할 수 없습니다. 정말 삭제하시겠습니까?
+				      </div>
+				      <div class="modal-footer border-0">
+				        <button type="button" class="btn btn-outline-dark btn-lg" data-bs-dismiss="modal" style="margin-right: 8px;">취소</button>
+						<th:block th:if="${session.loginUser?.adminCk == 1}">
+							<a th:href="@{/board/delete/{boardNo}/{userId}(boardNo=${board.board_no}, userId=${session.loginUser?.user_id})}" 
+							   class="btn btn-outline-danger btn-lg" style="margin-right: 8px;">
+								삭제
+							</a>
+						</th:block>
+						<th:block th:unless="${session.loginUser?.adminCk == 1}">
+							<a th:href="@{/board/delete/{boardNo}/{userId}(boardNo=${board.board_no}, userId=${board.user?.user_id})}" 
+							   class="btn btn-outline-danger btn-lg" style="margin-right: 8px;">
+								삭제
+							</a>
+						</th:block>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 				<a th:href="@{/board/detail/{boardNo}(boardNo=${board.board_no})}" class="btn btn-outline-dark btn-lg ms-auto">취소</a>
 			</div>
 		</div>
@@ -163,25 +182,4 @@
 <footer class="footer" th:insert="/NewFooter"></footer>
 </div>	
 </body>
-<script type="text/javascript">
-function noSpace(obj) { // 공백사용못하게
-    var str = /\s/;  // 공백체크
-    if(str.exec(obj.value.trim)) { //공백 체크
-        //alert("해당 항목에는 첫 글자 공백을 사용할수 없습니다.");
-        obj.focus();
-        obj.value = obj.value.replace(/^ +/,''); // 공백제거
-        return false;
-    }
-}
-//값이 없을 때 submit 불가
-var boardUpdateForm = document.forms.boardUpdateForm;
-var title = boardUpdateForm.title;
-var contents = boardUpdateForm.contents;
-var place = boardUpdateForm["place_name"];
-boardUpdateForm.addEventListener("submit", (event) => {
-	if(!title.value || !contents.value || !place.value) {
-		event.preventDefault();		
-	}
-});
-</script>
 </html>

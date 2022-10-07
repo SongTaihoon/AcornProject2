@@ -89,7 +89,7 @@ INSERT INTO USER (user_id, user_name, user_pw, user_phone, user_email, birth, ad
 ('48907711','하늘미','1234','010-2374-0406','user39@gmail.com','1962-11-29','서울 강남구 언주로93길 22-5 도영빌딩 1층','02-106');
 
 INSERT INTO USER (user_id, user_name, user_pw, user_phone, user_email, birth, add2, add1, adminCk) VALUES
-('admin','admin','Gyubin98A!','010-6737-3912','kvpark98@naver.com','1998-09-12','서울 강남구 언주로93길 22-5','02-106','1');
+('admin','관리자','Gyubin98A!','010-6737-3912','kvpark98@naver.com','1998-09-12','서울 강남구 언주로93길 22-5','02-106','1');
 
 INSERT INTO USER (user_id, user_name, user_pw, user_phone, user_email, birth, add2, add1) VALUES
 ('awriter','awriter','1234','011-0000-0000','awriter@gmail.com','1990-01-01','광주 광산구 풍영로101번길 22 104동','02-106');
@@ -228,10 +228,9 @@ reply_no INT AUTO_INCREMENT,
 title VARCHAR(255) NOT NULL,
 contents VARCHAR(255) NOT NULL,
 post_time DATETIME DEFAULT CURRENT_TIMESTAMP(),
-img_path VARCHAR(255),
+img_path VARCHAR(255) DEFAULT NULL,
 board_no INT NOT NULL,
 user_id VARCHAR(255) NOT NULL,
-remove_img_check INT DEFAULT 0,
 good INT NOT NULL DEFAULT 0,
 bad INT  NOT NULL DEFAULT 0,
 PRIMARY KEY(reply_no),

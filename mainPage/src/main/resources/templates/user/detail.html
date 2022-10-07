@@ -78,7 +78,7 @@
 			<th:block th:if="${session.loginUser?.adminCk == 1}">
 				<div class="d-flex mb-3 g-3">
 					<div class="ms-auto">
-						<a class="btn btn-outline-info btn-lg" th:href="@{/user/update/{userId}(userId=${user?.user_id})}">수정</a>
+						<a class="btn btn-outline-info btn-lg" th:href="@{/user/update/{userId}(userId=${user?.user_id})}" style="margin-right: 8px;">수정</a>
 						<a class="btn btn-outline-dark btn-lg" href="/user/list/1">목록</a>
 					</div>
 				</div>

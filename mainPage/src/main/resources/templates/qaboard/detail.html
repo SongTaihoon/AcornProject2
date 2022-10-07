@@ -71,7 +71,8 @@
 		<div class="d-flex">
 			<div class="ms-auto">
 				<th:block th:if="${(session.loginUser?.adminCk == 1) || (session.loginUser?.user_id == qaBoard.user?.user_id)}">
-					<a class="btn btn-outline-info btn-lg" th:href="@{/qaboard/update/{qaBoardNo}(qaBoardNo=${qaBoard.qaBoardNo})}">수정</a>
+					<a class="btn btn-outline-info btn-lg" th:href="@{/qaboard/update/{qaBoardNo}(qaBoardNo=${qaBoard.qaBoardNo})}"
+					   style="margin-right: 8px;">수정</a>
 					<a class="btn btn-outline-dark btn-lg" href="/qaboard/list/1">목록</a>
 				</th:block>
 				<th:block th:unless="${(session.loginUser?.adminCk == 1) || (session.loginUser?.user_id == qaBoard.user?.user_id)}">
