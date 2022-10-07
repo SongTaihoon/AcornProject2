@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>JEJU RESTAURANT TOP 20</title>
 <link rel="stylesheet" href="/public/css/rest/list.css">
+<script th:src="@{/public/js/top/rest/list.js}" defer="defer"></script>
 </head>
 <body>
 	<header th:insert="/NewHeader"></header>
@@ -52,7 +53,7 @@
 			<thead class="table-light">
 				<tr>
 					<th>순위</th>
-					<th>음식점명</th>
+					<th>음식점업소명</th>
 					<th>서귀포/제주도</th>
 					<th>카테고리</th>
 					<th>주소</th>	
@@ -73,7 +74,7 @@
 						</th:block>
 						<th:block th:if="${rest.category.category_id == '3'}">
 							<td>맛집</td> 
-						</th:block>					
+						</th:block>			
 						<td th:text="${rest.address2}"></td>
 						<td th:text="${rest.search}"></td>
 					</tr>					
@@ -86,14 +87,5 @@
 		</main>
   	  <footer class="footer" th:insert="/NewFooter"></footer>
     </div> 
-</body>
-	  <script type='text/javascript'>          
-		  var divElement = document.getElementById('viz1664518489534');  
-		  var vizElement = divElement.getElementsByTagName('object')[0];       
-		 	  vizElement.style.width='100%';
-		  	  vizElement.style.height=(divElement.offsetWidth*0.75)+'px'; 
-		  var scriptElement = document.createElement('script');           
-		  scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';  
-		  vizElement.parentNode.insertBefore(scriptElement, vizElement);          
-	  </script> 
+</body> 
 </html>

@@ -33,7 +33,7 @@
 			SELECT t.*, 
 		 	c.category_id,
 		 	RANK() OVER(ORDER BY search DESC) AS ranking
-
+		 	
 			FROM TOUR t
 			
 			LEFT JOIN CATEGORY c 
