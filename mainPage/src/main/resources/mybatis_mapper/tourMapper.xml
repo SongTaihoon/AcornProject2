@@ -33,7 +33,11 @@
 			SELECT t.*, 
 		 	c.category_id,
 		 	RANK() OVER(ORDER BY search DESC) AS ranking
+<<<<<<< HEAD
 		 	
+=======
+
+>>>>>>> 45d821cd56c005338a34db006d19f19835443a91
 			FROM TOUR t
 			
 			LEFT JOIN CATEGORY c 

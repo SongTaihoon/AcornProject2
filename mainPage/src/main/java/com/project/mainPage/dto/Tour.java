@@ -17,6 +17,11 @@ import lombok.Data;
 | category_id | varchar(255) | YES  | MUL | NULL    |                |
 | search      | int          | NO   |     | NULL    |                |
 | views       | int          | NO   |     | 0       |                |
+<<<<<<< HEAD
+=======
+| good        | int          | NO   |     | 0       |                |
+| bad         | int          | NO   |     | 0       |                |
+>>>>>>> 45d821cd56c005338a34db006d19f19835443a91
 | user_id     | varchar(45)  | NO   | MUL | NULL    |                |
 +-------------+--------------+------+-----+---------+----------------+
 11 rows in set (0.00 sec)
@@ -29,9 +34,18 @@ public class Tour {
 	 private String city;
 	 private String address3;
 	 private Category category;
+<<<<<<< HEAD
 	 private int views;
 	 private int search;
 	 private int ranking;
 	 private UserDto user; // UsersDto.user_id : fk 
+=======
+	 private int good;
+	 private int bad;
+	 private int views;
+	 private int search;
+	 private int ranking;
+	 private UserDto user; // UsersDto.userid : fk 
+>>>>>>> 45d821cd56c005338a34db006d19f19835443a91
 	 private List<TourImg> tourImgs; // 1:N  TourImg.tour_rank fk
 }
