@@ -109,11 +109,7 @@
 		    
 		    LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = 0) rp_bad
 		    ON r.reply_no = rp_bad.reply_no
-<<<<<<< HEAD
 		    
-=======
-
->>>>>>> 45d821cd56c005338a34db006d19f19835443a91
 			ORDER BY board_no DESC
 			LIMIT #{startRow}, #{pageSize}
 	</select>

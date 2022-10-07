@@ -27,11 +27,7 @@ import com.project.mainPage.mapper.ReplyPreferMapper;
 public class ReplyController {
 	@Autowired
 	ReplyMapper replyMapper;
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> 45d821cd56c005338a34db006d19f19835443a91
 //	application.properties의 설정 경로 받아 오기
 	@Value("${spring.servlet.multipart.location}") // 파일이 임시 저장되는 경로 + 실제로 저장할 경로
 	String savePath;

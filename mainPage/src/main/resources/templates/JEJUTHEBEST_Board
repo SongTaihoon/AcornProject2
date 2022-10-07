@@ -314,7 +314,6 @@ FOREIGN KEY(qaBoardNo) REFERENCES QABOARD(qaBoardNo)
 ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-
 CREATE TABLE TOURIMG(
 tour_img_no INT AUTO_INCREMENT,
 tour_rank INT NOT NULL,
@@ -324,21 +323,21 @@ FOREIGN KEY(tour_rank) REFERENCES TOUR(tour_rank)
 ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-<<<<<<< HEAD
 CREATE TABLE RESTAURANTIMG(
 restaurank_img_no INT AUTO_INCREMENT,
 rest_rank INT NOT NULL,
 img_path VARCHAR(255) NOT NULL,
 PRIMARY KEY(restaurank_img_no),
 FOREIGN KEY(rest_rank) REFERENCES RESTAURANT(rest_rank)
-=======
+ON UPDATE CASCADE ON DELETE CASCADE
+);
+
 CREATE TABLE ACCOIMG(
 acco_img_no INT AUTO_INCREMENT,
 acco_rank INT NOT NULL,
 img_path VARCHAR(255) NOT NULL,
 PRIMARY KEY(acco_img_no),
 FOREIGN KEY(acco_rank) REFERENCES ACCOMMODATE(acco_rank)
->>>>>>> 45d821cd56c005338a34db006d19f19835443a91
 ON UPDATE CASCADE ON DELETE CASCADE
 );
 
@@ -746,7 +745,3 @@ INSERT INTO RESTAURANT(tourist, province, city, address2, rest,category_id,user_
  ('제주곰집흑돼지연탄구이','제주특별자치도','서귀포시','제주 서귀포시 이어도로 703-4','음식','3','admin',16051),
  ('돈사돈중문점','제주특별자치도','서귀포시','제주 서귀포시 천제연로 264-1','음식','3','admin',16018),
  ('모슬포부두식당본점','제주특별자치도','서귀포시','제주 서귀포시 하모항구로 62-0','음식','3','admin',15686);
-<<<<<<< HEAD
-
-=======
->>>>>>> 45d821cd56c005338a34db006d19f19835443a91
