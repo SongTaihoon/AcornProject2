@@ -1,5 +1,0 @@
-2022-10-07 12:44:42,853 [Worker-51: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
-2022-10-07 12:44:42,854 [Worker-51: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
-2022-10-07 12:44:42,882 [Worker-51: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
-2022-10-07 12:44:43,026 [Worker-51: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 188 resources
-2022-10-07 12:44:43,126 [Worker-51: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
