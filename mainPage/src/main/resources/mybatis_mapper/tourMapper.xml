@@ -24,6 +24,7 @@
 		</association>
 		<collection property="tourImgs" javaType="java.util.ArrayList" ofType="TourImg">
 			<id column="tour_img_no" property="tour_img_no"/>
+			<result column="tour_rank" property="tour_rank"/>
 			<result column="img_path" property="img_path"/>
 		</collection>	
 	</resultMap>

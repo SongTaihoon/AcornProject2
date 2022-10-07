@@ -6,11 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,13 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.project.mainPage.dto.Pagination;
 import com.project.mainPage.dto.Tour;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.project.mainPage.dto.Pagination;
-import com.project.mainPage.dto.Tour;
 import com.project.mainPage.dto.TourImg;
 import com.project.mainPage.dto.UserDto;
 import com.project.mainPage.mapper.TourImgMapper;
@@ -61,7 +56,7 @@ public class TopController {
 		int startRow = (page - 1) * row;
 		List<Tour> tourList = tourMapper.selectListAll(startRow, row);
 		int count = tourMapper.selectPageAllCount();
-		Pagination pagination = new Pagination(page, count, "/tour/list/", row);
+		Pagination pagination = new Pagination(page, count, "/top/tour/list/", row);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("tourList",tourList);	
 		model.addAttribute("row", row);
@@ -193,7 +188,7 @@ public class TopController {
 							tourImg.setImg_path(newFileName);
 							tourImgs.add(tourImg);
 							
-							if(-- insertTourImgLength == 0) break; // 이미지 수가 5개면 반목문 종료 
+							if(-- insertTourImgLength == 0) {break;} // 이미지 수가 5개면 반목문 종료 
 						}
 					}
 					if(tourImgs.size() > 0) {
