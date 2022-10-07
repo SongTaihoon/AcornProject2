@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>답변 수정</title>
 <link rel="stylesheet" href="/public/css/qaboard/detail.css">
+<script src="/public/js/qaboard/modifyReply.js" defer="defer"></script>
 </head>
 <body>
 <header th:insert="/NewHeader"></header>
@@ -26,8 +27,13 @@
 	    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
 	    <span style="font-size: 35px;">답변 수정</span>
     </h1>	
+    <div class="mt-3 d-flex">
+		<div class="ms-auto align-self-center">
+			<span th:text="'답변일 : ' + ${#dates.format(qaBoard.qaReply?.qaReplyDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
+		</div>
+    </div>
 	<form action="/qaboard/replyUpdate.do" method="post" name="qaReplyupdateForm">
-		<table class="mt-5 mb-5 table align-middle table-bordered">
+		<table class="mt-3 mb-5 table align-middle table-bordered">
 			<tbody>
 				<tr>
 					<th class="table-light">제목</th>
@@ -42,13 +48,6 @@
 					<td>
 						<textarea name="qaReplyContent" class="form-control" th:text="${qaBoard.qaReply?.qaReplyContent}"
 								  onkeyup="noSpace(this)" onchange="noSpace(this);"></textarea>
-					</td>
-				</tr>
-				<tr>
-					<th class="table-light">답변일</th>
-					<td>
-						<input name="qaReplyDate" class="form-control" th:value="${#dates.format(qaBoard.qaReply?.qaReplyDate, 'yyyy-MM-dd HH:mm:ss')}"
-							   type="text" readonly>
 					</td>
 				</tr>
 			</tbody>
@@ -92,24 +91,4 @@
 <footer class="footer" th:insert="/NewFooter"></footer>
 </div>
 </body>
-<script type="text/javascript">
-function noSpace(obj) { // 공백사용못하게
-    var str = /\s/;  // 공백체크
-    if(str.exec(obj.value.trim)) { //공백 체크
-        //alert("해당 항목에는 첫 글자 공백을 사용할수 없습니다.");
-        obj.focus();
-        obj.value = obj.value.replace(/^ +/,''); // 공백제거
-        return false;
-    }
-}
-//값이 없을 때 submit 불가
-const qaReplyupdateForm = document.forms.qaReplyupdateForm;
-const qaReplyTitle = qaReplyupdateForm.qaReplyTitle;
-const qaReplyContent = qaReplyupdateForm.qaReplyContent;
-qaReplyupdateForm.addEventListener("submit", (event) => {
-	if(!qaReplyTitle.value || !qaReplyContent.value) {
-		event.preventDefault();		
-	}
-});
-</script>
 </html>

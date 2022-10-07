@@ -91,7 +91,7 @@ public class BoardController {
 		
 		Pagination pagination = new Pagination(page, count, "/board/list/", row);
 		model.addAttribute("pagination", pagination);
-		model.addAttribute("boardList", boardList);
+		model.addAttribute("list", boardList);
 		model.addAttribute("row", row);
 		model.addAttribute("count", count);
 		model.addAttribute("page", page);

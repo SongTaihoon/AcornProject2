@@ -4,9 +4,6 @@
 <meta charset="UTF-8">
 <title>회원 정보</title>
 <link rel="stylesheet" href="/public/css/user/detail.css">
-<!-- 주소API기능연동 -->
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" defer="defer"></script>
-<script th:src="@{/public/js/adressApi.js}" defer="defer"></script>
 </head>
 <body>
 <header th:insert="/NewHeader"></header>
@@ -78,7 +75,8 @@
 			<th:block th:if="${session.loginUser?.adminCk == 1}">
 				<div class="d-flex mb-3 g-3">
 					<div class="ms-auto">
-						<a class="btn btn-outline-info btn-lg" th:href="@{/user/update/{userId}(userId=${user?.user_id})}" style="margin-right: 8px;">수정</a>
+						<a class="btn btn-outline-info btn-lg" th:href="@{/user/update/{userId}(userId=${user?.user_id})}" 
+						   style="margin-right: 8px;">수정</a>
 						<a class="btn btn-outline-dark btn-lg" href="/user/list/1">목록</a>
 					</div>
 				</div>
@@ -94,15 +92,4 @@
 <footer class="footer" th:insert="/NewFooter"></footer>
 </div>
 </body>
-<script type="text/javascript">
-function noSpaceForm(obj) { // 공백 사용 못하게
-   var str_space = /\s/;  // 공백 체크
-   if(str_space.exec(obj.value.trim)) { //공백 체크
-       //alert("해당 항목에는 공백을 사용할수 없습니다.\n\n공백은 자동적으로 제거 됩니다.");
-       obj.focus();
-       obj.value = obj.value.replace(/\s| /gi,''); // 공백 제거
-       return false;
-   }
-}
-</script>
 </html>

@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>공지 사항</title>
 <link rel="stylesheet" href="/public/css/board/insert.css">
+<script src="/public/js/notice/modify.js" defer="defer"></script>
 </head>
 <body>
 <header th:insert="/NewHeader"></header>
@@ -31,22 +32,13 @@
 			data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="조회수">
 			<span th:text="${notice.views}"></span>
 		</i>
+		<div class="ms-auto align-self-center">
+			<span th:text="'등록일 : ' + ${#dates.format(notice.post_time,'yyyy-MM-dd HH:mm:ss')}"></span>
+		</div>
     </div>	
     <form action="/notice/update.do" method="post" name="noticeUpdateForm">
 		<table class="mt-3 mb-5 table align-middle table-bordered">
 			<tbody>
-				<tr>
-					<th class="table-light" style="border-left: none;">글 번호</th>
-					<td>
-						<input name="notice_no" class="form-control" id="notice_no" th:value="${noticeNo}" readonly>
-					</td>
-				</tr>
-				<tr>
-					<th class="table-light" style="border-left: none;">작성자</th>
-					<td>
-						<input name="user.userid" class="form-control" id="userId" th:value="${notice.user?.user_id}" readonly>
-					</td>
-				</tr>
 				<tr>
 					<th class="table-light" style="border-left: none;">제목</th>
 					<td>
@@ -61,18 +53,13 @@
 							   onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
 					</td>
 				</tr>
-				<tr>
-					<th class="table-light" style="border-left: none;">등록일</th>
-					<td>
-						<input name="post_time" class="form-control" id="post_time" th:value="${#dates.format(notice.post_time,'yyyy-MM-dd HH:mm:ss')}" readonly>
-					</td>
-				</tr>
 			</tbody>
 		</table>
 		<div class="d-flex">
 			<div class="ms-auto">
 				<button class="btn btn-outline-warning btn-lg" type="reset" style="margin-right: 8px;">초기화</button>
 				<button class="btn btn-outline-success btn-lg" type="submit" style="margin-right: 8px;">수정</button>
+				<input type="hidden" name="notice_no" th:value="${noticeNo}">
 				<!-- Button trigger modal -->
 				<button type="button" class="btn btn-outline-danger btn-lg" 
 					    style="margin-right: 8px;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -105,26 +92,4 @@
 <footer class="footer" th:insert="/NewFooter"></footer>
 </div>
 </body>
-<script>
-const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
-function noSpace(obj) { // 공백사용못하게
-    var str = /\s/;  // 공백체크
-    if(str.exec(obj.value.trim)) { //공백 체크
-        //alert("해당 항목에는 첫 글자 공백을 사용할수 없습니다.");
-        obj.focus();
-        obj.value = obj.value.replace(/^ +/,''); // 공백제거
-        return false;
-    }
-}
-// 값이 없을 때 submit 불가
-const noticeUpdateForm = document.forms.noticeUpdateForm;
-const title = noticeUpdateForm.title;
-const contents = noticeUpdateForm.contents;
-noticeUpdateForm.addEventListener("submit", (event) => {
-	if(!title.value || !contents.value) {
-		event.preventDefault();		
-	}
-});
-</script>
 </html>

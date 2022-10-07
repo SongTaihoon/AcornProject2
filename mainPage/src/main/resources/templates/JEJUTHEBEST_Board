@@ -278,7 +278,7 @@ qaBoardContents TEXT,
 qaBoardAnswer boolean DEFAULT FALSE,
 qaBoardDate DATETIME DEFAULT CURRENT_TIMESTAMP(),
 category_id VARCHAR(45) NOT NULL,
-user_id VARCHAR(45),
+user_id VARCHAR(45) NOT NULL,
 views INT NOT NULL DEFAULT 0,
 CONSTRAINT PRIMARY KEY(qaBoardNo),
 FOREIGN KEY(category_id) REFERENCES CATEGORY(category_id)

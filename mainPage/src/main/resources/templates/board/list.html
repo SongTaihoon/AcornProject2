@@ -62,7 +62,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<th:block th:each="board : ${boardList}">
+				<th:block th:each="board : ${list}">
 					<tr th:onclick="location.href='/board/detail/[[${board.board_no}]]'">
 						<td th:text="${board.board_no}"></td>
 						<td th:text="${board.user?.user_id}"></td>
