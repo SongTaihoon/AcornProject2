@@ -10,6 +10,7 @@ import com.project.mainPage.dto.TourImg;
 // com.project.mainPage.mapper.TourImgMapper
 @Mapper
 public interface TourImgMapper {
+	// 관광지 이미지 등록 
 	int insertOne(TourImg tourImg);
 	List<TourImg> selectTourRank(int tourRank);
 	TourImg selectOne(int tourImgNo);

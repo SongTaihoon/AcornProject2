@@ -10,9 +10,12 @@ import com.project.mainPage.dto.RestaurantImg;
 // com.project.mainPage.mapper.RestaurantImgMapper
 @Mapper
 public interface RestaurantImgMapper {
+	// 음식점 이미지 등록 
 	int insertOne(RestaurantImg restaurantImg);
-	List<RestaurantImg> selectRestRank(int restRank);
+	// 음식점 수정 
+	int selectCountRestRank(int restRank);
 	RestaurantImg selectOne(int restaurankImgNo);
 	int deleteOne(int restaurankImgNo);
-	int selectCountRestRank(int restRank);
+	// 음식점 삭제 
+	List<RestaurantImg> selectRestRank(int restRank);
 }

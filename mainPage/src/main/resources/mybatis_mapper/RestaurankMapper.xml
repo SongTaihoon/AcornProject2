@@ -78,8 +78,8 @@
 	<insert id="insertOne" parameterType="Restaurant"
 	 		useGeneratedKeys="true" keyProperty="rest_rank">
 		INSERT INTO RESTAURANT 
-			( tourist, province, city, address2, category_id, search , user_id)
-				VALUES (#{tourist}, #{province}, #{city}, #{address2}, #{category.category_id}, #{search}, #{user.user_id})
+			( tourist, province, city, address2, category_id, search , user_id ,rest)
+				VALUES (#{tourist}, #{province}, #{city}, #{address2}, #{category.category_id}, #{search}, #{user.user_id},#{rest})
 	</insert>
 	<!-- 수정  -->
 	<update id="updateOne" parameterType="Restaurant">
