@@ -30,12 +30,9 @@ import com.project.mainPage.service.TourService;
 
 import com.project.mainPage.dto.Acco;
 import com.project.mainPage.dto.AccoImg;
-import com.project.mainPage.dto.Rest;
 import com.project.mainPage.mapper.AccoImgMapper;
 import com.project.mainPage.mapper.AccoMapper;
-import com.project.mainPage.mapper.RestMapper;
 import com.project.mainPage.service.AccoService;
-import com.project.mainPage.service.RestService;
 
 
 
@@ -47,10 +44,6 @@ public class TopController {
 	private TourMapper tourMapper;
 	@Autowired
 	private TourService tourService;
-	@Autowired
-	private RestMapper restMapper;
-	@Autowired
-	private RestService restService;
 	@Autowired
 	private AccoMapper accoMapper;
 	@Autowired
@@ -272,46 +265,6 @@ public class TopController {
 			System.out.println(msg);
 			return "redirect:/user/login.do";
 		}
-		
-	}
-	
-	@GetMapping("/rest/{page}")
-	public String rest(
-			@PathVariable int page,
-			Model model){
-		int row = 10;
-		int startRow = (page - 1) * row;
-		List<Rest> restList = restMapper.selectListAll(startRow, row);
-		int count = restMapper.selectPageAllCount();
-		Pagination pagination = new Pagination(page, count, "/top/rest/", row);
-		model.addAttribute("pagination", pagination);
-		model.addAttribute("restList",restList);	
-		model.addAttribute("row", row);
-		model.addAttribute("count", count);
-		model.addAttribute("page", page);
-		return "top/rest";
-	}
-	
-	// 관광지 TOP Detail 
-	@GetMapping("/detail/{restRank}")
-	public String detailrest(
-			@PathVariable int restRank,
-			Model model
-			) {
-		Rest rest = null; 
-		try {
-			rest = restService.restUpdateView(restRank);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		System.out.println("rest" + rest);
-		if(rest != null) {
-			model.addAttribute(rest);
-			return "/top/detail";
-		}else {
-			return "redirect:/top/rest/1";	
-		}
-		
 		
 	}
 	
