@@ -1,0 +1,36 @@
+@charset "EUC-KR";
+
+#path {
+    display: flex;
+    margin: 20px 0;
+    min-width: 1200px;
+}
+#path ol {
+    margin-left: auto;      
+}
+#path ol li a {   
+    text-decoration: none;
+    vertical-align: middle;
+}
+
+/*footer css 하단고정  */
+html, body {
+    height: 100%
+}
+#wrapper {
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 325px;
+}
+.footer {
+    bottom: 0;
+}
+
+#h2{
+	display: flex;
+	justify-content: between;
+	align-items: center;
+}
+#spanId{
+	font-size: 35px;
+} 

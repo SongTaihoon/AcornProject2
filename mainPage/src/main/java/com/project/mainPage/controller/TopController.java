@@ -29,7 +29,9 @@ import com.project.mainPage.mapper.TourMapper;
 import com.project.mainPage.service.TourService;
 
 import com.project.mainPage.dto.Acco;
+import com.project.mainPage.dto.AccoImg;
 import com.project.mainPage.dto.Rest;
+import com.project.mainPage.mapper.AccoImgMapper;
 import com.project.mainPage.mapper.AccoMapper;
 import com.project.mainPage.mapper.RestMapper;
 import com.project.mainPage.service.AccoService;
@@ -53,8 +55,10 @@ public class TopController {
 	private AccoMapper accoMapper;
 	@Autowired
 	private AccoService accoService;
-	
+	@Autowired
 	private TourImgMapper tourImgMapper;
+	@Autowired
+	private AccoImgMapper accoImgMapper;
 	
 	@Value("${spring.servlet.multipart.location}") // 파일이 임시 저장되는 경로 + 파일을 저장할 경로
 	private String savePath;
@@ -62,6 +66,8 @@ public class TopController {
 
 	// Tour > tour_img 의 수를 5개로 제한 
 	private final static int TOUR_IMG_LIMIT = 5; 
+	private final static int ACCO_IMG_LIMIT = 5; 
+	
 	
 	// 관광지 TOP 10 LIST
 	@GetMapping("/tour/list/{page}")
@@ -327,7 +333,7 @@ public class TopController {
 	}
 	
 	@GetMapping("/acco/detail/{accoRank}")
-	public String accodetail(
+	public String accoDetail(
 			@PathVariable int accoRank,
 			Model model
 			) {
@@ -345,4 +351,172 @@ public class TopController {
 			return "redirect:/top/acco/list/1";	
 		}
 	}
+	
+	// 숙박 등록 페이지 (admin 관리자 등록하도록 설정)
+		@GetMapping("/acco/insert.do")
+		public String accoInsert(
+				@SessionAttribute(required = false) UserDto loginUser
+				) {
+			if((loginUser).getAdminCk() == 1) {
+				return "/top/acco/insert";
+			}else {
+				return "redirect:/user/login.do";
+			}
+		}
+		
+		// 숙박 등록
+		@PostMapping("/acco/insert.do")
+		public String accoInsert(
+					Acco  acco,
+					@RequestParam(name = "imgFile", required = false) MultipartFile [] imgFiles,
+					@SessionAttribute(required = false) UserDto loginUser,
+					HttpSession session) {
+			int insert = 0;
+			try {
+				//이미지 저장 및 처리
+				if(imgFiles != null) {
+					List<AccoImg> accoImgs = new ArrayList<AccoImg>();
+					// imgFiles가 null이면 여기서 오류 발생!! 
+					for(MultipartFile imgFile : imgFiles) {		
+						String type = imgFile.getContentType();
+						if(type.split("/")[0].equals("image")) {
+							// 새로운 이미지 등록 
+							String newFileName = "acco_" + System.nanoTime() + "." + type.split("/")[1]; // {"image", "jpeg"}
+							Path newFilePath = Paths.get(savePath + "/" + newFileName);
+							imgFile.transferTo(newFilePath); // 서버(static 내부에 있는 img 폴더)에 이미지 저장
+							
+							AccoImg accoImg = new AccoImg();
+							accoImg.setImg_path(newFileName); 
+							accoImgs.add(accoImg);
+						}
+					}
+					if(accoImgs.size() > 0) {
+						acco.setAccoImgs(accoImgs);
+					}
+				}
+				insert = accoService.registAcco(acco); // DB에 등록
+				System.out.println(acco);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			if(insert > 0) {
+				System.out.println("숙박 등록 성공! : " + insert);
+				return "redirect:/top/acco/list/1";
+			}else {
+				System.out.println("숙박 등록 실패! : " + insert);
+				return "redirect:/top/acco/insert.do";
+			}
+		}
+	
+		
+		// 숙박 수정 페이지 
+		@GetMapping("/acco/update/{accoRank}")
+		public String accoUpdate(
+				@PathVariable int accoRank, 
+				Model model, 
+				@SessionAttribute(name ="loginUser", required = false) UserDto loginUser,
+				HttpSession session) {
+			Acco acco = null;
+			acco = accoMapper.selectDetailOne(accoRank);
+			if(loginUser != null || loginUser.getAdminCk() == 1) {
+				model.addAttribute("acco", acco);
+				System.out.println("getMapperacco : "+acco);
+				return "/top/acco/update";			
+			} else {
+				return "redirect:/user/login.do";
+			}
+		}
+		
+		@PostMapping("/acco/update.do")
+		public String accoUpdate(
+				Acco acco,
+				Model model,
+				@SessionAttribute(name ="loginUser", required = false) UserDto loginUser,
+				@RequestParam(name="accoImgNo",required = false ) int [] accoImgNos,
+				@RequestParam(name = "imgFile", required = false) MultipartFile[] imgFiles,
+				HttpSession session
+				) {
+			int update = 0; 
+			if((loginUser).getAdminCk() == 1) {
+				try {
+					int accoImgCount = accoImgMapper.selectCountAccoRank(acco.getAcco_rank());
+					int insertAccoImgLength = ACCO_IMG_LIMIT - accoImgCount + ((accoImgNos != null) ? accoImgNos.length : 0);
+					// 이미지 저장 
+					if(imgFiles != null && insertAccoImgLength > 0) {
+						List<AccoImg> accoImgs = new ArrayList<AccoImg>();
+						for(MultipartFile imgFile : imgFiles) { 
+							String[] types = imgFile.getContentType().split("/");
+							if(types[0].equals("image")) {
+								// 새로운 이미지 등록 
+								String newFileName = "acco_" + System.nanoTime() + "." + types[1];
+								Path path = Paths.get(savePath + "/" + newFileName);
+								imgFile.transferTo(path); // 서버(static 내부에 있는 img 폴더)에 이미지 저장
+								
+								AccoImg accoImg = new AccoImg();
+								accoImg.setAcco_rank(acco.getAcco_rank());
+								accoImg.setImg_path(newFileName);
+								accoImgs.add(accoImg);
+								
+								if(-- insertAccoImgLength == 0) break; // 이미지 수가 5개면 반목문 종료 
+							}
+						}
+						if(accoImgs.size() > 0) {
+							acco.setAccoImgs(accoImgs);
+						}
+					}
+					update = accoService.updateAccoRemoveAccoImg(acco, accoImgNos); // DB에서 후기 수정
+
+					System.out.println("update : "+update);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return "redirect:/top/acco/update/" + acco.getAcco_rank();
+				}
+				if(update > 0) {
+					System.out.println("숙박 수정 성공! : " + update);
+					return "redirect:/top/acco/detail/" + acco.getAcco_rank();
+				}else {
+					System.out.println("숙박 수정 실패! : " + update);
+					return "redirect:/top/acco/update/" + acco.getAcco_rank();
+				}	
+			}else{ 
+				return "redirect:/user/login.do";
+			}  
+			
+		}	
+		
+		// 숙박 정보 삭제 
+		@SuppressWarnings("null")
+		@GetMapping("/acco/delete/{accoRank}/{userId}")
+		public String accoDelete(
+				@PathVariable int accoRank,
+				@PathVariable String userId,
+				@SessionAttribute(name ="loginUser",required = false) UserDto loginUser,
+				HttpSession session
+				) {
+			System.out.println("loginUser : "+loginUser);
+			String msg = "";
+			if(loginUser != null || loginUser.getAdminCk() == 1) {
+				int delete=0;
+				try {
+					delete = accoService.removeAcco(accoRank);
+				} catch(Exception e) {e.printStackTrace();}
+				if(delete > 0) {
+					msg="숙박업소 정보 삭제 성공";
+					session.setAttribute("msg", msg);
+					System.out.println(msg);
+					return "redirect:/top/acco/list/1";
+				}else {
+					msg="숙박업소 정보 삭제 실패";
+					session.setAttribute("msg", msg);
+					System.out.println(msg);
+					return "redirect:/top/acco/update/" + accoRank;			
+				}	
+			}else {
+				msg="로그인 하셔야 이용가능합니다.";
+				session.setAttribute("msg", msg);
+				System.out.println(msg);
+				return "redirect:/user/login.do";
+			}
+			
+		}
 }
