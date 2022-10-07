@@ -18,33 +18,8 @@
 		    	<a href="/">홈</a>
 		    </li>
 		    <li class="breadcrumb-item" aria-current="page">
-<<<<<<< HEAD
 		    	<a th:href="@{/user/detail/{userId}(userId=${user?.user_id})}" 
 		    	   class="breadcrumb-item active" th:text="${user?.user_name} + '(' + ${user?.user_id} + ')'"></a>
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD:mainPage/src/main/resources/templates/users/update.html
-		    	<a th:href="@{/users/detail/{userid}(userid=${user?.userid})}" 
-		    	   class="breadcrumb-item active" th:text="${user?.username} + '(' + ${user?.userid} + ')'"></a>
-=======
-		    	<a th:href="@{/user/detail/{userId}(userId=${user?.user_id})}" 
-		    	   class="breadcrumb-item active" th:text="${user?.user_name} + '(' + ${user?.user_id} + ')'"></a>
->>>>>>> 3b57866d1458d6ca2a6a16b9d264cdbf9821c426:mainPage/src/main/resources/templates/user/update.html
-=======
-		    	<a th:href="@{/user/detail/{userId}(userId=${user?.user_id})}" 
-		    	   class="breadcrumb-item active" th:text="${user?.user_name} + '(' + ${user?.user_id} + ')'"></a>
->>>>>>> 86919f3cef114c17bab0c3653b4e59bc9a69365c
-=======
-		    	<a th:href="@{/user/detail/{userId}(userId=${user?.user_id})}" 
-		    	   class="breadcrumb-item active" th:text="${user?.user_name} + '(' + ${user?.user_id} + ')'"></a>
->>>>>>> 7bdac3aa9dc81b597fcc53288e08f9af247e65b5
-=======
-		    	<a th:href="@{/user/detail/{userId}(userId=${user?.user_id})}" 
-		    	   class="breadcrumb-item active" th:text="${user?.user_name} + '(' + ${user?.user_id} + ')'"></a>
->>>>>>> 683228a46cbc0e047319d4400ad57fb5b64b8b93
->>>>>>> 45d821cd56c005338a34db006d19f19835443a91
 		    </li>
 		  </ol>
 		</nav>
@@ -52,215 +27,50 @@
 		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
 		    <span style="font-size: 35px;">회원 수정</span>
 	    </h1>	
-<<<<<<< HEAD
 		<form action="/user/update.do" method="post">
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD:mainPage/src/main/resources/templates/users/update.html
-		<form action="/users/update.do" method="post">
-=======
-		<form action="/user/update.do" method="post">
->>>>>>> 3b57866d1458d6ca2a6a16b9d264cdbf9821c426:mainPage/src/main/resources/templates/user/update.html
-=======
-		<form action="/user/update.do" method="post">
->>>>>>> 86919f3cef114c17bab0c3653b4e59bc9a69365c
-=======
-		<form action="/user/update.do" method="post">
->>>>>>> 7bdac3aa9dc81b597fcc53288e08f9af247e65b5
-=======
-		<form action="/user/update.do" method="post">
->>>>>>> 683228a46cbc0e047319d4400ad57fb5b64b8b93
->>>>>>> 45d821cd56c005338a34db006d19f19835443a91
 			<table class="mt-5 mb-5 table align-middle table-bordered">
 				<tbody>
 					<tr>
 						<th class="table-light">이름</th>
 						<td>
-<<<<<<< HEAD
-							<input name="user_name" id="username" class="form-control" type="text" th:value="${user?.user_name}" 
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD:mainPage/src/main/resources/templates/users/update.html
-							<input name="username" id="username" class="form-control" type="text" th:value="${user.username}" 
-=======
-							<input name="user_name" id="username" class="form-control" type="text" th:value="${user?.user_name}" 
->>>>>>> 3b57866d1458d6ca2a6a16b9d264cdbf9821c426:mainPage/src/main/resources/templates/user/update.html
-=======
-							<input name="user_name" id="username" class="form-control" type="text" th:value="${user?.user_name}" 
->>>>>>> 86919f3cef114c17bab0c3653b4e59bc9a69365c
-=======
-							<input name="user_name" id="username" class="form-control" type="text" th:value="${user?.user_name}" 
->>>>>>> 7bdac3aa9dc81b597fcc53288e08f9af247e65b5
-=======
-							<input name="user_name" id="username" class="form-control" type="text" th:value="${user?.user_name}" 
->>>>>>> 683228a46cbc0e047319d4400ad57fb5b64b8b93
->>>>>>> 45d821cd56c005338a34db006d19f19835443a91
-								   onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this)" maxlength="20">
+							<input name="user_name" id="username" class="form-control" type="text" th:value="${user?.user_name}"> 
 						</td>
 					</tr>
 					<tr>
 						<th class="table-light">아이디</th>
 						<td>
-<<<<<<< HEAD
 							<input name="user_id" type="text" class="form-control" th:value="${user?.user_id}" readonly maxlength="20">
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD:mainPage/src/main/resources/templates/users/update.html
-							<input name="userid" type="text" class="form-control" th:value="${user.userid}" readonly maxlength="20">
-=======
-							<input name="user_id" type="text" class="form-control" th:value="${user?.user_id}" readonly maxlength="20">
->>>>>>> 3b57866d1458d6ca2a6a16b9d264cdbf9821c426:mainPage/src/main/resources/templates/user/update.html
-=======
-							<input name="user_id" type="text" class="form-control" th:value="${user?.user_id}" readonly maxlength="20">
->>>>>>> 86919f3cef114c17bab0c3653b4e59bc9a69365c
-=======
-							<input name="user_id" type="text" class="form-control" th:value="${user?.user_id}" readonly maxlength="20">
->>>>>>> 7bdac3aa9dc81b597fcc53288e08f9af247e65b5
-=======
-							<input name="user_id" type="text" class="form-control" th:value="${user?.user_id}" readonly maxlength="20">
->>>>>>> 683228a46cbc0e047319d4400ad57fb5b64b8b93
->>>>>>> 45d821cd56c005338a34db006d19f19835443a91
 						</td>
 					</tr>
 					<tr>
 						<th class="table-light">비밀번호</th>
 						<td>
-<<<<<<< HEAD
-							<input name="user_pw" id="userpw" class="form-control" type="text" th:value="${user?.user_pw}" 
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD:mainPage/src/main/resources/templates/users/update.html
-							<input name="userpw" id="userpw" class="form-control" type="text" th:value="${user.userpw}" 
-=======
-							<input name="user_pw" id="userpw" class="form-control" type="text" th:value="${user?.user_pw}" 
->>>>>>> 3b57866d1458d6ca2a6a16b9d264cdbf9821c426:mainPage/src/main/resources/templates/user/update.html
-=======
-							<input name="user_pw" id="userpw" class="form-control" type="text" th:value="${user?.user_pw}" 
->>>>>>> 86919f3cef114c17bab0c3653b4e59bc9a69365c
-=======
-							<input name="user_pw" id="userpw" class="form-control" type="text" th:value="${user?.user_pw}" 
->>>>>>> 7bdac3aa9dc81b597fcc53288e08f9af247e65b5
-=======
-							<input name="user_pw" id="userpw" class="form-control" type="text" th:value="${user?.user_pw}" 
->>>>>>> 683228a46cbc0e047319d4400ad57fb5b64b8b93
->>>>>>> 45d821cd56c005338a34db006d19f19835443a91
-								   onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this)" maxlength="16">
+							<input name="user_pw" id="userpw" class="form-control" type="text" th:value="${user?.user_pw}"> 
 						</td>
 					</tr>
 					<tr>
 						<th class="table-light">이메일</th>
 						<td>
-<<<<<<< HEAD
-							<input name="user_email" id="email" class="form-control" type="email" th:value="${user?.user_email}" 
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD:mainPage/src/main/resources/templates/users/update.html
-							<input name="email" id="email" class="form-control" type="email" th:value="${user.email}" 
-=======
-							<input name="user_email" id="email" class="form-control" type="email" th:value="${user?.user_email}" 
->>>>>>> 3b57866d1458d6ca2a6a16b9d264cdbf9821c426:mainPage/src/main/resources/templates/user/update.html
-=======
-							<input name="user_email" id="email" class="form-control" type="email" th:value="${user?.user_email}" 
->>>>>>> 86919f3cef114c17bab0c3653b4e59bc9a69365c
-=======
-							<input name="user_email" id="email" class="form-control" type="email" th:value="${user?.user_email}" 
->>>>>>> 7bdac3aa9dc81b597fcc53288e08f9af247e65b5
-=======
-							<input name="user_email" id="email" class="form-control" type="email" th:value="${user?.user_email}" 
->>>>>>> 683228a46cbc0e047319d4400ad57fb5b64b8b93
->>>>>>> 45d821cd56c005338a34db006d19f19835443a91
-								   onkeyup="noSpaceForm(this)" onchange="noSpaceForm(this)">
+							<input name="user_email" id="email" class="form-control" type="email" th:value="${user?.user_email}" >
 						</td>
 					</tr>
 					<tr>
 						<th class="table-light">전화번호</th>
 						<td>
-<<<<<<< HEAD
-							<input name="user_phone" id="phone" class="form-control" type="tel" th:value="${user?.user_phone}" 
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD:mainPage/src/main/resources/templates/users/update.html
-							<input name="phone" id="phone" class="form-control" type="tel" th:value="${user.phone}" 
-=======
-							<input name="user_phone" id="phone" class="form-control" type="tel" th:value="${user?.user_phone}" 
->>>>>>> 3b57866d1458d6ca2a6a16b9d264cdbf9821c426:mainPage/src/main/resources/templates/user/update.html
-=======
-							<input name="user_phone" id="phone" class="form-control" type="tel" th:value="${user?.user_phone}" 
->>>>>>> 86919f3cef114c17bab0c3653b4e59bc9a69365c
-=======
-							<input name="user_phone" id="phone" class="form-control" type="tel" th:value="${user?.user_phone}" 
->>>>>>> 7bdac3aa9dc81b597fcc53288e08f9af247e65b5
-=======
-							<input name="user_phone" id="phone" class="form-control" type="tel" th:value="${user?.user_phone}" 
->>>>>>> 683228a46cbc0e047319d4400ad57fb5b64b8b93
->>>>>>> 45d821cd56c005338a34db006d19f19835443a91
-							       onkeydown="noSpaceForm(this)" onchange="noSpaceForm(this)" 
-							       oninput="phoneAutoComplete(this)" onKeyup="this.value=this.value.replace(/[^-0-9]/g,'');" maxlength="13">
+							<input name="user_phone" id="phone" class="form-control" type="tel" th:value="${user?.user_phone}" >
 						</td>
 					</tr>
 					<tr>
 						<th class="table-light">생일</th>
 						<td>
-<<<<<<< HEAD
 							<input name="birth" id="birth" class="form-control" type="date" th:value="${#dates.format(user?.birth, 'yyyy-MM-dd')}">
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD:mainPage/src/main/resources/templates/users/update.html
-							<input name="birth" id="birth" class="form-control" type="date" th:value="${#dates.format(user.birth, 'yyyy-MM-dd')}">
-=======
-							<input name="birth" id="birth" class="form-control" type="date" th:value="${#dates.format(user?.birth, 'yyyy-MM-dd')}">
->>>>>>> 3b57866d1458d6ca2a6a16b9d264cdbf9821c426:mainPage/src/main/resources/templates/user/update.html
-=======
-							<input name="birth" id="birth" class="form-control" type="date" th:value="${#dates.format(user?.birth, 'yyyy-MM-dd')}">
->>>>>>> 86919f3cef114c17bab0c3653b4e59bc9a69365c
-=======
-							<input name="birth" id="birth" class="form-control" type="date" th:value="${#dates.format(user?.birth, 'yyyy-MM-dd')}">
->>>>>>> 7bdac3aa9dc81b597fcc53288e08f9af247e65b5
-=======
-							<input name="birth" id="birth" class="form-control" type="date" th:value="${#dates.format(user?.birth, 'yyyy-MM-dd')}">
->>>>>>> 683228a46cbc0e047319d4400ad57fb5b64b8b93
->>>>>>> 45d821cd56c005338a34db006d19f19835443a91
 						</td>
 					</tr>
 					<tr>
 						<th class="table-light">우편번호</th>
 						<td style="text-align: left;">
 						<div class="d-flex align-items-center">
-<<<<<<< HEAD
 							<input name="add1" id="sample6_postcode" type="text" th:value="${user?.add1}" 
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD:mainPage/src/main/resources/templates/users/update.html
-							<input name="add1" id="sample6_postcode" type="text" th:value="${user.add1}" 
-=======
-							<input name="add1" id="sample6_postcode" type="text" th:value="${user?.add1}" 
->>>>>>> 3b57866d1458d6ca2a6a16b9d264cdbf9821c426:mainPage/src/main/resources/templates/user/update.html
-=======
-							<input name="add1" id="sample6_postcode" type="text" th:value="${user?.add1}" 
->>>>>>> 86919f3cef114c17bab0c3653b4e59bc9a69365c
-=======
-							<input name="add1" id="sample6_postcode" type="text" th:value="${user?.add1}" 
->>>>>>> 7bdac3aa9dc81b597fcc53288e08f9af247e65b5
-=======
-							<input name="add1" id="sample6_postcode" type="text" th:value="${user?.add1}" 
->>>>>>> 683228a46cbc0e047319d4400ad57fb5b64b8b93
->>>>>>> 45d821cd56c005338a34db006d19f19835443a91
 							class="form-control" style="display:inline; width:85%; margin-right: 8px;" readonly>
 							<input type="button" class="btn btn-secondary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" style="display:inline; width:15%;">
 							</div>
@@ -269,107 +79,27 @@
 					<tr>
 						<th class="table-light">주소</th>
 						<td>
-<<<<<<< HEAD
 							<input name="add2" id="sample6_address" type="text" size="40" th:value="${user?.add2}" class="form-control" readonly>
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD:mainPage/src/main/resources/templates/users/update.html
-							<input name="add2" id="sample6_address" type="text" size="40" th:value="${user.add2}" class="form-control" readonly>
-=======
-							<input name="add2" id="sample6_address" type="text" size="40" th:value="${user?.add2}" class="form-control" readonly>
->>>>>>> 3b57866d1458d6ca2a6a16b9d264cdbf9821c426:mainPage/src/main/resources/templates/user/update.html
-=======
-							<input name="add2" id="sample6_address" type="text" size="40" th:value="${user?.add2}" class="form-control" readonly>
->>>>>>> 86919f3cef114c17bab0c3653b4e59bc9a69365c
-=======
-							<input name="add2" id="sample6_address" type="text" size="40" th:value="${user?.add2}" class="form-control" readonly>
->>>>>>> 7bdac3aa9dc81b597fcc53288e08f9af247e65b5
-=======
-							<input name="add2" id="sample6_address" type="text" size="40" th:value="${user?.add2}" class="form-control" readonly>
->>>>>>> 683228a46cbc0e047319d4400ad57fb5b64b8b93
->>>>>>> 45d821cd56c005338a34db006d19f19835443a91
 						</td>	
 					</tr>
 					<tr>
 						<th class="table-light">상세 주소</th>
 						<td>
-<<<<<<< HEAD
 							<input name="add3" id="sample6_detailAddress" type="text" size="40" th:value="${user?.add3}" class="form-control"
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD:mainPage/src/main/resources/templates/users/update.html
-							<input name="add3" id="sample6_detailAddress" type="text" size="40" th:value="${user.add3}" class="form-control"
-=======
-							<input name="add3" id="sample6_detailAddress" type="text" size="40" th:value="${user?.add3}" class="form-control"
->>>>>>> 3b57866d1458d6ca2a6a16b9d264cdbf9821c426:mainPage/src/main/resources/templates/user/update.html
-=======
-							<input name="add3" id="sample6_detailAddress" type="text" size="40" th:value="${user?.add3}" class="form-control"
->>>>>>> 86919f3cef114c17bab0c3653b4e59bc9a69365c
-=======
-							<input name="add3" id="sample6_detailAddress" type="text" size="40" th:value="${user?.add3}" class="form-control"
->>>>>>> 7bdac3aa9dc81b597fcc53288e08f9af247e65b5
-=======
-							<input name="add3" id="sample6_detailAddress" type="text" size="40" th:value="${user?.add3}" class="form-control"
->>>>>>> 683228a46cbc0e047319d4400ad57fb5b64b8b93
->>>>>>> 45d821cd56c005338a34db006d19f19835443a91
 								   onkeyup="noSpace(this)" onchange="noSpace(this)">
 						</td>	
 					</tr>
 					<tr>
 						<th class="table-light">참고 항목</th>
 						<td>
-<<<<<<< HEAD
 							<input name="add4" id="sample6_extraAddress" type="text" size="40" th:value="${user?.add4}" class="form-control" readonly>
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD:mainPage/src/main/resources/templates/users/update.html
-							<input name="add4" id="sample6_extraAddress" type="text" size="40" th:value="${user.add3}" class="form-control" readonly>
-=======
-							<input name="add4" id="sample6_extraAddress" type="text" size="40" th:value="${user?.add4}" class="form-control" readonly>
->>>>>>> 3b57866d1458d6ca2a6a16b9d264cdbf9821c426:mainPage/src/main/resources/templates/user/update.html
-=======
-							<input name="add4" id="sample6_extraAddress" type="text" size="40" th:value="${user?.add4}" class="form-control" readonly>
->>>>>>> 86919f3cef114c17bab0c3653b4e59bc9a69365c
-=======
-							<input name="add4" id="sample6_extraAddress" type="text" size="40" th:value="${user?.add4}" class="form-control" readonly>
->>>>>>> 7bdac3aa9dc81b597fcc53288e08f9af247e65b5
-=======
-							<input name="add4" id="sample6_extraAddress" type="text" size="40" th:value="${user?.add4}" class="form-control" readonly>
->>>>>>> 683228a46cbc0e047319d4400ad57fb5b64b8b93
->>>>>>> 45d821cd56c005338a34db006d19f19835443a91
 						</td>	
 					</tr>
 					<tr>
 						<th class="table-light">가입일</th>
 						<td>
 							<input name="signup" id="inputSignup" class="form-control" type="text" 
-<<<<<<< HEAD
 				    			 th:value="${#dates.format(user?.signup, 'yyyy-MM-dd HH:mm:ss')}" readonly>
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD:mainPage/src/main/resources/templates/users/update.html
-				    			 th:value="${#dates.format(user.signup, 'yyyy-MM-dd HH:mm:ss')}" readonly>
-=======
-				    			 th:value="${#dates.format(user?.signup, 'yyyy-MM-dd HH:mm:ss')}" readonly>
->>>>>>> 3b57866d1458d6ca2a6a16b9d264cdbf9821c426:mainPage/src/main/resources/templates/user/update.html
-=======
-				    			 th:value="${#dates.format(user?.signup, 'yyyy-MM-dd HH:mm:ss')}" readonly>
->>>>>>> 86919f3cef114c17bab0c3653b4e59bc9a69365c
-=======
-				    			 th:value="${#dates.format(user?.signup, 'yyyy-MM-dd HH:mm:ss')}" readonly>
->>>>>>> 7bdac3aa9dc81b597fcc53288e08f9af247e65b5
-=======
-				    			 th:value="${#dates.format(user?.signup, 'yyyy-MM-dd HH:mm:ss')}" readonly>
->>>>>>> 683228a46cbc0e047319d4400ad57fb5b64b8b93
->>>>>>> 45d821cd56c005338a34db006d19f19835443a91
 						</td>	
 					</tr>
 				</tbody>
@@ -378,39 +108,9 @@
 				<div class="ms-auto">
 					<button type="reset" class="btn btn-outline-warning btn-lg">초기화</button>
 					<button type="submit" class="btn btn-outline-success btn-lg" style="margin-left: 8px; margin-right: 8px;">수정</button>
-<<<<<<< HEAD
 					<a class="btn btn-outline-danger btn-lg" th:href="@{/user/delete/{userId}(userId=${user?.user_id})}" 
 					   style="margin-right: 8px;">삭제</a>
 					<a class="btn btn-outline-dark btn-lg" th:href="@{/user/detail/{userId}(userId=${user?.user_id})}">취소</a>
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD:mainPage/src/main/resources/templates/users/update.html
-					<a class="btn btn-outline-danger btn-lg" th:href="@{/users/delete/{userid}(userid=${user.userid})}" 
-					   style="margin-right: 8px;">삭제</a>
-					<a class="btn btn-outline-dark btn-lg" th:href="@{/users/detail/{userId}(userId=${user.userid})}">취소</a>
-=======
-					<a class="btn btn-outline-danger btn-lg" th:href="@{/user/delete/{userId}(userId=${user?.user_id})}" 
-					   style="margin-right: 8px;">삭제</a>
-					<a class="btn btn-outline-dark btn-lg" th:href="@{/user/detail/{userId}(userId=${user?.user_id})}">취소</a>
->>>>>>> 3b57866d1458d6ca2a6a16b9d264cdbf9821c426:mainPage/src/main/resources/templates/user/update.html
-=======
-					<a class="btn btn-outline-danger btn-lg" th:href="@{/user/delete/{userId}(userId=${user?.user_id})}" 
-					   style="margin-right: 8px;">삭제</a>
-					<a class="btn btn-outline-dark btn-lg" th:href="@{/user/detail/{userId}(userId=${user?.user_id})}">취소</a>
->>>>>>> 86919f3cef114c17bab0c3653b4e59bc9a69365c
-=======
-					<a class="btn btn-outline-danger btn-lg" th:href="@{/user/delete/{userId}(userId=${user?.user_id})}" 
-					   style="margin-right: 8px;">삭제</a>
-					<a class="btn btn-outline-dark btn-lg" th:href="@{/user/detail/{userId}(userId=${user?.user_id})}">취소</a>
->>>>>>> 7bdac3aa9dc81b597fcc53288e08f9af247e65b5
-=======
-					<a class="btn btn-outline-danger btn-lg" th:href="@{/user/delete/{userId}(userId=${user?.user_id})}" 
-					   style="margin-right: 8px;">삭제</a>
-					<a class="btn btn-outline-dark btn-lg" th:href="@{/user/detail/{userId}(userId=${user?.user_id})}">취소</a>
->>>>>>> 683228a46cbc0e047319d4400ad57fb5b64b8b93
->>>>>>> 45d821cd56c005338a34db006d19f19835443a91
 				</div>
 			</div>
 		</form>
