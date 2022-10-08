@@ -38,7 +38,6 @@
  	</insert>
  	<update id="updateOne" parameterType="UserDto">
  		UPDATE USER SET 
- 			user_id = #{user_id}, 
  			user_name = #{user_name},
  			user_pw = #{user_pw}, 
  			user_phone = #{user_phone}, 

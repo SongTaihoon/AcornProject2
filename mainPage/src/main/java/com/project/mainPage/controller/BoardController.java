@@ -88,7 +88,7 @@ public class BoardController {
 			boardList = boardMapper.selectPageAll(startRow, row, null, null);
 			count = boardMapper.selectPageAllCount(null, null);
 		}
-		
+		System.out.println(boardList);
 		Pagination pagination = new Pagination(page, count, "/board/list/", row);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("list", boardList);

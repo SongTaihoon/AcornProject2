@@ -138,7 +138,7 @@ public class UserController {
 				} else {
 					return "redirect:/";
 				}
-			}else {
+			} else {
 				return "redirect:/user/login.do";					
 			}
 	}
@@ -146,6 +146,7 @@ public class UserController {
 //	회원 로그아웃
 	@GetMapping("/logout.do")
 	public String logout(HttpSession session) {
+		System.out.println("로그아웃 성공!"); 
 		session.invalidate();
 		return "redirect:/";
 	}
@@ -182,6 +183,7 @@ public class UserController {
 			session.setAttribute("loginUser", user); // 회원가입하면 로그인되어 있도록 설정
 			return "redirect:/";
 		}else {
+			System.out.println("회원가입 실패! : " + insert);
 			return "redirect:/user/signup.do";
 		}
 	}
@@ -223,7 +225,6 @@ public class UserController {
 		} else if(user.getUser_id().equals(loginUser.getUser_id()) || (loginUser.getAdminCk() == 1)) { // 로그인된 일반 회원이 본인의 수정 페이지로 이동 / 관리자는 모든 회원 수정 가능
 			System.out.println("회원 수정 페이지로 이동 성공!");
 			model.addAttribute("user", user);
-			System.out.println(user);
 			return "/user/update";	
 		} else { // 로그인된 일반 회원이 다른 회원의 수정 페이지로 이동할 수 없음
 			System.out.println("다른 회원의 정보를 수정할 수 없습니다.");
@@ -233,7 +234,9 @@ public class UserController {
 	
 //	회원 정보 수정
 	@PostMapping("/update.do")
-	public String update(UserDto user) {
+	public String update(
+			UserDto user,
+			HttpSession session) {
 		int update = 0;
 		try {
 			update = userMapper.updateOne(user);

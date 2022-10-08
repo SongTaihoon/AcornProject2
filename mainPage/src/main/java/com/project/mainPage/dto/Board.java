@@ -41,6 +41,7 @@ public class Board {
 	private UserDto user; // UsersDto.userid : fk 
 	private Category category;
 	private String category_id;
+	private int reply_size;
 	private List<Reply> replys; // 1:N Reply.board_no  : fk
 	private List<BoardImg> boardImgs; // 1:N  BOARD_IMG.board_no fk
 	private List<BoardPrefer> good_Prefers;

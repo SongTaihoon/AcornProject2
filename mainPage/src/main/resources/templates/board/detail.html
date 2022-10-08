@@ -272,12 +272,6 @@
 								<table class="table table-bordered table align-middle mb-3" style="height: 100%;">
 									<tbody>
 										<tr>
-											<th class="table-light">작성자</th>
-											<td>
-												<input name="user.user_id" class="form-control" id="userId" th:value="${session.loginUser?.user_id}" readonly>
-											</td>
-										</tr>
-										<tr>
 											<th class="table-light">제목</th>
 											<td>
 												<input name="title" class="form-control" id="title" onkeyup="noSpace(this);" onchange="noSpace(this);">
@@ -303,6 +297,7 @@
 										<button class="btn btn-outline-warning btn-lg" type="reset" style="margin-right: 8px;">초기화</button>
 										<button class="btn btn-outline-primary btn-lg" type="submit">등록</button>
 										<input type="hidden" name="board_no" th:value="${board.board_no}">
+										<input type="hidden" name="user.user_id" th:value="${session.loginUser?.user_id}">
 									</div>
 								</div>
 							</form>
@@ -418,12 +413,6 @@
 									<table class="table table-bordered table align-middle mb-3" style="height: 100%;">
 										<tbody>
 											<tr>
-												<th class="table-light">작성자</th>
-												<td>
-													<input name="user.user_id" class="form-control" id="userId" th:value="${session.loginUser?.user_id}" readonly>
-												</td>
-											</tr>
-											<tr>
 												<th class="table-light">제목</th>
 												<td>
 													<input name="title" class="form-control" id="title" onkeyup="noSpace(this);" onchange="noSpace(this);">
@@ -449,6 +438,7 @@
 											<button class="btn btn-outline-warning btn-lg" type="reset" style="margin-right: 8px;">초기화</button>
 											<button class="btn btn-outline-primary btn-lg" type="submit">등록</button>
 											<input type="hidden" name="board_no" th:value="${board.board_no}">
+											<input type="hidden" name="user.user_id" th:value="${session.loginUser?.user_id}">
 										</div>
 									</div>
 								</form>
