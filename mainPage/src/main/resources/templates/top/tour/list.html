@@ -20,30 +20,6 @@
 			    </li>
 			  </ol>
 			</nav>
-			<div class='tableauPlaceholder' id='viz1664438063428'>
-				<noscript id="noscript">
-				<a href='#'>
-					<img alt='제주 관광지 TOP 10' 
-						src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;10&#47;10_16643322610170&#47;1&#47;1_rss.png' 
-						/>
-				</a>
-				</noscript>
-				<object class='tableauViz'  style='display:none;'>
-					<param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> 
-					<param name='embed_code_version' value='3' /> 
-					<param name='site_root' value='' />
-					<param name='name' value='10_16643322610170&#47;1' />
-					<param name='tabs' value='no' />
-					<param name='toolbar' value='yes' />
-					<param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;10&#47;10_16643322610170&#47;1&#47;1.png' />
-					<param name='animate_transition' value='yes' />
-					<param name='display_static_image' value='yes' />
-					<param name='display_spinner' value='yes' />
-					<param name='display_overlay' value='yes' />
-					<param name='display_count' value='yes' />
-					<param name='language' value='ko-KR' />
-				</object>
-			</div>
 			<h1 class="pb-4 d-flex justify-content-between align-items-center" style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
 				<span style="font-size: 35px;">제주도 여행 추천</span> 
 				<th:block th:if="${session.loginUser?.adminCk == 1}" class="ms-auto">
@@ -83,8 +59,32 @@
 				</th:block>
 			</tbody>
 		</table>
+			<div class='tableauPlaceholder' id='viz1664438063428'>
+				<noscript id="noscript">
+				<a href='#'>
+					<img alt='제주 관광지 TOP 10' 
+						src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;10&#47;10_16643322610170&#47;1&#47;1_rss.png' 
+						/>
+				</a>
+				</noscript>
+				<object class='tableauViz'  style='display:none;'>
+					<param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> 
+					<param name='embed_code_version' value='3' /> 
+					<param name='site_root' value='' />
+					<param name='name' value='10_16643322610170&#47;1' />
+					<param name='tabs' value='no' />
+					<param name='toolbar' value='yes' />
+					<param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;10&#47;10_16643322610170&#47;1&#47;1.png' />
+					<param name='animate_transition' value='yes' />
+					<param name='display_static_image' value='yes' />
+					<param name='display_spinner' value='yes' />
+					<param name='display_overlay' value='yes' />
+					<param name='display_count' value='yes' />
+					<param name='language' value='ko-KR' />
+				</object>
+			</div>
 		<th:block th:unless="${count == 0}">
-			<div class="d-flex justify-content-center" th:insert="/pagination"></div>
+			<div class="d-flex justify-content-center mt-5 mb-5" th:insert="/pagination"></div>
 		</th:block>
 		</main>
   	  <footer class="footer" th:insert="/NewFooter"></footer>

@@ -18,6 +18,7 @@ import lombok.Data;
 | rest        | varchar(255) | NO   |     | NULL    |                |
 | search      | int          | NO   |     | NULL    |                |
 | views       | int          | NO   |     | 0       |                |
+| rest_phone  | varchar(20)  | YES  |     | NULL    |                |
 | user_id     | varchar(45)  | NO   | MUL | NULL    |                |
 | category_id | varchar(255) | YES  | MUL | NULL    |                |
 +-------------+--------------+------+-----+---------+----------------+
@@ -33,7 +34,8 @@ public class Restaurant {
 	private String rest;
 	private int views;
 	private int search;
-	private int ranking;
+	private int ranking;	
+	private String rest_phone;
 	private UserDto user; // UsersDto.user_id : fk 
 	private Category category;
 	private List<RestaurantImg> restaurantImgs;
