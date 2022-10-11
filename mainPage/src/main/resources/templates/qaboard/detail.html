@@ -39,10 +39,6 @@
 		<table class="mt-3 mb-5 table align-middle table-bordered">
 			<tbody>
 				<tr>
-					<th class="table-light">글 번호</th>
-					<td th:text="${qaBoard.qaBoardNo}"></td>
-				</tr>
-				<tr>
 					<th class="table-light">작성자</th>
 					<td th:text="${qaBoard.user?.user_name+'('+qaBoard.user?.user_id+')'}"></td>
 				</tr>

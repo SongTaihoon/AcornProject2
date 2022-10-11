@@ -47,8 +47,7 @@
     padding-left: 15px;
     line-height: 50px;
 }
-#container #subContainer #signupBox #signupForm button {
-	margin-top: 20px;
+#container #subContainer #signupBox #signupForm #button {
 	height: 50px;
 	width: 454px;    	
 	background-color: #1E96C4;

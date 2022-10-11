@@ -40,8 +40,8 @@
  		UPDATE USER SET 
  			user_name = #{user_name},
  			user_pw = #{user_pw}, 
- 			user_phone = #{user_phone}, 
- 			user_email = #{user_email},
+ 			user_phone = #{post_user_phone}, 
+ 			user_email = #{post_user_email},
  			birth = #{birth},
  			add1 = #{add1},
  			add2 = #{add2},

@@ -10,7 +10,7 @@ html, body {
     bottom: 0;
 }
 .shopping{
-    height: 65vh;                    
+    height: 80vh;                    
     position: relative;            
     overflow: hidden;         
     display: flex;
