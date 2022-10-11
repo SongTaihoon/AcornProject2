@@ -34,3 +34,9 @@ html, body {
 	margin-bottom: 50px;
 	resize: both;
 }
+table thead tr{
+	text-align: center
+}
+#rest{
+	text-align: center
+}

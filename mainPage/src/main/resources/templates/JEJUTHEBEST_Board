@@ -344,6 +344,15 @@ FOREIGN KEY(acco_rank) REFERENCES ACCOMMODATE(acco_rank)
 ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+CREATE TABLE RESTAURANTIMG(
+restaurank_img_no INT AUTO_INCREMENT,
+rest_rank INT NOT NULL,
+img_path VARCHAR(255) NOT NULL,
+PRIMARY KEY(restaurank_img_no),
+FOREIGN KEY(rest_rank) REFERENCES RESTAURANT(rest_rank)
+ON UPDATE CASCADE ON DELETE CASCADE
+);
+
 INSERT INTO TOUR(tourist, province, city, address3, search,category_id,user_id) VALUES 
 ('협재해수욕장','제주특별자치도','제주시','제주 제주시한림읍 협재리 2497-1',521616,'1','admin'),
 ('성산일출봉','제주특별자치도','서귀포시','제주 서귀포시 일출로 284-12',503334,'1','admin'),
