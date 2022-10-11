@@ -315,7 +315,7 @@ updateForm["post_user_phone"].addEventListener("input", (event) => {
 			fetch(ajaxPhoneUrl + value)
 				.then(response => response.json())
 				.then((json) => {
-					if(json.phoneCheck) {
+					if(json.phoneCheck && value != updateForm["user_phone"].value) {
 						phoneHelpInvalid.innerText = "이미 사용 중인 전화번호입니다.";
 						updateForm["post_user_phone"].classList.remove("is-valid");
 						updateForm["post_user_phone"].classList.add("is-invalid");
@@ -323,11 +323,20 @@ updateForm["post_user_phone"].addEventListener("input", (event) => {
 						phoneHelp.classList.add("is-invalid");
 						phoneSubmit = false;
 					} else {
-						updateForm["post_user_phone"].classList.remove("is-invalid");
-						updateForm["post_user_phone"].classList.add("is-valid");
-						phoneHelp.classList.remove("is-invalid");
-						phoneHelp.classList.add("is-valid");
-						phoneSubmit = true;
+						if(value != updateForm["user_phone"].value) {
+							updateForm["post_user_phone"].classList.remove("is-invalid");
+							updateForm["post_user_phone"].classList.add("is-valid");
+							phoneHelp.classList.remove("is-invalid");
+							phoneHelp.classList.add("is-valid");
+							phoneSubmit = true;
+						} else {
+							updateForm["post_user_phone"].classList.remove("is-invalid");
+							updateForm["post_user_phone"].classList.remove("is-valid");
+							phoneHelp.classList.remove("is-invalid");
+							phoneHelp.classList.remove("is-valid");
+							phoneSubmit = true;
+						}
+						
 					}
 				});
 		} else {
