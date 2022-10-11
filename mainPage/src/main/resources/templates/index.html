@@ -1,29 +1,39 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>JEJU THE BEST</title>
-<link rel="stylesheet" href="/public/css/index.css">
-</head>
-<body>
-	<header th:insert="/NewHeader"></header>
-	<div id="wrapper">
-		<section class="shopping">
-			<div class="heading">
-				<h1>
-					<span>JEJU THE BEST</span>					
-				</h1>
-				<h2>세계자연유산 제주</h2>
-				<p>
-					방문해 주셔서 감사합니다.
-				</p>
-				<p>
-					당신에게 딱 맞는 여행지를 추천해 드립니다.
-				</p>
-			</div>
-			<video src="/medias/takeoff.mp4" autoplay muted loop></video>
-		</section>
-  	  <footer class="footer" th:insert="/NewFooter"></footer>
-    </div> 
+<html xmlns:th="http://www.thymeleaf.org" dir="ltr">
+<body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+    <main>
+        <header th:insert="/NewHeader"></header>
+        <section class="home-section home-parallax home-fade home-full-height bg-dark-30" id="home">
+            <div class="hero-slider">
+                <ul class="slides">
+                    <li class="bg-dark-30 bg-dark" style="background-image:url(/img/JEJU1.jpeg);">
+                        <div class="titan-caption">
+                            <div class="caption-content">
+                                <div class="font-alt mb-30 titan-title-size-2">환영합니다</div>
+                                <div class="font-alt mb-40 titan-title-size-4">JEJU THE BEST</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="bg-dark-30 bg-dark" style="background-image:url(/img/JEJU2.jpg);">
+                        <div class="titan-caption">
+                            <div class="caption-content">
+                                <div class="font-alt mb-30 titan-title-size-2">천혜의 자연환경</div>
+                                <div class="font-alt mb-40 titan-title-size-4">세계문화유산 제주</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="bg-dark-30 bg-dark" style="background-image:url(/img/JEJU3.jpeg);">
+                        <div class="titan-caption">
+                           <div class="caption-content">
+                                <div class="font-alt mb-30 titan-title-size-2">방문해 주셔서 감사합니다</div>
+                                <div class="font-alt mb-40 titan-title-size-4">당신에게 딱 맞는 여행지를 추천해 드립니다</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <footer th:insert="/NewFooter"></footer>
+    </main>
 </body>
 </html>
