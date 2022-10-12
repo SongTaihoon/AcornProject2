@@ -24,14 +24,14 @@
 		  </ol>
 		</nav>
 		<h1 class="pb-4 d-flex justify-content-between align-items-center" 
-		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
+		    style="border-bottom: 1px solid #e8e8e8;">
 		    <span style="font-size: 35px;">문의하기</span>
 	    </h1>	
 		<form action="/qaboard/insert.do" method="post" enctype="multipart/form-data" name="qaInsertForm">
 			<table class="mt-5 mb-5 table align-middle table-bordered">
 				<tbody>
 					<tr>
-						<th class="table-light">유형</th>
+						<th class="table-light align-middle">유형</th>
 						<td>
 							<select name="category_id" class="form-select" id="category_id">
 								<option value="1">관광지</option>
@@ -41,13 +41,13 @@
 						</td>
 					</tr>
 					<tr>
-						<th class="table-light">제목</th>
+						<th class="table-light align-middle">제목</th>
 						<td>
 							<input name="qaBoardTitle" class="form-control" id="qaBoardTitle" onkeyup="noSpace(this);" onchange="noSpace(this);">
 						</td>
 					</tr>
 					<tr>
-						<th class="table-light">내용</th>
+						<th class="table-light align-middle">내용</th>
 						<td>
 							<textarea name="qaBoardContents" class="form-control" id="qaBoardContents" onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
 						</td>	
@@ -56,7 +56,7 @@
 			</table>
 			<div class="d-flex">
 				<div class="ms-auto">
-					<button class="btn btn-outline-warning btn-lg" type="reset" style="margin-right: 8px;">초기화</button>
+					<button class="btn btn-outline-warning btn-lg" type="reset" style="margin-right: 8px; padding: 12px 37.5px;">초기화</button>
 					<button class="btn btn-outline-primary btn-lg" type="submit" style="margin-right: 8px;">등록</button>
 					<input type="hidden" name="user.user_id" th:value="${session.loginUser?.user_id}">
 					<a class="btn btn-outline-dark btn-lg" href="/qaboard/list/1">목록</a>

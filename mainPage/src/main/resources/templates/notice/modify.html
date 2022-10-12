@@ -40,25 +40,25 @@
 		<table class="mt-3 mb-5 table align-middle table-bordered">
 			<tbody>
 				<tr>
-					<th class="table-light" style="border-left: none;">제목</th>
+					<th class="table-light align-middle" style="border-left: none;">제목</th>
 					<td>
 						<input name="title" class="form-control" id="title" th:value="${notice.title}" 
 							   onkeyup="noSpace(this);" onchange="noSpace(this);">
 					</td>
 				</tr>
 				<tr>
-					<th class="table-light" style="border-left: none;">내용</th>
+					<th class="table-light align-middle" style="border-left: none;">내용</th>
 					<td>
 						<textarea name="contents" class="form-control" id="contents" th:text="${notice.contents}" 
-							   onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
+							   	  onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 		<div class="d-flex">
 			<div class="ms-auto">
-				<button class="btn btn-outline-warning btn-lg" type="reset" style="margin-right: 8px;">초기화</button>
-				<button class="btn btn-outline-success btn-lg" type="submit" style="margin-right: 8px;">수정</button>
+				<button class="btn btn-outline-warning btn-lg" type="reset" style="padding: 12px 37.5px;">초기화</button>
+				<button class="btn btn-outline-success btn-lg" type="submit" style="margin-left: 8px; margin-right: 8px;">수정</button>
 				<input type="hidden" name="notice_no" th:value="${noticeNo}">
 				<!-- Button trigger modal -->
 				<button type="button" class="btn btn-outline-danger btn-lg" 

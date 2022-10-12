@@ -7,43 +7,45 @@
 <script src="/public/js/user/login.js" defer="defer"></script>
 </head>
 <body>
-<main>
 	<header th:insert="/NewHeader"></header>
-		<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" id="path">
-		  <ol class="breadcrumb">
-		    <li class="breadcrumb-item"><a href="/">홈</a></li>
-		    <li class="breadcrumb-item" aria-current="page">
-		    	<a href="/user/login.do" class="breadcrumb-item active">로그인</a>
-		    </li>
-		  </ol>
-		</nav>
-		<div id="container">
-       	  <div id="subContainer">
-               <div id="loginBox">
-                <div id="loginLogo">로그인</div>
-			 <form action="/user/login.do" id="loginForm" method="post">
-			   <div class="row g-3 align-items-center">
-				<div class="col-auto loginInputBox">
-					<label for="inputId" class="form-label">아이디</label>
-					<input type="text" name="user_id" class="form-control loginInput" id="inputId"
-						   onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);" placeholder="아이디"
-						   aria-describedby="id" value="admin">
-				</div>
-			  </div>			
-			  <div class="row g-3 align-items-center">
-				<div class="col-auto loginInputBox">
-					<label for="inputPw" class="form-label">비밀번호</label>
-					<input type="password" name="user_pw" class="form-control loginInput" 
-					 	   onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);" placeholder="비밀번호"
-						   id="inputPw" value="Gyubin98A!" >
-				</div>
-			  </div>
-			 <button class="btn btn-primary mt-3">로그인</button>
-			</form> 	
-		   </div>
+<div id="wrapper">
+<main class="container-xl">
+	<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" id="path">
+	  <ol class="breadcrumb">
+	    <li class="breadcrumb-item"><a href="/">홈</a></li>
+	    <li class="breadcrumb-item" aria-current="page">
+	    	<a href="/user/login.do" class="breadcrumb-item active">로그인</a>
+	    </li>
+	  </ol>
+	</nav>
+	<div id="container">
+      	  <div id="subContainer">
+              <div id="loginBox">
+               <div id="loginLogo">로그인</div>
+		 <form action="/user/login.do" id="loginForm" method="post">
+		   <div class="row g-3 align-items-center">
+			<div class="col-auto loginInputBox">
+				<label for="inputId" class="form-label">아이디</label>
+				<input type="text" name="user_id" class="form-control loginInput" id="inputId"
+					   onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);" placeholder="아이디"
+					   aria-describedby="id" value="admin">
+			</div>
+		  </div>			
+		  <div class="row g-3 align-items-center">
+			<div class="col-auto loginInputBox">
+				<label for="inputPw" class="form-label">비밀번호</label>
+				<input type="password" name="user_pw" class="form-control loginInput" 
+				 	   onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);" placeholder="비밀번호"
+					   id="inputPw" value="Gyubin98A!" >
+			</div>
 		  </div>
-		</div>
-	<footer class="footer" th:insert="/NewFooter"></footer>
+		 <button class="btn btn-primary mt-5">로그인</button>
+		</form> 	
+	   </div>
+	  </div>
+	</div>
 </main>
+<footer class="footer" th:insert="/NewFooter"></footer>
+</div>
 </body>
 </html>

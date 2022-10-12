@@ -40,7 +40,7 @@
 		<table class="mt-3 mb-5 table align-middle table-bordered">
 			<tbody>
 				<tr>
-					<th class="table-light">유형</th>
+					<th class="table-light align-middle">유형</th>
 					<td>
 						<select name="category_id" class="form-select" id="category_id" th:value="${qaBoard.category.category_id}">
 								<option value="1" th:selected="${qaBoard.category.category_id} == '1'">관광지</option>
@@ -50,7 +50,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th class="table-light">제목</th>
+					<th class="table-light align-middle">제목</th>
 					<td>
 						<input name="qaBoardTitle" th:value="${qaBoard.qaBoardTitle}" 
 							   type="text" class="form-control"
@@ -58,7 +58,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th class="table-light">내용</th>
+					<th class="table-light align-middle">내용</th>
 					<td>
 						<textarea name="qaBoardContents" 
 						class="form-control" th:text="${qaBoard.qaBoardContents}" 
@@ -69,7 +69,7 @@
 		</table>
 		<div class="d-flex">
 			<div class="ms-auto">
-				<button type="reset" class="btn btn-outline-warning btn-lg">초기화</button>
+				<button type="reset" class="btn btn-outline-warning btn-lg" style="padding: 12px 37.5px;">초기화</button>
 				<button type="submit" class="btn btn-outline-success btn-lg" style="margin-left: 8px; margin-right: 8px;">수정</button>
 				<input name="qaBoardNo" type="hidden" th:value="${qaBoard.qaBoardNo}">
 				<!-- Button trigger modal -->

@@ -15,21 +15,21 @@
 			  		<table class="mt-3 mb-3 table align-middle table-bordered">
 						<tbody>
 							<tr>
-								<th class="table-light">작성자</th>
+								<th class="table-light align-middle">작성자</th>
 								<td style="background-color: white;">
 									<input name="user.user_id" th:value="${reply.user?.user_id}" 
 										   type="text" class="form-control" readonly>
 								</td>
 							</tr>
 							<tr>
-								<th class="table-light">제목</th>
+								<th class="table-light align-middle">제목</th>
 								<td style="background-color: white;">
 									<input name="title" type="text" class="form-control" th:value="${reply.title}" 
 										   onkeyup="noSpace(this);" onchange="noSpace(this);">
 								</td>
 							</tr>
 							<tr>
-								<th class="table-light">사진</th>
+								<th class="table-light align-middle">사진</th>
 								<td style="background-color: white;">
 									<div class="mb-2" th:if="${reply.img_path != null}">
 										<p class="mb-2"> 삭제하기
@@ -58,11 +58,11 @@
 										  </div>
 										</div>							
 									</div>
-									<input name="imgFile" type="file" class="form-control form-control-lg">
+									<input name="imgFile" type="file" class="form-control form-control-lg" style="height: 29px;">
 								</td>
 							</tr>
 							<tr>
-								<th class="table-light">내용</th>
+								<th class="table-light align-middle">내용</th>
 								<td style="background-color: white;">
 									<textarea name="contents" class="form-control" th:text="${reply.contents}" 
 											  onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
@@ -77,6 +77,7 @@
 				  						: 'bi-hand-thumbs-up'
 					    					}"
 					    	class="btn btn-sm btn-outline-primary rounded-pill bi border-0" 
+					    	style="padding: 6px;"
 					    	th:text="${reply.good}"
 					    	th:href="|javascript:replyPreferHandler(${reply.reply_no}, ${reply.prefer_active}, 'good')|">
 					    </a>
@@ -86,11 +87,12 @@
 				  						: 'bi-hand-thumbs-down'
 					    					}"
 					    	class="btn btn-sm btn-outline-danger rounded-pill bi border-0" 
+					    	style="padding: 6px;"
 					    	th:text="${reply.bad}" 
 					    	th:href="|javascript:replyPreferHandler(${reply.reply_no}, ${reply.prefer_active}, 'bad')|">
 					    </a>					
 		  				<div class="ms-auto">
-							<button type="reset" class="btn btn-lg btn-outline-warning">초기화</button>
+							<button type="reset" class="btn btn-lg btn-outline-warning" style="padding: 12px 37.5px;">초기화</button>
 							<button type="submit" class="btn btn-lg btn-outline-success" style="margin-left: 8px; margin-right: 8px;">수정</button>
 							<input type="hidden" name="reply_no" th:value="${reply.reply_no}">
 							<!-- Button trigger modal -->

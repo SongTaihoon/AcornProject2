@@ -28,7 +28,7 @@
 	        <div id="subContainer">
 	            <div id="signupBox">
 	                <div id="signupLogo">회원 수정</div>
-	                 <form action="/user/update.do" name="updateForm" id="signupForm" method="post" class="" novalidate>
+	                 <form action="/user/update.do" name="updateForm" id="signupForm" method="post" novalidate>
 	                    <div class="row g-3 align-items-center">
 						  <div class="col-auto signupInputBox">
 						    <input type="text" name="user_name" class="form-control signupInput" th:value="${user?.user_name}"
@@ -106,7 +106,7 @@
 						    </div>
 						</div>
 						<div class="row g-3 align-items-center">
-						    <div class="col-auto signupInputBox" style="width: 335px;">
+						    <div class="col-auto signupInputBox" style="width: 306px;">
 							   <input type="text" class="form-control signupInput" name="add1" id="sample6_postcode" 
 							   		  placeholder="우편번호(필수)" th:value="${user?.add1}" readonly>
 							</div>
@@ -150,8 +150,15 @@
 						</div> 
 				    	<div class="mt-3 mb-3 g-3">
 							<div class="ms-auto">
-								<button type="reset" class="btn btn-outline-warning btn-lg" name="resetBtn">초기화</button>
-								<button type="submit" class="btn btn-outline-success btn-lg" style="margin-left: 8px; margin-right: 8px;">수정</button>
+								<div class="mb-3">
+									<button type="submit" class="btn btn-outline-success btn-lg me-2" style="width: 227px;">수정</button>
+									<a class="btn btn-outline-danger btn-lg" data-bs-toggle="modal" 
+									   href="#exampleModalToggle" role="button" style="width: 227px;">삭제</a>
+								</div>
+								<div>
+									<button type="reset" class="btn btn-outline-warning btn-lg me-2" name="resetBtn" style="padding: 12px 37.5px; width: 227px;">초기화</button>
+									<a class="btn btn-outline-dark btn-lg" th:href="@{/user/detail/{userId}(userId=${user?.user_id})}" style="width: 227px;">취소</a>
+								</div>
 								<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
 								  <div class="modal-dialog modal-dialog">
 								    <div class="modal-content">
@@ -187,9 +194,6 @@
 								    </div>
 								  </div>
 								</div>
-								<a class="btn btn-outline-danger btn-lg" data-bs-toggle="modal" 
-								   href="#exampleModalToggle" role="button" style="margin-right: 8px;">삭제</a>
-								<a class="btn btn-outline-dark btn-lg" th:href="@{/user/detail/{userId}(userId=${user?.user_id})}">취소</a>
 							</div>
 						</div>
 					</form>
