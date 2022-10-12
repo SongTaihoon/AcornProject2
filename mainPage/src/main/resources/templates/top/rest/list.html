@@ -40,8 +40,7 @@
 					<th>카테고리</th>
 					<th>전화번호</th>	
 					<th>주소</th>	
-					<th>검색수</th>	
-					<th>세부사항</th>
+					<th>검색수</th>		
 				</tr>
 			</thead>
 			<tbody>
@@ -62,9 +61,7 @@
 						<td  th:text="${rest.rest_phone}"></td>
 						<td th:text="${rest.address2}"></td>
 						<td th:text="${rest.search}"></td>
-						<td>
-							<a th:href="@{/top/rest/detail/{no}(no=${rest.rest_rank})}">자세히 보기</a>
-						</td>
+						<td style="display: none;" th:text="${rest.rest_rank}"></td>
 					</tr>					
 				</th:block>
 			</tbody>

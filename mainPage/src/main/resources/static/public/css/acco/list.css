@@ -26,12 +26,7 @@ html, body {
     text-decoration: none;
     vertical-align: middle;
 }
-
-#viz1664853501070{
-	box-shadow: 0 0 50px rgba(0, 60, 255, 0.485);
-	border-radius: 20px;
-	margin-top: 50px;
-	margin-bottom: 50px;
-	resize: both;
+tbody tr{
+	cursor: pointer;
 }
  

@@ -26,6 +26,7 @@ html, body {
     text-decoration: none;
     vertical-align: middle;
 }
+<<<<<<< HEAD
 
 #viz1664518489534{
 	box-shadow: 0 0 50px rgba(0, 60, 255, 0.485);
@@ -35,6 +36,12 @@ html, body {
 	resize: both;
 }
 table thead tr{
+=======
+tbody tr{
+	cursor: pointer;
+}
+ thead tr{
+>>>>>>> 57e7bb58c58b89871e0d0f15bf21527f0e935ceb
 	text-align: center
 }
 #rest{
