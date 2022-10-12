@@ -16,7 +16,7 @@
 		<result column="prefer_bad" property="bad"/>
 		<result column="prefer_active" property="prefer_active"/>
 		<result column="views" property="views"/>
-		<!-- Board : UsersDto = N : 1   -->	
+		<result column="reply_size" property="reply_size"/>
 		<association property="user" javaType="UserDto" foreignColumn="user_id">
 			<id column="user_id" property="user_id"/>
 			<result column="user_name" property="user_name"/>
@@ -57,60 +57,37 @@
 		</collection>
 	</resultMap>
 	<select id="selectPageAll" resultMap="BoardMap">
-		SELECT b.*,
+		SELECT 
+			DISTINCT b.board_no,
+			b.*,
 			(SELECT COUNT(*) FROM BOARD_PREFER WHERE board_no = b.board_no AND prefer = 1) prefer_good,
-			(SELECT COUNT(*) FROM BOARD_PREFER WHERE board_no = b.board_no AND prefer = 0) prefer_bad,
 
 			u.user_id, 
-			u.user_name, 
-			u.user_email, 
-			u.birth,
 			
-		    r.reply_no, 
-		    r.title AS reply_title,
-		    r.contents AS reply_contents, 
-		    r.post_time AS reply_post_time, 
-		    r.img_path AS reply_img_path, 
-		    r.good AS reply_good,
-		    r.bad AS reply_bad, 
-		    r.user_id AS reply_user_id,
+			(SELECT COUNT(*) FROM REPLY WHERE board_no = b.board_no) reply_size,
 		    
-		    i.board_img_no AS iboard_img_no,
-		    i.img_path AS iimg_path,
-		    
-		    c.category_id,
-		     
-		    rp_good.user_id AS rp_good_user_id,
-		    rp_good.reply_prefer_no AS rp_good_reply_prefer_no,
-		    rp_good.reply_no AS rp_good_reply_no,
-		    rp_good.prefer AS rp_good_prefer,
-		    
-		    rp_bad.user_id AS rp_bad_user_id,
-		    rp_bad.reply_prefer_no AS rp_bad_reply_prefer_no,
-		    rp_bad.reply_no AS rp_bad_reply_no,
-		    rp_bad.prefer AS rp_bad_prefer
+		    c.category_id
 		    
 		    FROM BOARD b 
 		    
-		    INNER JOIN USER u 
-		    USING(user_id) 
-		    
-		    LEFT JOIN BOARD_IMG i 
-		    USING(board_no)
+		    LEFT JOIN USER u 
+		    USING(user_id)
 		    
 		    LEFT JOIN REPLY r 
-		    USING(board_no) 
+		    USING(board_no)
 	
 		    LEFT JOIN CATEGORY c 
-		    USING(category_id) 
+		    USING(category_id)
 		    
-		    LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = 1) rp_good
-		    ON r.reply_no = rp_good.reply_no
-		    
-		    LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = 0) rp_bad
-		    ON r.reply_no = rp_bad.reply_no
-		    
-			ORDER BY board_no DESC
+			<if test="sort != null">
+				ORDER BY ${sort} 
+			</if>
+			<if test="direct != null">
+				<choose>
+					<when test="direct.equals('desc')">desc</when>
+					<otherwise>asc</otherwise>
+				</choose>
+			</if>
 			LIMIT #{startRow}, #{pageSize}
 	</select>
 	<select id="selectPageAllCount" resultType="int">
@@ -281,59 +258,27 @@
 	  	</trim>
 	</sql>
 	<select id="searchBoard" resultMap="BoardMap">
-		SELECT b.*,
+		SELECT 
+			DISTINCT b.board_no,
+			b.*,
 			(SELECT COUNT(*) FROM BOARD_PREFER WHERE board_no = b.board_no AND prefer = 1) prefer_good,
-			(SELECT COUNT(*) FROM BOARD_PREFER WHERE board_no = b.board_no AND prefer = 0) prefer_bad,
 
 			u.user_id, 
-			u.user_name, 
-			u.user_email, 
-			u.birth,
 			
-		    r.reply_no, 
-		    r.title AS reply_title,
-		    r.contents AS reply_contents, 
-		    r.post_time AS reply_post_time, 
-		    r.img_path AS reply_img_path, 
-		    r.good AS reply_good,
-		    r.bad AS reply_bad, 
-		    r.user_id AS reply_user_id,
+			(SELECT COUNT(*) FROM REPLY WHERE board_no = b.board_no) reply_size,
 		    
-		    i.board_img_no AS iboard_img_no,
-		    i.img_path AS iimg_path,
-		    
-		    c.category_id,
-		     
-		    rp_good.user_id AS rp_good_user_id,
-		    rp_good.reply_prefer_no AS rp_good_reply_prefer_no,
-		    rp_good.reply_no AS rp_good_reply_no,
-		    rp_good.prefer AS rp_good_prefer,
-		    
-		    rp_bad.user_id AS rp_bad_user_id,
-		    rp_bad.reply_prefer_no AS rp_bad_reply_prefer_no,
-		    rp_bad.reply_no AS rp_bad_reply_no,
-		    rp_bad.prefer AS rp_bad_prefer
+		    c.category_id
 		    
 		    FROM BOARD b 
 		    
-		    INNER JOIN USER u 
-		    USING(user_id) 
-		    
-		    LEFT JOIN BOARD_IMG i 
-		    USING(board_no)
+		    LEFT JOIN USER u 
+		    USING(user_id)
 		    
 		    LEFT JOIN REPLY r 
-		    USING(board_no) 
+		    USING(board_no)
 	
 		    LEFT JOIN CATEGORY c 
-		    USING(category_id) 
-		    
-		    LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = 1) rp_good
-		    ON r.reply_no = rp_good.reply_no
-		    
-		    LEFT JOIN (SELECT * FROM REPLY_PREFER WHERE prefer = 0) rp_bad
-		    ON r.reply_no = rp_bad.reply_no
-		    
+		    USING(category_id)		    
 			<include refid="criteria"></include>
 				ORDER BY board_no DESC 
 					LIMIT #{skip}, #{amount}	

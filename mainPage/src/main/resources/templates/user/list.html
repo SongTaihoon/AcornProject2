@@ -2,8 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>회원 리스트</title>
+<title>회원 목록</title>
 <link rel="stylesheet" href="/public/css/user/list.css">
+<script src="/public/js/user/list.js" defer="defer"></script>
 </head>
 <body>
 <header th:insert="/NewHeader"></header>
@@ -15,23 +16,29 @@
 		    	<a href="/">홈</a>
 		    </li>
 		    <li class="breadcrumb-item" aria-current="page">
-		    	<a href="/user/list/1" class="breadcrumb-item active">회원 리스트</a>
+		    	<a href="/user/list/1" class="breadcrumb-item active">회원 목록</a>
 		    </li>
 		  </ol>
 		</nav>
-		<h1 class="pb-4 d-flex justify-content-between align-items-center" 
-		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
-		    <span style="font-size: 35px;">회원 리스트</span>
-		    <span style="font-size: 18px;" class="d-flex align-items-center" >
-			    <span style="margin-right: 8px;">총 회원 수 : </span>  
-			    <span class="badge text-bg-dark" th:text="${count}"></span>
-		    </span>
-	    </h1>
-		<p>
-			
-		</p>
-		<table class="mt-5 mb-5 table table-bordered table-hover align-middle"
-			   style="min-width: 1200px;">
+		<div class="pb-4 d-flex justify-content-between align-items-center" 
+		     style="border-bottom: 1px solid #e8e8e8;">
+		    <div class="d-flex align-items-center">
+			    <span style="font-size: 35px; margin-right: 8px;">회원 목록</span>
+			    <span class="badge text-bg-dark" style="font-size: 20px;" th:text="${count}"></span>
+		    </div>
+		    <div class="dropdown-center d-inline-block">
+			  	<button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+				    필터
+				</button>
+			    <ul class="dropdown-menu">
+			      <li><a class="dropdown-item text-center ps-0 pe-0" th:href="@{./1(sort=signup, direct=asc)}">가입 오래된순</a></li>
+			      <li><a class="dropdown-item text-center ps-0 pe-0" th:href="@{./1(sort=signup, direct=desc)}">가입 최근순</a></li>
+			      <li><a class="dropdown-item text-center ps-0 pe-0" th:href="@{./1(sort=user_name, direct=asc)}">이름 오름차순</a></li>
+				  <li><a class="dropdown-item text-center ps-0 pe-0" th:href="@{./1(sort=user_name, direct=desc)}">이름 내림차순</a></li>			      
+			    </ul>
+		  	</div>
+	    </div>
+		<table class="mt-5 mb-5 table table-bordered table-hover align-middle">
 			<thead class="table-light">
 				<tr>
 					<th>아이디</th>
@@ -60,7 +67,7 @@
 		<th:block th:unless="${count == 0}">
 			<div class="d-flex justify-content-center" th:insert="/pagination"></div>
 		</th:block>
-		<nav class="navbar mt-4 mb-4" style="min-width: 1200px;">
+		<nav class="navbar mt-4 mb-4">
 		  <div class="container-xl" style="padding-left: 0;">
 		    <form action="/user/search/1" class="d-flex" id="userSearchForm" role="search" name="userSearchForm">
 		      <select class="form-select me-2" name="type" style="width: 100px; border: 1px solid #6c757d">
@@ -72,8 +79,8 @@
 		      		 onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);" 
 		      		 type="search" placeholder="검색" aria-label="Search" 
 		      		 style="border: 1px solid #6c757d">
-		      <button class="btn btn-outline-secondary" style="padding: 6px;">
-		      	<div class="bi bi-search" style="width: 28px; height: 28px;"></div>
+		      <button class="btn btn-secondary" style="padding: 6px;">
+		      	<div class="bi bi-search" style="width: 19px;"></div>
 		      </button>
 		    </form>
 		  </div>
@@ -82,21 +89,4 @@
 <footer class="footer" th:insert="/NewFooter"></footer>
 </div>
 </body>
-<script>
-function noSpaceForm(obj) { // 공백사용못하게
-    var str_space = /\s/;  // 공백체크
-    if(str_space.exec(obj.value.trim)) { //공백 체크
-        //alert("해당 항목에는 공백을 사용할수 없습니다.\n\n공백은 자동적으로 제거 됩니다.");
-        obj.focus();
-        obj.value = obj.value.replace(/\s| /gi,''); // 공백제거
-        return false;
-    }
-}
-const userSearchForm = document.forms.userSearchForm;
-userSearchForm.addEventListener("submit", (event) => {
-	if(!userSearchForm.keyword.value) {
-		event.preventDefault();		
-	}
-});
-</script>
 </html>

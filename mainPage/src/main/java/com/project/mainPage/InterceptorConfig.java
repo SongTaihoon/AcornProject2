@@ -24,6 +24,7 @@ public class InterceptorConfig implements WebMvcConfigurer{
 			.addPathPatterns("/reply/insert/**")
 			.addPathPatterns("/reply/delete/**")
 			.addPathPatterns("/reply/update/**")
+			.addPathPatterns("/reply/prefer/**")
 			.addPathPatterns("/qaboard/insert/**")
 			.addPathPatterns("/qaboard/delete/**")
 			.addPathPatterns("/qaboard/update/**")

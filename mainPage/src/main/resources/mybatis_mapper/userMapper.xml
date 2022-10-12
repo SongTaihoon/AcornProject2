@@ -5,6 +5,15 @@
  <mapper namespace="com.project.mainPage.mapper.UserMapper">
  	<select id="selectPageAll" resultType="UserDto">
  		select * from USER 
+ 			<if test="sort != null">
+				ORDER BY ${sort} 
+			</if>
+			<if test="direct != null">
+				<choose>
+					<when test="direct.equals('desc')">desc</when>
+					<otherwise>asc</otherwise>
+				</choose>
+			</if>
  			LIMIT #{startRow}, #{pageSize}
  	</select>
  	<select id="selectPageAllCount" resultType = "int" >
@@ -29,11 +38,10 @@
  	</insert>
  	<update id="updateOne" parameterType="UserDto">
  		UPDATE USER SET 
- 			user_id = #{user_id}, 
  			user_name = #{user_name},
  			user_pw = #{user_pw}, 
- 			user_phone = #{user_phone}, 
- 			user_email = #{user_email},
+ 			user_phone = #{post_user_phone}, 
+ 			user_email = #{post_user_email},
  			birth = #{birth},
  			add1 = #{add1},
  			add2 = #{add2},
@@ -73,7 +81,15 @@
 	<select id="searchUser" resultType="UserDto">
 			SELECT * FROM USER
 			<include refid="criteria"></include>
-			ORDER BY user_id DESC
+			<if test="sort != null">
+				ORDER BY ${sort} 
+			</if>
+			<if test="direct != null">
+				<choose>
+					<when test="direct.equals('desc')">desc</when>
+					<otherwise>asc</otherwise>
+				</choose>
+			</if>
 			LIMIT #{skip}, #{amount}	
 	</select>
 	<select id="userGetTotal" resultType="int">

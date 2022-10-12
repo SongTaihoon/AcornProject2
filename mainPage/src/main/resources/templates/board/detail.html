@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>후기 상세</title>
 <link rel="stylesheet" href="/public/css/board/detail.css">
-<script th:src="@{/public/js/board/detail.js}" defer></script>
+<script th:src="@{/public/js/board/detail.js}" defer="defer"></script>
 </head>
 <body>
 <header th:insert="/NewHeader"></header>
@@ -23,56 +23,54 @@
 		    </li>
 		  </ol>
 		</nav>
-		 <h1 class="pb-4 d-flex justify-content-between align-items-center" 
-		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
+		<h1 class="pb-4 d-flex justify-content-between align-items-center" 
+		    style="border-bottom: 1px solid #e8e8e8;">
 		    <span style="font-size: 35px;" th:text="${board.title}"></span>
 	    </h1>	
 		<div class="mt-3 d-flex">
 			<div class="d-flex align-items-center">
 				<i class="bi bi-eye" style="margin-right: 4px;"
-					data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="조회수">
-					<span th:text="${board.views}"></span>
+				   data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="조회수">
+				   <span th:text="${board.views}"></span>
 				</i>
-				<th:block th:if="${(session.loginUser?.user_id != null) && (session.loginUser?.user_id != board.user?.user_id)}">
-					<a style="margin-right: 4px; margin-left: 4px;"
-				 	data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="좋아요!"
-					th:href="@{/board/prefer/{no}/{prefer}(no=${board.board_no}, prefer=${true})}" 
-					class="btn btn-outline-primary border-0 rounded-pill">
+				<th:block th:if="${(session.loginUser?.user_id != null)}">
+					<a style="margin-right: 4px; margin-left: 4px; padding: 8px;"
+					   th:href="@{/board/prefer/{no}/{prefer}(no=${board.board_no}, prefer=${true})}" 
+					   class="btn btn-outline-primary border-0 rounded-pill">
 						<i th:classappend="${(board.prefer_active != null && board.prefer_active) ? 'bi-hand-thumbs-up-fill' : 'bi-hand-thumbs-up'}" class="bi "></i>				
 						<span th:text="${board.good}"></span>
 					</a> 
-					<a style="margin-right: 8px;"
-				 	data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="싫어요!"
-					th:href="@{/board/prefer/{no}/{prefer}(no=${board.board_no}, prefer=${false})}"  
-					class="btn btn-outline-danger border-0 rounded-pill">
+					<a style="padding: 8px;"
+					   th:href="@{/board/prefer/{no}/{prefer}(no=${board.board_no}, prefer=${false})}"  
+					   class="btn btn-outline-danger border-0 rounded-pill">
 						<i th:classappend="${(board.prefer_active != null && !board.prefer_active) ? 'bi-hand-thumbs-down-fill' : 'bi-hand-thumbs-down'}" class="bi "></i>				
 						<span th:text="${board.bad}"></span>
 					</a>
 				</th:block>
-				<th:block th:unless="${(session.loginUser?.user_id != null) && (session.loginUser?.user_id != board.user?.user_id)}">
+				<th:block th:unless="${(session.loginUser?.user_id != null)}">
 					<a style="margin-right: 4px; margin-left: 4px;"
-				 	data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="좋아요!"
-					class="btn btn-outline-primary border-0 rounded-pill">
+					   class="btn btn-outline-primary border-0 rounded-pill">
 						<i th:classappend="${(board.prefer_active != null && board.prefer_active) ? 'bi-hand-thumbs-up-fill' : 'bi-hand-thumbs-up'}" class="bi "></i>				
 						<span th:text="${board.good}"></span>
 					</a> 
-					<a style="margin-right: 8px;"
-				 	data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="싫어요!"
-					class="btn btn-outline-danger border-0 rounded-pill">
+					<a class="btn btn-outline-danger border-0 rounded-pill">
 						<i th:classappend="${(board.prefer_active != null && !board.prefer_active) ? 'bi-hand-thumbs-down-fill' : 'bi-hand-thumbs-down'}" class="bi "></i>				
 						<span th:text="${board.bad}"></span>
 					</a>
 				</th:block>
+			</div>
+			<div class="ms-auto align-self-center">
+				<span th:text="'등록일 : ' + ${#dates.format(board.post_time,'yyyy-MM-dd HH:mm:ss')}"></span>
 			</div>
 	  </div>
 	  <div class="mt-3 mb-5">
 	 	<table class="table table-bordered table align-middle">
 		  <tbody>
 		    <tr>
-		      <th style="width: 100px; border-left: none;" class="bg-light">작성자</th>
-		      <td style="width: 800px;" th:text="${board.user?.user_id}"></td>
+		      <th style="width: 100px; border-left: none;" class="bg-light align-middle">작성자</th>
+		      <td class="align-middle" style="width: 800px;" th:text="${board.user?.user_id}"></td>
 		      <td style="width: 400px; border-right: none;" rowspan="6">
-		      	<div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel" 
+		      	<div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel"
 		      		style="width: 400px; height: 400px;">
 				  <div class="carousel-inner">
 				  	<th:block th:each="boardImg : ${board.boardImgs}">
@@ -80,9 +78,9 @@
 					      	<div class="mb-1" th:if="${boardImg != null}">
 								<!-- Button trigger modal -->
 								<button type="button" class="btn border-0" data-bs-toggle="modal"
-									style="padding: 0" 
-									th:data-bs-target="'#boardImgModal' + ${boardImg.board_img_no}">
-     								<img th:src="@{/img/{fileName}(fileName=${boardImg.img_path})}" alt="후기 이미지"  style="width: 400px; height: 400px;">
+									style="padding: 0" th:data-bs-target="'#boardImgModal' + ${boardImg.board_img_no}">
+									<img th:src="@{/img/{fileName}(fileName=${boardImg.img_path})}" alt="후기 이미지" 
+				  						 style="width: 400px; height: 400px;">
 								</button>			
 							</div>
 				  		</div>
@@ -93,11 +91,33 @@
 						    <div class="modal-content" 
 						    style="background-color: rgba(255,255,255,0)">
 						      <div class="modal-body">
-		   						<img th:src="@{/img/{fileName}(fileName=${boardImg.img_path})}" alt="후기 이미지" width="760"> 
+		   						<img th:src="@{/img/{fileName}(fileName=${boardImg.img_path})}" alt="후기 이미지"
+		   						width="760"> 
 						      </div>
 						    </div>
 						  </div>
 						</div>							
+				  	</th:block>
+				  	<th:block th:if="${#lists.isEmpty(board.boardImgs)}">
+			  			<!-- Button trigger modal -->
+						<button type="button" class="btn border-0" data-bs-toggle="modal"
+							style="padding: 0" data-bs-target="#boardImgModal">
+							<img src="/img/logo.png" alt="후기 이미지" 
+					  		   style="width: 400px; height: 400px;">
+						</button>	
+					 	<!-- Modal -->
+						<div class="modal fade"
+							id="boardImgModal" >
+						  <div class="modal-dialog modal-dialog-centered modal-lg">
+						    <div class="modal-content" 
+						    style="background-color: rgba(255,255,255,0)">
+						      <div class="modal-body">
+		   						<img src="/img/logo.png" alt="후기 이미지"
+		   						width="760"> 
+						      </div>
+						    </div>
+						  </div>
+						</div>	
 				  	</th:block>
 				  </div>
 				  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -112,133 +132,331 @@
 		      </td>
 		    </tr>
 		    <tr>
-		      <th style="width: 100px; border-left: none;" class="bg-light">카테고리</th>
+		      <th style="width: 100px; border-left: none;" class="bg-light align-middle">카테고리</th>
 		      <th:block th:if="${board.category.category_id == '1'}">
-				  <td style="width: 600px;">관광지</td> 
+				  <td class="align-middle" style="width: 600px;">관광지</td> 
 			  </th:block>
 			  <th:block th:if="${board.category.category_id == '2'}">
-				  <td style="width: 600px;">숙박</td> 
+				  <td class="align-middle" style="width: 600px;">숙박</td> 
 			  </th:block>
 			  <th:block th:if="${board.category.category_id == '3'}">
-				  <td style="width: 600px;">맛집</td> 
+				  <td class="align-middle" style="width: 600px;">맛집</td> 
 			  </th:block>
 		    </tr>
 		    <tr>
-		      <th style="width: 100px; border-left: none;" class="bg-light">장소명</th>
-		      <td style="width: 600px;" th:text="${board.place_name}"></td>
+		      <th style="width: 100px; border-left: none;" class="bg-light align-middle">장소명</th>
+		      <td class="align-middle" style="width: 600px;" th:text="${board.place_name}"></td>
 		    </tr>
 		    <tr>
-		      <th style="width: 100px; border-left: none;" class="bg-light">주소</th>
-		      <td style="width: 600px;" th:text="${board.place_name}"></td>
+		      <th style="width: 100px; border-left: none;" class="bg-light align-middle">주소</th>
+		      <td class="align-middle" style="width: 600px;" th:text="${board.place_name}"></td>
 		    </tr>
 		    <tr>
-		      <th style="width: 100px; border-left: none;" class="bg-light">평점</th>
-		      <td style="width: 600px;" th:text="${board.rating}"></td>
+		      <th style="width: 100px; border-left: none;" class="bg-light align-middle">평점</th>
+		      <td class="align-middle" style="width: 600px;" th:text="${board.rating}"></td>
 		    </tr>
 		    <tr>
-		      <th style="width: 100px; border-left: none;" class="bg-light">내용</th>
-		      <td style="width: 600px;" th:text="${board.contents}"></td>
+		      <th style="width: 100px; border-left: none;" class="bg-light align-middle">내용</th>
+		      <td class="align-middle" style="width: 600px;" th:text="${board.contents}"></td>
 		    </tr>
 		  </tbody>
 		</table>
 	  </div>	
 	  <div class="d-flex mb-5">
-			<div th:if="${(session.loginUser?.user_id == board.user?.user_id) || (session.loginUser?.adminCk == 1)}" class="ms-auto">
-				<a th:href="@{/board/update/{boardNo}(boardNo = ${board.board_no})}" class="btn btn-outline-info btn-lg" style="margin-right: 8px;">
-					수정
-				</a>
-				<a href="/board/list/1" class="btn btn-outline-dark btn-lg">목록</a>
-			</div>
-			<div th:unless="${(session.loginUser?.user_id == board.user?.user_id) || (session.loginUser?.adminCk == 1)}" class="ms-auto">
-				<a href="/board/list/1" class="btn btn-outline-dark btn-lg">목록</a>
-			</div>
-	  </div>
-	  	<h1 class="pb-4 d-flex justify-content-between align-items-center" 
-		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
-		    <span style="font-size: 35px;">댓글 : <strong th:text="${board.replys?.size}"></strong></span>
-		    <button class="btn btn-lg btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#replyCollapse">
-    			토글
-  			</button>
-	    </h1>
-		<div class="mt-3">
-			<ul class="list-group collapse show mt-3" id="replyCollapse">
-<!--///////////////////////////////////// 리플 등록 폼 ///////////////////////////////////////////////////////////////// -->	
-				<li class="list-group-item fixed-bottom" 
-				th:if="${session.loginUser?.user_id != null}">
-					<div class="d-flex align-items-center">
-						<p style="font-size: 30px; margin-top: 8px;">댓글 등록</p>
-						<p class="ms-auto mb-0">
-						  <button class="btn btn-lg btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#replyInsertCollapse" aria-expanded="false" aria-controls="collapseExample">
-						    토글
-						  </button>
-						</p>
-					</div>
-					<div class="collapse" id="replyInsertCollapse">
-					  	<form action="/reply/insert.do" method="post" enctype="multipart/form-data" name="replyInsertForm">
-						<table class="table table-bordered table align-middle mb-3" style="height: 100%;">
-							<tbody>
-								<tr>
-									<th class="table-light">작성자</th>
-									<td>
-										<input name="user.user_id" class="form-control" id="userId" th:value="${session.loginUser?.user_id}" readonly>
-									</td>
-								</tr>
-								<tr>
-									<th class="table-light">제목</th>
-									<td>
-										<input name="title" class="form-control" id="title" onkeyup="noSpace(this);" onchange="noSpace(this);">
-									</td>
-								</tr>
-								<tr>
-									<th class="table-light">사진</th>
-									<td>
-										<input name="imgFile" class="form-control form-control-lg" type="file">
-									</td>
-								</tr>
-								<tr>
-									<th class="table-light">내용</th>
-									<td>
-										<textarea name="contents" class="form-control" id="contents" 
-												  onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
-									</td>	
-								</tr>
-							</tbody>
-						</table>
-						<div class="d-flex mb-2">
-							<div class="ms-auto">
-								<button class="btn btn-outline-warning btn-lg" type="reset" style="margin-right: 8px;">초기화</button>
-								<button class="btn btn-outline-primary btn-lg" type="submit">등록</button>
-								<input type="hidden" name="board_no" th:value="${board.board_no}">
-							</div>
-						</div>
-					</form>
-				</div>							
-				</li>
-				<th:block th:insert="/board/replyList" th:with="replys=${board.replys}" id="replyList"></th:block>
-			</ul>
+		<div th:if="${(session.loginUser?.user_id == board.user?.user_id) || (session.loginUser?.adminCk == 1)}" class="ms-auto">
+			<a th:href="@{/board/update/{boardNo}(boardNo = ${board.board_no})}" class="btn btn-outline-info btn-lg" style="margin-right: 8px;">
+				수정
+			</a>
+			<a href="/board/list/1" class="btn btn-outline-dark btn-lg">목록</a>
 		</div>
-	</main>	
-	 <footer class="footer" th:insert="/NewFooter"></footer> 
-	</div>
+		<div th:unless="${(session.loginUser?.user_id == board.user?.user_id) || (session.loginUser?.adminCk == 1)}" class="ms-auto">
+			<a href="/board/list/1" class="btn btn-outline-dark btn-lg">목록</a>
+		</div>
+	  </div>
+	  
+	  <th:block th:if="${(param.writer != null && param.writer != '') && (#strings.equals(param.writer, session.loginUser?.user_id))}">
+		<div class="accordion " id="accordionFlushExample">
+		  <div class="accordion-item ">
+		    <h2 class="accordion-header " id="flush-headingOne">
+		      	<button th:classappend="${(repl != 0) ? '' : 'collapsed'}" class="accordion-button " type="button" 
+		      		    style="background-color: white;" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" 
+		      		    aria-expanded="false" aria-controls="flush-collapseOne">	       
+			            <span style="font-size: 35px;">나의 댓글 : <strong th:text="${repl}"></strong></span>
+		        </button>
+		    </h2>
+		    <div id="flush-collapseOne" th:classappend="${(repl != 0) ? 'show' : ''}" class="accordion-collapse collapse " 
+	    	 	 style="max-height: 1200px; overflow-y: scroll;" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+		      <div class="accordion-body">
+		      	<div class="list-group sticky-top">
+				 <div class="d-flex list-group-item bg-light">
+				    <th:block th:if="${session.loginUser?.user_id != null}">
+					    <th:block th:if="${param.writer != null && param.writer != ''}">
+					       <a class="btn btn-lg btn-primary" th:href="@{./{boardNo}(boardNo=${board.board_no})}">전체 댓글</a>
+					    </th:block>
+					    <th:block th:unless="${param.writer != null && param.writer != ''}">
+					       <a class="btn btn-lg btn-primary" th:href="@{./{boardNo}(boardNo=${board.board_no}, writer=${session.loginUser?.user_id})}">나의 댓글</a>
+					    </th:block>
+					</th:block>
+					<th:block th:unless="${session.loginUser?.user_id != null}">
+					    <a class="btn btn-lg btn-primary" th:href="@{./{boardNo}(boardNo=${board.board_no})}">전체 댓글</a>
+					</th:block>
+					<th:block th:if="${repl != 0}">
+					<div class="dropdown-center ms-auto">
+					   <button type="button" class="btn btn-lg btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+					     필터
+					   </button>
+					   <ul class="dropdown-menu">
+				        <li>
+				        	<th:block th:if="${session.loginUser?.user_id != null}">
+				        		<th:block th:if="${param.writer != null && param.writer != ''}">
+						          	<a class="dropdown-item text-center ps-0 pe-0" th:href="@{./{boardNo}(boardNo=${board.board_no}, writer=${session.loginUser?.user_id}, sort=good, direct=desc)}">인기순</a>
+				        		</th:block>
+				        		<th:block th:unless="${param.writer != null && param.writer != ''}">
+						          	<a class="dropdown-item text-center ps-0 pe-0" th:href="@{./{boardNo}(boardNo=${board.board_no}, sort=good, direct=desc)}">인기순</a>
+				        		</th:block>
+				        	</th:block>
+				        	<th:block th:unless="${session.loginUser?.user_id != null}">
+					          	<a class="dropdown-item text-center ps-0 pe-0" th:href="@{./{boardNo}(boardNo=${board.board_no}, sort=good, direct=desc)}">인기순</a>
+				        	</th:block>
+				        </li>
+				        <li>
+				        	<th:block th:if="${session.loginUser?.user_id != null}">
+				        		<th:block th:if="${param.writer != null && param.writer != ''}">
+						          	<a class="dropdown-item text-center ps-0 pe-0" th:href="@{./{boardNo}(boardNo=${board.board_no}, writer=${session.loginUser?.user_id}, sort=post_time, direct=desc)}">최신순</a>
+				        		</th:block>
+				        		<th:block th:unless="${param.writer != null && param.writer != ''}">
+						          	<a class="dropdown-item text-center ps-0 pe-0" th:href="@{./{boardNo}(boardNo=${board.board_no}, sort=post_time, direct=desc)}">최신순</a>
+				        		</th:block>
+				        	</th:block>
+				        	<th:block th:unless="${session.loginUser?.user_id != null}">
+					          	<a class="dropdown-item text-center ps-0 pe-0" th:href="@{./{boardNo}(boardNo=${board.board_no}, sort=post_time, direct=desc)}">최신순</a>
+				        	</th:block>
+				        </li>
+				        <li>
+				        	<th:block th:if="${session.loginUser?.user_id != null}">
+				        		<th:block th:if="${param.writer != null && param.writer != ''}">
+						          	<a class="dropdown-item text-center ps-0 pe-0" th:href="@{./{boardNo}(boardNo=${board.board_no}, writer=${session.loginUser?.user_id}, sort=post_time, direct=asc)}">오래된순</a>
+				        		</th:block>
+				        		<th:block th:unless="${param.writer != null && param.writer != ''}">
+						          	<a class="dropdown-item text-center ps-0 pe-0" th:href="@{./{boardNo}(boardNo=${board.board_no}, sort=post_time, direct=asc)}">오래된순</a>
+				        		</th:block>
+				        	</th:block>
+				        	<th:block th:unless="${session.loginUser?.user_id != null}">
+					          	<a class="dropdown-item text-center ps-0 pe-0" th:href="@{./{boardNo}(boardNo=${board.board_no}, sort=post_time, direct=asc)}">오래된순</a>
+				        	</th:block>
+				        </li>
+				       </ul>
+					 </div>
+					</th:block>
+				  </div>
+				 </div>
+				<ul class="list-group mt-3">
+			    <th:block th:if="${param.writer != null && param.writer != ''}">
+			   	  <th:block th:insert="/board/replyMyList" th:with="replys=${board.replys}" id="replyList"></th:block>
+			    </th:block>
+			    <th:block th:unless="${param.writer != null && param.writer != ''}">
+			   	  <th:block th:insert="/board/replyList" th:with="replys=${board.replys}" id="replyList"></th:block>
+			    </th:block>
+	<!--///////////////////////////////////// 리플 등록 폼 ///////////////////////////////////////////////////////////////// -->	
+				<li class="list-group-item sticky-bottom bg-light"
+					th:if="${session.loginUser?.user_id != null}">
+					<div class="accordion " id="accordionReplyInsert">
+					  <div class="accordion-item">
+					    <h2 class="accordion-header" id="headingOne">
+					      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+					      		  data-bs-target="#collapseReplyInsert" aria-expanded="true" aria-controls="collapseReplyInsert">
+					        댓글 등록
+					      </button>
+					    </h2>
+					    <div id="collapseReplyInsert" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionReplyInsert">
+					      <div class="accordion-body">
+							 <form action="/reply/insert.do" method="post" enctype="multipart/form-data" name="replyInsert">
+								<table class="table table-bordered table align-middle mb-3" style="height: 100%;">
+									<tbody>
+										<tr>
+											<th class="table-light align-middle">제목</th>
+											<td>
+												<input name="title" class="form-control" id="title" onkeyup="noSpace(this);" onchange="noSpace(this);">
+											</td>
+										</tr>
+										<tr>
+											<th class="table-light align-middle">사진</th>
+											<td>
+												<input name="imgFile" class="form-control form-control-lg" type="file" style="height: 29px;">
+											</td>
+										</tr>
+										<tr>
+											<th class="table-light align-middle">내용</th>
+											<td>
+												<textarea name="contents" class="form-control" id="contents" 
+														  onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
+											</td>	
+										</tr>
+									</tbody>
+								</table>
+								<div class="d-flex">
+									<div class="ms-auto">
+										<button class="btn btn-outline-warning btn-lg" type="reset" style="margin-right: 8px; padding: 12px 37.5px;">초기화</button>
+										<button class="btn btn-outline-primary btn-lg" type="submit">등록</button>
+										<input type="hidden" name="board_no" th:value="${board.board_no}">
+										<input type="hidden" name="user.user_id" th:value="${session.loginUser?.user_id}">
+									</div>
+								</div>
+							</form>
+					      </div>
+					    </div>
+					  </div>
+					</div>						
+				  </li>
+				</ul>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		</th:block>	 
+		
+		<th:block th:unless="${param.writer != null && param.writer != ''}">
+			<div class="accordion " id="accordionFlushExample">
+			  <div class="accordion-item ">
+			    <h2 class="accordion-header " id="flush-headingOne">
+			      	<button th:classappend="${(replySize != 0) ? '' : 'collapsed'}" class="accordion-button " type="button" 
+		      		    style="background-color: white;" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" 
+		      		    aria-expanded="false" aria-controls="flush-collapseOne">	       
+			            <span style="font-size: 35px;">전체 댓글 : <strong th:text="${replySize}"></strong></span>
+		       	    </button>
+			    </h2>
+			   	<div id="flush-collapseOne" th:classappend="${(replySize != 0) ? 'show' : ''}" class="accordion-collapse collapse " 
+		    	 	 style="max-height: 1200px; overflow-y: scroll;" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+			      <div class="accordion-body">
+			      	<div class="list-group sticky-top">
+					 <div class="d-flex list-group-item bg-light">
+					    <th:block th:if="${session.loginUser?.user_id != null}">
+						    <th:block th:if="${param.writer != null && param.writer != ''}">
+						       <a class="btn btn-lg btn-primary" th:href="@{./{boardNo}(boardNo=${board.board_no})}">전체 댓글</a>
+						    </th:block>
+						    <th:block th:unless="${param.writer != null && param.writer != ''}">
+						       <a class="btn btn-lg btn-primary" th:href="@{./{boardNo}(boardNo=${board.board_no}, writer=${session.loginUser?.user_id})}">나의 댓글</a>
+						    </th:block>
+						</th:block>
+						<th:block th:unless="${session.loginUser?.user_id != null}">
+						    <a class="btn btn-lg btn-primary" th:href="@{./{boardNo}(boardNo=${board.board_no})}">전체 댓글</a>
+						</th:block>
+						<th:block th:if="${replySize != 0}">
+						<div class="dropdown-center ms-auto">
+						   <button type="button" class="btn btn-lg btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+						     필터
+						   </button>
+						   <ul class="dropdown-menu">
+					        <li>
+					        	<th:block th:if="${session.loginUser?.user_id != null}">
+					        		<th:block th:if="${param.writer != null && param.writer != ''}">
+							          	<a class="dropdown-item text-center ps-0 pe-0" th:href="@{./{boardNo}(boardNo=${board.board_no}, writer=${session.loginUser?.user_id}, sort=good, direct=desc)}">인기순</a>
+					        		</th:block>
+					        		<th:block th:unless="${param.writer != null && param.writer != ''}">
+							          	<a class="dropdown-item text-center ps-0 pe-0" th:href="@{./{boardNo}(boardNo=${board.board_no}, sort=good, direct=desc)}">인기순</a>
+					        		</th:block>
+					        	</th:block>
+					        	<th:block th:unless="${session.loginUser?.user_id != null}">
+						          	<a class="dropdown-item text-center ps-0 pe-0" th:href="@{./{boardNo}(boardNo=${board.board_no}, sort=good, direct=desc)}">인기순</a>
+					        	</th:block>
+					        </li>
+					        <li>
+					        	<th:block th:if="${session.loginUser?.user_id != null}">
+					        		<th:block th:if="${param.writer != null && param.writer != ''}">
+							          	<a class="dropdown-item text-center ps-0 pe-0" th:href="@{./{boardNo}(boardNo=${board.board_no}, writer=${session.loginUser?.user_id}, sort=post_time, direct=desc)}">최신순</a>
+					        		</th:block>
+					        		<th:block th:unless="${param.writer != null && param.writer != ''}">
+							          	<a class="dropdown-item text-center ps-0 pe-0" th:href="@{./{boardNo}(boardNo=${board.board_no}, sort=post_time, direct=desc)}">최신순</a>
+					        		</th:block>
+					        	</th:block>
+					        	<th:block th:unless="${session.loginUser?.user_id != null}">
+						          	<a class="dropdown-item text-center ps-0 pe-0" th:href="@{./{boardNo}(boardNo=${board.board_no}, sort=post_time, direct=desc)}">최신순</a>
+					        	</th:block>
+					        </li>
+					        <li>
+					        	<th:block th:if="${session.loginUser?.user_id != null}">
+					        		<th:block th:if="${param.writer != null && param.writer != ''}">
+							          	<a class="dropdown-item text-center ps-0 pe-0" th:href="@{./{boardNo}(boardNo=${board.board_no}, writer=${session.loginUser?.user_id}, sort=post_time, direct=asc)}">오래된순</a>
+					        		</th:block>
+					        		<th:block th:unless="${param.writer != null && param.writer != ''}">
+							          	<a class="dropdown-item text-center ps-0 pe-0" th:href="@{./{boardNo}(boardNo=${board.board_no}, sort=post_time, direct=asc)}">오래된순</a>
+					        		</th:block>
+					        	</th:block>
+					        	<th:block th:unless="${session.loginUser?.user_id != null}">
+						          	<a class="dropdown-item text-center ps-0 pe-0" th:href="@{./{boardNo}(boardNo=${board.board_no}, sort=post_time, direct=asc)}">오래된순</a>
+					        	</th:block>
+					        </li>
+					       </ul>
+						 </div>
+					    </th:block>
+					  </div>
+					 </div>
+					<ul class="list-group mt-3">
+				    <th:block th:if="${param.writer != null && param.writer != ''}">
+				   	  <th:block th:insert="/board/replyMyList" th:with="replys=${board.replys}" id="replyList"></th:block>
+				    </th:block>
+				    <th:block th:unless="${param.writer != null && param.writer != ''}">
+				   	  <th:block th:insert="/board/replyList" th:with="replys=${board.replys}" id="replyList"></th:block>
+				    </th:block>
+		<!--///////////////////////////////////// 리플 등록 폼 ///////////////////////////////////////////////////////////////// -->	
+					<li class="list-group-item sticky-bottom bg-light"
+						th:if="${session.loginUser?.user_id != null}">
+						<div class="accordion" id="accordionReplyInsert">
+						  <div class="accordion-item">
+						    <h2 class="accordion-header" id="headingOne">
+						      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+						      		  data-bs-target="#collapseReplyInsert" aria-expanded="true" aria-controls="collapseReplyInsert">
+						        댓글 등록
+						      </button>
+						    </h2>
+						    <div id="collapseReplyInsert" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionReplyInsert">
+						      <div class="accordion-body">
+								 <form action="/reply/insert.do" method="post" enctype="multipart/form-data" name="replyInsert">
+									<table class="table table-bordered table align-middle mb-3" style="height: 100%;">
+										<tbody>
+											<tr>
+												<th class="table-light align-middle">제목</th>
+												<td>
+													<input name="title" class="form-control" id="title" onkeyup="noSpace(this);" onchange="noSpace(this);">
+												</td>
+											</tr>
+											<tr>
+												<th class="table-light align-middle">사진</th>
+												<td>
+													<input name="imgFile" class="form-control form-control-lg" type="file" style="height: 29px;">
+												</td>
+											</tr>
+											<tr>
+												<th class="table-light align-middle">내용</th>
+												<td>
+													<textarea name="contents" class="form-control" id="contents" 
+															  onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
+												</td>	
+											</tr>
+										</tbody>
+									</table>
+									<div class="d-flex">
+										<div class="ms-auto">
+											<button class="btn btn-outline-warning btn-lg" type="reset" style="margin-right: 8px; padding: 12px 37.5px;">초기화</button>
+											<button class="btn btn-outline-primary btn-lg" type="submit">등록</button>
+											<input type="hidden" name="board_no" th:value="${board.board_no}">
+											<input type="hidden" name="user.user_id" th:value="${session.loginUser?.user_id}">
+										</div>
+									</div>
+								</form>
+						      </div>
+						    </div>
+						  </div>
+						</div>						
+					  </li>
+					</ul>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</th:block>
+  </main>	
+<footer class="footer" th:insert="/NewFooter"></footer> 
+</div>
 </body>
-<script>
-//값이 없을 때 submit 불가
-var replyInsertForm = document.forms.replyInsertForm;
-var replyTitle = replyInsertForm.title;
-var replyContents = replyInsertForm.contents;
-replyInsertForm.addEventListener("submit", (event) => {
-	if(!(replyTitle.value) || !(replyContents.value)) {
-		event.preventDefault();		
-	}
-});
-function noSpace(obj) { // 공백사용못하게
-    var str = /\s/;  // 공백체크
-    if(str.exec(obj.value.trim)) { //공백 체크
-        //alert("해당 항목에는 첫 글자 공백을 사용할수 없습니다.");
-        obj.focus();
-        obj.value = obj.value.replace(/^ +/,''); // 공백제거
-        return false;
-    }
-}
-</script>
 </html>
