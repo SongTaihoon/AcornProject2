@@ -39,8 +39,10 @@
 					<th>관광지명</th>
 					<th>서귀포/제주도</th>
 					<th>카테고리</th>
+					<th>전화번호</th>	
 					<th>주소</th>	
 					<th>검색수</th>	
+					<th>세부사항</th>	
 				</tr>
 			</thead>
 			<tbody>
@@ -58,8 +60,12 @@
 						<th:block th:if="${tour.category.category_id == '3'}">
 							<td>맛집</td> 
 						</th:block>					
+						<td th:text="${tour.tour_phone}"></td>
 						<td th:text="${tour.address3}"></td>
 						<td th:text="${tour.search}"></td>
+						<td>
+							<a th:href="@{/top/tour/detail/{no}(no=${tour.tour_rank})}">자세히 보기</a>
+						</td>
 					</tr>					
 				</th:block>
 			</tbody>
