@@ -36,9 +36,10 @@
 	        var  names = this.cells[1].innerText; 
 	        var  region = this.cells[2].innerText;
 	        var  cate = this.cells[3].innerText;
-			var  address = this.cells[4].innerText;
-	        var  search = this.cells[5].innerText;
-	         
+	        var  phone = this.cells[4].innerText;	        
+			var  address = this.cells[5].innerText;
+	        var  search = this.cells[6].innerText;
+	        var  number = this.cells[7].innerText; 
 	
 	// 주소-좌표 변환 객체를 생성합니다
 	var geocoder = new kakao.maps.services.Geocoder();
@@ -50,20 +51,21 @@
 	     if (status === kakao.maps.services.Status.OK) {
 	
 	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-	        
+
 	        // 결과값으로 받은 위치를 마커로 표시합니다
 	        var marker = new kakao.maps.Marker({
 	            map: map,
 	            position: coords,
 	            clickable: true
 	        });
-	        	        
+        
 	        kakao.maps.event.addListener(marker, 'click', function() {        
    	    
 		        // 인포윈도우로 장소에 대한 설명을 표시합니다
-		        var iwContent='<div style="width:200px;margin:5px;padding:6px 0;"><div style="font-size:22px;margin:10px 10px 1px;"><strong>'+names+
+		        var iwContent='<div style="width:250px;margin:4px;padding:6px 0;"><div style="font-size:22px;margin:10px 10px 1px;"><strong>'+names+
 		        '</strong></div><br><div style="font-size:15px;margin:5px;">'+address+
-		        '</div><a style="display:flex;justify-content:center;" class="btn" href="https://map.kakao.com/link/to/'+names+','+
+		        '</div><div style="font-size:14px;margin:1px 10px 1px;"><span>'+phone+'</span><span style="margin:1px 10px 1px;"><a style="text-decoration:none;" href="/top/rest/detail/'+number+
+		        '">상세보기</a></span></div><a style="display:flex;justify-content:center;" class="btn" href="https://map.kakao.com/link/to/'+names+','+
 		        marker.getPosition().getLat()+','+marker.getPosition().getLng()+'" target="_blank">길찾기</a></div>';
 		        var	iwRemoveable = true;
 		        
@@ -73,8 +75,12 @@
 		        });
 		        
 		        infowindow.open(map, marker);  
+		        		        
 			});
-
+			
+			kakao.maps.event.addListener(marker, 'rightclick', function() {
+				marker.setMap(null);
+			});
 			
 	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 	        map.setCenter(coords);

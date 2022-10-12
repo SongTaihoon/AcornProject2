@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 
 /*
- desc accommodate;
+  desc accommodate;
 +-------------+--------------+------+-----+---------+----------------+
 | Field       | Type         | Null | Key | Default | Extra          |
 +-------------+--------------+------+-----+---------+----------------+
@@ -15,9 +15,10 @@ import lombok.Data;
 | city        | varchar(255) | NO   |     | NULL    |                |
 | address1    | varchar(255) | NO   |     | NULL    |                |
 | search      | int          | NO   |     | NULL    |                |
+| views       | int          | NO   |     | 0       |                |
+| acco_phone  | varchar(20)  | YES  |     | NULL    |                |
 | user_id     | varchar(45)  | NO   | MUL | NULL    |                |
 | category_id | varchar(255) | YES  | MUL | NULL    |                |
-| views       | int          | NO   |     | 0       |                |
 +-------------+--------------+------+-----+---------+----------------+
 */
 @Data
@@ -27,6 +28,7 @@ public class Acco {
 	 private String province;
 	 private String city;
 	 private String address1;
+	 private String acco_phone;
 	 private Category category;
 	 private int views;
 	 private int search;

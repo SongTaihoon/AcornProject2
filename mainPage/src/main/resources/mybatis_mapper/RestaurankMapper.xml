@@ -13,6 +13,7 @@
 		<result column="views" property="views"/>	
 		<result column="search" property="search"/>
 		<result column="ranking" property="ranking"/>
+		<result column="rest_phone" property="rest_phone"/>
 		<!-- Restaurant : UsersDto = N : 1   -->	
 		<association property="user" javaType="UserDto" foreignColumn="user_id">
 			<id column="user_id" property="user_id"/>
@@ -78,8 +79,8 @@
 	<insert id="insertOne" parameterType="Restaurant"
 	 		useGeneratedKeys="true" keyProperty="rest_rank">
 		INSERT INTO RESTAURANT 
-			( tourist, province, city, address2, category_id, search , user_id ,rest)
-				VALUES (#{tourist}, #{province}, #{city}, #{address2}, #{category.category_id}, #{search}, #{user.user_id},#{rest})
+			( tourist, province, city, address2, category_id, search , user_id ,rest ,rest_phone )
+				VALUES (#{tourist}, #{province}, #{city}, #{address2}, #{category.category_id}, #{search}, #{user.user_id},#{rest},#{rest_phone})
 	</insert>
 	<!-- 수정  -->
 	<update id="updateOne" parameterType="Restaurant">
@@ -87,7 +88,8 @@
 				tourist = #{tourist},
 				city = #{city},
 				address2 = #{address2},
-				search = #{search}
+				search = #{search},
+				rest_phone =#{rest_phone}
 				WHERE rest_rank = #{rest_rank}
 	</update>
 	<!-- 삭제  -->
