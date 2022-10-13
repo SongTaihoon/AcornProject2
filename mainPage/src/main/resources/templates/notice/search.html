@@ -34,7 +34,6 @@
 			<thead class="table-light">
 				<tr>
 					<th>글 번호</th>
-					<th>작성자</th>
 					<th>제목</th>
 					<th>조회수</th>
 					<th>등록일</th>
@@ -44,7 +43,6 @@
 				<th:block th:each="notice : ${list}" >
 					<tr th:onclick="location.href='/notice/detail/[[${notice.notice_no}]]'">
 						<td th:text="${notice.notice_no}"></td>
-						<td th:text="${notice.user?.user_id}"></td>
 						<td th:text="${notice.title}"></td>
 						<td th:text="${notice.views}"></td>
 						<td th:text="${#dates.format(notice.post_time,'yyyy-MM-dd HH:mm:ss')}"></td>
@@ -55,10 +53,10 @@
 		<th:block th:unless="${count == 0}">
 			<div class="d-flex justify-content-center" th:insert="/pagination"></div>
 		</th:block>
-		<nav class="navbar mt-4 mb-4" style="min-width: 1200px;">
+		<nav class="navbar mt-4 mb-4">
 		  <div class="container-xl" style="padding-left: 0;">
 		    <form action="/notice/search/1" class="d-flex" id="noticeSearchForm" role="search" name="noticeSearchForm">
-		      <select class="form-select me-2" name="type" style="width: 100px; border: 1px solid #6c757d">
+		      <select class="form-select form-select-sm me-2" name="type" style="width: 100px; border: 1px solid #6c757d; border-radius: 2px;">
 		            <option value="N">글 번호</option>
 					<option value="W">작성자</option>
 					<option value="C">제목</option>
@@ -67,8 +65,8 @@
 		      		 onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);" 
 		      		 type="search" placeholder="검색" aria-label="Search" 
 		      		 style="border: 1px solid #6c757d">
-		      <button class="btn btn-outline-secondary" style="padding: 6px;">
-		      	<div class="bi bi-search" style="width: 19px;"></div>
+		      <button class="btn btn-outline-secondary" style="padding: 6px; border-radius: 2px;">
+		      	<div class="bi bi-search" style="width: 17px;"></div>
 		      </button>
 		    </form>
 		  </div>

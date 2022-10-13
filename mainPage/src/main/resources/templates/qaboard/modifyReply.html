@@ -63,7 +63,8 @@
 				  삭제
 				</button>
 				<!-- Modal -->
-				<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" 
+					 style="opacity: 1" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				  <div class="modal-dialog">
 				    <div class="modal-content">
 				      <div class="modal-header border-0">
@@ -74,9 +75,9 @@
 				        한 번 삭제하면 복구할 수 없습니다. 정말 삭제하시겠습니까?
 				      </div>
 				      <div class="modal-footer border-0">
-				        <button type="button" class="btn btn-outline-dark btn-lg" data-bs-dismiss="modal" style="margin-right: 8px;">취소</button>
+				        <button type="button" class="btn btn-outline-dark btn-lg" data-bs-dismiss="modal" style="margin: 0 8px 0 0;">취소</button>
 						<a class="btn btn-outline-danger btn-lg" th:href="@{/qaboard/replyDelete/{qaBoardNo}(qaBoardNo=${qaBoard.qaBoardNo})}"
-				   		   style="margin-right: 8px;">삭제</a>
+				   		   style="margin: 0;">삭제</a>
 				      </div>
 				    </div>
 				  </div>

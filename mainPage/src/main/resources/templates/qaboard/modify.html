@@ -42,7 +42,7 @@
 				<tr>
 					<th class="table-light align-middle">유형</th>
 					<td>
-						<select name="category_id" class="form-select" id="category_id" th:value="${qaBoard.category.category_id}">
+						<select name="category_id" class="form-select" id="category_id" th:value="${qaBoard.category.category_id}" style="font-size: 11px; border-radius: 2px;">
 								<option value="1" th:selected="${qaBoard.category.category_id} == '1'">관광지</option>
 								<option value="2" th:selected="${qaBoard.category.category_id} == '2'">숙박</option>
 								<option value="3" th:selected="${qaBoard.category.category_id} == '3'">맛집</option>
@@ -78,7 +78,8 @@
 				  삭제
 				</button>
 				<!-- Modal -->
-				<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" 
+					 style="opacity: 1" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				  <div class="modal-dialog">
 				    <div class="modal-content">
 				      <div class="modal-header border-0">
@@ -89,9 +90,9 @@
 				        한 번 삭제하면 복구할 수 없습니다. 정말 삭제하시겠습니까?
 				      </div>
 				      <div class="modal-footer border-0">
-				        <button type="button" class="btn btn-outline-dark btn-lg" data-bs-dismiss="modal" style="margin-right: 8px;">취소</button>
+				        <button type="button" class="btn btn-outline-dark btn-lg" data-bs-dismiss="modal" style="margin: 0 8px 0 0;">취소</button>
 						<a class="btn btn-outline-danger btn-lg" th:href="@{/qaboard/delete/{no}(no=${qaBoard.qaBoardNo})}" 
-				   		   style="margin-right: 8px;">삭제</a>
+				   		   style="margin: 0;">삭제</a>
 				      </div>
 				    </div>
 				  </div>

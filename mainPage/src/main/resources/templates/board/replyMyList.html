@@ -45,7 +45,7 @@
 											th:src="@{/img/{file}(file=${reply.img_path})}">
 										</button>	
 										<!-- Modal -->
-										<div class="modal fade"
+										<div class="modal fade" style="opacity: 1"
 											th:id="'replyImgModal' + ${reply.reply_no}" >
 										  <div class="modal-dialog modal-dialog-centered modal-lg">
 										    <div class="modal-content" 
@@ -102,7 +102,7 @@
 							</button>
 							<!-- Modal -->
 							<div class="modal fade" id="staticBackdrop" data-bs-keyboard="false" tabindex="-1" 
-								 aria-labelledby="staticBackdropLabel" aria-hidden="true">
+								 style="opacity: 1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 							  <div class="modal-dialog">
 							    <div class="modal-content">
 							      <div class="modal-header border-0">
@@ -113,9 +113,9 @@
 							        한 번 삭제하면 복구할 수 없습니다. 정말 삭제하시겠습니까?
 							      </div>
 							      <div class="modal-footer border-0">
-							        <button type="button" class="btn btn-outline-dark btn-lg" data-bs-dismiss="modal" style="margin-right: 8px;">취소</button>
+							        <button type="button" class="btn btn-outline-dark btn-lg" data-bs-dismiss="modal" style="margin: 0 8px 0 0;">취소</button>
 									<a th:href="@{/reply/delete/{reply_no}(reply_no=${reply.reply_no})}"
-									   class="btn btn-lg btn-outline-danger">삭제</a>
+									   class="btn btn-lg btn-outline-danger" style="margin: 0;">삭제</a>
 							      </div>
 							    </div>
 							  </div>
