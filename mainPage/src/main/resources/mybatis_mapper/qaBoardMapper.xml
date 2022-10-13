@@ -20,7 +20,6 @@
 		</association>
 		<association property="qaReply" javaType="qaReply"  foreignColumn="qaBoardNo">
 			<id column="qaReplyNo" property="qaReplyNo"/>
-			<result column="qaReplyTitle" property="qaReplyTitle"/>
 			<result column="qaReplyContent" property="qaReplyContent"/>
 			<result column="qaReplyDate" property="qaReplyDate"/>
 		</association>

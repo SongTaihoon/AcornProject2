@@ -28,7 +28,6 @@
 		</association>
 		<collection property="replys" javaType="java.util.ArrayList" ofType="Reply">
 			<id column="reply_no" property="reply_no"/>
-			<result column="reply_title" property="title"/>
 			<result column="reply_contents" property="contents"/>
 			<result column="reply_post_time" property="post_time"/>
 			<result column="reply_img_path" property="img_path"/>
@@ -102,7 +101,6 @@
 			u.user_email,
 			
 			r.reply_no,
-			r.title AS reply_title, 
 			r.contents AS reply_contents, 
 			r.post_time AS reply_post_time,
 			r.img_path AS reply_img_path,
@@ -159,7 +157,6 @@
 			u.birth,
 			
 		    r.reply_no, 
-		    r.title AS reply_title,
 		    r.contents AS reply_contents, 
 		    r.post_time AS reply_post_time, 
 		    r.img_path AS reply_img_path, 
@@ -301,7 +298,6 @@
 			u.birth,
 			
 		    r.reply_no, 
-		    r.title AS reply_title,
 		    r.contents AS reply_contents, 
 		    r.post_time AS reply_post_time, 
 		    r.img_path AS reply_img_path, 

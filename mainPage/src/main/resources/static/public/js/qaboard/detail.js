@@ -13,10 +13,9 @@ function noSpace(obj) { // 공백사용못하게
 
 //값이 없을 때 submit 불가
 const qaReplyInsertForm = document.forms.qaReplyInsertForm;
-const qaReplyTitle = qaReplyInsertForm.qaReplyTitle;
 const qaReplyContent = qaReplyInsertForm.qaReplyContent;
 qaReplyInsertForm.addEventListener("submit", (event) => {
-	if(!qaReplyTitle.value || !qaReplyContent.value) {
+	if(!qaReplyContent.value) {
 		event.preventDefault();		
 	}
 });

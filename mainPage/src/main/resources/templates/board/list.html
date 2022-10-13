@@ -30,9 +30,10 @@
 		      <span class="badge text-bg-dark" style="font-size: 20px;" th:text="${count}"></span>
 	      </div>
 		  <div class="ms-auto">
-		  	  <a href="/board/insert.do" class="btn btn-secondary">후기 작성</a>
+		  	  <a href="/board/insert.do" class="btn btn-secondary" style="padding: 12px 20px;">후기 작성</a>
 			  <div class="dropdown-center d-inline-block">
-				  <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+				  <button class="btn btn-dark dropdown-toggle" type="button" 
+				  		  style="padding: 12px 20px;" data-bs-toggle="dropdown" aria-expanded="false">
 				    필터
 				  </button>
 				  <ul class="dropdown-menu">
@@ -46,6 +47,7 @@
 			  </div>
 		  </div>
 	  </div>	
+	  <div class="table-responsive" style="border: none;">
 		<table class="mt-5 mb-5 table table-bordered table-hover align-middle">
 			<thead class="table-light">
 				<tr>
@@ -86,6 +88,7 @@
 				</th:block>
 			</tbody>
 		</table>
+	  </div>
 		<th:block th:unless="${count == 0}">
 			<div class="d-flex justify-content-center" th:insert="/pagination"></div>
 		</th:block>

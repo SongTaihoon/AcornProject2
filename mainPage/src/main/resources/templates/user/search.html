@@ -31,33 +31,34 @@
 			    <span class="badge text-bg-dark" th:text="${count}"></span>
 		    </span>
 	    </div>
-		<table class="mt-5 mb-5 table table-bordered table-hover align-middle"
-			   >
-			<thead class="table-light">
-				<tr>
-					<th>아이디</th>
-					<th>이름</th>
-					<th>이메일</th>
-					<th>전화번호</th>
-					<th>나이</th>
-					<th>주소</th>
-					<th>가입일</th>
-			    </tr>
-			</thead>
-			<tbody>
-				<th:block th:each="user : ${list}">
-					<tr th:onclick="'location.href = \'' + @{/user/detail/{userId}(userId = ${user.user_id})} + '\''">
-						<td th:text="${user.user_id}"></td>
-						<td th:text="${user.user_name}"></td>
-						<td th:text="${user.user_phone}"></td>
-						<td th:text="${(#dates.format(#calendars.createNow(),'yyyy'))} - ${(#dates.format(user.birth,'yyyy'))}"></td>
-						<td th:text="${user.user_email}"></td>
-						<td th:text="${user.add2}"></td>
-						<td th:text="${#dates.format(user.signup,'yyyy-MM-dd HH:mm')}"></td>
-					</tr>
-				</th:block>
-			</tbody>
-		</table>
+	    <div class="table-responsive" style="border: none;">
+			<table class="mt-5 mb-5 table table-bordered table-hover align-middle">
+				<thead class="table-light">
+					<tr>
+						<th>아이디</th>
+						<th>이름</th>
+						<th>이메일</th>
+						<th>전화번호</th>
+						<th>나이</th>
+						<th>주소</th>
+						<th>가입일</th>
+				    </tr>
+				</thead>
+				<tbody>
+					<th:block th:each="user : ${list}">
+						<tr th:onclick="'location.href = \'' + @{/user/detail/{userId}(userId = ${user.user_id})} + '\''">
+							<td th:text="${user.user_id}"></td>
+							<td th:text="${user.user_name}"></td>
+							<td th:text="${user.user_phone}"></td>
+							<td th:text="${(#dates.format(#calendars.createNow(),'yyyy'))} - ${(#dates.format(user.birth,'yyyy'))}"></td>
+							<td th:text="${user.user_email}"></td>
+							<td th:text="${user.add2}"></td>
+							<td th:text="${#dates.format(user.signup,'yyyy-MM-dd HH:mm')}"></td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+		</div>
 		<th:block th:unless="${count == 0}">
 			<div class="d-flex justify-content-center" th:insert="/pagination"></div>
 		</th:block>

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>공지 사항</title>
+<title>공지사항</title>
 <link rel="stylesheet" href="/public/css/notice/list.css">
 <script src="/public/js/notice/list.js" defer="defer"></script>
 </head>
@@ -19,22 +19,23 @@
 		    	<a href="#">고객 센터</a>
 		    </li>
 		    <li class="breadcrumb-item" aria-current="page">
-		    	<a href="/notice/list/1" class="breadcrumb-item active">공지 사항</a>
+		    	<a href="/notice/list/1" class="breadcrumb-item active">공지사항</a>
 		    </li>
 		  </ol>
 		</nav>
 		<div class="pb-4 d-flex align-items-center" 
-			style="border-bottom: 1px solid #e8e8e8;">
+			 style="border-bottom: 1px solid #e8e8e8;">
 			<div class="d-flex align-items-center">
-			    <span style="font-size: 35px; margin-right: 8px;">공지 사항</span>
+			    <span style="font-size: 35px; margin-right: 8px;">공지사항</span>
 			    <span class="badge text-bg-dark" style="font-size: 20px;" th:text="${count}"></span>
 		    </div>
 			<div class="ms-auto">
 				<th:block th:if="${session.loginUser?.adminCk == 1}">
-					<a href="/notice/insert.do" class="btn btn-secondary">공지 사항 등록</a>
+					<a href="/notice/insert.do" class="btn btn-secondary" style="padding: 12px 20px;">공지사항 등록</a>
 				</th:block>
 				<div class="dropdown-center d-inline-block">
-				  	<button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+				  	<button class="btn btn-dark dropdown-toggle" type="button" 
+				  			style="padding: 12px 20px;" data-bs-toggle="dropdown" aria-expanded="false">
 					    필터
 					</button>
 				    <ul class="dropdown-menu">
@@ -45,26 +46,28 @@
 			  	</div>
 		  	</div>
 		</div>
-		<table class="mt-5 mb-5 table table-bordered table-hover">
-			<thead class="table-light">
-				<tr>
-					<th>글 번호</th>
-					<th>제목</th>
-					<th>조회수</th>
-					<th>등록일</th>
-				</tr>
-			</thead>
-			<tbody>
-				<th:block th:each="notice : ${noticeList}" >
-					<tr th:onclick="location.href='/notice/detail/[[${notice.notice_no}]]'">
-						<td th:text="${notice.notice_no}"></td>
-						<td th:text="${notice.title}"></td>
-						<td th:text="${notice.views}"></td>
-						<td th:text="${#dates.format(notice.post_time,'yyyy-MM-dd HH:mm:ss')}"></td>
-					</tr>				
-				</th:block>
-			</tbody>
-		</table>
+		<div class="table-responsive" style="border: none;">
+			<table class="mt-5 mb-5 table table-bordered table-hover">
+				<thead class="table-light">
+					<tr>
+						<th>글 번호</th>
+						<th>제목</th>
+						<th>조회수</th>
+						<th>등록일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<th:block th:each="notice : ${noticeList}" >
+						<tr th:onclick="location.href='/notice/detail/[[${notice.notice_no}]]'">
+							<td th:text="${notice.notice_no}"></td>
+							<td th:text="${notice.title}"></td>
+							<td th:text="${notice.views}"></td>
+							<td th:text="${#dates.format(notice.post_time,'yyyy-MM-dd HH:mm:ss')}"></td>
+						</tr>				
+					</th:block>
+				</tbody>
+			</table>
+		</div>
 		<th:block th:unless="${count == 0}">
 			<div class="d-flex justify-content-center" th:insert="/pagination"></div>
 		</th:block>
