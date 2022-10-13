@@ -80,7 +80,7 @@ public class BoardService {
 //	@Transactional : 함수 내부의 db 실행을 한 트랙젝션으로 보고 중간에 실패 시 db 실행을 취소 (roll back);
 	@Transactional
 	public int modifyBoardRemoveBoardImg(Board board, int[] boardImgNos) throws Exception {
-		int modify = 0;
+		int update = 0;
 		// 기존의 이미지 삭제
 		if(boardImgNos != null) { // 선택한 삭제될 board_img.board_img_no
 			for(int no : boardImgNos) {
@@ -100,8 +100,7 @@ public class BoardService {
 				System.out.println("board의 Board_img(DB) 등록 성공! : " + registBoardImg);
 			}
 		}
-		modify = boardMapper.updateOne(board); // DB에서 후기 수정
-		System.out.println(modify);
-		return modify;
+		update = boardMapper.updateOne(board); // DB에서 후기 수정
+		return update;
 	}
 }

@@ -1,7 +1,9 @@
+* {
+    box-sizing: border-box;
+}
 #path {
     display: flex;
     margin: 20px 0;
-    min-width: 1200px;
 }
 #path ol {
     margin-left: auto;      
@@ -14,7 +16,7 @@
 	cursor: Pointer;
 }
 html, body {
-	height: 100%;
+	height: 100vh;
 }
 #wrapper {	
 	min-height: 100%;
@@ -27,4 +29,6 @@ table th, table td {
 }
 .footer {
     bottom: 0;
+    position: absolute;
+	width: 100%;
 }

@@ -48,7 +48,15 @@
 		LEFT JOIN QAREPLY r
 		USING(qaBoardNo)
 		
-		ORDER BY q.qaBoardNo DESC 
+		<if test="sort != null">
+			ORDER BY ${sort} 
+		</if>
+		<if test="direct != null">
+			<choose>
+				<when test="direct.equals('desc')">desc</when>
+				<otherwise>asc</otherwise>
+			</choose>
+		</if>
 		LIMIT #{startRow}, #{pageSize}
 	</select>
 	<select id="selectPageAllCount" resultType="int">

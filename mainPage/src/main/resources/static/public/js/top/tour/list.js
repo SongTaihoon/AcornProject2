@@ -36,9 +36,10 @@
 	        var  names = this.cells[1].innerText; 
 	        var  region = this.cells[2].innerText;
 	        var  cate = this.cells[3].innerText;
-			var  address = this.cells[4].innerText;
-	        var  search = this.cells[5].innerText;
-	        var  number = this.cells[6].innerText;
+			var  phone = this.cells[4].innerText;
+			var  address = this.cells[5].innerText;
+	        var  search = this.cells[6].innerText;
+	        var  number = this.cells[7].innerText;
 	
 	// 주소-좌표 변환 객체를 생성합니다
 	var geocoder = new kakao.maps.services.Geocoder();
@@ -82,7 +83,7 @@
 			
 	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 	        map.setCenter(coords);
-			
+
 	    } 
 	    
 	});  

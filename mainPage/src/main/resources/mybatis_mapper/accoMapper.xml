@@ -13,6 +13,7 @@
 		<result column="views" property="views"/>	
 		<result column="search" property="search"/>	
 		<result column="ranking" property="ranking"/>	
+		<result column="acco_phone" property="acco_phone"/>	
 		<!-- Acco : UsersDto = N : 1   -->	
 		<association property="user" javaType="UserDto" foreignColumn="user_id">
 			<id column="user_id" property="user_id"/>
@@ -75,8 +76,8 @@
 	<insert id="insertOne" parameterType="Acco"
 	 		useGeneratedKeys="true" keyProperty="acco_rank">
 		INSERT INTO ACCOMMODATE 
-			( tourist, address1,province,city,category_id,search , user_id)
-				VALUES (#{tourist}, #{address1},#{province},#{city},#{category.category_id},#{search}, #{user.user_id})
+			( tourist, address1,province,city,category_id,search , user_id,acco_phone)
+				VALUES (#{tourist}, #{address1},#{province},#{city},#{category.category_id},#{search}, #{user.user_id},#{acco_phone})
 	</insert>
 	<!-- 수정  -->
 	<update id="updateOne" parameterType="Acco">
@@ -84,7 +85,8 @@
 				tourist = #{tourist},
 				city = #{city},
 				address1 = #{address1},
-				search = #{search}
+				search = #{search},
+				acco_phone = #{acco_phone}
 				WHERE acco_rank = #{acco_rank}
 	</update>
 	<!-- 삭제  -->

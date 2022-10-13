@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,11 +52,21 @@ public class NoticeController {
 	@GetMapping("/list/{page}")
 	public String list(
 			@PathVariable int page, 
+			@RequestParam(required = false) String sort,
+			@RequestParam(required = false, defaultValue = "desc") String direct,
 			Model model) {
 		int row = 10;
 		int startRow = (page - 1) * row;
-		List<Notice> noticeList = noticeMapper.selectPageAll(startRow, row);
-		int count = noticeMapper.selectPageAllCount();
+		List<Notice> noticeList = null;
+		int count = 0;
+		
+		if(sort != null && !sort.equals("")) { // 정렬(o)
+			noticeList = noticeMapper.selectPageAll(startRow, row, sort, direct);
+			count = noticeMapper.selectPageAllCount(sort, direct);
+		} else { // 정렬(x)
+			noticeList = noticeMapper.selectPageAll(startRow, row, null, null);
+			count = noticeMapper.selectPageAllCount(null, null);
+		}
 		
 		Pagination pagination = new Pagination(page, count, "/notice/list/", row);
 		model.addAttribute("pagination", pagination);
@@ -92,11 +105,40 @@ public class NoticeController {
 //	공지 사항 상세 페이지
 	@GetMapping("/detail/{noticeNo}")
 	public String detail(
-			@PathVariable int noticeNo, 
+			@PathVariable Integer noticeNo, 
+			HttpServletRequest req,
+			HttpServletResponse resp,
 			Model model) {
 		Notice notice = null; 
 		try {
-			notice = noticeService.noticeUpdateView(noticeNo);
+			notice = noticeMapper.selectDetailOne(noticeNo);
+			
+			// 공지 사항 조회수 로직
+			Cookie oldCookie = null; // oldCookie 객체를 선언한 후 빈값으로 초기화
+			Cookie[] cookies = req.getCookies(); // request 객체에서 쿠키들을 가져와 Cookie 타입을 요소로 가지는 리스트에 담기
+			
+			if (cookies != null) { // 접속한 기록이 있을 때
+				for (Cookie cookie : cookies) { // 반복문으로 하나하나 검사
+					if (cookie.getName().equals("noticeViews")) { // 쿠키의 이름이 noticeViews인지 확인 
+						oldCookie = cookie; // 맞으면 oldCookie에 해당 쿠키를 저장 
+					}
+				}
+			}
+			if (oldCookie != null) { // 이름이 noticeViews인 쿠키가 있을 때
+				if (!oldCookie.getValue().contains("["+ noticeNo.toString() +"]")) { // 특정 공지 사항 아이디가 oldCookie에 포함되어 있지 않을 때 (이미 포함되어 있다면 조회수 올라가지 않음)
+					this.noticeService.noticeUpdateView(noticeNo); // 조회수 올리기
+					oldCookie.setValue(oldCookie.getValue() + "_[" + noticeNo + "]"); // 조회한 공지 사항 아이디 oldCookie에 저장
+					oldCookie.setPath("/"); // 쿠키 경로 저장
+					oldCookie.setMaxAge(60 * 60 * 24); // 쿠키 지속 시간 저장
+					resp.addCookie(oldCookie); // response에 oldCookie를 전달
+				}
+			} else { // 이름이 noticeViews인 쿠키가 없을 때
+				this.noticeService.noticeUpdateView(noticeNo); // 조회수 올리기
+				Cookie newCookie = new Cookie("noticeViews", "[" + noticeNo + "]"); // noticeViews라는 이름으로 쿠키를 만들고 조회한 공지 사항 아이디 저장
+				newCookie.setPath("/"); // 쿠키 경로 저장
+				newCookie.setMaxAge(60 * 60 * 24); // 쿠키 지속 시간 저장
+				resp.addCookie(newCookie); // response에 newCookie를 전달
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

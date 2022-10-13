@@ -32,12 +32,22 @@ public class UserController {
 	@GetMapping("/list/{page}")
 	public String list(
 			@PathVariable int page, 
+			@RequestParam(required = false) String sort,
+			@RequestParam(required = false, defaultValue = "desc") String direct,
 			Model model) {
 		int row = 10;
 		int startRow = (page - 1) * row;
-		List<UserDto> userList = userMapper.selectPageAll(startRow, row);
-		int count = userMapper.selectPageAllCount();
 		
+		List<UserDto> userList = null;
+		int count = 0;
+		
+		if(sort != null && !sort.equals("")) { // 정렬(o)
+			userList = userMapper.selectPageAll(startRow, row, sort, direct);
+			count = userMapper.selectPageAllCount(sort, direct);
+		} else { // 정렬(x)
+			userList = userMapper.selectPageAll(startRow, row, null, null);
+			count = userMapper.selectPageAllCount(null, null);
+		}
 		Pagination pagination = new Pagination(page, count, "/user/list/", row);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("userList", userList);
@@ -50,19 +60,30 @@ public class UserController {
 //	회원 검색 페이지
 	@GetMapping("/search/{page}")
 	public String searchProduct(
-			@RequestParam(value = "type") String type,
-			@RequestParam(value = "keyword") String keyword,
 			@PathVariable int page, 
+			@RequestParam(required = false, value = "type") String type,
+			@RequestParam(required = false, value = "keyword") String keyword,
+			@RequestParam(required = false) String sort,
+			@RequestParam(required = false, defaultValue = "desc") String direct,
 			@SessionAttribute(required = false) UserDto loginUser,
 			HttpSession session,
 			Criteria cri, 
 			Model model) {
 		int row = 10;
-		int startRow = (page - 1) * row;
+		int startRow = (page - 1) * row;		
 		cri.setAmount(row);
 		cri.setSkip(startRow);
-		List<UserDto> list = userMapper.searchUser(cri);
-		int count = userMapper.userGetTotal(cri);
+		
+		List<UserDto> list = null;
+		int count = 0;
+		
+		if(sort != null && !sort.equals("")) { // 정렬(o)
+			list = userMapper.searchUser(cri, sort, direct);
+			count = userMapper.userGetTotal(cri, sort, direct);
+		} else { // 정렬(x)
+			list = userMapper.searchUser(cri, null, null);
+			count = userMapper.userGetTotal(cri, null, null);
+		}
 		if(!list.isEmpty()) { 
 			model.addAttribute("list", list);
 		} else {
@@ -115,7 +136,7 @@ public class UserController {
 				} else {
 					return "redirect:/";
 				}
-			}else {
+			} else {
 				return "redirect:/user/login.do";					
 			}
 	}
@@ -123,6 +144,7 @@ public class UserController {
 //	회원 로그아웃
 	@GetMapping("/logout.do")
 	public String logout(HttpSession session) {
+		System.out.println("로그아웃 성공!"); 
 		session.invalidate();
 		return "redirect:/";
 	}
@@ -159,6 +181,7 @@ public class UserController {
 			session.setAttribute("loginUser", user); // 회원가입하면 로그인되어 있도록 설정
 			return "redirect:/";
 		}else {
+			System.out.println("회원가입 실패! : " + insert);
 			return "redirect:/user/signup.do";
 		}
 	}
@@ -200,7 +223,6 @@ public class UserController {
 		} else if(user.getUser_id().equals(loginUser.getUser_id()) || (loginUser.getAdminCk() == 1)) { // 로그인된 일반 회원이 본인의 수정 페이지로 이동 / 관리자는 모든 회원 수정 가능
 			System.out.println("회원 수정 페이지로 이동 성공!");
 			model.addAttribute("user", user);
-			System.out.println(user);
 			return "/user/update";	
 		} else { // 로그인된 일반 회원이 다른 회원의 수정 페이지로 이동할 수 없음
 			System.out.println("다른 회원의 정보를 수정할 수 없습니다.");
@@ -210,7 +232,9 @@ public class UserController {
 	
 //	회원 정보 수정
 	@PostMapping("/update.do")
-	public String update(UserDto user) {
+	public String update(
+			UserDto user,
+			HttpSession session) {
 		int update = 0;
 		try {
 			update = userMapper.updateOne(user);
@@ -271,7 +295,11 @@ public class UserController {
 			HttpSession session) {
 		int delete = 0;
 		if(loginUser.getAdminCk() == 1 && !loginUser.getUser_id().equals(userId)) { // 관리자가 본인이 아닌 다른 회원을 삭제 성공 시 로그아웃되지 않고 회원 리스트로 이동
-			delete = userService.removeUser(userId);
+			try {
+				delete = userService.removeUser(userId);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			if(delete > 0) {
 				System.out.println("회원 삭제 성공!(관리자) : " + delete);
 				return "redirect:/user/list/1";
@@ -280,7 +308,11 @@ public class UserController {
 				return "redirect:/user/update/" + userId;
 			}
 		} else if(loginUser.getAdminCk() == 0 && loginUser.getUser_id().equals(userId)) { // 일반 회원이 본인을 삭제 성공 시 로그아웃되면서 메인 화면으로 이동
-			delete = userService.removeUser(userId);
+			try {
+				delete = userService.removeUser(userId);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			if(delete > 0) {
 				System.out.println("회원 삭제 성공!(일반 회원) : " + delete);
 				session.invalidate(); // 세션 강제 만료
@@ -290,7 +322,7 @@ public class UserController {
 				return "redirect:/user/update/" + userId;
 			}
 		} else { // 관리자가 본인을 삭제하거나 일반 회원이 다른 회원을 삭제하는 것 불가
-			System.out.println("회원 삭제 불가");
+			System.out.println("관리자는 본인 삭제 불가");
 			return "redirect:/user/update/" + userId;
 		}
 	} 

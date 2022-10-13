@@ -13,6 +13,7 @@
 		<result column="views" property="views"/>	
 		<result column="search" property="search"/>
 		<result column="ranking" property="ranking"/>
+		<result column="tour_phone" property="tour_phone"/>
 		<!-- Tour : UsersDto = N : 1   -->	
 		<association property="user" javaType="UserDto" foreignColumn="user_id">
 			<id column="user_id" property="user_id"/>
@@ -76,8 +77,8 @@
 	<insert id="insertOne" parameterType="Tour"
 	 		useGeneratedKeys="true" keyProperty="tour_rank">
 		INSERT INTO TOUR 
-			( tourist, address3,province,city,category_id,search , user_id)
-				VALUES (#{tourist}, #{address3},#{province},#{city},#{category.category_id},#{search}, #{user.user_id})
+			( tourist, address3,province,city,category_id,search , user_id,tour_phone)
+				VALUES (#{tourist}, #{address3},#{province},#{city},#{category.category_id},#{search}, #{user.user_id},#{tour_phone})
 	</insert>
 	<!-- 수정  -->
 	<update id="updateOne" parameterType="Tour">
@@ -85,7 +86,8 @@
 				tourist = #{tourist},
 				city = #{city},
 				address3 = #{address3},
-				search = #{search}
+				search = #{search},
+				tour_phone = #{tour_phone}
 				WHERE tour_rank = #{tour_rank}
 	</update>
 	<!-- 삭제  -->

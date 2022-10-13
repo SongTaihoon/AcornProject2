@@ -27,6 +27,8 @@ public class UserDto {
 	private String user_pw; // 회원 패스워드
 	private String user_phone; // 회원 전화번호
  	private String user_email; // 회원 이메일
+ 	private String post_user_phone; // 회원 전화번호
+ 	private String post_user_email; // 회원 이메일
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birth; // 회원 생일
 	private int adminCk; // 관리자 체크
