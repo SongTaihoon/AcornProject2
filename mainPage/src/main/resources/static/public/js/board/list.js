@@ -9,7 +9,7 @@ function noSpaceForm(obj) { // 공백사용못하게
 }
 const reviewSearchForm = document.forms.reviewSearchForm;
 reviewSearchForm.addEventListener("submit", (event) => {
-	if(!reviewSearchForm.keyword.value) {
+	if(!reviewSearchForm.search.value) {
 		event.preventDefault();		
 	}
 });

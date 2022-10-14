@@ -27,10 +27,9 @@ async function replyListHadler(e){
 const replyUpdateForm = document.querySelectorAll("form");
 console.log(replyUpdateForm);
 replyUpdateForm.forEach((form) => {
-	let title = form.title;
 	let contents = form.contents;
 	form.addEventListener("submit", (event) => {
-	if(!(title.value) || !(contents.value)) {
+	if(!(contents.value)) {
 		event.preventDefault();		
 	}
 	});

@@ -237,7 +237,6 @@ ON UPDATE CASCADE ON DELETE CASCADE
 
 CREATE TABLE REPLY(
 reply_no INT AUTO_INCREMENT,
-title VARCHAR(255) NOT NULL,
 contents VARCHAR(255) NOT NULL,
 post_time DATETIME DEFAULT CURRENT_TIMESTAMP(),
 img_path VARCHAR(255) DEFAULT NULL,
@@ -307,7 +306,6 @@ insert into qaboard
 
 CREATE TABLE QAREPLY(
 qaReplyNo INT AUTO_INCREMENT,
-qaReplyTitle VARCHAR(255) NOT NULL,
 qaReplyContent TEXT,
 qaReplyDate DATETIME DEFAULT CURRENT_TIMESTAMP(),
 qaBoardNo INT,
@@ -754,8 +752,6 @@ INSERT INTO RESTAURANT(tourist, province, city, address2, rest,category_id,user_
  ('별돈별정원점','제주특별자치도','제주시','제주 제주시 고산로8길 21-15','음식','3','admin',16303),
  ('뚱보아저씨[한식]','제주특별자치도','제주시','제주 제주시 중산간서로 3651-0','음식','3','admin',16098),
  ('제주곰집흑돼지연탄구이','제주특별자치도','서귀포시','제주 서귀포시 이어도로 703-4','음식','3','admin',16051);
-
-
 
 
 

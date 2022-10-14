@@ -7,69 +7,96 @@
 		  		<li th:id="${'replyLi' + reply.reply_no}"
 		  			class="list-group-item bg-light">	
 		  		  <form action="/reply/update.do" method="post" enctype="multipart/form-data" name="replyUpdate">
-		  		  	<div class="mt-2 d-flex align-self-center">
-						<div class="ms-auto">
-							<span th:text="'등록일 : ' + ${#dates.format(reply.post_time,'yyyy-MM-dd HH:mm:ss')}"></span>
-						</div>
+		  		  	<div class="card mb-3">
+					  <div class="row">
+					    <div class="col-md-4">
+					        <div th:if="${reply.img_path != null}" style="width: 100%; height:100%;">
+								<!-- Button trigger modal -->
+								<button type="button" class="btn border-0" data-bs-toggle="modal"
+										style="padding: 0; width: 100%; height:100%;" 
+										th:data-bs-target="'#replyImgModal' + ${reply.reply_no}">
+									<img alt="댓글 이미지" class="card-img card-img-right" 
+										 style="width: 100%; height:100%; object-fit: cover;"
+										 th:src="@{/img/{file}(file=${reply.img_path})}">
+								</button>	
+								<!-- Modal -->
+								<div class="modal fade" style="opacity: 1"
+									 th:id="'replyImgModal' + ${reply.reply_no}" >
+								  <div class="modal-dialog modal-dialog-centered modal-lg">
+								    <div class="modal-content" 
+								    	 style="background-color: rgba(255,255,255,0)">
+								      <div class="modal-body">
+				   						<img alt="댓글 이미지" class="card-img card-img-right"
+											 th:src="@{/img/{file}(file=${reply.img_path})}" width="760">  
+								      </div>
+								    </div>
+								  </div>
+								</div>							
+							</div>
+							<div th:unless="${reply.img_path != null}" style="width: 100%; height: 100%;">
+					  			<!-- Button trigger modal -->
+								<button type="button" class="btn border-0" data-bs-toggle="modal"
+										style="padding: 0; width: 100%; height: 100%;" 
+										data-bs-target="#replyImgModal">
+									<img alt="댓글 이미지" class="card-img card-img-right" 
+										 style="width: 100%; height: 100%;"
+					      	 	   		 src="/img/JEJU1.jpeg">
+								</button>			
+								<!-- Modal -->
+								<div class="modal fade" style="opacity: 1"
+									 id="replyImgModal" >
+								  <div class="modal-dialog modal-dialog-centered modal-lg">
+								    <div class="modal-content" 
+								    	 style="background-color: rgba(255,255,255,0)">
+								      <div class="modal-body">
+					  						<img alt="댓글 이미지" class="card-img card-img-right"
+											 src="/img/JEJU1.jpeg" width="760">  
+								      </div>
+								    </div>
+								  </div>
+								</div>	
+						  	</div>
+					    </div>
+					    <div class="col-md-8">
+					      <div class="card-body">
+					  		<table class="mt-3 mb-3 table align-middle table-bordered">
+								<tbody>
+									<tr>
+										<th class="table-light align-middle">작성자</th>
+										<td>
+											<input name="user.user_id" th:value="${reply.user?.user_id}" 
+												   type="text" class="form-control" readonly>
+										</td>
+									</tr>
+									<tr>
+										<th class="table-light align-middle">사진</th>
+										<td>
+											<p th:if="${reply.img_path != null}" class="mb-2"> 기존 이미지 삭제
+												<input name="remove_img_check" type="checkbox"
+											   		   class="form-check-input align-middle" value="1">
+											</p>
+											<input name="imgFile" type="file" class="form-control form-control-lg" style="height: 29px;">
+										</td>
+									</tr>
+									<tr>
+										<th class="table-light align-middle">내용</th>
+										<td>
+											<textarea name="contents" class="form-control" th:text="${reply.contents}" 
+													  onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
+										</td>	
+									</tr>
+								</tbody>
+							</table>
+							<div class="d-flex">
+								<div class="ms-auto">
+									<span th:text="'등록일 : ' + ${#dates.format(reply.post_time,'yyyy-MM-dd HH:mm:ss')}"></span>
+								</div>
+							</div>
+					      </div>
+					    </div>
+					  </div>
 					</div>
-			  		<table class="mt-3 mb-3 table align-middle table-bordered">
-						<tbody>
-							<tr>
-								<th class="table-light align-middle">작성자</th>
-								<td style="background-color: white;">
-									<input name="user.user_id" th:value="${reply.user?.user_id}" 
-										   type="text" class="form-control" readonly>
-								</td>
-							</tr>
-							<tr>
-								<th class="table-light align-middle">제목</th>
-								<td style="background-color: white;">
-									<input name="title" type="text" class="form-control" th:value="${reply.title}" 
-										   onkeyup="noSpace(this);" onchange="noSpace(this);">
-								</td>
-							</tr>
-							<tr>
-								<th class="table-light align-middle">사진</th>
-								<td style="background-color: white;">
-									<div class="mb-2" th:if="${reply.img_path != null}">
-										<p class="mb-2"> 삭제하기
-											<input name="remove_img_check" type="checkbox"
-										   		   class="form-check-input ms-1" value="1">
-										</p>
-										<!-- Button trigger modal -->
-										<button type="button" class="btn border-0" data-bs-toggle="modal"
-											style="padding: 0" 
-											th:data-bs-target="'#replyImgModal' + ${reply.reply_no}">
-											<img alt="댓글 이미지" class="img-thumbnail" 
-											 style="height:100%; width:40%; object-fit: cover;"
-											th:src="@{/img/{file}(file=${reply.img_path})}">
-										</button>	
-										<!-- Modal -->
-										<div class="modal fade"
-											th:id="'replyImgModal' + ${reply.reply_no}" >
-										  <div class="modal-dialog modal-dialog-centered modal-lg">
-										    <div class="modal-content" 
-										    style="background-color: rgba(255,255,255,0)">
-										      <div class="modal-body">
-						   						<img alt="댓글 이미지" class="img-thumbnail"
-													 th:src="@{/img/{file}(file=${reply.img_path})}" width="760">  
-										      </div>
-										    </div>
-										  </div>
-										</div>							
-									</div>
-									<input name="imgFile" type="file" class="form-control form-control-lg" style="height: 29px;">
-								</td>
-							</tr>
-							<tr>
-								<th class="table-light align-middle">내용</th>
-								<td style="background-color: white;">
-									<textarea name="contents" class="form-control" th:text="${reply.contents}" 
-											  onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
-								</td>	
-							</tr>
-						</tbody>
-					</table>
+		  		  	
 		  			<div class="d-flex mb-2 align-items-center">
 					    <a th:classappend="${
 					    		(reply.prefer_active != null && reply.prefer_active)
@@ -92,17 +119,18 @@
 					    	th:href="|javascript:replyPreferHandler(${reply.reply_no}, ${reply.prefer_active}, 'bad')|">
 					    </a>					
 		  				<div class="ms-auto">
-							<button type="reset" class="btn btn-lg btn-outline-warning" style="padding: 12px 37.5px;">초기화</button>
-							<button type="submit" class="btn btn-lg btn-outline-success" style="margin-left: 8px; margin-right: 8px;">수정</button>
+							<button type="reset" class="btn btn-lg btn-outline-warning" style="padding: 12px 12.5px;">초기화</button>
+							<button type="submit" class="btn btn-lg btn-outline-success" style="margin-left: 8px; margin-right: 8px; padding: 12px 20px;">수정</button>
 							<input type="hidden" name="reply_no" th:value="${reply.reply_no}">
 							<!-- Button trigger modal -->
 							<button type="button" class="btn btn-outline-danger btn-lg" 
-								    data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+								    data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+								    style="padding: 12px 20px;">
 							  삭제
 							</button>
 							<!-- Modal -->
 							<div class="modal fade" id="staticBackdrop" data-bs-keyboard="false" tabindex="-1" 
-								 aria-labelledby="staticBackdropLabel" aria-hidden="true">
+								 style="opacity: 1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 							  <div class="modal-dialog">
 							    <div class="modal-content">
 							      <div class="modal-header border-0">
@@ -113,9 +141,9 @@
 							        한 번 삭제하면 복구할 수 없습니다. 정말 삭제하시겠습니까?
 							      </div>
 							      <div class="modal-footer border-0">
-							        <button type="button" class="btn btn-outline-dark btn-lg" data-bs-dismiss="modal" style="margin-right: 8px;">취소</button>
+							        <button type="button" class="btn btn-outline-dark btn-lg" data-bs-dismiss="modal" style="margin: 0 8px 0 0; padding: 12px 20px;">취소</button>
 									<a th:href="@{/reply/delete/{reply_no}(reply_no=${reply.reply_no})}"
-									   class="btn btn-lg btn-outline-danger">삭제</a>
+									   class="btn btn-lg btn-outline-danger" style="margin: 0; padding: 12px 20px;">삭제</a>
 							      </div>
 							    </div>
 							  </div>

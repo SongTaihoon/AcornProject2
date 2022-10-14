@@ -55,7 +55,7 @@
 		    <tr>
 		      <th style="width: 100px;" class="bg-light align-middle">카테고리</th>
 		      <td style="width: 600px;">
-		      	<select name="category_id" class="form-select" id="category_id" th:value="${board.category.category_id}">
+		      	<select name="category_id" class="form-select" id="category_id" th:value="${board.category.category_id}" style="font-size: 11px; border-radius: 2px;">
 					<option value="1" th:selected="${board.category.category_id} == '1'">관광지</option>
 					<option value="2" th:selected="${board.category.category_id} == '2'">숙박</option>
 					<option value="3" th:selected="${board.category.category_id} == '3'">맛집</option>
@@ -71,7 +71,7 @@
 		    <tr>
 		      <th style="width: 100px;" class="bg-light align-middle">평점</th>
 		      <td style="width: 600px;">
-		      	<select name="rating" class="form-select" id="rating" th:value="${board.rating}">
+		      	<select name="rating" class="form-select" id="rating" th:value="${board.rating}" style="font-size: 11px; border-radius: 2px;">
 					<option value="0.0" th:selected="${board.rating} == '0.0'">0.0</option>
 					<option value="0.5" th:selected="${board.rating} == '0.5'">0.5</option>
 					<option value="1.0" th:selected="${board.rating} == '1.0'">1.0</option>
@@ -127,17 +127,19 @@
 		</table>
 		<div class="d-flex">
 			<div class="ms-auto">
-				<button class="btn btn-outline-warning btn-lg" type="reset" style="padding: 12px 37.5px;">초기화</button>
-				<button class="btn btn-outline-success btn-lg" type="submit" style="margin-left: 8px; margin-right: 8px;">수정</button>
+				<button class="btn btn-outline-warning btn-lg" type="reset" style="padding: 12px 12.5px;">초기화</button>
+				<button class="btn btn-outline-success btn-lg" type="submit" style="margin-left: 8px; margin-right: 8px; padding: 12px 20px;">수정</button>
 				<input type="hidden" name="board_no" th:value="${board.board_no}">
 				<input type="hidden" name="user.user_id" th:value="${board.user?.user_id}">
 				<!-- Button trigger modal -->
 				<button type="button" class="btn btn-outline-danger btn-lg" 
-					    style="margin-right: 8px;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+					    style="margin-right: 8px; padding: 12px 20px;" 
+					    data-bs-toggle="modal" data-bs-target="#staticBackdrop">
 				  삭제
 				</button>
 				<!-- Modal -->
-				<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" 
+					 style="opacity: 1" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				  <div class="modal-dialog">
 				    <div class="modal-content">
 				      <div class="modal-header border-0">
@@ -148,16 +150,17 @@
 				        한 번 삭제하면 복구할 수 없습니다. 정말 삭제하시겠습니까?
 				      </div>
 				      <div class="modal-footer border-0">
-				        <button type="button" class="btn btn-outline-dark btn-lg" data-bs-dismiss="modal" style="margin-right: 8px;">취소</button>
+				        <button type="button" class="btn btn-outline-dark btn-lg" 
+				        		data-bs-dismiss="modal" style="margin: 0 8px 0 0; padding: 12px 20px;">취소</button>
 						<th:block th:if="${session.loginUser?.adminCk == 1}">
 							<a th:href="@{/board/delete/{boardNo}/{userId}(boardNo=${board.board_no}, userId=${session.loginUser?.user_id})}" 
-							   class="btn btn-outline-danger btn-lg" style="margin-right: 8px;">
+							   class="btn btn-outline-danger btn-lg" style="margin: 0; padding: 12px 20px;">
 								삭제
 							</a>
 						</th:block>
 						<th:block th:unless="${session.loginUser?.adminCk == 1}">
 							<a th:href="@{/board/delete/{boardNo}/{userId}(boardNo=${board.board_no}, userId=${board.user?.user_id})}" 
-							   class="btn btn-outline-danger btn-lg" style="margin-right: 8px;">
+							   class="btn btn-outline-danger btn-lg" style="margin: 0; padding: 12px 20px;">
 								삭제
 							</a>
 						</th:block>
@@ -165,7 +168,8 @@
 				    </div>
 				  </div>
 				</div>
-				<a th:href="@{/board/detail/{boardNo}(boardNo=${board.board_no})}" class="btn btn-outline-dark btn-lg ms-auto">취소</a>
+				<a th:href="@{/board/detail/{boardNo}(boardNo=${board.board_no})}" class="btn btn-outline-dark btn-lg ms-auto"
+				   style="padding: 12px 20px;">취소</a>
 			</div>
 		</div>
 	   </form>
