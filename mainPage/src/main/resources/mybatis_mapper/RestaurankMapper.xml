@@ -41,7 +41,7 @@
 			LEFT JOIN CATEGORY c 
 		    USING(category_id)
 		     
-			ORDER BY search DESC LIMIT #{startRow}, #{pageSize} 
+			LIMIT #{startRow}, #{pageSize} 
 	</select>
 	<select id="selectPageAllCount" resultType="int">
 		SELECT COUNT(*) FROM RESTAURANT

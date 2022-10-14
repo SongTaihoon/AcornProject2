@@ -64,7 +64,7 @@
 		        // 인포윈도우로 장소에 대한 설명을 표시합니다
 		        var iwContent='<div style="width:250px;margin:4px;padding:6px 0;"><div style="font-size:22px;margin:10px 10px 1px;"><strong>'+names+
 		        '</strong></div><br><div style="font-size:15px;margin:5px;">'+address+
-		        '</div><div style="font-size:14px;margin:1px 10px 1px;"><span>'+search+'</span><span style="margin:1px 10px 1px;"><a style="text-decoration:none;" href="/top/tour/detail/'+number+
+		        '</div><div style="font-size:14px;margin:1px 10px 1px;"><span>'+phone+'</span><span style="margin:1px 10px 1px;"><a style="text-decoration:none;" href="/top/tour/detail/'+number+
 		        '">상세보기</a></span></div><a style="display:flex;justify-content:center;" class="btn" href="https://map.kakao.com/link/to/'+names+','+
 		        marker.getPosition().getLat()+','+marker.getPosition().getLng()+'" target="_blank">길찾기</a></div>';
 		        var	iwRemoveable = true;
