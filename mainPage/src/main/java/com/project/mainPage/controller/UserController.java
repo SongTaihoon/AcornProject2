@@ -110,6 +110,31 @@ public class UserController {
 			}
 	}
 	
+//	아이디 찾기
+	@PostMapping("/findId.do")
+	public String findId(
+			String user_name, 
+			String user_email, 
+			String user_phone,
+			Model model) {
+		UserDto user = null;
+		String msg = "";
+		try {
+			user = userMapper.findId(user_name, user_email, user_phone);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(user != null) {
+			msg = "당신의 아이디는 " + user.getUser_id() + "입니다.";
+			model.addAttribute("msg", msg);
+			return "user/login";
+		} else {
+			msg = "존재하지 않는 아이디입니다.";
+			model.addAttribute("msg", msg);
+			return "user/login";
+		}
+	}
+	
 //	회원 로그아웃
 	@GetMapping("/logout.do")
 	public String logout(HttpSession session) {

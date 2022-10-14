@@ -27,7 +27,15 @@
  	</select>
  	<!-- 로그인 -->
  	<select id="selectIdPwOne" resultType="UserDto">
- 		SELECT * FROM USER WHERE user_id = #{userId} AND user_pw = #{userPw}
+ 		SELECT * FROM USER 
+ 			WHERE user_id = #{userId} 
+ 				AND user_pw = #{userPw}
+ 	</select>
+ 	<select id="findId" resultType="UserDto">
+ 		SELECT * FROM USER 
+ 			WHERE user_name = #{user_name}
+ 				AND user_email = #{user_email}
+ 					AND user_phone = #{user_phone}
  	</select>
  	<select id="selectId" resultType="UserDto" parameterType="String">
  		SELECT * FROM USER WHERE user_id = #{user_id}
