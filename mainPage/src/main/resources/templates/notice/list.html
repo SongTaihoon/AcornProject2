@@ -33,15 +33,15 @@
 				<th:block th:if="${session.loginUser?.adminCk == 1}">
 					<a href="/notice/insert.do" class="btn btn-secondary" style="padding: 12px 20px;">공지사항 등록</a>
 				</th:block>
-				<div class="dropdown-center d-inline-block">
+				<div class="dropdown-center d-inline-block" th:if="${count != 0}">
 				  	<button class="btn btn-dark dropdown-toggle" type="button" 
 				  			style="padding: 12px 20px;" data-bs-toggle="dropdown" aria-expanded="false">
 					    필터
 					</button>
 				    <ul class="dropdown-menu">
-				      <li><a class="dropdown-item text-center ps-0 pe-0" th:href="@{./1(sort=views, direct=desc)}">조회수순</a></li>
-				      <li><a class="dropdown-item text-center ps-0 pe-0" th:href="@{./1(sort=post_time, direct=desc)}">최신순</a></li>
-				      <li><a class="dropdown-item text-center ps-0 pe-0" th:href="@{./1(sort=post_time, direct=asc)}">오래된순</a></li>
+				      <li><a class="dropdown-item text-center ps-0 pe-0" th:href="@{./1(field=${param.field}, search=${param.search}, sort=views, direct=desc)}">조회수순</a></li>
+				      <li><a class="dropdown-item text-center ps-0 pe-0" th:href="@{./1(field=${param.field}, search=${param.search}, sort=post_time, direct=desc)}">최신순</a></li>
+				      <li><a class="dropdown-item text-center ps-0 pe-0" th:href="@{./1(field=${param.field}, search=${param.search}, sort=post_time, direct=asc)}">오래된순</a></li>
 				    </ul>
 			  	</div>
 		  	</div>
@@ -71,15 +71,15 @@
 		<th:block th:unless="${count == 0}">
 			<div class="d-flex justify-content-center" th:insert="/pagination"></div>
 		</th:block>
-		<nav class="navbar mt-4 mb-4">
+		<nav class="navbar mt-4" style="margin-bottom: 0;">
 		  <div class="container-xl" style="padding-left: 0;">
-		    <form action="/notice/search/1" class="d-flex" id="noticeSearchForm" role="search" name="noticeSearchForm">
-		      <select class="form-select form-select-sm me-2" name="type" style="width: 100px; border: 1px solid #6c757d; border-radius: 2px;">
-		            <option value="N">글 번호</option>
-					<option value="W">작성자</option>
-					<option value="C">제목</option>
+		    <form th:action="@{./1}" class="d-flex" id="noticeSearchForm" role="search" name="noticeSearchForm">
+		      <select class="form-select form-select-sm me-2" name="field" 
+		      		  style="width: 100px; border: 1px solid #6c757d; border-radius: 2px; font-size: 11px;">
+					<option th:selected="${#strings.equals(param.field, 'notice_no')}" value="notice_no">글 번호</option>
+		      	    <option th:selected="${#strings.equals(param.field, 'title')}" value="title">제목</option>
 		      </select>
-		      <input class="form-control me-2" name="keyword" id="search" size="20" 
+		      <input class="form-control me-2" name="search" id="search" size="20" 
 		      		 onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);" 
 		      		 type="search" placeholder="검색" aria-label="Search" 
 		      		 style="border: 1px solid #6c757d">

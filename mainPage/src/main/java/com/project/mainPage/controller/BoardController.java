@@ -26,7 +26,6 @@ import com.project.mainPage.dto.BoardImg;
 import com.project.mainPage.service.BoardService;
 import com.project.mainPage.dto.Board;
 import com.project.mainPage.dto.BoardPrefer;
-import com.project.mainPage.dto.Criteria;
 import com.project.mainPage.dto.Pagination;
 import com.project.mainPage.dto.Reply;
 import com.project.mainPage.dto.ReplyPrefer;
@@ -72,6 +71,8 @@ public class BoardController {
 	public String list(
 			@PathVariable int page, 
 			Model model, 
+			@RequestParam(required = false) String field,
+			@RequestParam(required = false) String search,
 			@RequestParam(required = false) String sort,
 			@RequestParam(required = false, defaultValue = "desc") String direct,
 			@SessionAttribute(required = false) UserDto loginUser) {
@@ -80,15 +81,24 @@ public class BoardController {
 		
 		List<Board> boardList = null;
 		int count = 0;
-		
-		if(sort != null && !sort.equals("")) { // 정렬(o)
-			boardList = boardMapper.selectPageAll(startRow, row, sort, direct);
-			count = boardMapper.selectPageAllCount(sort, direct);
-		} else { // 정렬(x)
-			boardList = boardMapper.selectPageAll(startRow, row, null, null);
-			count = boardMapper.selectPageAllCount(null, null);
+		if(field != null && !field.equals("")) {
+			if(sort != null && !sort.equals("")) { // 검색(o) + 정렬(o)
+				boardList = boardMapper.selectPageAll(startRow, row, field, search, sort, direct);
+				count = boardMapper.selectPageAllCount(field, search, sort, direct);
+			} else { // 검색(o) + 정렬(x)
+				boardList = boardMapper.selectPageAll(startRow, row, field, search, null, null);
+				count = boardMapper.selectPageAllCount(field, search, null, null);
+			}
+		} else {
+			if(sort != null && !sort.equals("")) { // 검색(x) + 정렬(o)
+				boardList = boardMapper.selectPageAll(startRow, row, null, null, sort, direct);
+				count = boardMapper.selectPageAllCount(null, null, sort, direct);
+			} else { // 검색(x) + 정렬(x)
+				boardList = boardMapper.selectPageAll(startRow, row, null, null, null, null);
+				count = boardMapper.selectPageAllCount(null, null, null, null);
+			}
 		}
-		System.out.println(boardList);
+		
 		Pagination pagination = new Pagination(page, count, "/board/list/", row);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("list", boardList);
@@ -97,35 +107,6 @@ public class BoardController {
 		model.addAttribute("page", page);
 		return "/board/list";
 	}
-	
-//	후기 검색 페이지
-	@GetMapping("/search/{page}")
-	public String searchProduct(
-			@RequestParam(value = "type") String type,
-			@RequestParam(value = "keyword") String keyword,
-			@PathVariable int page, 
-			Criteria cri, 
-			Model model) {
-		int row = 10;
-		int startRow = (page - 1) * row;
-		cri.setAmount(row);
-		cri.setSkip(startRow);
-		List<Board> list = boardMapper.searchBoard(cri);
-		int count = boardMapper.boardGetTotal(cri);
-		  if(!list.isEmpty()) { 
-			model.addAttribute("list", list);
-		  } else {
-		    model.addAttribute("listCheck","empty"); 
-			return "/board/search";
-		  }
-		Pagination pagination = new Pagination(page, count, "/board/search/", row);
-		model.addAttribute("pagination", pagination);
-		model.addAttribute("list", list);
-		model.addAttribute("row", row);
-		model.addAttribute("count", count);
-		model.addAttribute("page", page);
-		return "/board/search";
-	}	
 	
 //	후기 상세 페이지
 	@GetMapping("/detail/{boardNo}")

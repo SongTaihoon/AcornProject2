@@ -3,10 +3,10 @@
 }
 #path {
     display: flex;
-    margin: 20px 0;
+    margin: 75px 0 25px 0;
 }
 #path ol {
-    margin-left: auto;      
+    margin-left: auto;    
 }
 #path ol li a {   
     text-decoration: none;
@@ -37,4 +37,14 @@ table td{
 th{
 	width: 150px;
 	height: 50px;
+}
+@media (max-width: 576px) {
+	#wrapper {
+	    padding-bottom: 750px;
+	}
+}
+@media (max-width: 992px) {
+	#path {
+	    margin-top: 93px;
+	}
 }

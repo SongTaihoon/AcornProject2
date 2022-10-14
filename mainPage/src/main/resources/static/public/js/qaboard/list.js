@@ -9,7 +9,7 @@ function noSpaceForm(obj) { // 공백사용못하게
 }
 const qnaSearchForm = document.forms.qnaSearchForm;
 qnaSearchForm.addEventListener("submit", (event) => {
-	if(!qnaSearchForm.keyword.value) {
+	if(!qnaSearchForm.search.value) {
 		event.preventDefault();		
 	}
 });
