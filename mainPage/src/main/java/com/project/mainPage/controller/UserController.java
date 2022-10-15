@@ -88,25 +88,35 @@ public class UserController {
 		public String login(
 				@RequestParam(value="user_id") String userId, 
 				@RequestParam(value="user_pw") String userPw,
+				Model model,
 				HttpSession session) {
 			UserDto user = null;
+			String msg = "";
 			try {
-				user = userMapper.selectIdPwOne(userId, userPw);
+				user = userMapper.selectId(userId); // 아이디만으로 유저 정보 불러 오기
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
-			if(user != null) {
-				session.setAttribute("loginUser", user);
-				Object redirectPage = session.getAttribute("redirectPage"); // 이전 페이지
-				session.removeAttribute("redirectPage");
-				System.out.println("로그인 성공! " + user); 
-				if(redirectPage != null) {
-					return "redirect:" + redirectPage; // 이전 페이지로 이동
-				} else {
-					return "redirect:/";
+			if(user != null) { // 아이디가 존재할 때
+				if(user.getUser_pw().equals(userPw)) { // 아이디로 불러 온 유저의 실제 비밀번호와 유저가 로그인 폼에서 입력한 비밀번호 값이 같을 때
+					session.setAttribute("loginUser", user);
+					Object redirectPage = session.getAttribute("redirectPage"); // 이전 페이지
+					session.removeAttribute("redirectPage");
+					System.out.println("로그인 성공! " + user); 
+					if(redirectPage != null) {
+						return "redirect:" + redirectPage; // 이전 페이지로 이동
+					} else {
+						return "redirect:/";
+					}
+				} else { // 아이디로 불러 온 유저의 실제 비밀번호와 유저가 로그인 폼에서 입력한 비밀번호 값이 같지 않을 때
+					msg = "잘못된 비밀번호입니다.";
+					model.addAttribute("msg", msg);
+					return "user/login";	
 				}
-			} else {
-				return "redirect:/user/login.do";					
+			} else { // 아이디가 존재하지 않을 때
+				msg = "존재하지 않는 아이디입니다.";
+				model.addAttribute("msg", msg);
+				return "user/login";					
 			}
 	}
 	
@@ -129,7 +139,7 @@ public class UserController {
 			model.addAttribute("msg", msg);
 			return "user/login";
 		} else {
-			msg = "존재하지 않는 아이디입니다.";
+			msg = "아이디를 찾을 수 없습니다.";
 			model.addAttribute("msg", msg);
 			return "user/login";
 		}

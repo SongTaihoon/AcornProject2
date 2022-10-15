@@ -168,10 +168,10 @@
 								      <div class="modal-body">
 								        삭제하시겠습니까?
 								      </div>
-								      <div class="modal-footer border-0">
+								      <div class="modal-footer border-0" style="padding: 16px;">
 								        <button type="button" class="btn btn-outline-primary btn-lg" data-bs-target="#exampleModalToggle2" 
-								        		data-bs-toggle="modal" style="margin: 0 8px 0 0;">예</button>
-								      	<button type="button" class="btn btn-outline-dark btn-lg" data-bs-dismiss="modal" style="margin: 0; padding: 12px 30px;">아니오</button>
+								        		data-bs-toggle="modal" style="margin: 0 8px 0 0; padding: 12px 27.5px;">예</button>
+								      	<button type="button" class="btn btn-outline-dark btn-lg" data-bs-dismiss="modal" style="margin: 0; padding: 12px 12.5px;">아니오</button>
 								      </div>
 								    </div>
 								  </div>
@@ -187,9 +187,9 @@
 								      <div class="modal-body">
 								        삭제 시 회원의 모든 정보가 삭제되며 복구할 수 없습니다. 그래도 삭제하시겠습니까?
 								      </div>
-								      <div class="modal-footer border-0">
-								        <button type="button" class="btn btn-outline-dark btn-lg" data-bs-dismiss="modal" style="margin: 0 8px 0 0;">취소</button>
-								        <a class="btn btn-outline-danger btn-lg" th:href="@{/user/delete/{userId}(userId=${user?.user_id})}" style="margin: 0;">삭제</a>
+								      <div class="modal-footer border-0" style="padding: 16px;">
+								        <button type="button" class="btn btn-outline-dark btn-lg" data-bs-dismiss="modal" style="margin: 0 8px 0 0; padding: 12px 20px;">취소</button>
+								        <a class="btn btn-outline-danger btn-lg" th:href="@{/user/delete/{userId}(userId=${user?.user_id})}" style="margin: 0; padding: 12px 20px;">삭제</a>
 								      </div>
 								    </div>
 								  </div>
