@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>공지 사항 등록</title>
+<title>공지사항 등록</title>
 <link rel="stylesheet" href="/public/css/board/insert.css">
 <script src="/public/js/notice/insert.js" defer="defer"></script>
 </head>
@@ -19,13 +19,13 @@
 		    	<a href="#">고객 센터</a>
 		    </li>
 		    <li class="breadcrumb-item" aria-current="page">
-		    	<a href="/notice/list/1" class="breadcrumb-item active">공지 사항</a>
+		    	<a href="/notice/list/1" class="breadcrumb-item active">공지사항</a>
 		    </li>
 		  </ol>
 		</nav>
 		<h1 class="pb-4 d-flex justify-content-between align-items-center" 
-		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
-		    <span style="font-size: 35px;">공지 사항 등록</span>
+		    style="border-bottom: 1px solid #e8e8e8;">
+		    <span style="font-size: 35px;">공지사항 등록</span>
 	    </h1>	
 	    <form action="/notice/insert.do" method="post" name="noticeInsertForm">
 			<table class="mt-5 mb-5 table align-middle table-bordered">
@@ -46,10 +46,10 @@
 			</table>
 			<div class="d-flex">
 				<div class="ms-auto">
-					<button class="btn btn-outline-warning btn-lg" type="reset" style="padding: 12px 37.5px;">초기화</button>
-					<button class="btn btn-outline-primary btn-lg" type="submit" style="margin-left: 8px; margin-right: 8px;">등록</button>
+					<button class="btn btn-outline-warning btn-lg" type="reset" style="padding: 12px 12.5px;">초기화</button>
+					<button class="btn btn-outline-primary btn-lg" type="submit" style="margin-left: 8px; margin-right: 8px; padding: 12px 20px;">등록</button>
 					<input type="hidden" name="user.user_id" th:value="${session.loginUser?.user_id}">
-					<a class="btn btn-outline-dark btn-lg" href="/notice/list/1">목록</a>
+					<a class="btn btn-outline-dark btn-lg" href="/notice/list/1" style="padding: 12px 20px;">목록</a>
 				</div>
 			</div>
 		</form>

@@ -25,7 +25,9 @@
 			n.user_id AS 'user.user_id' 
 			
 			FROM NOTICE n
-			
+			<if test="field != null">
+				WHERE ${field} LIKE CONCAT('%', #{search}, '%')
+			</if>
 			<if test="sort != null">
 				ORDER BY ${sort} 
 			</if>
@@ -39,6 +41,9 @@
 	</select>
 	<select id="selectPageAllCount" resultType="int">
 		SELECT COUNT(*) FROM NOTICE
+		<if test="field != null">
+			WHERE ${field} LIKE CONCAT('%', #{search}, '%')
+		</if>
 	</select>
 	<select id="selectDetailOne" resultMap="NoticeMap">
 		SELECT n.*,
@@ -81,52 +86,4 @@
 		DELETE FROM NOTICE 
 			WHERE notice_no = #{noticeNo}
 	</delete>
-	<!-- criteria(검색조건) -->
-	<sql id="criteria">
-		    <trim prefix="WHERE (" suffix=")" prefixOverrides="AND">
-	  		<foreach item="type" collection="typeArr">
-	  			<trim prefix="AND">
-	  				<choose>
-	  					<when test="type == 'N'.toString()">
-	  						<trim prefixOverrides="or">
-			  					<foreach collection="noticeArr" item="notice_no">
-			  						<trim prefix="or">
-			  							notice_no = #{notice_no}
-			  						</trim>
-			  					</foreach>  						
-	  						</trim>
-	  					</when>
-	  					<when test="type == 'T'.toString()">
-	  						title LIKE CONCAT ('%', #{keyword}, '%')
-	  					</when>
-	  					<when test="type == 'C'.toString()">
-	  						contents LIKE CONCAT ('%', #{keyword}, '%')
-	  					</when>  					
-	  				</choose>
-	  			</trim>
-	  		</foreach>
-	  	</trim>
-	</sql>
-	<select id="searchNotice" resultType="Notice">
-		SELECT * FROM NOTICE
-		<include refid="criteria"></include>
-			ORDER BY notice_no DESC 
-			LIMIT #{skip}, #{amount}	
-	</select>
-	<select id="noticeGetTotal" resultType="int">
-  		SELECT COUNT(*) FROM NOTICE
-		<include refid="criteria"></include>
-	</select>	
-	<select id="searchAllNotice" resultType="Notice">
-		SELECT * FROM NOTICE
-			WHERE title LIKE CONCAT ('%', #{keyword}, '%') 
-				OR contents LIKE CONCAT ('%', #{keyword}, '%')
-					ORDER BY notice_no DESC 
-					LIMIT #{skip}, #{amount}	
-	</select>
-	<select id="noticeAllGetTotal" resultType="int">
-  		SELECT COUNT(*) FROM NOTICE
-			WHERE title LIKE CONCAT ('%', #{keyword}, '%') 
-				OR contents LIKE CONCAT ('%', #{keyword}, '%')
-	</select>
 </mapper>

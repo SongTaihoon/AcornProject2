@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import com.project.mainPage.dto.Criteria;
 import com.project.mainPage.dto.Pagination;
 import com.project.mainPage.dto.QaBoard;
 import com.project.mainPage.dto.QaReply;
@@ -37,6 +36,8 @@ public class QaBoardController {
 	@GetMapping("/list/{page}")
 	public String list(
 			@PathVariable int page, 
+			@RequestParam(required = false) String field,
+			@RequestParam(required = false) String search,
 			@RequestParam(required = false) String sort,
 			@RequestParam(required = false, defaultValue = "desc") String direct,
 			Model model) {
@@ -45,14 +46,23 @@ public class QaBoardController {
 		
 		List<QaBoard> list = null;
 		int count = 0;
-		
-		if(sort != null && !sort.equals("")) { // 정렬(o)
-			list = qaBoardMapper.selectPageAll(startRow, row, sort, direct);
-			count = qaBoardMapper.selectPageAllCount(sort, direct);
-		} else { // 정렬(x)
-			list = qaBoardMapper.selectPageAll(startRow, row, null, null);
-			count = qaBoardMapper.selectPageAllCount(null, null);
-		}		
+		if(field != null && !field.equals("")) {
+			if(sort != null && !sort.equals("")) { // 검색(o) + 정렬(o)
+				list = qaBoardMapper.selectPageAll(startRow, row, field, search, sort, direct);
+				count = qaBoardMapper.selectPageAllCount(field, search, sort, direct);
+			} else { // 검색(o) + 정렬(x)
+				list = qaBoardMapper.selectPageAll(startRow, row, field, search, null, null);
+				count = qaBoardMapper.selectPageAllCount(field, search, null, null);
+			}
+		} else {
+			if(sort != null && !sort.equals("")) { // 검색(x) + 정렬(o)
+				list = qaBoardMapper.selectPageAll(startRow, row, null, null, sort, direct);
+				count = qaBoardMapper.selectPageAllCount(null, null, sort, direct);
+			} else { // 검색(x) + 정렬(x)
+				list = qaBoardMapper.selectPageAll(startRow, row, null, null, null, null);
+				count = qaBoardMapper.selectPageAllCount(null, null, null, null);
+			}
+		}
 		Pagination pagination = new Pagination(page, count, "/qaboard/list/", row);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("list", list);
@@ -61,37 +71,7 @@ public class QaBoardController {
 		model.addAttribute("page", page);
 		return "/qaboard/list";
 	}
-	
-//	고객 문의 리스트 검색 페이지
-	@GetMapping("/search/{page}")
-	public String searchProduct(
-			@PathVariable int page,
-			@RequestParam(value = "type") String type,
-			@RequestParam(value = "keyword") String keyword,
-			Criteria cri, 
-			Model model) {
-		int row = 10;
-		int startRow = (page - 1) * row;
-		cri.setAmount(row);
-		cri.setSkip(startRow);
-		List<QaBoard> list = qaBoardMapper.searchQaBoard(cri);
-		int count = qaBoardMapper.QaBoardGetTotal(cri);
-		  if(!list.isEmpty()) { 
-			  model.addAttribute("list", list);
-		  } else { 
-			  model.addAttribute("listCheck","empty"); 
-			  return "/qaboard/search"; 
-		  }
-		Pagination pagination = new Pagination(page, count, "/qaboard/search/", row);
-		model.addAttribute("pagination", pagination);
-		model.addAttribute("list", list);
-		System.out.println("list : " + list);
-		model.addAttribute("row", row);
-		model.addAttribute("count", count);
-		model.addAttribute("page", page);
-		return "/qaboard/search";
-	}
-	
+
 //	고객 문의 상세 페이지
 	@GetMapping("/detail/{qaBoardno}")
 	public String detail(

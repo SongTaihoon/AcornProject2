@@ -10,7 +10,7 @@ function noSpaceForm(obj) { // 공백사용못하게
 
 const noticeSearchForm = document.forms.noticeSearchForm;
 noticeSearchForm.addEventListener("submit", (event) => {
-	if(!noticeSearchForm.keyword.value) {
+	if(!noticeSearchForm.search.value) {
 		event.preventDefault();		
 	}
 });

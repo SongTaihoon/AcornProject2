@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import com.project.mainPage.dto.Criteria;
 import com.project.mainPage.dto.EmailCheck;
 import com.project.mainPage.dto.IdCheck;
 import com.project.mainPage.dto.Pagination;
@@ -32,6 +31,8 @@ public class UserController {
 	@GetMapping("/list/{page}")
 	public String list(
 			@PathVariable int page, 
+			@RequestParam(required = false) String field,
+			@RequestParam(required = false) String search,
 			@RequestParam(required = false) String sort,
 			@RequestParam(required = false, defaultValue = "desc") String direct,
 			Model model) {
@@ -40,13 +41,22 @@ public class UserController {
 		
 		List<UserDto> userList = null;
 		int count = 0;
-		
-		if(sort != null && !sort.equals("")) { // 정렬(o)
-			userList = userMapper.selectPageAll(startRow, row, sort, direct);
-			count = userMapper.selectPageAllCount(sort, direct);
-		} else { // 정렬(x)
-			userList = userMapper.selectPageAll(startRow, row, null, null);
-			count = userMapper.selectPageAllCount(null, null);
+		if(field != null && !field.equals("")) {
+			if(sort != null && !sort.equals("")) { // 검색(o) + 정렬(o)
+				userList = userMapper.selectPageAll(startRow, row, field, search, sort, direct);
+				count = userMapper.selectPageAllCount(field, search, sort, direct);
+			} else { // 검색(o) + 정렬(x)
+				userList = userMapper.selectPageAll(startRow, row, field, search, null, null);
+				count = userMapper.selectPageAllCount(field, search, null, null);
+			}
+		} else {
+			if(sort != null && !sort.equals("")) { // 검색(x) + 정렬(o)
+				userList = userMapper.selectPageAll(startRow, row, null, null, sort, direct);
+				count = userMapper.selectPageAllCount(null, null, sort, direct);
+			} else { // 검색(x) + 정렬(x)
+				userList = userMapper.selectPageAll(startRow, row, null, null, null, null);
+				count = userMapper.selectPageAllCount(null, null, null, null);
+			}
 		}
 		Pagination pagination = new Pagination(page, count, "/user/list/", row);
 		model.addAttribute("pagination", pagination);
@@ -57,49 +67,6 @@ public class UserController {
 		return "/user/list";
 	}	
 	
-//	회원 검색 페이지
-	@GetMapping("/search/{page}")
-	public String searchProduct(
-			@PathVariable int page, 
-			@RequestParam(required = false, value = "type") String type,
-			@RequestParam(required = false, value = "keyword") String keyword,
-			@RequestParam(required = false) String sort,
-			@RequestParam(required = false, defaultValue = "desc") String direct,
-			@SessionAttribute(required = false) UserDto loginUser,
-			HttpSession session,
-			Criteria cri, 
-			Model model) {
-		int row = 10;
-		int startRow = (page - 1) * row;		
-		cri.setAmount(row);
-		cri.setSkip(startRow);
-		
-		List<UserDto> list = null;
-		int count = 0;
-		
-		if(sort != null && !sort.equals("")) { // 정렬(o)
-			list = userMapper.searchUser(cri, sort, direct);
-			count = userMapper.userGetTotal(cri, sort, direct);
-		} else { // 정렬(x)
-			list = userMapper.searchUser(cri, null, null);
-			count = userMapper.userGetTotal(cri, null, null);
-		}
-		if(!list.isEmpty()) { 
-			model.addAttribute("list", list);
-		} else {
-			model.addAttribute("listCheck", "empty"); 
-			return "/user/search";
-		}
-		Pagination pagination = new Pagination(page, count, "/user/search/", row);
-		model.addAttribute("pagination", pagination);
-		model.addAttribute("list", list);
-		model.addAttribute("row", row);
-		model.addAttribute("count", count);
-		model.addAttribute("page", page);
-		return "/user/search";
-	}
-	
-//	로그인 페이지
 	@GetMapping("/login.do")
 		public String loginPage(
 				@SessionAttribute(required = false) UserDto loginUser,
@@ -329,7 +296,7 @@ public class UserController {
 	
 //	푸터 연결용
 	@GetMapping("/agreement")
-	public void agreement() {};
+	public void agreement() {}; 
 	
 	@GetMapping("/privacy")
 	public void privacy() {};
