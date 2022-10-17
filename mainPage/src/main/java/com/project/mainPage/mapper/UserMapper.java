@@ -23,7 +23,6 @@ public interface UserMapper {
 	UserDto selectId(String userId); // 아이디 중복 검사
 	UserDto selectPhone(String userPhone); // 전화번호 중복 검사
 	UserDto selectEmail(String userEmail); // 이메일 중복 검사
-	
 	int deleteOne(String userId);
 	int updateOne(UserDto user);
 	int insertOne(UserDto user);

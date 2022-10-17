@@ -124,7 +124,6 @@ public class NoticeController {
 				newCookie.setMaxAge(60 * 60 * 24); // 쿠키 지속 시간 저장
 				resp.addCookie(newCookie); // response에 newCookie를 전달
 			}
-			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

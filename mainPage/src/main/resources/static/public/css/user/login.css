@@ -55,7 +55,7 @@ html, body {
 #wrapper {
     min-height: 100%;
     position: relative;
-    padding-bottom: 300px;
+    padding-bottom: 250px;
 }
 .footer {
     bottom: 0;

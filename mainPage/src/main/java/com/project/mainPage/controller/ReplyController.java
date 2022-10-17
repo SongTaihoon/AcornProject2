@@ -2,8 +2,6 @@ package com.project.mainPage.controller;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Value;
-import com.project.mainPage.dto.Pagination;
 import com.project.mainPage.dto.Reply;
 import com.project.mainPage.dto.ReplyPrefer;
 import com.project.mainPage.dto.UserDto;
@@ -30,7 +27,6 @@ import com.project.mainPage.mapper.ReplyPreferMapper;
 public class ReplyController {
 	@Autowired
 	ReplyMapper replyMapper;
-	
 //	application.properties의 설정 경로 받아 오기
 	@Value("${spring.servlet.multipart.location}") // 파일이 임시 저장되는 경로 + 실제로 저장할 경로
 	String savePath;
@@ -219,6 +215,7 @@ public class ReplyController {
 		return "/board/replyDetail";
 	}
 	
+
 //	댓글 좋아요 수정
 	@PutMapping("/prefer/update/{reply_no}/{prefer}")
 	public String ReplyPreferUpdate(

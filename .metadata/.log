@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 !SESSION 2022-10-14 22:07:00.391 -----------------------------------------------
 eclipse.buildId=4.15.1.202206171354
 java.version=17.0.3
@@ -10818,3 +10819,5 @@ Binding(CTRL+SHIFT+C,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.textEditorScope,,,system)
+=======
+>>>>>>> 5f37975fb43c3e45068e09460e931540b198f04c
