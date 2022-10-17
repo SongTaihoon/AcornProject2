@@ -93,7 +93,7 @@ public class TopController {
 	}
 	
 	// 관광지 TOP Detail 
-	@GetMapping("/tour/detail/{tourRank}")
+	@GetMapping("/tour/detail/{tourRank}") 
 	public String detail(
 			@PathVariable int tourRank,
 			Model model

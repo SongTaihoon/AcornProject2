@@ -261,7 +261,7 @@
 					      <div class="modal-body">
 					        한 번 삭제하면 복구할 수 없습니다. 정말 삭제하시겠습니까?
 					      </div>
-					      <div class="modal-footer border-0">
+					      <div class="modal-footer border-0" style="padding: 16px;">
 					        <button type="button" class="btn btn-outline-dark btn-lg" data-bs-dismiss="modal" style="margin: 0 8px 0 0; padding: 12px 20px;">취소</button>
 							<a th:href="@{/reply/delete/{reply_no}(reply_no=${reply.reply_no})}"
 								class="btn btn-lg btn-outline-danger" style="margin: 0; padding: 12px 20px;">삭제</a>
@@ -275,25 +275,4 @@
 			</div>
   		</form>
   	</th:block>
-<script>
-//값이 없을 때 submit 불가
-const replyUpdateForm1 = document.forms.replyUpdateForm1;
-console.log(replyUpdateForm1);
-const titl = replyUpdateForm1.title;
-const content = replyUpdateForm1.contents;
-replyUpdateForm1.addEventListener("submit", (event) => {
-	if(!(titl.value) || !(content.value)) {
-		event.preventDefault();		
-	}
-});
-function noSpace(obj) { // 공백사용못하게
-    var str = /\s/;  // 공백체크
-    if(str.exec(obj.value.trim)) { //공백 체크
-        //alert("해당 항목에는 첫 글자 공백을 사용할수 없습니다.");
-        obj.focus();
-        obj.value = obj.value.replace(/^ +/,''); // 공백제거
-        return false;
-    }
-}
-</script>
 </html>
