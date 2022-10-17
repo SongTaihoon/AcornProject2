@@ -5,11 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
+=======
+>>>>>>> origin/js
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -187,6 +190,7 @@ public class BoardController {
 					}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				}
 				
 =======
@@ -195,6 +199,9 @@ public class BoardController {
 =======
 				}				
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
+=======
+				}				
+>>>>>>> origin/js
 				// 나의 댓글 & 댓글 정렬
 				if(writer != null && !writer.equals("")) {
 					if(sort != null && !sort.equals("")) { // 나의 댓글(o) + 정렬(o)

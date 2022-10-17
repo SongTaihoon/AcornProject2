@@ -2,11 +2,14 @@ package com.project.mainPage.controller;
 import java.util.List;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
+=======
+>>>>>>> origin/js
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

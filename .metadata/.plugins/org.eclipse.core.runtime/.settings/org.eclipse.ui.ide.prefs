@@ -6,6 +6,7 @@ IMPORT_FILES_AND_FOLDERS_TYPE=23,1\:7,1
 eclipse.preferences.version=1
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 platformState=1658710068991
 =======
 platformState=1658710022389
@@ -13,5 +14,8 @@ platformState=1658710022389
 =======
 platformState=1658710022389
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
+=======
+platformState=1658710022389
+>>>>>>> origin/js
 quickStart=false
 tipsAndTricks=true
