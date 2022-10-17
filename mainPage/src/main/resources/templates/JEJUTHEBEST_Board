@@ -154,6 +154,7 @@ CREATE TABLE ACCOMMODATE(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 acco_rank INT NOT NULL,
 =======
 acco_rank INT AUTO_INCREMENT,
@@ -167,6 +168,9 @@ acco_rank INT AUTO_INCREMENT,
 =======
 acco_rank INT AUTO_INCREMENT,
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
+=======
+acco_rank INT AUTO_INCREMENT,
+>>>>>>> origin/js
 tourist VARCHAR(255) NOT NULL,
 province VARCHAR(255) NOT NULL,
 city VARCHAR(255) NOT NULL,
@@ -188,6 +192,7 @@ CREATE TABLE RESTAURANT(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 rest_rank INT NOT NULL,
 =======
 rest_rank INT AUTO_INCREMENT,
@@ -201,6 +206,9 @@ rest_rank INT AUTO_INCREMENT,
 =======
 rest_rank INT AUTO_INCREMENT,
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
+=======
+rest_rank INT AUTO_INCREMENT,
+>>>>>>> origin/js
 tourist VARCHAR(255) NOT NULL,
 province VARCHAR(255) NOT NULL,
 city VARCHAR(255) NOT NULL,
@@ -323,6 +331,7 @@ qaBoardTitle VARCHAR(255) NOT NULL,
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 qaBoardContents TEXT NOT NULL,
 =======
 qaBoardContents TEXT,
@@ -336,6 +345,9 @@ qaBoardContents TEXT,
 =======
 qaBoardContents TEXT,
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
+=======
+qaBoardContents TEXT,
+>>>>>>> origin/js
 qaBoardAnswer boolean DEFAULT FALSE,
 qaBoardDate DATETIME DEFAULT CURRENT_TIMESTAMP(),
 category_id VARCHAR(45) NOT NULL,
@@ -363,6 +375,7 @@ qaReplyContent TEXT NOT NULL,
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 qaReplyContent TEXT NOT NULL,
 =======
 =======
@@ -374,6 +387,8 @@ qaReplyContent TEXT NOT NULL,
 >>>>>>> origin/js
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
+=======
+>>>>>>> origin/js
 =======
 >>>>>>> 5f37975fb43c3e45068e09460e931540b198f04c
 qaReplyContent TEXT,
@@ -381,6 +396,7 @@ qaReplyContent TEXT,
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
@@ -388,6 +404,8 @@ qaReplyContent TEXT,
 >>>>>>> origin/js
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
+=======
+>>>>>>> origin/js
 qaReplyDate DATETIME DEFAULT CURRENT_TIMESTAMP(),
 qaBoardNo INT,
 CONSTRAINT PRIMARY KEY(qaReplyNo),
@@ -408,6 +426,7 @@ ON UPDATE CASCADE ON DELETE CASCADE
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
@@ -415,6 +434,8 @@ ON UPDATE CASCADE ON DELETE CASCADE
 >>>>>>> origin/js
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
+=======
+>>>>>>> origin/js
 CREATE TABLE RESTAURANTIMG(
 restaurank_img_no INT AUTO_INCREMENT,
 rest_rank INT NOT NULL,
@@ -426,9 +447,21 @@ ON UPDATE CASCADE ON DELETE CASCADE
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 =======
+=======
+
+CREATE TABLE ACCOIMG(
+acco_img_no INT AUTO_INCREMENT,
+acco_rank INT NOT NULL,
+img_path VARCHAR(255) NOT NULL,
+PRIMARY KEY(acco_img_no),
+FOREIGN KEY(acco_rank) REFERENCES ACCOMMODATE(acco_rank)
+ON UPDATE CASCADE ON DELETE CASCADE
+);
+>>>>>>> origin/js
 
 CREATE TABLE ACCOIMG(
 acco_img_no INT AUTO_INCREMENT,

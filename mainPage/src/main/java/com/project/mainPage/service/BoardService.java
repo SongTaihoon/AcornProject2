@@ -12,6 +12,7 @@ import java.util.List;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 >>>>>>> origin/js
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
+=======
+>>>>>>> origin/js
 import org.springframework.transaction.annotation.Transactional;
 import com.project.mainPage.dto.BoardImg;
 import com.project.mainPage.dto.Reply;

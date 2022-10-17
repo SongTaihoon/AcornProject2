@@ -4,6 +4,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>>=86919f3cef114c17bab0c3653b4e59bc9a69365c
 =======
 >>>>>>>=5998e5a704edd7332fd051d52c51cea908082ca4
@@ -17,6 +18,8 @@ content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="n
 >>>>>>> origin/js
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
+=======
+>>>>>>> origin/js
 >>>>>>>=5998e5a704edd7332fd051d52c51cea908082ca4
 content_assist_completion_replacement_background=200,200,0
 content_assist_completion_replacement_foreground=200,0,0
@@ -24,11 +27,14 @@ content_assist_favorite_static_members=org.assertj.core.api.Assertions.*;org.moc
 content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="com.project.mainPage.dto.QaBoard"><rhs name\="com.project.mainPage.dto.QaBoard"/></lhs></history>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 =======
 >>>>>>> origin/js
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
+=======
+>>>>>>> origin/js
 content_assist_number_of_computers=15
 content_assist_parameters_background=52,57,61
 content_assist_parameters_foreground=238,238,238
@@ -40,6 +46,7 @@ org.eclipse.jdt.ui.formatterprofiles.version=22
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
@@ -47,6 +54,8 @@ org.eclipse.jdt.ui.formatterprofiles.version=22
 >>>>>>> origin/js
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
+=======
+>>>>>>> origin/js
 overriddenByCSS=,content_assist_completion_replacement_background,content_assist_completion_replacement_foreground,content_assist_parameters_background,content_assist_parameters_foreground,java_bracket,java_comment_task_tag,java_default,java_doc_default,java_doc_keyword,java_doc_link,java_doc_tag,java_keyword,java_keyword_bold,java_keyword_return,java_keyword_return_bold,java_multi_line_comment,java_operator,java_single_line_comment,java_string,matchingBracketsColor,pf_coloring_argument,pf_coloring_assignment,pf_coloring_comment,pf_coloring_key,pf_coloring_value,semanticHighlighting.abstractClass.color,semanticHighlighting.abstractClass.enabled,semanticHighlighting.abstractMethodInvocation.color,semanticHighlighting.abstractMethodInvocation.enabled,semanticHighlighting.annotation.color,semanticHighlighting.annotation.enabled,semanticHighlighting.annotation.italic,semanticHighlighting.annotationElementReference.color,semanticHighlighting.annotationElementReference.enabled,semanticHighlighting.class.color,semanticHighlighting.class.enabled,semanticHighlighting.deprecatedMember.color,semanticHighlighting.deprecatedMember.enabled,semanticHighlighting.deprecatedMember.underline,semanticHighlighting.deprecatedMember.strikethrough,semanticHighlighting.enum.color,semanticHighlighting.enum.enabled,semanticHighlighting.enum.italic,semanticHighlighting.field.color,semanticHighlighting.field.enabled,semanticHighlighting.inheritedField.color,semanticHighlighting.inheritedMethodInvocation.color,semanticHighlighting.inheritedMethodInvocation.enabled,semanticHighlighting.interface.color,semanticHighlighting.interface.enabled,semanticHighlighting.localVariable.color,semanticHighlighting.localVariable.enabled,semanticHighlighting.localVariableDeclaration.color,semanticHighlighting.localVariableDeclaration.enabled,semanticHighlighting.localVariableDeclaration.bold,semanticHighlighting.method.color,semanticHighlighting.method.enabled,semanticHighlighting.methodDeclarationName.color,semanticHighlighting.methodDeclarationName.enabled,semanticHighlighting.methodDeclarationName.bold,semanticHighlighting.number.color,semanticHighlighting.number.enabled,semanticHighlighting.parameterVariable.color,semanticHighlighting.parameterVariable.enabled,semanticHighlighting.staticField.color,semanticHighlighting.staticField.enabled,semanticHighlighting.staticFinalField.color,semanticHighlighting.staticFinalField.enabled,semanticHighlighting.staticMethodInvocation.color,semanticHighlighting.staticMethodInvocation.enabled,semanticHighlighting.typeArgument.color,semanticHighlighting.typeArgument.enabled,semanticHighlighting.typeParameter.color,semanticHighlighting.typeParameter.enabled,semanticHighlighting.typeParameter.bold,semanticHighlighting.restrictedKeywords.color,semanticHighlighting.restrictedKeywords.bold,sourceHoverBackgroundColor,
 pf_coloring_argument=221,40,103
 pf_coloring_assignment=217,232,247

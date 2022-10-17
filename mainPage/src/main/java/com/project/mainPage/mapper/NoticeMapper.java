@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
@@ -15,6 +16,8 @@ import org.apache.ibatis.annotations.Param;
 >>>>>>> origin/js
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
+=======
+>>>>>>> origin/js
 import com.project.mainPage.dto.Notice;
 
 // com.project.mainPage.mapper.NoticeMapper

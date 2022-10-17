@@ -62,6 +62,7 @@ public class UserController {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
@@ -71,6 +72,8 @@ public class UserController {
 >>>>>>> origin/js
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
+=======
+>>>>>>> origin/js
 		Pagination pagination = new Pagination(page, count, "/user/list/", row);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("userList", userList);
@@ -79,6 +82,7 @@ public class UserController {
 		model.addAttribute("page", page);	
 		return "/user/list";
 	}	
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -92,6 +96,8 @@ public class UserController {
 >>>>>>> origin/js
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
+=======
+>>>>>>> origin/js
 //	로그인 페이지
 	@GetMapping("/login.do")
 		public String loginPage(
