@@ -33,15 +33,9 @@
 		<table class="mt-5 mb-5 table align-middle table-bordered">
 				<tbody>
 					<tr>
-						<th class="table-light">작성자</th>
-						<td>
-							<input name="user.user_id" class="form-control" id="user.user_id" th:value="${session.loginUser.user_id}" readonly>
-						</td>
-					</tr>
-					<tr>
 						<th class="table-light">카테고리</th>
 						<td>
-							<select name="category.category_id" class="form-select" id="category_id">
+							<select name="category.category_id" class="form-select" id="category_id" style="font-size: 11px; border-radius: 2px;">
 									<option value="1">관광지</option>
 									<option value="2">숙박</option>
 									<option value="3">맛집</option>
@@ -63,7 +57,7 @@
 					<tr>
 						<th class="table-light">카테고리</th>
 						<td>
-							<select name="city" class="form-select" id="city">
+							<select name="city" class="form-select" id="city" style="font-size: 11px; border-radius: 2px;">
 									<option value="서귀포시">서귀포</option>
 									<option value="제주시">제주시</option>
 							</select>
@@ -101,9 +95,10 @@
 			</table>
 			<div class="d-flex">
 				<div class="ms-auto">
-					<button class="btn btn-outline-warning btn-lg" type="reset" style="margin-right: 8px;">초기화</button>
-					<button class="btn btn-outline-primary btn-lg" type="submit" style="margin-right: 8px;">등록</button>
-					<a class="btn btn-outline-dark btn-lg" href="/top/tour/list/1">목록</a>
+					<button class="btn btn-outline-warning btn-lg" type="reset" style="margin-right: 8px; padding: 12px 12.5px;">초기화</button>
+					<button class="btn btn-outline-primary btn-lg" type="submit" style="margin-right: 8px; padding: 12px 20px;">등록</button>
+					<input type="hidden" name="user.user_id" th:value="${session.loginUser.user_id}">
+					<a class="btn btn-outline-dark btn-lg" href="/top/tour/list/1" style="padding: 12px 20px;">목록</a>
 				</div>
 			</div>
 		</form>

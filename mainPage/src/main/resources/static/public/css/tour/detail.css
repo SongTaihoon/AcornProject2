@@ -1,9 +1,7 @@
-@charset "EUC-KR";
-/* È¨ > TOP 10 > °ü±¤Áö Á¤º¸ CSS  */
+/* í™ˆ > TOP 10 > ê´€ê´‘ì§€ ì •ë³´ CSS  */
 #path {
     display: flex;
-    margin: 20px 0;
-    min-width: 1200px;
+    margin: 91px 0 25px 0;
 }
 #path ol {
     margin-left: auto;      
@@ -12,19 +10,37 @@
     text-decoration: none;
     vertical-align: middle;
 }
-
-/*footer css ÇÏ´Ü°íÁ¤  */
+/*footer css í•˜ë‹¨ê³ ì •  */
 html, body {
     height: 100vh;
 }
 #wrapper {
     min-height: 100%;
-    min-width: 1200px;
     position: relative;
-    padding-bottom: 330px;
+    padding-bottom: 400px;
 }
 .footer {
     bottom: 0;
     position: absolute;
 	width: 100%;
+}
+table{
+	padding: 30px;
+}
+table tr{
+	text-align: center;
+}
+th{
+	width: 150px;
+	height: 50px;
+}
+@media (max-width: 576px) {
+	#wrapper {
+	    padding-bottom: 750px;
+	}
+}
+@media (max-width: 992px) {
+	#path {
+	    margin-top: 93px;
+	}
 }
