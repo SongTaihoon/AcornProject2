@@ -21,6 +21,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		<result column="reply_size" property="reply_size"/>
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
@@ -36,6 +37,9 @@
 =======
 		<result column="reply_size" property="reply_size"/>
 >>>>>>> origin/js
+=======
+		<result column="reply_size" property="reply_size"/>
+>>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
 		<association property="user" javaType="UserDto" foreignColumn="user_id">
 			<id column="user_id" property="user_id"/>
 			<result column="user_name" property="user_name"/>

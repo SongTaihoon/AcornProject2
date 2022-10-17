@@ -1,0 +1,8 @@
+2022-10-17 16:13:01,831 [Worker-17: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.project:mainPage:0.0.1-SNAPSHOT @ E:\Bigdata\AcornProject2\mainPage\pom.xml.
+2022-10-17 16:13:04,146 [Worker-17: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-10-17 16:13:04,146 [Worker-17: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2022-10-17 16:13:04,166 [Worker-17: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2022-10-17 16:13:04,197 [Worker-17: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1198 resources
+2022-10-17 16:13:04,364 [Worker-17: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-10-17 16:13:04,365 [Worker-17: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2022-10-17 16:13:04,365 [Worker-17: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\Bigdata\AcornProject2\mainPage\src\test\resources

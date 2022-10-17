@@ -155,6 +155,7 @@ CREATE TABLE ACCOMMODATE(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 acco_rank INT NOT NULL,
 =======
 acco_rank INT AUTO_INCREMENT,
@@ -171,6 +172,9 @@ acco_rank INT AUTO_INCREMENT,
 =======
 acco_rank INT AUTO_INCREMENT,
 >>>>>>> origin/js
+=======
+acco_rank INT AUTO_INCREMENT,
+>>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
 tourist VARCHAR(255) NOT NULL,
 province VARCHAR(255) NOT NULL,
 city VARCHAR(255) NOT NULL,
@@ -193,6 +197,7 @@ CREATE TABLE RESTAURANT(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 rest_rank INT NOT NULL,
 =======
 rest_rank INT AUTO_INCREMENT,
@@ -209,6 +214,9 @@ rest_rank INT AUTO_INCREMENT,
 =======
 rest_rank INT AUTO_INCREMENT,
 >>>>>>> origin/js
+=======
+rest_rank INT AUTO_INCREMENT,
+>>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
 tourist VARCHAR(255) NOT NULL,
 province VARCHAR(255) NOT NULL,
 city VARCHAR(255) NOT NULL,
@@ -236,7 +244,10 @@ category_id VARCHAR(255),
 search INT(45) NOT NULL,
 views INT  NOT NULL DEFAULT 0 ,
 tour_phone VARCHAR(20),
+<<<<<<< HEAD
 contents TEXT,
+=======
+>>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
 user_id VARCHAR(45) NOT NULL,
 PRIMARY KEY(tour_rank),
 FOREIGN KEY(user_id) REFERENCES USER(user_id)
@@ -332,6 +343,7 @@ qaBoardTitle VARCHAR(255) NOT NULL,
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 qaBoardContents TEXT NOT NULL,
 =======
 qaBoardContents TEXT,
@@ -348,6 +360,9 @@ qaBoardContents TEXT,
 =======
 qaBoardContents TEXT,
 >>>>>>> origin/js
+=======
+qaBoardContents TEXT,
+>>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
 qaBoardAnswer boolean DEFAULT FALSE,
 qaBoardDate DATETIME DEFAULT CURRENT_TIMESTAMP(),
 category_id VARCHAR(45) NOT NULL,
@@ -376,6 +391,7 @@ qaReplyContent TEXT NOT NULL,
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 qaReplyContent TEXT NOT NULL,
 =======
 =======
@@ -389,6 +405,8 @@ qaReplyContent TEXT NOT NULL,
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 =======
 >>>>>>> origin/js
+=======
+>>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
 =======
 >>>>>>> 5f37975fb43c3e45068e09460e931540b198f04c
 qaReplyContent TEXT,
@@ -397,6 +415,7 @@ qaReplyContent TEXT,
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
@@ -406,6 +425,8 @@ qaReplyContent TEXT,
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 =======
 >>>>>>> origin/js
+=======
+>>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
 qaReplyDate DATETIME DEFAULT CURRENT_TIMESTAMP(),
 qaBoardNo INT,
 CONSTRAINT PRIMARY KEY(qaReplyNo),
@@ -427,6 +448,7 @@ ON UPDATE CASCADE ON DELETE CASCADE
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
@@ -436,6 +458,8 @@ ON UPDATE CASCADE ON DELETE CASCADE
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 =======
 >>>>>>> origin/js
+=======
+>>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
 CREATE TABLE RESTAURANTIMG(
 restaurank_img_no INT AUTO_INCREMENT,
 rest_rank INT NOT NULL,
@@ -448,10 +472,22 @@ ON UPDATE CASCADE ON DELETE CASCADE
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 =======
 =======
+=======
+
+CREATE TABLE ACCOIMG(
+acco_img_no INT AUTO_INCREMENT,
+acco_rank INT NOT NULL,
+img_path VARCHAR(255) NOT NULL,
+PRIMARY KEY(acco_img_no),
+FOREIGN KEY(acco_rank) REFERENCES ACCOMMODATE(acco_rank)
+ON UPDATE CASCADE ON DELETE CASCADE
+);
+>>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
 
 CREATE TABLE ACCOIMG(
 acco_img_no INT AUTO_INCREMENT,
@@ -526,6 +562,7 @@ INSERT INTO TOUR(tourist, province, city, address3, search,category_id,user_id) 
 ('용두암해안도로','제주특별자치도','제주시','제주 제주시 서해안로 0-0',45425,'1','admin'),
 ('도두봉','제주특별자치도','제주시','제주 제주시 서해안로 0-0',45277,'1','admin');
 
+<<<<<<< HEAD
 INSERT INTO TOUR(tourist, province, city, address3, search,category_id,user_id,tour_phone,contents) VALUES 
 ('협재해수욕장','제주특별자치도','제주시','제주 제주시한림읍 협재리 2497-1',521616,'1','admin','064-728-3981',
 '제주도 서쪽에 가볼만한 해수욕장을 꼽으라 하면 단연 1,2위로 꼽아 추천하는 곳이 협재해수욕장이다. 
@@ -547,6 +584,12 @@ INSERT INTO TOUR(tourist, province, city, address3, search,category_id,user_id,t
  바로 옆에 자리한 서우봉은 봄이 되면 노란 유채꽃으로 여름엔 초록빛으로 계절마다 그림 같은 풍경을 선사한다. 서우봉에 오르면 함덕해수욕장을 한눈에 담을 수 있는 호사를 누릴 수 있다. 날씨가 좋으면 한라산과 동쪽 오름들도 내려다볼 수 있는 최고의 전망 포인트이다.');
 
 INSERT INTO TOUR(tourist, province, city, address3, search,category_id,user_id,tour_phone) VALUES 
+=======
+INSERT INTO TOUR(tourist, province, city, address3, search,category_id,user_id,tour_phone) VALUES 
+('협재해수욕장','제주특별자치도','제주시','제주 제주시한림읍 협재리 2497-1',521616,'1','admin','064-728-3981'),
+('성산일출봉','제주특별자치도','서귀포시','제주 서귀포시 일출로 284-12',503334,'1','admin','064-783-0959'),
+('함덕해수욕장','제주특별자치도','제주시','제주 제주시 조함해안로 525-0',493903,'1','admin','064-728-3989'),
+>>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
 ('섭지코지','제주특별자치도','서귀포시','제주 서귀포시 섭지코지로 107-0',337764,'1','admin','064-782-2810'),
 ('오설록티뮤지엄','제주특별자치도','서귀포시','제주 서귀포시 신화역사로 15-0',336769,'1','admin','064-794-5312'),
 ('이호테우해변','제주특별자치도','제주시','제주 제주시 이호일동',302290,'1','admin','064-728-3994'),

@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.util.List;
 
 =======
@@ -19,6 +20,8 @@ import java.util.List;
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 =======
 >>>>>>> origin/js
+=======
+>>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -237,6 +240,7 @@ public class ReplyController {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
@@ -252,6 +256,9 @@ public class ReplyController {
 =======
 
 >>>>>>> origin/js
+=======
+
+>>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
 //	댓글 좋아요 수정
 	@PutMapping("/prefer/update/{reply_no}/{prefer}")
 	public String ReplyPreferUpdate(

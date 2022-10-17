@@ -3,6 +3,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
@@ -18,11 +19,15 @@
 =======
 
 >>>>>>> origin/js
+=======
+
+>>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
 * {
     box-sizing: border-box;
 }
 #path {
     display: flex;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -44,6 +49,9 @@
 =======
     margin: 91px 0 25px 0;
 >>>>>>> origin/js
+=======
+    margin: 91px 0 25px 0;
+>>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
 }
 #path ol {
     margin-left: auto;      

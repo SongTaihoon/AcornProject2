@@ -125,6 +125,7 @@ public class TopController {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
@@ -134,6 +135,8 @@ public class TopController {
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 =======
 >>>>>>> origin/js
+=======
+>>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
 	// 관광지 등록 페이지 (admin 관리자 등록하도록 설정)
 	@GetMapping("/tour/insert.do")
 	public String insert(
@@ -265,6 +268,7 @@ public class TopController {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	}
 }
 =======
@@ -276,6 +280,8 @@ public class TopController {
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 =======
 >>>>>>> origin/js
+=======
+>>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
 	}
 	
 	// 관광지 정보 삭제 
@@ -727,6 +733,7 @@ public class TopController {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 =======
@@ -741,3 +748,6 @@ public class TopController {
 =======
 }
 >>>>>>> origin/js
+=======
+}
+>>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec

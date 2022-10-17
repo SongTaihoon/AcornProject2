@@ -14,7 +14,10 @@
 		<result column="search" property="search"/>
 		<result column="ranking" property="ranking"/>
 		<result column="tour_phone" property="tour_phone"/>
+<<<<<<< HEAD
 		<result column="contents" property="contents"/>
+=======
+>>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
 		<!-- Tour : UsersDto = N : 1   -->	
 		<association property="user" javaType="UserDto" foreignColumn="user_id">
 			<id column="user_id" property="user_id"/>
@@ -79,8 +82,13 @@
 	<insert id="insertOne" parameterType="Tour"
 	 		useGeneratedKeys="true" keyProperty="tour_rank">
 		INSERT INTO TOUR 
+<<<<<<< HEAD
 			( tourist, address3,province,city,category_id,search , user_id,tour_phone,contents)
 				VALUES (#{tourist}, #{address3},#{province},#{city},#{category.category_id},#{search}, #{user.user_id},#{tour_phone},#{contents})
+=======
+			( tourist, address3,province,city,category_id,search , user_id,tour_phone)
+				VALUES (#{tourist}, #{address3},#{province},#{city},#{category.category_id},#{search}, #{user.user_id},#{tour_phone})
+>>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
 	</insert>
 	<!-- 수정  -->
 	<update id="updateOne" parameterType="Tour">
@@ -89,8 +97,12 @@
 				city = #{city},
 				address3 = #{address3},
 				search = #{search},
+<<<<<<< HEAD
 				tour_phone = #{tour_phone},
 				contents = #{contents}
+=======
+				tour_phone = #{tour_phone}
+>>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
 				WHERE tour_rank = #{tour_rank}
 	</update>
 	<!-- 삭제  -->
