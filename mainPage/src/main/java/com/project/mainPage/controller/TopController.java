@@ -283,7 +283,7 @@ public class TopController {
 		public String restlist(
 				@PathVariable int page,
 				Model model){
-			int row = 20;
+			int row = 10;
 			int startRow = (page - 1) * row;
 			List<Restaurant> restaurantsList = restaurankMapper.selectListAll(startRow, row);
 			int count = restaurankMapper.selectPageAllCount();
