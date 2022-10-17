@@ -18,9 +18,13 @@ import lombok.Data;
 | views       | int          | NO   |     | 0       |                |
 | tour_phone  | varchar(20)  | YES  |     | NULL    |                |
 <<<<<<< HEAD
+<<<<<<< HEAD
 | contents    | text         | YES  |     | NULL    |                |
 =======
 >>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
+=======
+| contents    | text         | YES  |     | NULL    |                |
+>>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 | user_id     | varchar(45)  | NO   | MUL | NULL    |                |
 +-------------+--------------+------+-----+---------+----------------+
  * */
@@ -32,10 +36,7 @@ public class Tour {
 	 private String city;
 	 private String address3;
 	 private String tour_phone;
-<<<<<<< HEAD
 	 private String contents;
-=======
->>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
 	 private Category category;
 	 private int views;
 	 private int search;

@@ -6,30 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.project.mainPage.dto.Pagination;
 import com.project.mainPage.dto.Tour;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
-
-<<<<<<< HEAD
-=======
 import com.project.mainPage.dto.Pagination;
 import com.project.mainPage.dto.Restaurant;
 import com.project.mainPage.dto.RestaurantImg;
 import com.project.mainPage.dto.Tour;
->>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 import com.project.mainPage.dto.TourImg;
 import com.project.mainPage.dto.UserDto;
 import com.project.mainPage.mapper.RestaurankMapper;
@@ -118,25 +111,6 @@ public class TopController {
 			return "redirect:/top/tour/list/1";	
 		}
 	}
-<<<<<<< HEAD
-=======
-	
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
-=======
->>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
-=======
->>>>>>> origin/js
-=======
->>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
-=======
->>>>>>> origin/js
-=======
->>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
 	// 관광지 등록 페이지 (admin 관리자 등록하도록 설정)
 	@GetMapping("/tour/insert.do")
 	public String insert(
@@ -261,29 +235,8 @@ public class TopController {
 				return "redirect:/top/tour/update/" + tour.getTour_rank();
 			}	
 		}else{ 
-			return "redirect:/user/login.do";
+			return "redirect:/user/login.do";}
 		}  
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-	}
-}
-=======
-=======
->>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
-=======
->>>>>>> origin/js
-=======
->>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
-=======
->>>>>>> origin/js
-=======
->>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
-	}
-	
 	// 관광지 정보 삭제 
 	@SuppressWarnings("null")
 	@GetMapping("/tour/delete/{tourRank}/{userId}")
@@ -728,26 +681,4 @@ public class TopController {
 					return "redirect:/user/login.do";
 				}
 				
-			}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-}
->>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
-=======
-}
->>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
-=======
-}
->>>>>>> origin/js
-=======
-}
->>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
-=======
-}
->>>>>>> origin/js
-=======
-}
->>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
+			}}

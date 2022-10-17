@@ -1,40 +1,11 @@
 package com.project.mainPage.service;
-
-<<<<<<< HEAD
-=======
-import java.io.File;
-import java.util.List;
-
->>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.project.mainPage.dto.Tour;
 import java.io.File;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
-=======
->>>>>>> origin/js
-=======
->>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
-=======
->>>>>>> origin/js
-=======
->>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
-import com.project.mainPage.dto.Tour;
->>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 import com.project.mainPage.dto.TourImg;
 import com.project.mainPage.mapper.TourImgMapper;
 import com.project.mainPage.mapper.TourMapper;
@@ -93,9 +64,6 @@ public class TourService {
 		System.out.println("service update : "+update);
 		return update;
 	}
-<<<<<<< HEAD
-=======
-	
 	public int removeTour(int tourRank) throws Exception{
 		int remove=0;
 		List<TourImg> tourImgs = tourImgMapper.selectTourRank(tourRank);
@@ -110,102 +78,4 @@ public class TourService {
 		remove = tourMapper.deleteOne(tourRank);
 		return remove;
 	}
-	
-<<<<<<< HEAD
-	
->>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
-=======
-	public int removeTour(int tourRank) throws Exception{
-		int remove=0;
-		List<TourImg> tourImgs = tourImgMapper.selectTourRank(tourRank);
-		if(tourImgs != null ) {
-			tourImgs.stream()
-				.map(TourImg :: getImg_path)
-				.forEach((img)->{
-					File f=new File(savePath+"/"+img);
-					System.out.println("관광지 이미지 삭제:"+f.delete());
-				});
-		}
-		remove = tourMapper.deleteOne(tourRank);
-		return remove;
-	}
-	
-<<<<<<< HEAD
-	
->>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
-=======
-	public int removeTour(int tourRank) throws Exception{
-		int remove=0;
-		List<TourImg> tourImgs = tourImgMapper.selectTourRank(tourRank);
-		if(tourImgs != null ) {
-			tourImgs.stream()
-				.map(TourImg :: getImg_path)
-				.forEach((img)->{
-					File f=new File(savePath+"/"+img);
-					System.out.println("관광지 이미지 삭제:"+f.delete());
-				});
-		}
-		remove = tourMapper.deleteOne(tourRank);
-		return remove;
-	}
-	
-<<<<<<< HEAD
-	
->>>>>>> origin/js
-=======
-	public int removeTour(int tourRank) throws Exception{
-		int remove=0;
-		List<TourImg> tourImgs = tourImgMapper.selectTourRank(tourRank);
-		if(tourImgs != null ) {
-			tourImgs.stream()
-				.map(TourImg :: getImg_path)
-				.forEach((img)->{
-					File f=new File(savePath+"/"+img);
-					System.out.println("관광지 이미지 삭제:"+f.delete());
-				});
-		}
-		remove = tourMapper.deleteOne(tourRank);
-		return remove;
-	}
-	
-<<<<<<< HEAD
-	
->>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
-=======
-	public int removeTour(int tourRank) throws Exception{
-		int remove=0;
-		List<TourImg> tourImgs = tourImgMapper.selectTourRank(tourRank);
-		if(tourImgs != null ) {
-			tourImgs.stream()
-				.map(TourImg :: getImg_path)
-				.forEach((img)->{
-					File f=new File(savePath+"/"+img);
-					System.out.println("관광지 이미지 삭제:"+f.delete());
-				});
-		}
-		remove = tourMapper.deleteOne(tourRank);
-		return remove;
-	}
-	
-<<<<<<< HEAD
-	
->>>>>>> origin/js
-=======
-	public int removeTour(int tourRank) throws Exception{
-		int remove=0;
-		List<TourImg> tourImgs = tourImgMapper.selectTourRank(tourRank);
-		if(tourImgs != null ) {
-			tourImgs.stream()
-				.map(TourImg :: getImg_path)
-				.forEach((img)->{
-					File f=new File(savePath+"/"+img);
-					System.out.println("관광지 이미지 삭제:"+f.delete());
-				});
-		}
-		remove = tourMapper.deleteOne(tourRank);
-		return remove;
-	}
-	
-	
->>>>>>> 7152490d28b08ecba93d4fc6a301f61fdf9723ec
 }
