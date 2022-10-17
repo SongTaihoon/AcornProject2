@@ -63,10 +63,6 @@ public class QaBoardController {
 				count = qaBoardMapper.selectPageAllCount(null, null, null, null);
 			}
 		}
-<<<<<<< HEAD
-
-=======
->>>>>>> 5f37975fb43c3e45068e09460e931540b198f04c
 		Pagination pagination = new Pagination(page, count, "/qaboard/list/", row);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("list", list);

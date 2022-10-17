@@ -27,11 +27,7 @@
 			  
 			<th:block th:each="n:${#numbers.sequence(pagination.start,pagination.end)}">
 				<li class="page-item" th:classappend="${(pagination.page==n)?'active':''}" style="margin-left: 3px;">
-<<<<<<< HEAD
 					<a class="page-link" style="margin: 0;"
-=======
-					<a class="page-link" style="margin: 0; padding: 6px 7.5px; "
->>>>>>> 5f37975fb43c3e45068e09460e931540b198f04c
 						 th:href="@{{url}{page}
 						 			(url=${pagination.url}, page=${n}, field=${param.field}, search=${param.search}, sort=${param.sort}, direct=${param.direct})}" th:text="${n}"></a>
 				</li>

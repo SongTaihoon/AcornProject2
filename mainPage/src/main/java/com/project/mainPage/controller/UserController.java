@@ -58,10 +58,6 @@ public class UserController {
 				count = userMapper.selectPageAllCount(null, null, null, null);
 			}
 		}
-<<<<<<< HEAD
-
-=======
->>>>>>> 5f37975fb43c3e45068e09460e931540b198f04c
 		Pagination pagination = new Pagination(page, count, "/user/list/", row);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("userList", userList);
@@ -70,11 +66,7 @@ public class UserController {
 		model.addAttribute("page", page);	
 		return "/user/list";
 	}	
-	
-<<<<<<< HEAD
 //	로그인 페이지
-=======
->>>>>>> 5f37975fb43c3e45068e09460e931540b198f04c
 	@GetMapping("/login.do")
 		public String loginPage(
 				@SessionAttribute(required = false) UserDto loginUser,

@@ -2,10 +2,6 @@ package com.project.mainPage.mapper;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-<<<<<<< HEAD
-
-=======
->>>>>>> 5f37975fb43c3e45068e09460e931540b198f04c
 import com.project.mainPage.dto.Notice;
 
 // com.project.mainPage.mapper.NoticeMapper
