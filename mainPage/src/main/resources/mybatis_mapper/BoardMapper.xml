@@ -17,6 +17,10 @@
 		<result column="prefer_active" property="prefer_active"/>
 		<result column="views" property="views"/>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		<result column="reply_size" property="reply_size"/>
+>>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 =======
 		<result column="reply_size" property="reply_size"/>
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8

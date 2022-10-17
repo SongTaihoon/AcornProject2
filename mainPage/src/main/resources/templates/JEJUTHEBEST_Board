@@ -151,7 +151,11 @@ INSERT INTO CATEGORY(category_id, category_name) VALUES
 
 CREATE TABLE ACCOMMODATE(
 <<<<<<< HEAD
+<<<<<<< HEAD
 acco_rank INT NOT NULL,
+=======
+acco_rank INT AUTO_INCREMENT,
+>>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 =======
 acco_rank INT AUTO_INCREMENT,
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
@@ -173,7 +177,11 @@ ON UPDATE CASCADE ON DELETE CASCADE
 
 CREATE TABLE RESTAURANT(
 <<<<<<< HEAD
+<<<<<<< HEAD
 rest_rank INT NOT NULL,
+=======
+rest_rank INT AUTO_INCREMENT,
+>>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 =======
 rest_rank INT AUTO_INCREMENT,
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
@@ -296,7 +304,11 @@ CREATE TABLE QABOARD(
 qaBoardNo INT AUTO_INCREMENT,
 qaBoardTitle VARCHAR(255) NOT NULL,
 <<<<<<< HEAD
+<<<<<<< HEAD
 qaBoardContents TEXT NOT NULL,
+=======
+qaBoardContents TEXT,
+>>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 =======
 qaBoardContents TEXT,
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
@@ -320,16 +332,25 @@ insert into qaboard
 CREATE TABLE QAREPLY(
 qaReplyNo INT AUTO_INCREMENT,
 <<<<<<< HEAD
+<<<<<<< HEAD
 qaReplyContent TEXT NOT NULL,
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
 qaReplyContent TEXT NOT NULL,
 =======
+=======
+<<<<<<< HEAD
+qaReplyContent TEXT NOT NULL,
+=======
+>>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 =======
 >>>>>>> 5f37975fb43c3e45068e09460e931540b198f04c
 qaReplyContent TEXT,
 >>>>>>> 5f37975fb43c3e45068e09460e931540b198f04c
+<<<<<<< HEAD
+>>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
+=======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 qaReplyDate DATETIME DEFAULT CURRENT_TIMESTAMP(),
 qaBoardNo INT,
@@ -348,7 +369,10 @@ ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 CREATE TABLE RESTAURANTIMG(
 restaurank_img_no INT AUTO_INCREMENT,
 rest_rank INT NOT NULL,
@@ -357,6 +381,18 @@ PRIMARY KEY(restaurank_img_no),
 FOREIGN KEY(rest_rank) REFERENCES RESTAURANT(rest_rank)
 ON UPDATE CASCADE ON DELETE CASCADE
 );
+<<<<<<< HEAD
+=======
+
+CREATE TABLE ACCOIMG(
+acco_img_no INT AUTO_INCREMENT,
+acco_rank INT NOT NULL,
+img_path VARCHAR(255) NOT NULL,
+PRIMARY KEY(acco_img_no),
+FOREIGN KEY(acco_rank) REFERENCES ACCOMMODATE(acco_rank)
+ON UPDATE CASCADE ON DELETE CASCADE
+);
+>>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 
 CREATE TABLE ACCOIMG(
 acco_img_no INT AUTO_INCREMENT,

@@ -3,7 +3,10 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 import com.project.mainPage.dto.Notice;

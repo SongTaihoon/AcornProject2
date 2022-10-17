@@ -59,7 +59,10 @@ public class UserController {
 			}
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 		Pagination pagination = new Pagination(page, count, "/user/list/", row);
@@ -71,7 +74,10 @@ public class UserController {
 		return "/user/list";
 	}	
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 =======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 //	로그인 페이지

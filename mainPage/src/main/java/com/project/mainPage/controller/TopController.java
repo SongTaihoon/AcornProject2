@@ -121,6 +121,9 @@ public class TopController {
 <<<<<<< HEAD
 =======
 	
+<<<<<<< HEAD
+>>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
+=======
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 	// 관광지 등록 페이지 (admin 관리자 등록하도록 설정)
 	@GetMapping("/tour/insert.do")
@@ -249,9 +252,12 @@ public class TopController {
 			return "redirect:/user/login.do";
 		}  
 <<<<<<< HEAD
+<<<<<<< HEAD
 	}
 }
 =======
+=======
+>>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 	}
 	
 	// 관광지 정보 삭제 
@@ -699,5 +705,9 @@ public class TopController {
 				}
 				
 			}
+<<<<<<< HEAD
+}
+>>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
+=======
 }
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
