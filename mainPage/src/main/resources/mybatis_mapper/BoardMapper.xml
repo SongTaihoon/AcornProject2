@@ -16,11 +16,6 @@
 		<result column="prefer_bad" property="bad"/>
 		<result column="prefer_active" property="prefer_active"/>
 		<result column="views" property="views"/>
-<<<<<<< HEAD
-		<!-- Board : UsersDto = N : 1   -->	
-=======
-		<result column="reply_size" property="reply_size"/>
->>>>>>> 444ad76e202372373b568017d807c2ab0ad89d0e
 		<association property="user" javaType="UserDto" foreignColumn="user_id">
 			<id column="user_id" property="user_id"/>
 			<result column="user_name" property="user_name"/>
