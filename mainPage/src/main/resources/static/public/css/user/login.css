@@ -3,7 +3,7 @@
 }
 #path {
     display: flex;
-    margin: 75px 0 25px 0;
+    margin: 91px 0 25px 0;
 }
 #path ol {
     margin-left: auto;      
@@ -55,7 +55,7 @@ html, body {
 #wrapper {
     min-height: 100%;
     position: relative;
-    padding-bottom: 300px;
+    padding-bottom: 250px;
 }
 .footer {
     bottom: 0;

@@ -3,7 +3,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,13 +55,7 @@ public class BoardController {
 	private BoardPreferMapper boardPreferMapper;
 	
 	@Autowired
-	private UserMapper userMapper;
-	
-	@Autowired
 	private ReplyMapper replyMapper;
-	
-	@Autowired
-	private ReplyPreferMapper replyPreferMapper;
 	
 	@Value("${spring.servlet.multipart.location}") // 파일이 임시 저장되는 경로 + 파일을 저장할 경로
 	private String savePath;
@@ -74,8 +71,7 @@ public class BoardController {
 			@RequestParam(required = false, defaultValue = "desc") String direct,
 			@SessionAttribute(required = false) UserDto loginUser) {
 		int row = 10;
-		int startRow = (page - 1) * row;
-		
+		int startRow = (page - 1) * row;		
 		List<Board> boardList = null;
 		int count = 0;
 		if(field != null && !field.equals("")) {
@@ -186,8 +182,12 @@ public class BoardController {
 							reply.setPrefer_active(false);
 						}
 					}
+<<<<<<< HEAD
 				}
 				
+=======
+				}				
+>>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 				// 나의 댓글 & 댓글 정렬
 				if(writer != null && !writer.equals("")) {
 					if(sort != null && !sort.equals("")) { // 나의 댓글(o) + 정렬(o)

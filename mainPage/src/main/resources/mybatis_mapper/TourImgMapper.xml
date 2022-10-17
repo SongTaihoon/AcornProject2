@@ -9,12 +9,6 @@
 		SELECT * FROM TOURIMG
 			WHERE tour_rank =  #{tourRank}
 	</select>
-	<select id="selectUserId" resultType="TourImg" parameterType="String">
-		SELECT * FROM TOURIMG
-			WHERE tour_rank
-				IN (SELECT tour_rank FROM TOUR 
-						WHERE tourist = #{tourist})
-	</select>
 	<!-- update  -->
 	<select id="selectOne" resultType="TourImg" parameterType="int">
 		SELECT * FROM TOURIMG

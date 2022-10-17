@@ -16,11 +16,10 @@ import lombok.Data;
 | category_id | varchar(255) | YES  | MUL | NULL    |                |
 | search      | int          | NO   |     | NULL    |                |
 | views       | int          | NO   |     | 0       |                |
-| good        | int          | NO   |     | 0       |                |
-| bad         | int          | NO   |     | 0       |                |
+| tour_phone  | varchar(20)  | YES  |     | NULL    |                |
+| contents    | text         | YES  |     | NULL    |                |
 | user_id     | varchar(45)  | NO   | MUL | NULL    |                |
 +-------------+--------------+------+-----+---------+----------------+
-11 rows in set (0.00 sec)
  * */
 @Data
 public class Tour {
@@ -29,11 +28,12 @@ public class Tour {
 	 private String province;
 	 private String city;
 	 private String address3;
+	 private String tour_phone;
+	 private String contents;
 	 private Category category;
-	 private int good;
-	 private int bad;
 	 private int views;
 	 private int search;
-	 private UserDto user; // UsersDto.userid : fk 
+	 private int ranking;
+	 private UserDto user; // UsersDto.user_id : fk 
 	 private List<TourImg> tourImgs; // 1:N  TourImg.tour_rank fk
 }

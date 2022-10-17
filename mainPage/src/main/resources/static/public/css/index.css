@@ -5,13 +5,14 @@ html, body {
 #wrapper {
     min-height: 100%;
     position: relative;
-    padding-bottom: 325px;
+    padding-bottom: 400px;
 }
 .footer {
     bottom: 0;
     position: absolute;
 	width: 100%;
 }
+<<<<<<< HEAD
 .jejuthebesting{
     height: 65vh;                    
     position: relative;            
@@ -55,4 +56,12 @@ html, body {
 #home {
 	height: 100vh;
 	top: 0;
+=======
+#home {
+	height: 100vh;
+	top: 0;
+}
+ol {
+	display: none;
+>>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 }

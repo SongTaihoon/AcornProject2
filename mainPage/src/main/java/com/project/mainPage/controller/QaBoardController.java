@@ -1,6 +1,9 @@
 package com.project.mainPage.controller;
 import java.util.List;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -64,7 +67,6 @@ public class QaBoardController {
 				count = qaBoardMapper.selectPageAllCount(null, null, null, null);
 			}
 		}
-
 		Pagination pagination = new Pagination(page, count, "/qaboard/list/", row);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("list", list);
@@ -112,7 +114,6 @@ public class QaBoardController {
 				newCookie.setMaxAge(60 * 60 * 24); // 쿠키 지속 시간 저장
 				resp.addCookie(newCookie); // response에 newCookie를 전달
 			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

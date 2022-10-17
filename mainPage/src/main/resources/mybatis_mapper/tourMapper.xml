@@ -12,6 +12,9 @@
 		<result column="tours" property="tours"/>	
 		<result column="views" property="views"/>	
 		<result column="search" property="search"/>
+		<result column="ranking" property="ranking"/>
+		<result column="tour_phone" property="tour_phone"/>
+		<result column="contents" property="contents"/>
 		<!-- Tour : UsersDto = N : 1   -->	
 		<association property="user" javaType="UserDto" foreignColumn="user_id">
 			<id column="user_id" property="user_id"/>
@@ -31,20 +34,21 @@
 	<!--  tour List  -->
 	<select id="selectListAll" resultMap="TourMap">	
 			SELECT t.*, 
-		 	c.category_id
+		 	c.category_id,
+		 	RANK() OVER(ORDER BY search DESC) AS ranking
 		 	
 			FROM TOUR t
 			
 			LEFT JOIN CATEGORY c 
 		    USING(category_id)
 		     
-			ORDER BY search DESC LIMIT #{startRow}, #{pageSize} 
+			LIMIT #{startRow}, #{pageSize} 
 	</select>
 	<select id="selectPageAllCount" resultType="int">
 		SELECT COUNT(*) FROM TOUR
 	</select>
 	<!-- tour Detail  -->
-	<select id="selectDetailOne" resultMap="TourMap">
+	<select id="selectDetailOne" resultMap="TourMap" parameterType="int">
 		SELECT t.*, 
 			u.user_id, 
 			u.user_name, 
@@ -75,18 +79,19 @@
 	<insert id="insertOne" parameterType="Tour"
 	 		useGeneratedKeys="true" keyProperty="tour_rank">
 		INSERT INTO TOUR 
-			( tourist, address3,province,city,category_id,search , user_id)
-				VALUES (#{tourist}, #{address3},#{province},#{city},#{category.category_id},#{search}, #{user.user_id})
+			( tourist, address3,province,city,category_id,search , user_id,tour_phone,contents)
+				VALUES (#{tourist}, #{address3},#{province},#{city},#{category.category_id},#{search}, #{user.user_id},#{tour_phone},#{contents})
 	</insert>
 	<!-- 수정  -->
 	<update id="updateOne" parameterType="Tour">
-		UPDATE TOUR 
-			SET 
+		UPDATE TOUR SET 
 				tourist = #{tourist},
 				city = #{city},
 				address3 = #{address3},
-				search = #{search}
-			WHERE tour_rank = #{tourRank}
+				search = #{search},
+				tour_phone = #{tour_phone},
+				contents = #{contents}
+				WHERE tour_rank = #{tour_rank}
 	</update>
 	<!-- 삭제  -->
 	<delete id="deleteOne" parameterType="int">

@@ -16,6 +16,10 @@
 		<result column="prefer_bad" property="bad"/>
 		<result column="prefer_active" property="prefer_active"/>
 		<result column="views" property="views"/>
+<<<<<<< HEAD
+=======
+		<result column="reply_size" property="reply_size"/>
+>>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 		<association property="user" javaType="UserDto" foreignColumn="user_id">
 			<id column="user_id" property="user_id"/>
 			<result column="user_name" property="user_name"/>
