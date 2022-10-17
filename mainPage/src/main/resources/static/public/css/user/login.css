@@ -3,7 +3,7 @@
 }
 #path {
     display: flex;
-    margin: 75px 0 25px 0;
+    margin: 91px 0 25px 0;
 }
 #path ol {
     margin-left: auto;      
@@ -34,7 +34,7 @@
 #container #subContainer #loginBox #loginForm .loginInputBox {
 	position: relative;
     width: 470px;
-    margin: 15px 0;
+    margin: 10px 0;
 }
 #container #subContainer #loginBox #loginForm .loginInputBox .loginInput {
     width: 100%;

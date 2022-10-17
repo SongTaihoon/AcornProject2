@@ -413,6 +413,7 @@ updateForm["add3"].addEventListener("keydown", (event) => {
 	}	
 });
 
+// 초기화 버튼 클릭 시 전부 원상복귀
 updateForm.resetBtn.addEventListener("click", (event) => {
 	document.querySelectorAll("input").forEach((input) => {
 		input.classList.remove("is-invalid");
