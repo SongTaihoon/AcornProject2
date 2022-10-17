@@ -4,7 +4,6 @@
 <mapper namespace="com.project.mainPage.mapper.QaReplyMapper">
 	<resultMap type="QaReply" id="QaReplyMap">
 	<id column="qaReplyNo" property="qaReplyNo"/>
-		<result column="qaReplyTitle" property="qaReplyTitle"/>
 		<result column="qaReplyContent" property="qaReplyContent"/>
 		<result column="qaReplyDate" property="qaReplyDate"/>
 		<association property="qaBoard" javaType="QaBoard"  foreignColumn="qaBoardNo">
@@ -13,12 +12,11 @@
 		</association>
 	</resultMap>
 	<insert id="insertOne" parameterType="QaReply">
-		INSERT INTO QAREPLY (qaReplyTitle, qaReplyContent, qaBoardNo)
-			VALUES (#{qaReplyTitle}, #{qaReplyContent}, #{qaBoardNo})
+		INSERT INTO QAREPLY (qaReplyContent, qaBoardNo)
+			VALUES (#{qaReplyContent}, #{qaBoardNo})
 	</insert>
 	<update id="updateOne" parameterType="QaReply">
 		UPDATE QAREPLY SET 
-			qaReplyTitle = #{qaReplyTitle},
 			qaReplyContent = #{qaReplyContent}
 				WHERE qaBoardNo = #{qaBoardNo}
 	</update>

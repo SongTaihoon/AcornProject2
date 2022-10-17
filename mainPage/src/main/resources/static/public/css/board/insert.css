@@ -1,34 +1,29 @@
+* {
+    box-sizing: border-box;
+}
 #path {
     display: flex;
-    margin: 20px 0;
-    min-width: 1200px;
+    margin: 75px 0 25px 0;
 }
 #path ol {
-    margin-left: auto;      
+    margin-left: auto;    
 }
 #path ol li a {   
     text-decoration: none;
     vertical-align: middle;
 }
 html, body {
-    height: 100%
+    height: 100vh;
 }
 #wrapper {
     min-height: 100%;
-    min-width: 1200px;
     position: relative;
     padding-bottom: 400px;
 }
 .footer {
     bottom: 0;
-}
-#button{
-	display: flex;
-	justify-content: center;
-	margin-top: 10px;
-}
-select, input {
-	height: 48px;
+    position: absolute;
+	width: 100%;
 }
 table{
 	padding: 30px;
@@ -42,4 +37,14 @@ table td{
 th{
 	width: 150px;
 	height: 50px;
+}
+@media (max-width: 576px) {
+	#wrapper {
+	    padding-bottom: 750px;
+	}
+}
+@media (max-width: 992px) {
+	#path {
+	    margin-top: 93px;
+	}
 }

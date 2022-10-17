@@ -35,10 +35,9 @@ const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 //값이 없을 때 submit 불가
 let replyInsert = document.forms.replyInsert;
-let replyTitle = replyInsert.title;
 let replyContents = replyInsert.contents;
 replyInsert.addEventListener("submit", (event) => {
-	if(!(replyTitle.value) || !(replyContents.value)) {
+	if(!(replyContents.value)) {
 		event.preventDefault();		
 	}
 });

@@ -4,16 +4,19 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.project.mainPage.dto.Board;
-import com.project.mainPage.dto.Criteria;
 // com.project.mainPage.mapper.BoardMapper
 @Mapper
 public interface BoardMapper {
 	List<Board> selectPageAll(
 			int startRow, 
 			int pageSize,
+			@Param(value = "field")String field, 
+			@Param(value = "search")String search,
 			@Param(value = "sort")String sort, 
 			@Param(value = "direct")String direct);
 	int selectPageAllCount(
+			@Param(value = "field")String field, 
+			@Param(value = "search")String search,
 			@Param(value = "sort")String sort, 
 			@Param(value = "direct")String direct);
 	Board selectDetailOneAll(int boardNo);
@@ -23,11 +26,4 @@ public interface BoardMapper {
 	int updateOne(Board board);
 	Board selectOne(int boardNo);
 	Board selectOne(int boardNo, String loginUsersId);
-	// 검색
-	public List<Board> searchBoard(Criteria cri);
-	// 검색 개수
-	public int boardGetTotal(Criteria cri);
-	// 통합 검색
-	public List<Board> searchAllBoard(Criteria cri);
-	public int boardAllGetTotal(Criteria cri);
 }

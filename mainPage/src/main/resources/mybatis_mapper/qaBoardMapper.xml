@@ -11,6 +11,7 @@
 		<result column="views" property="views"/>
 		<association property="category" javaType="Category"  foreignColumn="category_id">
 			<id column="category_id" property="category_id"/>
+			<id column="category_name" property="category_name"/>
 		</association>
 		<association property="user" javaType="UserDto"  foreignColumn="user_id">
 			<id column="user_id" property="user_id"/>
@@ -20,7 +21,6 @@
 		</association>
 		<association property="qaReply" javaType="qaReply"  foreignColumn="qaBoardNo">
 			<id column="qaReplyNo" property="qaReplyNo"/>
-			<result column="qaReplyTitle" property="qaReplyTitle"/>
 			<result column="qaReplyContent" property="qaReplyContent"/>
 			<result column="qaReplyDate" property="qaReplyDate"/>
 		</association>
@@ -33,7 +33,7 @@
 		u.user_email,
 		u.user_phone,
 		
-		c.category_id,
+		c.*,
 		
 		r.*
 		
@@ -48,6 +48,9 @@
 		LEFT JOIN QAREPLY r
 		USING(qaBoardNo)
 		
+		<if test="field != null">
+			WHERE ${field} LIKE CONCAT('%', #{search}, '%')
+		</if>
 		<if test="sort != null">
 			ORDER BY ${sort} 
 		</if>
@@ -61,6 +64,19 @@
 	</select>
 	<select id="selectPageAllCount" resultType="int">
 		SELECT COUNT(*) FROM QABOARD
+		
+		LEFT JOIN USER u 
+		USING(user_id)
+		
+		LEFT JOIN CATEGORY c
+		USING(category_id)
+		
+		LEFT JOIN QAREPLY r
+		USING(qaBoardNo)
+		
+		<if test="field != null">
+			WHERE ${field} LIKE CONCAT('%', #{search}, '%')
+		</if>
 	</select>
 	<update id="answerOne" parameterType="QaBoard">
  		UPDATE QABOARD SET 
@@ -113,52 +129,4 @@
 			views = views + 1
 				WHERE qaBoardNo = #{qaBoardNo}
 	</update>
-	<!-- criteria(검색조건) -->
-	<sql id="criteria">
-		    <trim prefix="WHERE (" suffix=")" prefixOverrides="AND">
-	  		<foreach item="type" collection="typeArr">
-	  			<trim prefix="AND">
-	  				<choose>
-	  					<when test="type == 'T'.toString()">
-	  						qaBoardKind LIKE CONCAT ('%', #{keyword}, '%')
-	  					</when>
-	  					<when test="type == 'C'.toString()">
-	  						qaBoardTitle LIKE CONCAT ('%', #{keyword}, '%')
-	  					</when>  					
-	  				</choose>
-	  			</trim>
-	  		</foreach>
-	  	</trim>
-	</sql>
-	<select id="searchQaBoard" resultMap="QaBoardMap">
-			SELECT q.*,
-			
-			u.user_id,
-			u.user_name,
-			u.user_email,
-			u.user_phone,
-			
-			c.category_id,
-			
-			r.*
-			
-			FROM QABOARD q 
-			
-			LEFT JOIN USER u 
-			USING(user_id)
-			
-			LEFT JOIN CATEGORY c
-			USING(category_id)
-			
-			LEFT JOIN QAREPLY r 
-			USING(qaBoardno)
-			
-			<include refid="criteria"></include>
-			ORDER BY q.qaBoardNo DESC 
-			LIMIT #{skip}, #{amount}	
-	</select>
-	<select id="QaBoardGetTotal" resultType="int">
-  		SELECT COUNT(*) FROM QABOARD
-		<include refid="criteria"></include>
-	</select>
 </mapper>

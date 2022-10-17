@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.project.mainPage.dto.Criteria;
 import com.project.mainPage.dto.Notice;
 import com.project.mainPage.dto.NoticeImg;
 import com.project.mainPage.dto.Pagination;
@@ -52,6 +51,8 @@ public class NoticeController {
 	@GetMapping("/list/{page}")
 	public String list(
 			@PathVariable int page, 
+			@RequestParam(required = false) String field,
+			@RequestParam(required = false) String search,
 			@RequestParam(required = false) String sort,
 			@RequestParam(required = false, defaultValue = "desc") String direct,
 			Model model) {
@@ -59,15 +60,24 @@ public class NoticeController {
 		int startRow = (page - 1) * row;
 		List<Notice> noticeList = null;
 		int count = 0;
-		
-		if(sort != null && !sort.equals("")) { // 정렬(o)
-			noticeList = noticeMapper.selectPageAll(startRow, row, sort, direct);
-			count = noticeMapper.selectPageAllCount(sort, direct);
-		} else { // 정렬(x)
-			noticeList = noticeMapper.selectPageAll(startRow, row, null, null);
-			count = noticeMapper.selectPageAllCount(null, null);
+		if(field != null && !field.equals("")) {
+			if(sort != null && !sort.equals("")) { // 검색(o) + 정렬(o)
+				noticeList = noticeMapper.selectPageAll(startRow, row, field, search, sort, direct);
+				count = noticeMapper.selectPageAllCount(field, search, sort, direct);
+			} else { // 검색(o) + 정렬(x)
+				noticeList = noticeMapper.selectPageAll(startRow, row, field, search, null, null);
+				count = noticeMapper.selectPageAllCount(field, search, null, null);
+			}
+		} else {
+			if(sort != null && !sort.equals("")) { // 검색(x) + 정렬(o)
+				noticeList = noticeMapper.selectPageAll(startRow, row, null, null, sort, direct);
+				count = noticeMapper.selectPageAllCount(null, null, sort, direct);
+			} else { // 검색(x) + 정렬(x)
+				noticeList = noticeMapper.selectPageAll(startRow, row, null, null, null, null);
+				count = noticeMapper.selectPageAllCount(null, null, null, null);
+			}
 		}
-		
+			
 		Pagination pagination = new Pagination(page, count, "/notice/list/", row);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("noticeList", noticeList);
@@ -76,32 +86,7 @@ public class NoticeController {
 		model.addAttribute("page", page);
 		return "/notice/list";
 	}
-	
-//	공지 사항 검색 페이지
-	@GetMapping("/search/{page}")
-	public String searchProduct(
-			@RequestParam(value = "type") String type,
-			@RequestParam(value = "keyword") String keyword,
-			@PathVariable int page, Criteria cri, Model model) {
-		int row = 10;
-		int startRow = (page - 1) * row;
-		cri.setAmount(row);
-		cri.setSkip(startRow);
-		List<Notice> list=noticeMapper.searchNotice(cri);
-		int count = noticeMapper.noticeGetTotal(cri);
-		  if(!list.isEmpty()) { model.addAttribute("list",list);
-		  }else { model.addAttribute("listCheck","empty"); return "/notice/search"; }
-		Pagination pagination = new Pagination(page, count, "/notice/search/", row);
-		model.addAttribute("pagination", pagination);
-		System.out.println(pagination);
-		model.addAttribute("list", list);
-		System.out.println("list : "+list);
-		model.addAttribute("row", row);
-		model.addAttribute("count", count);
-		model.addAttribute("page", page);
-		return "/notice/search";
-	}
-	
+
 //	공지 사항 상세 페이지
 	@GetMapping("/detail/{noticeNo}")
 	public String detail(

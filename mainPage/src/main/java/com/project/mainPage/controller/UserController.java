@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import com.project.mainPage.dto.Criteria;
 import com.project.mainPage.dto.EmailCheck;
 import com.project.mainPage.dto.IdCheck;
 import com.project.mainPage.dto.Pagination;
@@ -32,6 +31,8 @@ public class UserController {
 	@GetMapping("/list/{page}")
 	public String list(
 			@PathVariable int page, 
+			@RequestParam(required = false) String field,
+			@RequestParam(required = false) String search,
 			@RequestParam(required = false) String sort,
 			@RequestParam(required = false, defaultValue = "desc") String direct,
 			Model model) {
@@ -40,15 +41,24 @@ public class UserController {
 		
 		List<UserDto> userList = null;
 		int count = 0;
-		
-		if(sort != null && !sort.equals("")) { // 정렬(o)
-			userList = userMapper.selectPageAll(startRow, row, sort, direct);
-			count = userMapper.selectPageAllCount(sort, direct);
-		} else { // 정렬(x)
-			userList = userMapper.selectPageAll(startRow, row, null, null);
-			count = userMapper.selectPageAllCount(null, null);
+		if(field != null && !field.equals("")) {
+			if(sort != null && !sort.equals("")) { // 검색(o) + 정렬(o)
+				userList = userMapper.selectPageAll(startRow, row, field, search, sort, direct);
+				count = userMapper.selectPageAllCount(field, search, sort, direct);
+			} else { // 검색(o) + 정렬(x)
+				userList = userMapper.selectPageAll(startRow, row, field, search, null, null);
+				count = userMapper.selectPageAllCount(field, search, null, null);
+			}
+		} else {
+			if(sort != null && !sort.equals("")) { // 검색(x) + 정렬(o)
+				userList = userMapper.selectPageAll(startRow, row, null, null, sort, direct);
+				count = userMapper.selectPageAllCount(null, null, sort, direct);
+			} else { // 검색(x) + 정렬(x)
+				userList = userMapper.selectPageAll(startRow, row, null, null, null, null);
+				count = userMapper.selectPageAllCount(null, null, null, null);
+			}
 		}
-		
+
 		Pagination pagination = new Pagination(page, count, "/user/list/", row);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("userList", userList);
@@ -57,49 +67,6 @@ public class UserController {
 		model.addAttribute("page", page);	
 		return "/user/list";
 	}	
-	
-//	회원 검색 페이지
-	@GetMapping("/search/{page}")
-	public String searchProduct(
-			@PathVariable int page, 
-			@RequestParam(required = false, value = "type") String type,
-			@RequestParam(required = false, value = "keyword") String keyword,
-			@RequestParam(required = false) String sort,
-			@RequestParam(required = false, defaultValue = "desc") String direct,
-			@SessionAttribute(required = false) UserDto loginUser,
-			HttpSession session,
-			Criteria cri, 
-			Model model) {
-		int row = 10;
-		int startRow = (page - 1) * row;
-		
-		cri.setAmount(row);
-		cri.setSkip(startRow);
-		
-		List<UserDto> list = null;
-		int count = 0;
-		
-		if(sort != null && !sort.equals("")) { // 정렬(o)
-			list = userMapper.searchUser(cri, sort, direct);
-			count = userMapper.userGetTotal(cri, sort, direct);
-		} else { // 정렬(x)
-			list = userMapper.searchUser(cri, null, null);
-			count = userMapper.userGetTotal(cri, null, null);
-		}
-		if(!list.isEmpty()) { 
-			model.addAttribute("list", list);
-		} else {
-			model.addAttribute("listCheck", "empty"); 
-			return "/user/search";
-		}
-		Pagination pagination = new Pagination(page, count, "/user/search/", row);
-		model.addAttribute("pagination", pagination);
-		model.addAttribute("list", list);
-		model.addAttribute("row", row);
-		model.addAttribute("count", count);
-		model.addAttribute("page", page);
-		return "/user/search";
-	}
 	
 //	로그인 페이지
 	@GetMapping("/login.do")
@@ -121,31 +88,67 @@ public class UserController {
 		public String login(
 				@RequestParam(value="user_id") String userId, 
 				@RequestParam(value="user_pw") String userPw,
+				Model model,
 				HttpSession session) {
 			UserDto user = null;
+			String msg = "";
 			try {
-				user = userMapper.selectIdPwOne(userId, userPw);
+				user = userMapper.selectId(userId); // 아이디만으로 유저 정보 불러 오기
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
-			if(user != null) {
-				session.setAttribute("loginUser", user);
-				Object redirectPage = session.getAttribute("redirectPage"); // 이전 페이지
-				session.removeAttribute("redirectPage");
-				System.out.println("로그인 성공! " + user); 
-				if(redirectPage != null) {
-					return "redirect:" + redirectPage; // 이전 페이지로 이동
-				} else {
-					return "redirect:/";
+			if(user != null) { // 아이디가 존재할 때
+				if(user.getUser_pw().equals(userPw)) { // 아이디로 불러 온 유저의 실제 비밀번호와 유저가 로그인 폼에서 입력한 비밀번호 값이 같을 때
+					session.setAttribute("loginUser", user);
+					Object redirectPage = session.getAttribute("redirectPage"); // 이전 페이지
+					session.removeAttribute("redirectPage");
+					System.out.println("로그인 성공! " + user); 
+					if(redirectPage != null) {
+						return "redirect:" + redirectPage; // 이전 페이지로 이동
+					} else {
+						return "redirect:/";
+					}
+				} else { // 아이디로 불러 온 유저의 실제 비밀번호와 유저가 로그인 폼에서 입력한 비밀번호 값이 같지 않을 때
+					msg = "잘못된 비밀번호입니다.";
+					model.addAttribute("msg", msg);
+					return "user/login";	
 				}
-			}else {
-				return "redirect:/user/login.do";					
+			} else { // 아이디가 존재하지 않을 때
+				msg = "존재하지 않는 아이디입니다.";
+				model.addAttribute("msg", msg);
+				return "user/login";					
 			}
+	}
+	
+//	아이디 찾기
+	@PostMapping("/findId.do")
+	public String findId(
+			String user_name, 
+			String user_email, 
+			String user_phone,
+			Model model) {
+		UserDto user = null;
+		String msg = "";
+		try {
+			user = userMapper.findId(user_name, user_email, user_phone);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(user != null) {
+			msg = "당신의 아이디는 " + user.getUser_id() + "입니다.";
+			model.addAttribute("msg", msg);
+			return "user/login";
+		} else {
+			msg = "아이디를 찾을 수 없습니다.";
+			model.addAttribute("msg", msg);
+			return "user/login";
+		}
 	}
 	
 //	회원 로그아웃
 	@GetMapping("/logout.do")
 	public String logout(HttpSession session) {
+		System.out.println("로그아웃 성공!"); 
 		session.invalidate();
 		return "redirect:/";
 	}
@@ -182,6 +185,7 @@ public class UserController {
 			session.setAttribute("loginUser", user); // 회원가입하면 로그인되어 있도록 설정
 			return "redirect:/";
 		}else {
+			System.out.println("회원가입 실패! : " + insert);
 			return "redirect:/user/signup.do";
 		}
 	}
@@ -223,7 +227,6 @@ public class UserController {
 		} else if(user.getUser_id().equals(loginUser.getUser_id()) || (loginUser.getAdminCk() == 1)) { // 로그인된 일반 회원이 본인의 수정 페이지로 이동 / 관리자는 모든 회원 수정 가능
 			System.out.println("회원 수정 페이지로 이동 성공!");
 			model.addAttribute("user", user);
-			System.out.println(user);
 			return "/user/update";	
 		} else { // 로그인된 일반 회원이 다른 회원의 수정 페이지로 이동할 수 없음
 			System.out.println("다른 회원의 정보를 수정할 수 없습니다.");
@@ -233,7 +236,9 @@ public class UserController {
 	
 //	회원 정보 수정
 	@PostMapping("/update.do")
-	public String update(UserDto user) {
+	public String update(
+			UserDto user,
+			HttpSession session) {
 		int update = 0;
 		try {
 			update = userMapper.updateOne(user);
@@ -328,7 +333,7 @@ public class UserController {
 	
 //	푸터 연결용
 	@GetMapping("/agreement")
-	public void agreement() {};
+	public void agreement() {}; 
 	
 	@GetMapping("/privacy")
 	public void privacy() {};

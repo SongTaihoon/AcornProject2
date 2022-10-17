@@ -2,10 +2,9 @@
 const replyUpdate = document.querySelectorAll("form");
 console.log(replyUpdate);
 replyUpdate.forEach((form) => {
-	let title = form.title;
 	let contents = form.contents;
 	form.addEventListener("submit", (event) => {
-	if(!(title.value) || !(contents.value)) {
+	if(!(contents.value)) {
 		event.preventDefault();		
 	}
 	});

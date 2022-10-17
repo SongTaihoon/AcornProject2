@@ -24,22 +24,16 @@
 		  </ol>
 		</nav>
 	    <h1 class="pb-4 d-flex justify-content-between align-items-center" 
-		    style="border-bottom: 1px solid #e8e8e8; min-width: 1200px;">
+		    style="border-bottom: 1px solid #e8e8e8;">
 		    <span style="font-size: 35px;">후기 작성</span>
 	    </h1>	
 		<form action="/board/insert.do" method="post" enctype="multipart/form-data" name="boardInsertForm">
 			<table class="mt-5 mb-5 table align-middle table-bordered">
 				<tbody>
 					<tr>
-						<th class="table-light">작성자</th>
+						<th class="table-light align-middle">카테고리</th>
 						<td>
-							<input name="user.user_id" class="form-control" id="user.user_id" th:value="${session.loginUser.user_id}" readonly>
-						</td>
-					</tr>
-					<tr>
-						<th class="table-light">카테고리</th>
-						<td>
-							<select name="category_id" class="form-select" id="category_id">
+							<select name="category_id" class="form-select" id="category_id" style="font-size: 11px; border-radius: 2px;">
 									<option value="1">관광지</option>
 									<option value="2">숙박</option>
 									<option value="3">맛집</option>
@@ -47,15 +41,15 @@
 						</td>
 					</tr>
 					<tr>
-						<th class="table-light">장소명</th>
+						<th class="table-light align-middle">장소명</th>
 						<td>
 							<input name="place_name" class="form-control" id="place_name" onkeyup="noSpace(this);" onchange="noSpace(this);">
 						</td>
 					</tr>
 					<tr>
-						<th class="table-light">별점</th>
+						<th class="table-light align-middle">별점</th>
 						<td>
-							<select name="rating" class="form-select" id="rating">
+							<select name="rating" class="form-select" id="rating" style="font-size: 11px; border-radius: 2px;">
 								<option value="0.0">0.0</option>
 								<option value="0.5">0.5</option>
 								<option value="1.0">1.0</option>
@@ -71,24 +65,24 @@
 						</td>
 					</tr>
 					<tr>
-						<th class="table-light">사진</th>
+						<th class="table-light align-middle">사진</th>
 						<td>
-							<input name="imgFile" class="form-control mb-1 form-control-lg" type="file">
-							<input name="imgFile" class="form-control mb-1 form-control-lg" type="file">
-							<input name="imgFile" class="form-control mb-1 form-control-lg" type="file">
-							<input name="imgFile" class="form-control mb-1 form-control-lg" type="file">
-							<input name="imgFile" class="form-control mb-1 form-control-lg" type="file">
+							<input name="imgFile" class="form-control mb-1 form-control-lg" type="file" style="height: 29px;">
+							<input name="imgFile" class="form-control mb-1 form-control-lg" type="file" style="height: 29px;">
+							<input name="imgFile" class="form-control mb-1 form-control-lg" type="file" style="height: 29px;">
+							<input name="imgFile" class="form-control mb-1 form-control-lg" type="file" style="height: 29px;">
+							<input name="imgFile" class="form-control mb-1 form-control-lg" type="file" style="height: 29px;">
 						</td>
 					</tr>
 					<tr>
-						<th class="table-light">제목</th>
+						<th class="table-light align-middle">제목</th>
 						<td>
 							<input name="title" class="form-control" id="title" 
 								   onkeyup="noSpace(this);" onchange="noSpace(this);">
 						</td>
 					</tr>
 					<tr>
-						<th class="table-light">내용</th>
+						<th class="table-light align-middle">내용</th>
 						<td>
 							<textarea name="contents" class="form-control" id="contents" 
 									  onkeyup="noSpace(this);" onchange="noSpace(this);"></textarea>
@@ -98,10 +92,10 @@
 			</table>
 			<div class="d-flex">
 				<div class="ms-auto">
-					<button class="btn btn-outline-warning btn-lg" type="reset" style="margin-right: 8px;">초기화</button>
-					<button class="btn btn-outline-primary btn-lg" type="submit" style="margin-right: 8px;">등록</button>
-					<a class="btn btn-outline-dark btn-lg" href="/board/list/1">목록</a>
-
+					<button class="btn btn-outline-warning btn-lg" type="reset" style="margin-right: 8px; padding: 12px 12.5px;">초기화</button>
+					<button class="btn btn-outline-primary btn-lg" type="submit" style="margin-right: 8px; padding: 12px 20px;">등록</button>
+					<input type="hidden" name="user.user_id" th:value="${session.loginUser.user_id}">
+					<a class="btn btn-outline-dark btn-lg" href="/board/list/1" style="padding: 12px 20px;">목록</a>
 				</div>
 			</div>
 		</form>
