@@ -307,7 +307,7 @@ insert into qaboard
 
 CREATE TABLE QAREPLY(
 qaReplyNo INT AUTO_INCREMENT,
-qaReplyContent TEXT,
+qaReplyContent TEXT NOT NULL,
 qaReplyDate DATETIME DEFAULT CURRENT_TIMESTAMP(),
 qaBoardNo INT,
 CONSTRAINT PRIMARY KEY(qaReplyNo),
