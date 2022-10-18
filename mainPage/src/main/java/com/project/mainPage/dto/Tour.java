@@ -29,6 +29,7 @@ public class Tour {
 	 private int views;
 	 private int search;
 	 private int ranking;
+	 private String img_path;
 	 private UserDto user; // UsersDto.user_id : fk 
 	 private List<TourImg> tourImgs; // 1:N  TourImg.tour_rank fk
 }

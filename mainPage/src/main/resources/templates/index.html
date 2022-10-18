@@ -19,7 +19,7 @@ ol {
                             </div>
                         </div>
                     </li>
-                    <li class="bg-dark-30 bg-dark" style="background-image:url(/img/JEJU2.jpg);">
+                    <li class="bg-dark-30 bg-dark" style="background-image:url(/img/JEJUJUSANG.jpg);">
                         <div class="titan-caption">
                             <div class="caption-content">
                                 <div class="font-alt mb-30 titan-title-size-2">천혜의 자연환경</div>
@@ -27,7 +27,7 @@ ol {
                             </div>
                         </div>
                     </li>
-                    <li class="bg-dark-30 bg-dark" style="background-image:url(/img/JEJU3.jpeg);">
+                    <li class="bg-dark-30 bg-dark" style="background-image:url(/img/JEJUHALLA.jpg);">
                         <div class="titan-caption">
                            <div class="caption-content">
                                 <div class="font-alt mb-30 titan-title-size-2">방문해 주셔서 감사합니다</div>
@@ -41,146 +41,172 @@ ol {
         <section class="module-small bg-light">
               <div class="container-fluid">
                   <div class="row multi-columns-row d-flex justify-content-evenly">
-                      <div class="col-sm-6 col-md-3 col-lg-3" style="height: 320px;">
-                          <div class="shop-item" style="width: 100%; height: 60%;">
+                      <div class="col-sm-6 col-md-3 col-lg-3" style="height: 350px;">
+                          <div class="shop-item" style="width: 100%; height: 80%;">
                           	  <div id="carouselExampleFade1" class="carousel slide carousel-fade" data-bs-ride="carousel" style="width: 100%; height: 100%;">
 								  <div class="carousel-inner" style="width: 100%; height: 100%;">
-								  	<th:block th:unless="${#lists.isEmpty(tour1.tourImgs)}">
-		                              	<th:block th:each="tourImg : ${tour1.tourImgs}">
-										    <div class="carousel-item active" style="width: 100%; height: 100%;">
-			                              		<div class="shop-item-image" style="width: 100%; height: 100%;">
-											       <img th:src="@{/img/{fileName}(fileName=${tourImg.img_path})}" alt="추천 이미지" style="width: 100%; height: 100%;"/>		                              		   
+								  	<th:block th:each="tour : ${tourList}">
+								  		<th:block th:if="${tour.img_path != null}">
+										    <div class="carousel-item" th:classappend="${(tour.ranking == 1) ? 'active' : ''}" style="width: 100%; height: 100%;">
+			                              		<div class="shop-item-image" style="width: 100%; height: 70%;">
+											       <img th:src="@{/img/{fileName}(fileName=${tour.img_path})}" alt="추천 이미지" style="width: 100%; height: 100%;"/>		                              		   
 											       <div class="shop-item-detail">
-											       	  <a class="btn btn-round btn-b" th:href="@{/top/tour/detail/{tour_rank}(tour_rank = ${tour1.tour_rank})}">
+											       	  <a class="btn btn-round btn-b" th:href="@{/top/tour/detail/{tour_rank}(tour_rank = ${tour.tour_rank})}">
 											       		  <span>상세 보기</span>
 											       	  </a>
 											       </div>
 			                              		</div>
+			                              		<div style="width: 100%; height: 30%;">
+				                              		<h4 class="shop-item-title font-alt">
+											       	    <a th:href="@{/top/tour/detail/{tour_rank}(tour_rank = ${tour.tour_rank})}" th:text="${tour.tourist}"></a>
+											        </h4>
+					                          	    <span style="font-weight: bold; font-size: 14px;" th:text="'관광지 ' + ${tour.ranking} + '위'"></span>
+				                          	    </div> 
 										    </div>
-		                              	</th:block>
-								  	</th:block>
-								  	<th:block th:if="${#lists.isEmpty(tour1.tourImgs)}">
-								  		<div class="carousel-item active" style="width: 100%; height: 100%;">
-		                              		<div class="shop-item-image" style="width: 100%; height: 100%;">
-										       <img src="/img/JEJUHYUBJAE.jpg" alt="추천 이미지" style="width: 100%; height: 100%;"/>		                              		   
-										       <div class="shop-item-detail">
-										       	  <a class="btn btn-round btn-b" th:href="@{/top/tour/detail/{tour_rank}(tour_rank = ${tour1.tour_rank})}">
-										       		  <span>상세 보기</span>
-										       	  </a>
-										       </div>
-		                              		</div>
-									    </div>
+								  		</th:block>
+									  	<th:block th:unless="${tour.img_path != null}">
+									  		<div class="carousel-item" th:classappend="${(tour.ranking == 1) ? 'active' : ''}" style="width: 100%; height: 100%;">
+			                              		<div class="shop-item-image" style="width: 100%; height: 70%;">
+											       <img src="/img/JEJUHYUBJAE.jpg" alt="추천 이미지" style="width: 100%; height: 100%;"/>		                              		   
+											       <div class="shop-item-detail">
+											       	  <a class="btn btn-round btn-b" th:href="@{/top/tour/detail/{tour_rank}(tour_rank = ${tour.tour_rank})}">
+											       		  <span>상세 보기</span>
+											       	  </a>
+											       </div>
+			                              		</div>
+										        <div style="width: 100%; height: 30%;">
+				                              	    <h4 class="shop-item-title font-alt">
+											       	    <a th:href="@{/top/tour/detail/{tour_rank}(tour_rank = ${tour.tour_rank})}" th:text="${tour.tourist}"></a>
+											        </h4>
+					                          	    <span style="font-weight: bold; font-size: 14px;" th:text="'관광지 ' + ${tour.ranking} + '위'"></span>
+				                          	    </div> 
+										    </div>
+									  	</th:block>
 								  	</th:block>
 								  </div>
 								  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade1" 
-								  		  data-bs-slide="prev">
+								  		  style="height: 70%;" data-bs-slide="prev">
 								    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 								    <span class="visually-hidden">Previous</span>
 								  </button>
 								  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade1" 
-								  		  data-bs-slide="next">
+								  		  style="height: 70%;" data-bs-slide="next">
 								    <span class="carousel-control-next-icon" aria-hidden="true"></span>
 								    <span class="visually-hidden">Next</span>
 								  </button>
 							  </div>
-							   <h4 class="shop-item-title font-alt">
-						       	   <a th:href="@{/top/tour/detail/{tour_rank}(tour_rank = ${tour1.tour_rank})}" th:text="${tour1.tourist}"></a>
-						       </h4>
-                          	   <span style="font-weight: bold; font-size: 14px;" th:text="'관광지 ' + ${tour1.ranking} + '위'"></span> 
                           </div>
                       </div>
-                      <div class="col-sm-6 col-md-3 col-lg-3" style="height: 320px;">
-                          <div class="shop-item" style="width: 100%; height: 60%;">
+                      <div class="col-sm-6 col-md-3 col-lg-3" style="height: 350px;">
+                          <div class="shop-item" style="width: 100%; height: 80%;">
                           	   <div id="carouselExampleFade2" class="carousel slide carousel-fade" data-bs-ride="carousel" style="width: 100%; height: 100%;">
 								  <div class="carousel-inner" style="width: 100%; height: 100%;">
-								  	<th:block th:unless="${#lists.isEmpty(acco1.accoImgs)}">
-									  	<th:block th:each="accoImg : ${acco1.accoImgs}">
-										    <div class="carousel-item active" style="width: 100%; height: 100%;">
-			                              		<div class="shop-item-image" style="width: 100%; height: 100%;">
-											       <img th:src="@{/img/{fileName}(fileName=${accoImg.img_path})}" alt="추천 이미지" style="width: 100%; height: 100%;"/>
+							  		<th:block th:each="acco : ${accoList}">
+							  			<th:block th:if="${acco.img_path != null}">
+										    <div class="carousel-item" th:classappend="${(acco.ranking == 1) ? 'active' : ''}" style="width: 100%; height: 100%;">
+			                              		<div class="shop-item-image" style="width: 100%; height: 70%;">
+											       <img th:src="@{/img/{fileName}(fileName=${acco.img_path})}" alt="추천 이미지" style="width: 100%; height: 100%;"/>
 											       <div class="shop-item-detail">
-											       	  <a class="btn btn-round btn-b" th:href="@{/top/acco/detail/{acco_rank}(acco_rank = ${acco1.acco_rank})}">
+											       	  <a class="btn btn-round btn-b" th:href="@{/top/acco/detail/{acco_rank}(acco_rank = ${acco.acco_rank})}">
 											       	  	<span>상세 보기</span>
 											       	  </a>
 											       </div>
 			                              		</div>
+			                              		<div style="width: 100%; height: 30%;">
+					                                <h4 class="shop-item-title font-alt">
+					                              	    <a th:href="@{/top/acco/detail/{acco_rank}(acco_rank = ${acco.acco_rank})}" th:text="${acco.tourist}"></a>
+					                                </h4>
+					                                <span style="font-weight: bold; font-size: 14px;" th:text="'숙박 ' + ${acco.ranking} + '위'"></span> 
+				                                </div>
+										    </div>
+									    </th:block>
+									  	<th:block th:unless="${acco.img_path != null}">
+									  		<div class="carousel-item" th:classappend="${(acco.ranking == 1) ? 'active' : ''}" style="width: 100%; height: 100%;">
+			                              		<div class="shop-item-image" style="width: 100%; height: 70%;">
+											       <img src="/img/JEJUSHILLA.jpeg" alt="추천 이미지" style="width: 100%; height: 100%;"/>
+											       <div class="shop-item-detail">
+											       	  <a class="btn btn-round btn-b" th:href="@{/top/acco/detail/{acco_rank}(acco_rank = ${acco.acco_rank})}">
+											       	  	<span>상세 보기</span>
+											       	  </a>
+											       </div>
+			                              		</div>
+			                              		<div style="width: 100%; height: 30%;">
+					                                <h4 class="shop-item-title font-alt">
+					                              	    <a th:href="@{/top/acco/detail/{acco_rank}(acco_rank = ${acco.acco_rank})}" th:text="${acco.tourist}"></a>
+					                                </h4>
+					                                <span style="font-weight: bold; font-size: 14px;" th:text="'숙박 ' + ${acco.ranking} + '위'"></span> 
+				                                </div>
 										    </div>
 									  	</th:block>
-								  	</th:block>
-								  	<th:block th:if="${#lists.isEmpty(acco1.accoImgs)}">
-								  		<div class="carousel-item active" style="width: 100%; height: 100%;">
-		                              		<div class="shop-item-image" style="width: 100%; height: 100%;">
-										       <img src="/img/JEJUSHILLA.jpeg" alt="추천 이미지" style="width: 100%; height: 100%;"/>
-										       <div class="shop-item-detail">
-										       	  <a class="btn btn-round btn-b" th:href="@{/top/acco/detail/{acco_rank}(acco_rank = ${acco1.acco_rank})}">
-										       	  	<span>상세 보기</span>
-										       	  </a>
-										       </div>
-		                              		</div>
-									    </div>
-								  	</th:block>
+									 </th:block>
 								  </div>
 								  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade2" 
-								  		  data-bs-slide="prev">
+								  		  style="height: 70%;" data-bs-slide="prev">
 								    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 								    <span class="visually-hidden">Previous</span>
 								  </button>
 								  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade2" 
-								  	      data-bs-slide="next">
+								  	      style="height: 70%;" data-bs-slide="next">
 								    <span class="carousel-control-next-icon" aria-hidden="true"></span>
 								    <span class="visually-hidden">Next</span>
 								  </button>
 							  </div>
-                              <h4 class="shop-item-title font-alt">
-                              	  <a th:href="@{/top/acco/detail/{acco_rank}(acco_rank = ${acco1.acco_rank})}" th:text="${acco1.tourist}"></a>
-                              </h4>
-                              <span style="font-weight: bold; font-size: 14px;" th:text="'숙박 ' + ${acco1.ranking} + '위'"></span> 
                           </div>
                       </div>
-                      <div class="col-sm-6 col-md-3 col-lg-3" style="height: 320px;">
-                          <div class="shop-item" style="width: 100%; height: 60%;">
+                      <div class="col-sm-6 col-md-3 col-lg-3" style="height: 350px;">
+                          <div class="shop-item" style="width: 100%; height: 80%;">
                               <div id="carouselExampleFade3" class="carousel slide carousel-fade" data-bs-ride="carousel" style="width: 100%; height: 100%;">
 								  <div class="carousel-inner" style="width: 100%; height: 100%;">
-								  	<th:block th:unless="${#lists.isEmpty(rest1.restaurantImgs)}">
-									  	<th:block th:each="restaurantImg : ${rest1.restaurantImgs}">
-										    <div class="carousel-item active" style="width: 100%; height: 100%;">
-			                              		<div class="shop-item-image" style="width: 100%; height: 100%;">
-											       <img th:src="@{/img/{fileName}(fileName=${restaurantImg.img_path})}" alt="추천 이미지" style="width: 100%; height: 100%;"/>
+								  	<th:block th:each="rest : ${restList}">
+								  		<th:block th:if="${rest.img_path != null}">
+										    <div class="carousel-item" th:classappend="${(rest.ranking == 1) ? 'active' : ''}" style="width: 100%; height: 100%;">
+			                              		<div class="shop-item-image" style="width: 100%; height: 70%;">
+											       <img th:src="@{/img/{fileName}(fileName=${rest.img_path})}" alt="추천 이미지" style="width: 100%; height: 100%;"/>
 											       <div class="shop-item-detail">
-											       	   <a class="btn btn-round btn-b" th:href="@{/top/rest/detail/{rest_rank}(rest_rank=${rest1.rest_rank})}">
+											       	   <a class="btn btn-round btn-b" th:href="@{/top/rest/detail/{rest_rank}(rest_rank=${rest.rest_rank})}">
 											       	   	   <span>상세 보기</span>
 											       	   </a>
 											       </div>
 			                              		</div>
+			                              		<div style="width: 100%; height: 30%;">
+					                               <h4 class="shop-item-title font-alt">
+					                              	   <a th:href="@{/top/rest/detail/{rest_rank}(rest_rank=${rest.rest_rank})}" th:text="${rest.tourist}"></a>
+					                               </h4>
+					                               <span style="font-weight: bold; font-size: 14px;" th:text="'음식점 ' + ${rest.ranking} + '위'"></span>
+				                                </div> 
+										    </div>
+								  		</th:block>
+									  	<th:block th:unless="${rest.img_path != null}">
+									  		<div class="carousel-item" th:classappend="${(rest.ranking == 1) ? 'active' : ''}" style="width: 100%; height: 100%;">
+			                              		<div class="shop-item-image" style="width: 100%; height: 70%;">
+											       <img src="/img/JEJUFOOD3.jpeg" alt="추천 이미지" style="width: 100%; height: 100%;"/>
+											       <div class="shop-item-detail">
+											       	   <a class="btn btn-round btn-b" th:href="@{/top/rest/detail/{rest_rank}(rest_rank=${rest.rest_rank})}">
+											       	   	   <span>상세 보기</span>
+											       	   </a>
+											       </div>
+			                              		</div>
+			                              		<div style="width: 100%; height: 30%;">
+					                               <h4 class="shop-item-title font-alt">
+					                              	   <a th:href="@{/top/rest/detail/{rest_rank}(rest_rank=${rest.rest_rank})}" th:text="${rest.tourist}"></a>
+					                               </h4>
+					                               <span style="font-weight: bold; font-size: 14px;" th:text="'음식점 ' + ${rest.ranking} + '위'"></span>
+				                                </div> 
 										    </div>
 									  	</th:block>
 								  	</th:block>
-								  	<th:block th:if="${#lists.isEmpty(rest1.restaurantImgs)}">
-								  		<div class="carousel-item active" style="width: 100%; height: 100%;">
-		                              		<div class="shop-item-image" style="width: 100%; height: 100%;">
-										       <img src="/img/JEJUFOOD3.jpeg" alt="추천 이미지" style="width: 100%; height: 100%;"/>
-										       <div class="shop-item-detail">
-										       	   <a class="btn btn-round btn-b" th:href="@{/top/rest/detail/{rest_rank}(rest_rank=${rest1.rest_rank})}">
-										       	   	   <span>상세 보기</span>
-										       	   </a>
-										       </div>
-		                              		</div>
-									    </div>
-								  	</th:block>
 								  </div>
-								  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade3" data-bs-slide="prev">
+								  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade3" 
+								  		  style="height: 70%;" data-bs-slide="prev">
 								    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 								    <span class="visually-hidden">Previous</span>
 								  </button>
-								  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade3" data-bs-slide="next">
+								  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade3" 
+								  		  style="height: 70%;" data-bs-slide="next">
 								    <span class="carousel-control-next-icon" aria-hidden="true"></span>
 								    <span class="visually-hidden">Next</span>
 								  </button>
 							  </div>
-                              <h4 class="shop-item-title font-alt">
-                              	  <a th:href="@{/top/rest/detail/{rest_rank}(rest_rank=${rest1.rest_rank})}" th:text="${rest1.tourist}"></a>
-                              </h4>
-                              <span style="font-weight: bold; font-size: 14px;" th:text="'음식점 ' + ${rest1.ranking} + '위'"></span> 
                           </div>
                      </div>
                   </div>

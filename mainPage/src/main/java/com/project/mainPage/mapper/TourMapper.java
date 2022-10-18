@@ -23,6 +23,6 @@ public interface TourMapper {
 	// 삭제 
 	int deleteOne(int tourRank);
 	// 메인 화면에 출력
-	Tour mainPageTour();
+	List<Tour> mainPageTour();
 }
 

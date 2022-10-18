@@ -24,6 +24,6 @@ public interface AccoMapper {
 	// 삭제 
 	int deleteOne(int accoRank);
 	// 메인 화면에 출력
-	Acco mainPageAcco();
+	List<Acco> mainPageAcco();
 }
 

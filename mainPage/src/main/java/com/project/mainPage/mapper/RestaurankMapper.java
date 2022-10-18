@@ -25,5 +25,5 @@ public interface RestaurankMapper {
 	// 삭제 
 	int deleteOne(int restRank);
 	// 메인 화면에 출력
-	Restaurant mainPageRest();
+	List<Restaurant> mainPageRest();
 }

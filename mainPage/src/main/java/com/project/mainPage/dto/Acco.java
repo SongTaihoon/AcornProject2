@@ -29,6 +29,7 @@ public class Acco {
 	 private int views;
 	 private int search;
 	 private int ranking;
+	 private String img_path;
 	 private UserDto user; // UsersDto.userid : fk 
 	 private List<AccoImg> accoImgs; // 1:N  TourImg.tour_rank fk
 }

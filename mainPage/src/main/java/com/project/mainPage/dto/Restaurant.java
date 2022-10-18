@@ -30,6 +30,7 @@ public class Restaurant {
 	private int search;
 	private int ranking;	
 	private String rest_phone;
+	private String img_path;
 	private UserDto user; // UsersDto.user_id : fk 
 	private Category category;
 	private List<RestaurantImg> restaurantImgs;

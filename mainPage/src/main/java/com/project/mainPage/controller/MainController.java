@@ -24,13 +24,13 @@ public class MainController {
 	@GetMapping("/")
 	public String index(Model model) {
 		try {
-			Tour tour1 = tourMapper.mainPageTour();
-			Acco acco1 = accoMapper.mainPageAcco();
-			Restaurant rest1 = restaurankMapper.mainPageRest();
+			List<Tour> tourList = tourMapper.mainPageTour();
+			List<Acco> accoList = accoMapper.mainPageAcco();
+			List<Restaurant> restList = restaurankMapper.mainPageRest();
 			
-			model.addAttribute("tour1", tour1);
-			model.addAttribute("acco1", acco1);
-			model.addAttribute("rest1", rest1);
+			model.addAttribute("tourList", tourList);
+			model.addAttribute("accoList", accoList);
+			model.addAttribute("restList", restList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

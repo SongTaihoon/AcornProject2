@@ -13,6 +13,7 @@
 		<result column="search" property="search"/>
 		<result column="ranking" property="ranking"/>
 		<result column="tour_phone" property="tour_phone"/>
+		<result column="img_path" property="img_path"/>
 		<!-- Tour : UsersDto = N : 1   -->	
 		<association property="user" javaType="UserDto" foreignColumn="user_id">
 			<id column="user_id" property="user_id"/>
@@ -94,11 +95,14 @@
 		DELETE FROM TOUR 
 			WHERE tour_rank = #{tourRank}
 	</delete>
-	<select id="mainPageTour" resultMap="TourMap">
-		SELECT *, RANK() OVER(ORDER BY search DESC) AS ranking
-		 FROM TOUR
-		 	LEFT JOIN TOURIMG
-			USING(tour_rank) 
-			WHERE search = (SELECT MAX(search) FROM TOUR);
+	<select id="mainPageTour" resultType="Tour">
+		SELECT DISTINCT t.tour_rank,
+			t.*, 
+			(SELECT img_path FROM TOURIMG WHERE tour_rank = t.tour_rank LIMIT 1) img_path,
+			RANK() OVER(ORDER BY search DESC) AS ranking
+			
+		 	FROM TOUR t
+		 	
+			LIMIT 3;
 	</select>	
  </mapper>
