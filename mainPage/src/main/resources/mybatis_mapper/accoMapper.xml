@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
  <mapper namespace="com.project.mainPage.mapper.AccoMapper">
  	<resultMap type="Acco" id="AccoMap">
 		<id column="acco_rank" property="acco_rank"/>
@@ -94,5 +93,11 @@
 		DELETE FROM ACCOMMODATE 
 			WHERE acco_rank = #{accoRank}
 	</delete>
-	
+	<select id="mainPageAcco" resultMap="AccoMap">
+		SELECT *, RANK() OVER(ORDER BY search DESC) AS ranking
+		 FROM ACCOMMODATE 
+		 	LEFT JOIN ACCOIMG
+			USING(acco_rank)
+			WHERE search = (SELECT MAX(search) FROM ACCOMMODATE);
+	</select>
  </mapper>

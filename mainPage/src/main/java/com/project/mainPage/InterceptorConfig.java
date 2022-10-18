@@ -44,6 +44,7 @@ public class InterceptorConfig implements WebMvcConfigurer{
 			.excludePathPatterns("/user/agreement")
 			.excludePathPatterns("/ / ")
 			.excludePathPatterns("/ / ");
+			
 			registry.addInterceptor(adminInterceptor)
 			.addPathPatterns("/admin/**")
 			.addPathPatterns("/user/list/**")
@@ -55,6 +56,15 @@ public class InterceptorConfig implements WebMvcConfigurer{
 			.addPathPatterns("/qaboard/replyUpdate/**")
 			.addPathPatterns("/qaboard/replyInsert.do")
 			.addPathPatterns("/qaboard/replyUpdate.do")
-			.addPathPatterns("/qaboard/replyDelete/**");
+			.addPathPatterns("/qaboard/replyDelete/**")
+			.addPathPatterns("/top/tour/insert.do")
+			.addPathPatterns("/top/tour/update/**")
+			.addPathPatterns("/top/tour/delete/**")
+			.addPathPatterns("/top/acco/insert.do")
+			.addPathPatterns("/top/acco/update/**")
+			.addPathPatterns("/top/acco/delete/**")
+			.addPathPatterns("/top/rest/insert.do")
+			.addPathPatterns("/top/rest/update/**")
+			.addPathPatterns("/top/rest/delete/**");
 	}
 }

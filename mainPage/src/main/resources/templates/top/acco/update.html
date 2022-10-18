@@ -76,7 +76,7 @@
 						<p th:unless="${#lists.isEmpty(acco.accoImgs)}" class="mb-2">삭제할 사진 선택</p>
 						<th:block th:each="accoImg : ${acco.accoImgs}">
 							<label>
-								<input name="tourImgNo" type="checkbox"
+								<input name="accoImgNo" type="checkbox"
 									   class="form-check-input" th:value="${accoImg.acco_img_no}">
 								<img alt="후기 이미지" 
 									 th:src="@{/img/{file}(file=${accoImg.img_path})}" 

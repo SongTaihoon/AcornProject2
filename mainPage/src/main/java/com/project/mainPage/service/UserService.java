@@ -31,22 +31,20 @@ public class UserService {
 		List<BoardImg> boardImgList = boardImgMapper.selectUserId(userid); // 해당 유저가 작성한 모든 후기 글 
 		List<Reply> replyList = replyMapper.selectUserId(userid); // 해당 유저가 작성한 모든 댓글
 		if(boardImgList != null) { // 해당 유저가 작성한 후기 글에 등록된 모든 이미지들 삭제 
-			boardImgList.stream()
-				.filter(r -> r.getImg_path() != null)
-				.map(BoardImg::getImg_path)
-				.forEach(img -> {
-					File file = new File(savePath + "/" + img);
+			for(BoardImg boardImg : boardImgList) {
+				if(boardImg.getImg_path() != null) {
+					File file = new File(savePath + "/" + boardImg.getImg_path());
 					System.out.println("유저가 작성한 후기의 이미지 삭제 성공! : " + file.delete());
-				});
+				}
+			}
 		}
 		if(replyList != null) { // 해당 유저가 작성한 댓글에 등록된 모든 이미지들 삭제 
-			replyList.stream()
-				.filter(r -> r.getImg_path() != null)
-				.map(Reply::getImg_path)
-				.forEach(img -> {
-					File file = new File(savePath + "/" + img);
+			for(Reply reply : replyList) {
+				if(reply.getImg_path() != null) {
+					File file = new File(savePath + "/" + reply.getImg_path());
 					System.out.println("유저가 작성한 댓글의 이미지 삭제 성공! : " + file.delete());
-				});
+				}
+			}
 		}
 		remove = userMapper.deleteOne(userid); // DB에서 유저 삭제
 		return remove;

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">      
-        
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">          
 <mapper namespace="com.project.mainPage.mapper.RestaurankMapper">
 	<resultMap type="Restaurant" id="RestaurantMap">
 		<id column="rest_rank" property="rest_rank"/>
@@ -28,8 +27,7 @@
 			<id column="restaurank_img_no" property="restaurank_img_no"/>
 			<result column="img_path" property="img_path"/>
 		</collection>		
-	</resultMap>
-	
+	</resultMap>	
 	<!--  Restaurant List  -->
 	<select id="selectListAll" resultMap="RestaurantMap">	
 			SELECT r.*, 
@@ -97,4 +95,11 @@
 		DELETE FROM RESTAURANT 
 			WHERE rest_rank = #{restRank}
 	</delete>
+	<select id="mainPageRest" resultMap="RestaurantMap">
+		SELECT *, RANK() OVER(ORDER BY search DESC) AS ranking
+		  FROM RESTAURANT 
+		  	LEFT JOIN RESTAURANTIMG 
+			USING(rest_rank)
+			WHERE search = (SELECT MAX(search) FROM RESTAURANT);
+	</select>
 </mapper>

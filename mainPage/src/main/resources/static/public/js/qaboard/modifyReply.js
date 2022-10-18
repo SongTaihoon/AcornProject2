@@ -14,4 +14,4 @@ qaReplyupdateForm.addEventListener("submit", (event) => {
 	if(!qaReplyContent.value) {
 		event.preventDefault();		
 	}
-});
+}, {passive: false});

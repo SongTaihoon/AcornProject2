@@ -10,7 +10,7 @@ boardUpdateForm.addEventListener("submit", (event) => {
 	if(!title.value || !contents.value || !place.value) {
 		event.preventDefault();		
 	}
-});
+}, {passive: false});
 
 function noSpace(obj) { // 공백사용못하게
     var str = /\s/;  // 공백체크

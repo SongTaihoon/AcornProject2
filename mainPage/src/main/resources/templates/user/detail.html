@@ -85,7 +85,8 @@
 	<th:block th:unless="${session.loginUser?.adminCk == 1}">
 		<div class="d-flex mb-3 g-3">
 			<div class="ms-auto">
-				<a class="btn btn-outline-info btn-lg" th:href="@{/user/update/{userId}(userId=${user?.user_id})}">수정</a>
+				<a class="btn btn-outline-info btn-lg" th:href="@{/user/update/{userId}(userId=${user?.user_id})}"
+				   style="padding: 12px 20px;">수정</a>
 			</div>
 		</div>
 	</th:block>

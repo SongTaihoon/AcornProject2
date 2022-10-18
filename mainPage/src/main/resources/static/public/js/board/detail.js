@@ -40,7 +40,7 @@ replyInsert.addEventListener("submit", (event) => {
 	if(!(replyContents.value)) {
 		event.preventDefault();		
 	}
-});
+}, {passive: false});
 function noSpace(obj) { // 공백사용못하게
     let str = /\s/;  // 공백체크
     if(str.exec(obj.value.trim)) { //공백 체크

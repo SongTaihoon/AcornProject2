@@ -1,11 +1,7 @@
 package com.project.mainPage.dto;
-
 import java.util.List;
-
 import lombok.Data;
-
 /*
- *   desc tour;
 +-------------+--------------+------+-----+---------+----------------+
 | Field       | Type         | Null | Key | Default | Extra          |
 +-------------+--------------+------+-----+---------+----------------+
@@ -20,7 +16,7 @@ import lombok.Data;
 | tour_phone  | varchar(20)  | YES  |     | NULL    |                |
 | user_id     | varchar(45)  | NO   | MUL | NULL    |                |
 +-------------+--------------+------+-----+---------+----------------+
- * */
+*/
 @Data
 public class Tour {
 	 private int tour_rank;

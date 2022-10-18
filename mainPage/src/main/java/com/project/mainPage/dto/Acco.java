@@ -1,11 +1,7 @@
 package com.project.mainPage.dto;
-
 import java.util.List;
-
 import lombok.Data;
-
 /*
-  desc accommodate;
 +-------------+--------------+------+-----+---------+----------------+
 | Field       | Type         | Null | Key | Default | Extra          |
 +-------------+--------------+------+-----+---------+----------------+

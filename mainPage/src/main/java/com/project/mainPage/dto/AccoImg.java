@@ -1,9 +1,6 @@
 package com.project.mainPage.dto;
-
 import lombok.Data;
-
 /*
- * desc accoimg;
 +-------------+--------------+------+-----+---------+----------------+
 | Field       | Type         | Null | Key | Default | Extra          |
 +-------------+--------------+------+-----+---------+----------------+
@@ -11,7 +8,7 @@ import lombok.Data;
 | acco_rank   | int          | NO   | MUL | NULL    |                |
 | img_path    | varchar(255) | NO   |     | NULL    |                |
 +-------------+--------------+------+-----+---------+----------------+
- * */
+*/
 @Data
 public class AccoImg {
 	private int acco_img_no;

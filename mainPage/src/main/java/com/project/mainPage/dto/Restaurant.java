@@ -1,12 +1,7 @@
 package com.project.mainPage.dto;
-
-
 import java.util.List;
-
 import lombok.Data;
-
 /*
- * desc RESTAURANT;
 +-------------+--------------+------+-----+---------+----------------+
 | Field       | Type         | Null | Key | Default | Extra          |
 +-------------+--------------+------+-----+---------+----------------+
@@ -22,8 +17,7 @@ import lombok.Data;
 | user_id     | varchar(45)  | NO   | MUL | NULL    |                |
 | category_id | varchar(255) | YES  | MUL | NULL    |                |
 +-------------+--------------+------+-----+---------+----------------+
- * 
- * */
+*/
 @Data
 public class Restaurant {
 	private int rest_rank;

@@ -14,4 +14,4 @@ qaInsertForm.addEventListener("submit", (event) => {
 	if(!qaBoardTitle.value || !qaBoardContents.value) {
 		event.preventDefault();		
 	}
-});
+}, {passive: false});

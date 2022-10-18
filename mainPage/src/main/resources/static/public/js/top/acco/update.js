@@ -7,7 +7,7 @@ accoUpdateForm.addEventListener("submit", (event) => {
 	if(!tourist.value || !address.value || !search.value) {
 		event.preventDefault();		
 	}
-});
+}, {passive: false});
 
 function noSpace(obj) { // 공백사용못하게
     let str = /\s/;  // 공백체크

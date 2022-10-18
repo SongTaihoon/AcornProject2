@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.project.mainPage.dto.Acco;
+import com.project.mainPage.dto.Tour;
 
 
 // com.project.mainPage.mapper.AccoMapper
@@ -13,7 +14,7 @@ public interface AccoMapper {
 	List<Acco> selectListAll(int startRow, int pageSize);
 	int selectPageAllCount();
 	// detail 
-	Acco selectDetailOne(int accoRank);
+	Acco selectDetailOne(Integer accoRank);
 	// 조회수 
 	int updateViews(int accoRank);
 	// 등록
@@ -22,6 +23,7 @@ public interface AccoMapper {
 	int updateOne(Acco acco);
 	// 삭제 
 	int deleteOne(int accoRank);
-	
+	// 메인 화면에 출력
+	Acco mainPageAcco();
 }
 

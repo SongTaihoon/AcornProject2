@@ -1,9 +1,6 @@
 package com.project.mainPage.dto;
-
 import lombok.Data;
-
 /*
- * desc RESTAURANTIMG;
 +-------------------+--------------+------+-----+---------+----------------+
 | Field             | Type         | Null | Key | Default | Extra          |
 +-------------------+--------------+------+-----+---------+----------------+
@@ -11,9 +8,7 @@ import lombok.Data;
 | rest_rank         | int          | NO   | MUL | NULL    |                |
 | img_path          | varchar(255) | NO   |     | NULL    |                |
 +-------------------+--------------+------+-----+---------+----------------+
- 
- * */
-
+*/
 @Data
 public class RestaurantImg {
 	private int restaurank_img_no;

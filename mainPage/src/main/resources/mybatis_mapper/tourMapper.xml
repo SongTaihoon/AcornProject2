@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
  <mapper namespace="com.project.mainPage.mapper.TourMapper">
  	<resultMap type="Tour" id="TourMap">
 		<id column="tour_rank" property="tour_rank"/>
@@ -32,7 +31,7 @@
 	<!--  tour List  -->
 	<select id="selectListAll" resultMap="TourMap">	
 			SELECT t.*, 
-		 	c.category_id,
+		 	
 		 	RANK() OVER(ORDER BY search DESC) AS ranking
 		 	
 			FROM TOUR t
@@ -95,6 +94,11 @@
 		DELETE FROM TOUR 
 			WHERE tour_rank = #{tourRank}
 	</delete>
-	
-	
+	<select id="mainPageTour" resultMap="TourMap">
+		SELECT *, RANK() OVER(ORDER BY search DESC) AS ranking
+		 FROM TOUR
+		 	LEFT JOIN TOURIMG
+			USING(tour_rank) 
+			WHERE search = (SELECT MAX(search) FROM TOUR);
+	</select>	
  </mapper>
