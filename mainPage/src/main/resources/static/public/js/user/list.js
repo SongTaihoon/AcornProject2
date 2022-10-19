@@ -13,4 +13,4 @@ userSearchForm.addEventListener("submit", (event) => {
 	if(!userSearchForm.search.value) {
 		event.preventDefault();		
 	}
-});
+}, {passive: false});

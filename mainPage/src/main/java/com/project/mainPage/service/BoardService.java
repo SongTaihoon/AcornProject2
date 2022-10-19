@@ -11,6 +11,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 import com.project.mainPage.dto.BoardImg;
 import com.project.mainPage.dto.Reply;
+import com.project.mainPage.dto.TourImg;
 import com.project.mainPage.mapper.BoardImgMapper;
 @Service
 public class BoardService {
@@ -38,13 +39,12 @@ public class BoardService {
 		// Board를 참조하는 Reply의 이미지 삭제
 		List<Reply> replies = replyMapper.selectBoardNo(boardNo);
 		if(replies != null) {
-			replies.stream()
-				.filter((r) -> (r.getImg_path() != null))
-				.map(Reply::getImg_path)
-				.forEach((img) -> {
-					File f = new File(savePath + "/" + img);
+			for(Reply reply : replies) {
+				if(reply.getImg_path() != null) {
+					File f = new File(savePath + "/" + reply.getImg_path());
 					System.out.println("댓글 이미지 삭제 성공! : " + f.delete()); // 서버(static 폴더 내부에 있는 img폴더)에서 삭제
-				});
+				}
+			}
 		}
 		// Board를 참조하는 Board의 이미지 삭제
 		List<BoardImg> boardImgs = boardImgMapper.selectBoardNo(boardNo);

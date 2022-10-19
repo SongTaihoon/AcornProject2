@@ -13,4 +13,4 @@ noticeSearchForm.addEventListener("submit", (event) => {
 	if(!noticeSearchForm.search.value) {
 		event.preventDefault();		
 	}
-});
+}, {passive: false});
