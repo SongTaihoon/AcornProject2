@@ -16,4 +16,4 @@ noticeInsertForm.addEventListener("submit", (event) => {
 	if(!title.value || !contents.value) {
 		event.preventDefault();		
 	}
-});
+}, {passive: false});

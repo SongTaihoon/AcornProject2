@@ -25,14 +25,13 @@ async function replyListHadler(e){
 //값이 없을 때 submit 불가
 
 const replyUpdateForm = document.querySelectorAll("form");
-console.log(replyUpdateForm);
 replyUpdateForm.forEach((form) => {
 	let contents = form.contents;
 	form.addEventListener("submit", (event) => {
 	if(!(contents.value)) {
 		event.preventDefault();		
 	}
-	});
+	}, {passive: false});
 });
 function noSpace(obj) { // 공백사용못하게
     let str = /\s/;  // 공백체크

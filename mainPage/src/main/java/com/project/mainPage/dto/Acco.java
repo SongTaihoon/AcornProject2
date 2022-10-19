@@ -1,11 +1,7 @@
 package com.project.mainPage.dto;
-
 import java.util.List;
-
 import lombok.Data;
-
 /*
-  desc accommodate;
 +-------------+--------------+------+-----+---------+----------------+
 | Field       | Type         | Null | Key | Default | Extra          |
 +-------------+--------------+------+-----+---------+----------------+
@@ -33,6 +29,7 @@ public class Acco {
 	 private int views;
 	 private int search;
 	 private int ranking;
+	 private String img_path;
 	 private UserDto user; // UsersDto.userid : fk 
 	 private List<AccoImg> accoImgs; // 1:N  TourImg.tour_rank fk
 }

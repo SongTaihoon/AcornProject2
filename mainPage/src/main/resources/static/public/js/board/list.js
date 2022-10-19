@@ -12,4 +12,4 @@ reviewSearchForm.addEventListener("submit", (event) => {
 	if(!reviewSearchForm.search.value) {
 		event.preventDefault();		
 	}
-});
+}, {passive: false});

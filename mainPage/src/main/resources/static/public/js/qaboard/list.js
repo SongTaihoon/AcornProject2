@@ -12,4 +12,4 @@ qnaSearchForm.addEventListener("submit", (event) => {
 	if(!qnaSearchForm.search.value) {
 		event.preventDefault();		
 	}
-});
+}, {passive: false});
