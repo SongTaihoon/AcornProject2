@@ -66,7 +66,7 @@
 		      <th style="width: 100px;" class="bg-light align-middle">주소</th>
 		      <td style="width: 600px;">
 		      	<input name="address1" class="form-control" th:value="${acco.address1}"
-		      		   onkeyup="noSpace(this);" onchange="noSpace(this);"></input>
+		      		   onkeyup="noSpace(this);" onchange="noSpace(this);"></input> <!-- 첫 공백제거  -->
 		      </td>
 		    </tr>
 		     <tr>
@@ -92,6 +92,13 @@
 						<input name="imgFile" class="form-control form-control-lg" type="file" style="height: 29px;">
 					</div>
 		    	</td>
+		    </tr>
+		    <tr>
+		      <th style="width: 100px;" class="bg-light align-middle">설명</th>
+		      <td style="width: 600px;">
+		      	<input name="contents" class="form-control" th:value="${acco.contents}"
+		      		   onkeyup="noSpace(this);" onchange="noSpace(this);"></input> <!-- 첫 공백제거  -->
+		      </td>
 		    </tr>
 		    <tr>
 		      <th style="width: 100px;" class="bg-light align-middle">검색 수</th>
