@@ -36,4 +36,20 @@ public class MainController {
 		}
 		return "index";
 	}
+	
+	@GetMapping("/recommendation")
+	public String recommendation(Model model) {
+		try {
+			List<Tour> tourList = tourMapper.mainPageTour();
+			List<Acco> accoList = accoMapper.mainPageAcco();
+			List<Restaurant> restList = restaurankMapper.mainPageRest();
+			
+			model.addAttribute("tourList", tourList);
+			model.addAttribute("accoList", accoList);
+			model.addAttribute("restList", restList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "recommendation";
+	}
 }
