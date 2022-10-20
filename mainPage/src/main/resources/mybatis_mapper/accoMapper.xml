@@ -33,7 +33,7 @@
 	<!--  acco List  -->
 	<select id="selectListAll" resultMap="AccoMap">	
 			SELECT a.*, 
-		 	c.category_id,
+		 	
 		 	RANK() OVER(ORDER BY search DESC) AS ranking
 			FROM ACCOMMODATE a
 			

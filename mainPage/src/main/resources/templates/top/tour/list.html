@@ -5,7 +5,7 @@
 <title>JEJU TOUR TOP 10</title>
 <link rel="stylesheet" href="/public/css/tour/list.css">
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=65c4ad2b3d05a227dba49f74a4ba99b8&libraries=services"></script>
-<script th:src="@{/public/js/top/tour/list.js}" defer="defer"></script>
+<script src="/public/js/top/tour/list.js" defer="defer"></script>
 </head>
 <body>
 	<header th:insert="/NewHeader"></header>
@@ -34,6 +34,7 @@
 					<a href="/top/tour/insert.do" class="btn btn-secondary" style="padding: 12px 20px;">관광지 등록</a>
 				</th:block>
 			</h1>
+			<div class="table-responsive" style="border: none;">
 			<table class="mt-5 mb-5 table table-bordered table-hover align-middle" id="table_map">
 			<thead class="table-light">
 				<tr>
@@ -69,6 +70,7 @@
 				</th:block>
 			</tbody>
 		</table>
+		</div>
 		<th:block th:unless="${count == 0}">
 			<div class="d-flex justify-content-center mt-5 mb-5" th:insert="/pagination"></div>
 		</th:block>
