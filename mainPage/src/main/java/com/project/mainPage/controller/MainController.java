@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
 import com.project.mainPage.dto.Acco;
 import com.project.mainPage.dto.Restaurant;
 import com.project.mainPage.dto.Tour;
@@ -37,7 +39,7 @@ public class MainController {
 		return "index";
 	}
 	
-	@GetMapping("/recommendation")
+	@PostMapping("/recommendation")
 	public String recommendation(Model model) {
 		try {
 			List<Tour> tourList = tourMapper.mainPageTour();
