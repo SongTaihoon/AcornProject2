@@ -79,7 +79,7 @@
 								<input name="tourImgNo" type="checkbox"
 									   class="form-check-input" th:value="${tourImg.tour_img_no}">
 								<img alt="후기 이미지" 
-									 th:src="@{/img/{file}(file=${tourImg.img_path})}" 
+									 th:src="@{/public/img/{file}(file=${tourImg.img_path})}" 
 									 class="img-thumbnail" width="200">
 							</label>
 						</th:block>
@@ -96,7 +96,8 @@
 		    <tr>
 		      <th style="width: 100px;" class="bg-light align-middle">설명</th>
 		      <td style="width: 600px;">
-		      	<input name="contents" class="form-control" id="contents" th:value="${tour.contents}">
+		      	<input name="contents" class="form-control" th:value="${tour.contents}"
+		      		   onkeyup="noSpace(this);" onchange="noSpace(this);"></input>
 		      </td>
 		    </tr>
 		    <tr>

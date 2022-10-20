@@ -17,7 +17,6 @@
 	var zoomControl = new kakao.maps.ZoomControl();
 	map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 	
-	//document.getElementById("acco").onclick = function() {maps()};
 	maps();
 	
 	function maps(){
