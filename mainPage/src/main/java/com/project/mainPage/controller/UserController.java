@@ -17,6 +17,7 @@ import com.project.mainPage.dto.Pagination;
 import com.project.mainPage.dto.PhoneCheck;
 import com.project.mainPage.dto.UserDto;
 import com.project.mainPage.mapper.UserMapper;
+import com.project.mainPage.service.EmailService;
 import com.project.mainPage.service.UserService;
 @Controller
 @RequestMapping("/user")
@@ -26,6 +27,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+    private EmailService mailService;
 	
 //	회원 리스트
 	@GetMapping("/list/{page}")
@@ -138,6 +142,34 @@ public class UserController {
 			return "user/login";
 		} else {
 			msg = "아이디를 찾을 수 없습니다.";
+			model.addAttribute("msg", msg);
+			return "user/login";
+		}
+	}
+	
+//	비밀번호 찾기
+	@PostMapping("/findPw.do")
+	public String findPw(
+			String user_id,
+			String user_name, 
+			String user_email, 
+			String user_phone,
+			Model model) {
+		UserDto user = null;
+		String msg = "";
+		try {
+			user = userMapper.findPw(user_id, user_name, user_email, user_phone);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(user != null) {
+			msg = "비밀번호를 이메일로 발송했습니다.";
+			System.out.println("user_pw : " + user.getUser_pw());
+			model.addAttribute("msg", msg);
+			mailService.mailSend(user);
+			return "user/login";
+		} else {
+			msg = "비밀번호를 찾을 수 없습니다.";
 			model.addAttribute("msg", msg);
 			return "user/login";
 		}

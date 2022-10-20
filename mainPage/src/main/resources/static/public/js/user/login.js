@@ -1,12 +1,21 @@
 const loginForm = document.forms.loginForm;
 const findIdForm = document.forms.findIdForm;
+const findPwForm = document.forms.findPwForm;
 
+// 로그인
 let idSubmit = true;
 let pwSubmit = true;
 
+// 아이디 찾기
 let namesubmit = true;
 let emailsubmit = true;
 let phonesubmit = true;
+
+// 비밀번호 찾기
+let idPwSubmit = true;
+let namePwSubmit = true;
+let emailPwSubmit = true;
+let phonePwSubmit = true;
 
 // 전화번호 입력 시 하이픈(-) 자동으로 생성되게 하는 함수
 function phoneAutoComplete(e) {
@@ -136,7 +145,7 @@ findIdForm["user_name"].addEventListener("keydown", (event) => {
 	}
 });
 
-// 아이디 찾기 이름 입력 이벤트
+// 아이디 찾기 이메일 입력 이벤트
 findIdForm["user_email"].addEventListener("input", (event) => {
 	let value = event.target.value;
 	if(value) {
@@ -159,7 +168,7 @@ findIdForm["user_email"].addEventListener("keydown", (event) => {
 	}
 });
 
-// 아이디 찾기 이름 입력 이벤트
+// 아이디 찾기 전화번호 입력 이벤트
 findIdForm["user_phone"].addEventListener("input", (event) => {
 	let value = event.target.value;
 	if(value) {
@@ -205,5 +214,129 @@ findIdForm.addEventListener("submit", (event) => {
 	}
 	if(nameSubmit && emailSubmit && phoneSubmit) {
 		findIdForm.submit();
+	}
+});
+
+// 비밀번호 찾기 아이디 입력 이벤트
+findPwForm["user_id"].addEventListener("input", (event) => {
+	let value = event.target.value;
+	if(value) {
+		findPwForm["user_id"].classList.remove("is-invalid");
+		idHelpPw.classList.remove("is-invalid");
+		idPwSubmit = true;
+	} else {
+		idHelpInvalidPw.innerText = "아이디를 입력하세요.";
+		findPwForm["user_id"].classList.add("is-invalid");
+		idHelpPw.classList.add("is-invalid");
+		idPwSubmit = false;
+	}
+});
+
+// 비밀번호 찾기 아이디 공백 차단
+findPwForm["user_id"].addEventListener("keydown", (event) => {
+	let key = event.key;
+	if(key == " ") {
+		event.preventDefault();
+	}
+});
+
+// 비밀번호 찾기 이름 입력 이벤트
+findPwForm["user_name"].addEventListener("input", (event) => {
+	let value = event.target.value;
+	if(value) {
+		findPwForm["user_name"].classList.remove("is-invalid");
+		nameHelpPw.classList.remove("is-invalid");
+		namePwSubmit = true;
+	} else {
+		nameHelpInvalidPw.innerText = "이름을 입력하세요.";
+		findPwForm["user_name"].classList.add("is-invalid");
+		nameHelpPw.classList.add("is-invalid");
+		namePwSubmit = false;
+	}
+});
+
+// 비밀번호 찾기 이름 공백 차단
+findPwForm["user_name"].addEventListener("keydown", (event) => {
+	let key = event.key;
+	if(key == " ") {
+		event.preventDefault();
+	}
+});
+
+// 비밀번호 찾기 이메일 입력 이벤트
+findPwForm["user_email"].addEventListener("input", (event) => {
+	let value = event.target.value;
+	if(value) {
+		findPwForm["user_email"].classList.remove("is-invalid");
+		emailHelpPw.classList.remove("is-invalid");
+		emailPwSubmit = true;
+	} else {
+		emailHelpInvalidPw.innerText = "이메일을 입력하세요.";
+		findPwForm["user_email"].classList.add("is-invalid");
+		emailHelpPw.classList.add("is-invalid");
+		emailPwSubmit = false;
+	}
+});
+
+// 비밀번호 찾기 이메일 공백 차단
+findPwForm["user_email"].addEventListener("keydown", (event) => {
+	let key = event.key;
+	if(key == " ") {
+		event.preventDefault();
+	}
+});
+
+// 비밀번호 찾기 전화번호 입력 이벤트
+findPwForm["user_phone"].addEventListener("input", (event) => {
+	let value = event.target.value;
+	if(value) {
+		findPwForm["user_phone"].classList.remove("is-invalid");
+		phoneHelpPw.classList.remove("is-invalid");
+		phonePwSubmit = true;
+	} else {
+		phoneHelpInvalidPw.innerText = "전화번호를 입력하세요.";
+		findPwForm["user_phone"].classList.add("is-invalid");
+		phoneHelpPw.classList.add("is-invalid");
+		phonePwSubmit = false;
+	}
+});
+
+// 비밀번호 찾기 전화번호 공백 차단
+findPwForm["user_phone"].addEventListener("keydown", (event) => {
+	let key = event.key;
+	if(key == " ") {
+		event.preventDefault();
+	}
+});
+
+// 비밀번호 찾기 최종 제출 이벤트
+findPwForm.addEventListener("submit", (event) => {
+	event.preventDefault();
+	if(!findPwForm["user_id"].value) {
+		idHelpInvalidPw.innerText = "필수 정보입니다.";
+		findPwForm["user_id"].classList.add("is-invalid");
+		idHelpPw.classList.add("is-invalid");
+		idPwSubmit = false;
+	}
+	if(!findPwForm["user_name"].value) {
+		nameHelpInvalidPw.innerText = "필수 정보입니다.";
+		findPwForm["user_name"].classList.add("is-invalid");
+		nameHelpPw.classList.add("is-invalid");
+		namePwSubmit = false;
+	}
+	if(!findPwForm["user_email"].value) {
+		emailHelpInvalidPw.innerText = "필수 정보입니다.";
+		findPwForm["user_email"].classList.add("is-invalid");
+		emailHelpPw.classList.add("is-invalid");
+		emailPwSubmit = false;
+	}
+	if(!findPwForm["user_phone"].value) {
+		phoneHelpInvalidPw.innerText = "필수 정보입니다.";
+		findPwForm["user_phone"].classList.add("is-invalid");
+		phoneHelpPw.classList.add("is-invalid");
+		phonePwSubmit = false;
+	}
+	if(idPwSubmit && namePwSubmit && emailPwSubmit && phonePwSubmit) {
+		findPwForm.submit();
 	}
 });

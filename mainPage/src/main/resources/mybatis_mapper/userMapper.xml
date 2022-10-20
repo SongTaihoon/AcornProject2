@@ -37,6 +37,13 @@
  				AND user_email = #{user_email}
  					AND user_phone = #{user_phone}
  	</select>
+ 	<select id="findPw" resultType="UserDto">
+ 		SELECT * FROM USER 
+ 			WHERE user_id = #{user_id}
+	 			AND user_name = #{user_name}
+	 				AND user_email = #{user_email}
+	 					AND user_phone = #{user_phone}
+ 	</select>
  	<select id="selectId" resultType="UserDto" parameterType="String">
  		SELECT * FROM USER WHERE user_id = #{user_id}
  	</select>

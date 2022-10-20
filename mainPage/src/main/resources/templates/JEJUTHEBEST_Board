@@ -174,8 +174,6 @@ tourist VARCHAR(255) NOT NULL,
 province VARCHAR(255) NOT NULL,
 city VARCHAR(255) NOT NULL,
 address2 VARCHAR(255) NOT NULL,
-<<<<<<< HEAD
-<<<<<<< HEAD
 rest VARCHAR(255),
 search INT(45) NOT NULL,
 views INT  NOT NULL DEFAULT 0,
