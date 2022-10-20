@@ -8,11 +8,11 @@
 		<result column="province" property="province"/>
 		<result column="city" property="city"/>
 		<result column="address2" property="address2"/>
-		<result column="rest" property="rest"/>	
 		<result column="views" property="views"/>	
 		<result column="search" property="search"/>
 		<result column="ranking" property="ranking"/>
 		<result column="rest_phone" property="rest_phone"/>
+		<result column="contents" property="contents"/>
 		<result column="img_path" property="img_path"/>
 		<!-- Restaurant : UsersDto = N : 1   -->	
 		<association property="user" javaType="UserDto" foreignColumn="user_id">
@@ -78,8 +78,13 @@
 	<insert id="insertOne" parameterType="Restaurant"
 	 		useGeneratedKeys="true" keyProperty="rest_rank">
 		INSERT INTO RESTAURANT 
+<<<<<<< HEAD
 			(tourist, province, city, address2, category_id, search, user_id, rest_phone)
 				VALUES (#{tourist}, #{province}, #{city}, #{address2}, #{category.category_id}, #{search}, #{user.user_id}, #{rest_phone})
+=======
+			( tourist, province, city, address2, category_id, search , user_id,rest_phone,contents )
+				VALUES (#{tourist}, #{province}, #{city}, #{address2}, #{category.category_id}, #{search}, #{user.user_id},#{rest_phone},#{contents})
+>>>>>>> ffa50c2c2e727c83f570525f622c19fb6aea01de
 	</insert>
 	<!-- 수정  -->
 	<update id="updateOne" parameterType="Restaurant">
@@ -88,7 +93,12 @@
 				city = #{city},
 				address2 = #{address2},
 				search = #{search},
+<<<<<<< HEAD
 				rest_phone = #{rest_phone}
+=======
+				rest_phone = #{rest_phone},
+				contents = #{contents}
+>>>>>>> ffa50c2c2e727c83f570525f622c19fb6aea01de
 				WHERE rest_rank = #{rest_rank}
 	</update>
 	<!-- 삭제  -->

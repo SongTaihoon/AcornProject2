@@ -94,6 +94,13 @@
 		    	</td>
 		    </tr>
 		    <tr>
+		      <th style="width: 100px;" class="bg-light align-middle">설명</th>
+		      <td style="width: 600px;">
+		      	<input name="contents" class="form-control" th:value="${restaurant.contents}"
+		      		   onkeyup="noSpace(this);" onchange="noSpace(this);"></input>
+		      </td>
+		    </tr>
+		    <tr>
 		      <th style="width: 100px;" class="bg-light align-middle">검색 수</th>
 		      <td style="width: 600px;">
 		      	<input name="search" class="form-control" th:value="${restaurant.search}"
