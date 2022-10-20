@@ -1,12 +1,11 @@
 //값이 없을 때 submit 불가
 const restInsertForm = document.forms.restInsertForm;
-let rest = restInsertForm.rest;
 let tourist = restInsertForm.tourist;
 let province = restInsertForm.province;
 let address = restInsertForm.address2;
 let search = restInsertForm.search;
 restInsertForm.addEventListener("submit", (event) => {
-	if(!rest.value || !tourist.value || !province.value || !address.value || !search.value) {
+	if(!tourist.value || !province.value || !address.value || !search.value) {
 		event.preventDefault();		
 	}
 }, {passive: false});

@@ -154,7 +154,10 @@
 	            나의 여행 추천
 	          </a>
 	          <ul class="dropdown-menu bg-secondary">
-	            <li><a class="dropdown-item text-center" href="#" style="font-size: 13px;">나의 여행 추천</a></li>
+	            <li>
+	            	<!-- Button trigger modal -->
+	            	<a data-bs-toggle="modal" href="#exampleModal" role="button" class="dropdown-item text-center" style="font-size: 13px;">나의 여행 추천</a>
+	            </li>
 	          </ul>
 	        </li>
 	        <li class="nav-item dropdown">
@@ -211,6 +214,105 @@
 	    </div>
 	  </div>
 	</nav>
+	<!-- 나의 여행 추천 Modal -->
+	<div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" 
+		 aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+	  <div class="modal-lg modal-dialog modal-dialog-centered modal-dialog-scrollable">
+	  	 <form class="modal-content" action="/recommendation" name="recommendation" method="post">
+             <div class="modal-header border-0">
+		       <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">나의 여행 추천</h1>
+		       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		     </div>
+             <div class="modal-body">
+               <div class="row">
+					<label for="genre" class="form-label" style="margin-bottom: 0;">여행 유형</label>
+					<div class="col mb-3" style="padding-right: 8px;">
+						<select name="genre" id="genre" class="form-select" style="font-size: 11px; border-radius: 2px;">
+						  <option value="1" selected>혼자 여행</option>
+						  <option value="2">가족과 여행</option>
+						  <option value="3">연인과 여행</option>
+						  <option value="4">친구들과 여행</option>
+						  <option value="5">출장</option>
+						</select>
+					</div>
+			   </div>
+			   <div class="row">
+					<label for="period" class="form-label" style="margin-bottom: 0;">여행 기간</label>
+					<div class="col mb-3" style="padding-right: 8px;">
+						<select name="period" id="period" class="form-select" style="font-size: 11px; border-radius: 2px;">
+						  <option value="1">당일치기</option>
+						  <option value="2" selected>1박 2일</option>
+						  <option value="3">2박 3일</option>
+						  <option value="4">3박 4일</option>
+						  <option value="5">4박 5일</option>
+						  <option value="6">5박 이상</option>
+						</select>
+					</div>
+			   </div>
+               <div class="row">
+					<label for="gender" class="form-label" style="margin-bottom: 0;">성별</label>
+					<div class="col mb-3" style="padding-right: 8px;">
+						<select name="gender" id="gender" class="form-select" style="font-size: 11px; border-radius: 2px;">
+						  <option value="1" selected>남성</option>
+						  <option value="2">여성</option>
+						</select>
+					</div>
+			   </div>
+               <div class="row">
+					<label for="age" class="form-label" style="margin-bottom: 0;">연령대</label>
+					<div class="col mb-3" style="padding-right: 8px;">
+						<select name="age" id="age" class="form-select" style="font-size: 11px; border-radius: 2px;">
+						  <option value="1">유아</option>
+						  <option value="2">10대</option>
+						  <option value="3" selected>20대</option>
+						  <option value="4">30대</option>
+						  <option value="5">40대</option>
+						  <option value="6">50대</option>
+						  <option value="7">60대 이상</option>
+						</select>
+					</div>
+			   </div>
+			   <div class="row">
+					<label for="location" class="form-label" style="margin-bottom: 0;">지역</label>
+					<div class="col mb-3" style="padding-right: 8px;">
+						<select name="location" id="location" class="form-select" style="font-size: 11px; border-radius: 2px;">
+						  <option value="1" selected>서귀포</option>
+						  <option value="2">제주</option>
+						</select>
+					</div>
+			   </div>
+			   <div class="row">
+					<label for="acco" class="form-label" style="margin-bottom: 0;">숙박 최애포인트 (당신에게는 무엇이 제일 중요합니까?)</label>
+					<div class="col mb-3" style="padding-right: 8px;">
+						<select name="acco" id="acco" class="form-select" style="font-size: 11px; border-radius: 2px;">
+						  <option value="1" selected>가격</option>
+						  <option value="2">객실</option>
+						  <option value="3">위치</option>
+						  <option value="4">청결도</option>
+						  <option value="5">서비스 (친절도)</option>
+						  <option value="6">침대 퀄리티</option>
+						</select>
+					</div>
+			   </div>
+			   <div class="row">
+					<label for="rest" class="form-label" style="margin-bottom: 0;">음식점 최애포인트 (당신에게는 무엇이 제일 중요합니까?)</label>
+					<div class="col mb-3" style="padding-right: 8px;">
+						<select name="rest" id="rest" class="form-select" style="font-size: 11px; border-radius: 2px;">
+						  <option value="1" selected>가격</option>
+						  <option value="2">서비스 (친절도)</option>
+						  <option value="3">맛</option>
+						</select>
+					</div>
+			   </div>
+             </div>
+             <div class="modal-footer border-0" style="padding: 16px;">
+		       <button type="button" class="btn btn-outline-dark" data-bs-target="#exampleModalToggle" 
+		        	   style="margin: 0 8px 0 0; padding: 12px 20px;" data-bs-toggle="modal">취소</button>
+               <button class="btn btn-outline-primary" style="margin: 0; padding: 12px 20px;">제출</button>
+		     </div>
+          </form>
+	  </div>
+	</div>
     <!--  JavaScripts
     =============================================-->
     <script src="/titan-master/assets/lib/jquery/dist/jquery.js"></script>
@@ -227,5 +329,6 @@
     <script src="/titan-master/assets/js/plugins.js"></script>
     <script src="/titan-master/assets/js/main.js"></script>
     <script src="/bootstrap-5.2.0-dist/js/bootstrap.bundle.js"></script>
+    <script src="/public/js/index.js" defer="defer"></script>
 </body>
 </html>
