@@ -17,7 +17,7 @@
 										th:data-bs-target="'#replyImgModal' + ${reply.reply_no}">
 									<img alt="댓글 이미지" class="card-img card-img-right" 
 										 style="width: 100%; height:100%; object-fit: cover;"
-										 th:src="@{/img/{file}(file=${reply.img_path})}">
+										 th:src="@{/public/img/{file}(file=${reply.img_path})}">
 								</button>	
 								<!-- Modal -->
 								<div class="modal fade" style="opacity: 1"
@@ -27,7 +27,7 @@
 								    	 style="background-color: rgba(255,255,255,0)">
 								      <div class="modal-body">
 				   						<img alt="댓글 이미지" class="card-img card-img-right"
-											 th:src="@{/img/{file}(file=${reply.img_path})}" width="760">  
+											 th:src="@{/public/img/{file}(file=${reply.img_path})}" width="760">  
 								      </div>
 								    </div>
 								  </div>
@@ -40,7 +40,7 @@
 										data-bs-target="#replyImgModal">
 									<img alt="댓글 이미지" class="card-img card-img-right" 
 										 style="width: 100%; height: 100%;"
-					      	 	   		 src="/img/JEJU1.jpeg">
+					      	 	   		 src="/img/NullImg.jpg">
 								</button>			
 								<!-- Modal -->
 								<div class="modal fade" style="opacity: 1"
@@ -50,7 +50,7 @@
 								    	 style="background-color: rgba(255,255,255,0)">
 								      <div class="modal-body">
 					  						<img alt="댓글 이미지" class="card-img card-img-right"
-											 src="/img/JEJU1.jpeg" width="760">  
+											 src="/img/NullImg.jpg" width="760">  
 								      </div>
 								    </div>
 								  </div>
