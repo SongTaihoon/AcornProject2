@@ -78,13 +78,8 @@
 	<insert id="insertOne" parameterType="Restaurant"
 	 		useGeneratedKeys="true" keyProperty="rest_rank">
 		INSERT INTO RESTAURANT 
-<<<<<<< HEAD
-			(tourist, province, city, address2, category_id, search, user_id, rest_phone)
-				VALUES (#{tourist}, #{province}, #{city}, #{address2}, #{category.category_id}, #{search}, #{user.user_id}, #{rest_phone})
-=======
-			( tourist, province, city, address2, category_id, search , user_id,rest_phone,contents )
-				VALUES (#{tourist}, #{province}, #{city}, #{address2}, #{category.category_id}, #{search}, #{user.user_id},#{rest_phone},#{contents})
->>>>>>> ffa50c2c2e727c83f570525f622c19fb6aea01de
+			(tourist, province, city, address2, category_id, search, user_id, rest_phone, contents)
+				VALUES (#{tourist}, #{province}, #{city}, #{address2}, #{category.category_id}, #{search}, #{user.user_id}, #{rest_phone}, #{contents})
 	</insert>
 	<!-- 수정  -->
 	<update id="updateOne" parameterType="Restaurant">
@@ -93,12 +88,8 @@
 				city = #{city},
 				address2 = #{address2},
 				search = #{search},
-<<<<<<< HEAD
-				rest_phone = #{rest_phone}
-=======
 				rest_phone = #{rest_phone},
 				contents = #{contents}
->>>>>>> ffa50c2c2e727c83f570525f622c19fb6aea01de
 				WHERE rest_rank = #{rest_rank}
 	</update>
 	<!-- 삭제  -->
