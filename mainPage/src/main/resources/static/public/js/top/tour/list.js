@@ -17,7 +17,8 @@
 	var zoomControl = new kakao.maps.ZoomControl();
 	map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 	
-	document.getElementById("tour").onclick = function() {maps()};
+	//document.getElementById("tour").onclick = function() {maps()};
+	maps();
 	
 	function maps(){
 	  var table =document.getElementById('table_map');
