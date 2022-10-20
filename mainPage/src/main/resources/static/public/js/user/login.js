@@ -1,17 +1,20 @@
-const loginForm = document.forms.loginForm;
-const findIdForm = document.forms.findIdForm;
-const findPwForm = document.forms.findPwForm;
+const loginForm = document.forms.loginForm; // 로그인 폼
+const findIdForm = document.forms.findIdForm; // 아이디 찾기 폼
+const findPwForm = document.forms.findPwForm; // 비밀번호 찾기 폼
 
-// 로그인
+// ajax url
+const ajaxIdUrl = "/user/idCheck/"; // 아이디 ajax
+
+// 로그인 제출 변수
 let idSubmit = true;
 let pwSubmit = true;
 
-// 아이디 찾기
+// 아이디 찾기 제출 변수
 let namesubmit = true;
 let emailsubmit = true;
 let phonesubmit = true;
 
-// 비밀번호 찾기
+// 비밀번호 찾기 제출 변수
 let idPwSubmit = true;
 let namePwSubmit = true;
 let emailPwSubmit = true;
@@ -59,16 +62,56 @@ function phoneAutoComplete(e) {
 // 로그인 아이디 입력 이벤트
 loginForm["user_id"].addEventListener("input", (event) => {
 	let value = event.target.value;
-	if(value) {
-		loginForm["user_id"].classList.remove("is-invalid");
-		idHelp.classList.remove("is-invalid");
-		idSubmit = true;
-	} else {
+	if(value) { // 아이디 값이 있을 때
+		fetch(ajaxIdUrl + value) // 아이디 ajax 요청
+			.then(response => response.json())
+			.then((json) => {
+				if(json.idCheck) { // 아이디가 가입되어 있을 때
+					if(loginForm["user_pw"].value) { // 비밀번호 입력 후 다시 아이디를 수정할 경우 (비밀번호 값이 있을 때)
+						if(json.user["user_pw"] === loginForm["user_pw"].value) { // 아이디 ajax로 가져온 유저의 정보에 있는 비밀번호와 입력한 비밀번호가 일치하는지 확인
+							loginForm["user_pw"].removeAttribute("readonly");
+							loginForm["user_pw"].classList.remove("is-invalid");
+							loginForm["user_pw"].classList.add("is-valid");
+							pwHelp.classList.remove("is-invalid");
+							pwHelp.classList.add("is-valid");
+							pwSubmit = true;
+						} else {
+							pwHelpInvalid.innerText = "잘못된 비밀번호입니다.";
+							loginForm["user_pw"].removeAttribute("readonly");
+							loginForm["user_pw"].classList.remove("is-valid");
+							loginForm["user_pw"].classList.add("is-invalid");
+							pwHelp.classList.remove("is-valid");
+							pwHelp.classList.add("is-invalid");
+							pwSubmit = false;
+						}
+					} else {
+						loginForm["user_pw"].removeAttribute("readonly");
+						loginForm["user_pw"].classList.remove("is-invalid");
+						pwHelp.classList.remove("is-invalid");
+					}
+					loginForm["user_id"].classList.remove("is-invalid");
+					loginForm["user_id"].classList.add("is-valid");
+					idHelp.classList.remove("is-invalid");
+					idHelp.classList.add("is-valid");
+					idSubmit = true;
+				} else { // 아이디가 가입되어 있지 않을 떄
+					idHelpInvalid.innerText = "가입되어 있지 않은 아이디입니다.";
+					loginForm["user_id"].classList.remove("is-valid");
+					loginForm["user_id"].classList.add("is-invalid");
+					idHelp.classList.remove("is-valid");
+					idHelp.classList.add("is-invalid");
+					idSubmit = false;
+				}
+			});
+	} else { // 아이디 값이 없을 때
 		idHelpInvalid.innerText = "아이디를 입력하세요.";
+		loginForm["user_id"].classList.remove("is-valid");
 		loginForm["user_id"].classList.add("is-invalid");
+		idHelp.classList.remove("is-valid");
 		idHelp.classList.add("is-invalid");
 		idSubmit = false;
 	}
+	return idSubmit;
 });
 
 // 로그인 아이디 공백 차단
@@ -82,16 +125,34 @@ loginForm["user_id"].addEventListener("keydown", (event) => {
 // 로그인 비밀번호 입력 이벤트
 loginForm["user_pw"].addEventListener("input", (event) => {
 	let value = event.target.value;
-	if(value) {
-		loginForm["user_pw"].classList.remove("is-invalid");
-		pwHelp.classList.remove("is-invalid");
-		pwSubmit = true;
-	} else {
+	if(value) { // 비밀번호 값이 있을 때
+		fetch(ajaxIdUrl + loginForm["user_id"].value) // 아이디 ajax 요청
+			.then(response => response.json())
+			.then((json) => {
+				if(json.user["user_pw"] === value) { // 아이디 ajax로 가져온 유저의 정보에 있는 비밀번호와 입력한 비밀번호가 일치하는지 확인
+					loginForm["user_pw"].classList.remove("is-invalid");
+					loginForm["user_pw"].classList.add("is-valid");
+					pwHelp.classList.remove("is-invalid");
+					pwHelp.classList.add("is-valid");
+					pwSubmit = true;
+				} else {
+					pwHelpInvalid.innerText = "잘못된 비밀번호입니다.";
+					loginForm["user_pw"].classList.remove("is-valid");
+					loginForm["user_pw"].classList.add("is-invalid");
+					pwHelp.classList.remove("is-valid");
+					pwHelp.classList.add("is-invalid");
+					pwSubmit = false;
+				}
+			});
+	} else { // 비밀번호 값이 없을 때
 		pwHelpInvalid.innerText = "비밀번호를 입력하세요.";
+		loginForm["user_pw"].classList.remove("is-valid");
 		loginForm["user_pw"].classList.add("is-invalid");
+		pwHelp.classList.remove("is-valid");
 		pwHelp.classList.add("is-invalid");
 		pwSubmit = false;
 	}
+	return pwSubmit;
 });
 
 // 로그인 비밀번호 공백 차단
@@ -100,6 +161,57 @@ loginForm["user_pw"].addEventListener("keydown", (event) => {
 	if(key == " ") {
 		event.preventDefault();
 	}
+});
+
+// 아이디가 올바르지 않을 시 비밀번호 readonly
+loginForm["user_id"].addEventListener("keyup", (event) => {
+	if(idSubmit) { // 가입되어 있는 아이디일 때
+		if(loginForm["user_pw"].value) { // 비밀번호 값이 이미 있을 때
+			fetch(ajaxIdUrl + loginForm["user_id"].value) // 아이디 ajax 요청
+			.then(response => response.json())
+			.then((json) => {
+				if(json.user["user_pw"] === loginForm["user_pw"].value) { // 아이디 ajax로 가져온 유저의 정보에 있는 비밀번호와 입력한 비밀번호가 일치하는지 확인
+					loginForm["user_pw"].removeAttribute("readonly");
+					loginForm["user_pw"].classList.remove("is-invalid");
+					loginForm["user_pw"].classList.add("is-valid");
+					pwHelp.classList.remove("is-invalid");
+					pwHelp.classList.add("is-valid");
+					pwSubmit = true;
+				} else {
+					pwHelpInvalid.innerText = "잘못된 비밀번호입니다.";
+					loginForm["user_pw"].removeAttribute("readonly");
+					loginForm["user_pw"].classList.remove("is-valid");
+					loginForm["user_pw"].classList.add("is-invalid");
+					pwHelp.classList.remove("is-valid");
+					pwHelp.classList.add("is-invalid");
+					pwSubmit = false;
+				}
+			});
+		} else { // 비밀번호 값이 아직 없을 때
+			loginForm["user_pw"].removeAttribute("readonly");
+			loginForm["user_pw"].classList.remove("is-invalid");
+			pwHelp.classList.remove("is-invalid");
+		}
+	} else { // 가입되어 있지 않은 아이디일 때
+		if(loginForm["user_id"].value) { // 아이디 값이 있을 때
+			pwHelpInvalid.innerText = "아이디가 올바르지 않아 입력하거나 수정할 수 없습니다.";
+			loginForm["user_pw"].setAttribute("readonly", "readonly");
+			loginForm["user_pw"].classList.remove("is-valid");
+			loginForm["user_pw"].classList.add("is-invalid");
+			pwHelp.classList.remove("is-valid");
+			pwHelp.classList.add("is-invalid");	
+			pwSubmit = false;
+		} else { // 아이디 값이 없을 때
+			pwHelpInvalid.innerText = "먼저 아이디를 입력하세요.";
+			loginForm["user_pw"].setAttribute("readonly", "readonly");
+			loginForm["user_pw"].classList.remove("is-valid");
+			loginForm["user_pw"].classList.add("is-invalid");
+			pwHelp.classList.remove("is-valid");
+			pwHelp.classList.add("is-invalid");	
+			pwSubmit = false;
+		}
+	} 
+	return pwSubmit;
 });
 
 // 로그인 최종 제출 이벤트
