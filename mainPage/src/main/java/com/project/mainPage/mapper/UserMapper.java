@@ -20,6 +20,7 @@ public interface UserMapper {
 	
 	UserDto selectIdPwOne(String userId, String userPw); // 로그인
 	UserDto findId(String user_name, String user_email, String user_phone); // 아이디 찾기
+	UserDto findPw(String user_id, String user_name, String user_email, String user_phone); // 비밀번호 찾기
 	UserDto selectId(String userId); // 아이디 중복 검사
 	UserDto selectPhone(String userPhone); // 전화번호 중복 검사
 	UserDto selectEmail(String userEmail); // 이메일 중복 검사
