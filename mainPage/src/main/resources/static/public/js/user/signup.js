@@ -1,9 +1,10 @@
 const signupForm = document.forms.signupForm;
 
 // ajax url
-const ajaxIdUrl = "/user/idCheck/"; // primary key
-const ajaxEmailUrl = "/user/emailCheck/"; // unique key
-const ajaxPhoneUrl = "/user/phoneCheck/"; // unique key
+const ajaxIdUrl = "/user/idCheck/"; // 아이디 ajax
+const ajaxEmailUrl = "/user/emailCheck/"; // 이메일 ajax
+const ajaxPhoneUrl = "/user/phoneCheck/"; // 전화번호 ajax
+const ajaxEmailConfirmUrl = "/user/emailConfirm/" // 이메일 인증번호 ajax
 
 // submit event 처리 변수
 let nameSubmit = false;
@@ -11,9 +12,12 @@ let idSubmit = false;
 let pwSubmit = false;
 let pwCheckSubmit = false;
 let emailSubmit = false;
+let emailConfirmSubmit = false;
 let phoneSubmit = false;
 let birthSubmit = false;
 let adressSubmit = false;
+
+let authCode;
 
 // 이름 정규식
 function nameCheck(v) {
@@ -137,6 +141,7 @@ function noSpace(obj) { // 공백사용못하게
     }
 }
 
+/*
 // 잘라내기, 복사, 붙여넣기 차단
 document.querySelectorAll("input").forEach((input) => {
 	input.addEventListener("cut", (event) => {
@@ -152,6 +157,7 @@ document.querySelectorAll("input").forEach((input) => {
 		alert("붙여넣을 수 없습니다.");
 	});
 });
+*/ 
 
 // 이름 입력 이벤트
 signupForm["user_name"].addEventListener("input", (event) => {
@@ -393,6 +399,8 @@ signupForm["user_email"].addEventListener("input", (event) => {
 					.then(response => response.json())
 					.then((json) => {
 						if(json.emailCheck) {
+							emailConfirmBtnDiv.setAttribute("style", "display: none");
+							emailConfirmCodeDiv.setAttribute("style", "display: none");
 							emailHelpInvalid.innerText = "이미 사용 중인 이메일입니다.";
 							signupForm["user_email"].classList.remove("is-valid");
 							signupForm["user_email"].classList.add("is-invalid");
@@ -400,6 +408,7 @@ signupForm["user_email"].addEventListener("input", (event) => {
 							emailHelp.classList.add("is-invalid");
 							emailSubmit = false;
 						} else {
+							emailConfirmBtnDiv.removeAttribute("style");
 							signupForm["user_email"].classList.remove("is-invalid");
 							signupForm["user_email"].classList.add("is-valid");
 							emailHelp.classList.remove("is-invalid");
@@ -408,6 +417,8 @@ signupForm["user_email"].addEventListener("input", (event) => {
 						}
 					});
 			} else {
+				emailConfirmBtnDiv.setAttribute("style", "display: none");
+				emailConfirmCodeDiv.setAttribute("style", "display: none");
 				emailHelpInvalid.innerText = "유효하지 않은 형식입니다. 예시) Kevin@example.com";
 				signupForm["user_email"].classList.remove("is-valid");
 				signupForm["user_email"].classList.add("is-invalid");
@@ -416,6 +427,8 @@ signupForm["user_email"].addEventListener("input", (event) => {
 				emailSubmit = false;
 			}	
 	} else {
+		emailConfirmBtnDiv.setAttribute("style", "display: none");
+		emailConfirmCodeDiv.setAttribute("style", "display: none");
 		emailHelpInvalid.innerText = "이메일을 입력하세요.";
 		signupForm["user_email"].classList.remove("is-valid");
 		signupForm["user_email"].classList.add("is-invalid");
@@ -431,6 +444,40 @@ signupForm["user_email"].addEventListener("keydown", (event) => {
 	let key = event.key;
 	if(key == " ") {
 		event.preventDefault();
+	}
+});
+
+// 이메일 인증 버튼 클릭
+signupForm["emailConfirmBtn"].addEventListener("click", (event) => {
+	fetch(ajaxEmailConfirmUrl + signupForm["user_email"].value)
+		.then(response => response.json())
+		.then((json) => {
+			authCode = json.authCode; // 인증번호
+			console.log(authCode);
+		});
+	emailConfirmCodeDiv.removeAttribute("style");
+});
+
+// 이메일 인증 번호 입력 이벤트
+signupForm["emailConfirmCode"].addEventListener("input", (event) => {
+	let key = event.target.value;
+	console.log(authCode);
+	if(key === authCode) {
+		signupForm["user_email"].setAttribute("readonly", "readonly");
+		emailConfirmBtnDiv.setAttribute("style", "display: none");
+		signupForm["emailConfirmCode"].setAttribute("readonly", "readonly");
+		signupForm["emailConfirmCode"].classList.remove("is-invalid");
+		signupForm["emailConfirmCode"].classList.add("is-valid");
+		codeHelp.classList.remove("is-invalid");
+		codeHelp.classList.add("is-valid");
+		emailConfirmSubmit = true;
+	} else {
+		codeHelpInvalid.innerText = "인증번호가 일치하지 않습니다.";
+		signupForm["emailConfirmCode"].classList.remove("is-valid");
+		signupForm["emailConfirmCode"].classList.add("is-invalid");
+		codeHelp.classList.remove("is-valid");
+		codeHelp.classList.add("is-invalid");
+		emailConfirmSubmit = false;
 	}
 });
 
@@ -604,7 +651,7 @@ signupForm.addEventListener("submit", (event) => {
 		addDetailHelp.classList.remove("is-valid");
 		addDetailHelp.classList.add("is-invalid");
 	}
-	if(nameSubmit && idSubmit && pwSubmit && pwCheckSubmit && emailSubmit && phoneSubmit && birthSubmit && adressSubmit) {
+	if(nameSubmit && idSubmit && pwSubmit && pwCheckSubmit && emailSubmit && emailConfirmSubmit && phoneSubmit && birthSubmit && adressSubmit) {
 		if(signupForm["user_pw"].value === signupForm["pwCheck"].value) {
 			signupForm.submit();	
 		} else {

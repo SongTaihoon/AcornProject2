@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import com.project.mainPage.dto.EmailCheck;
+import com.project.mainPage.dto.EmailConfirmDto;
 import com.project.mainPage.dto.IdCheck;
 import com.project.mainPage.dto.Pagination;
 import com.project.mainPage.dto.PhoneCheck;
@@ -321,6 +322,17 @@ public class UserController {
 		return phoneCheck;	
 	}
 	
+//	회원가입 이메일 인증 버튼 누를 시 이메일로 인증번호 발송
+	@GetMapping("/emailConfirm/{userEmail}")
+	@ResponseBody public EmailConfirmDto emailConfirm(@PathVariable String userEmail) throws Exception {
+		EmailConfirmDto emailConfirm = new EmailConfirmDto();
+		String code = mailService.sendEmailConfirm(userEmail);
+		if(code != null) {
+			emailConfirm.authCode = code;
+		}
+		return emailConfirm;
+	}
+
 //	회원 삭제
 	@GetMapping("/delete/{userId}")
 	public String delete(
