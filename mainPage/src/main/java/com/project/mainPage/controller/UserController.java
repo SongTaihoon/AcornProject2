@@ -16,9 +16,11 @@ import com.project.mainPage.dto.EmailConfirmDto;
 import com.project.mainPage.dto.IdCheck;
 import com.project.mainPage.dto.Pagination;
 import com.project.mainPage.dto.PhoneCheck;
+import com.project.mainPage.dto.PhoneConfirmDto;
 import com.project.mainPage.dto.UserDto;
 import com.project.mainPage.mapper.UserMapper;
 import com.project.mainPage.service.EmailService;
+import com.project.mainPage.service.MessageService;
 import com.project.mainPage.service.UserService;
 @Controller
 @RequestMapping("/user")
@@ -31,6 +33,9 @@ public class UserController {
 	
 	@Autowired
     private EmailService mailService;
+	
+	@Autowired
+    private MessageService messageService;
 	
 //	회원 리스트
 	@GetMapping("/list/{page}")
@@ -288,7 +293,8 @@ public class UserController {
 //	회원가입 중복 체크 (id)
 	@GetMapping("/idCheck/{userId}")
 	//ResponseBody가 들어가야 ajax가 작동한다
-	@ResponseBody public IdCheck idCheck(@PathVariable String userId) {
+	@ResponseBody public IdCheck idCheck(
+			@PathVariable String userId) {
 		IdCheck idCheck = new IdCheck();
 		UserDto user = userMapper.selectId(userId);
 		if(user != null) { // 중복된 아이디가 있다
@@ -300,7 +306,8 @@ public class UserController {
 	
 //	회원가입 중복 체크 (email)
 	@GetMapping("/emailCheck/{userEmail}")
-	@ResponseBody public EmailCheck emailCheck(@PathVariable String userEmail) {
+	@ResponseBody public EmailCheck emailCheck(
+			@PathVariable String userEmail) {
 		EmailCheck emailCheck = new EmailCheck();
 		UserDto user = userMapper.selectEmail(userEmail);
 		if(user != null) { // 중복된 이메일이 있다
@@ -312,7 +319,8 @@ public class UserController {
 	
 //	회원가입 중복 체크 (phone)
 	@GetMapping("/phoneCheck/{userPhone}")
-	@ResponseBody public PhoneCheck phoneCheck(@PathVariable String userPhone) {
+	@ResponseBody public PhoneCheck phoneCheck(
+			@PathVariable String userPhone) {
 		PhoneCheck phoneCheck = new PhoneCheck();
 		UserDto user = userMapper.selectPhone(userPhone);
 		if(user != null) { // 중복된 전화번호가 있다
@@ -324,7 +332,8 @@ public class UserController {
 	
 //	회원가입 이메일 인증 버튼 누를 시 이메일로 인증번호 발송
 	@GetMapping("/emailConfirm/{userEmail}")
-	@ResponseBody public EmailConfirmDto emailConfirm(@PathVariable String userEmail) throws Exception {
+	@ResponseBody public EmailConfirmDto emailConfirm(
+			@PathVariable String userEmail) throws Exception {
 		EmailConfirmDto emailConfirm = new EmailConfirmDto();
 		String code = mailService.sendEmailConfirm(userEmail);
 		if(code != null) {
@@ -332,7 +341,18 @@ public class UserController {
 		}
 		return emailConfirm;
 	}
-
+	
+//	회원가입 전화번호 인증 버튼 누를 시 휴대폰으로 인증번호 발송
+	@GetMapping("/phoneConfirm/{userPhone}")
+	@ResponseBody public PhoneConfirmDto phoneConfirm(
+			@PathVariable String userPhone) throws Exception {
+		PhoneConfirmDto phoneConfirm = new PhoneConfirmDto();
+		String code = messageService.PhoneNumberCheck(userPhone);
+		if(code != null) {
+			phoneConfirm.authCode = code;
+		}
+		return phoneConfirm;
+	}
 //	회원 삭제
 	@GetMapping("/delete/{userId}")
 	public String delete(

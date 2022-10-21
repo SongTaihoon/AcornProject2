@@ -105,8 +105,9 @@
 						      <div id="emailModal" class="modal-body">
 						        인증번호가 이메일로 발송되었습니다. 이메일을 확인해 주시기 바랍니다.
 						      </div>
-						      <div class="modal-footer border-0">
-						        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+						      <div class="modal-footer border-0" style="padding: 16px;">
+						        <button type="button" class="btn btn-secondary" 
+						        		data-bs-dismiss="modal" style="margin: 0; padding: 12px 20px;">확인</button>
 						      </div>
 						    </div>
 						  </div>
@@ -116,7 +117,7 @@
 					<div id="emailConfirmCodeDiv" class="row g-3 align-items-center" style="display: none;">
 					 <div class="box col-auto signupInputBox">
 					    <input type="text" name="emailConfirmCode" class="form-control signupInput" 
-					    	   placeholder="이메일 인증번호">					  
+					    	   placeholder="이메일 인증번호" maxlength="7">					  
 				     </div>
 					  <div class="col-auto mt-0">
 					     <span id="codeHelp" class="form-text"></span>
@@ -140,6 +141,45 @@
 						 <span id="phoneHelpInvalid" class="invalid-feedback"></span> 
 					  </div>
 					</div> 
+					<div id="phoneConfirmBtnDiv" class="row g-3 align-items-center" style="display: none;">
+					 <div class="col-auto signupInputBox">
+					    <!-- Button trigger modal -->
+					    <button type="button" class="button btn btn-success" name="phoneConfirmBtn"
+					    	    data-bs-toggle="modal" data-bs-target="#phoneConfirm">전화번호 인증</button>		
+						<!-- Modal -->
+						<div class="modal fade" id="phoneConfirm" data-bs-backdrop="static" data-bs-keyboard="false" 
+							 tabindex="-1" aria-labelledby="phoneConfirmLabel" aria-hidden="true">
+						  <div class="modal-dialog">
+						    <div class="modal-content">
+						      <div class="modal-header border-0">
+						        <h1 class="modal-title fs-5" id="phoneConfirmLabel">전화번호 인증</h1>
+						        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						      </div>
+						      <div id="phoneModal" class="modal-body">
+						        인증번호가 휴대폰 번호로 발송되었습니다. 휴대폰을 확인해 주시기 바랍니다.
+						      </div>
+						      <div class="modal-footer border-0" style="padding: 16px;">
+						        <button type="button" class="btn btn-secondary" 
+						        		data-bs-dismiss="modal" style="margin: 0; padding: 12px 20px;">확인</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>	  
+				     </div>
+					</div>
+					<div id="phoneConfirmCodeDiv" class="row g-3 align-items-center" style="display: none;">
+					 <div class="box col-auto signupInputBox">
+					    <input type="text" name="phoneConfirmCode" class="form-control signupInput" 
+					    	   placeholder="전화번호 인증번호" maxlength="4">					  
+				     </div>
+					  <div class="col-auto mt-0">
+					     <span id="codeHelp2" class="form-text"></span>
+						 <span class="valid-feedback">
+						   인증 완료되었습니다.
+						 </span>
+						 <span id="codeHelpInvalid2" class="invalid-feedback"></span> 
+					  </div>
+					</div>
 					<div class="row g-3 align-items-center">
 						<div class="box col-auto signupInputBox">
 						   <input class="form-control signupInput" type="date" name="birth" placeholder="생일(필수)" required aria-required="true">
