@@ -49,13 +49,16 @@
 	height: 50px;
 	width: 454px;    	
 }
+#addressBtn {
+    margin-top: 0;
+}
 html, body {
 	height: 100vh;
 }
 #wrapper {
     min-height: 100%;
     position: relative;
-    padding-bottom: 500px;
+    padding-bottom: 600px;
 }
 .footer {
     bottom: 0;
@@ -72,10 +75,10 @@ input[type='date']:valid::before {
 }
 @media (max-width: 600px) {
 	#wrapper {
-	    padding-bottom: 950px;
+	    padding-bottom: 1500px;
 	}
 	.box {
-	    margin: 50px 0 0 0;
+	    margin: 10px 0 10px 0;
 	}
 	#addressBtn {
 	    margin-top: 10px;
