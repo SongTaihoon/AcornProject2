@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.project.mainPage.dto.Acco;
 import com.project.mainPage.dto.Restaurant;
 import com.project.mainPage.dto.Tour;
@@ -38,15 +40,23 @@ public class MainController {
 	}
 	
 	@GetMapping("/recommendation")
-	public String recommendation(Model model) {
+	public String recommendation(
+			@RequestParam(required = false) String city, // 지역
+			@RequestParam(required = false) String acco, // 숙박 최애포인트
+			@RequestParam(required = false) String rest, // 음식점 최애포인트
+			Model model) {
 		try {
-			List<Tour> tourList = tourMapper.mainPageTour();
-			List<Acco> accoList = accoMapper.mainPageAcco();
-			List<Restaurant> restList = restaurankMapper.mainPageRest();
+			List<Tour> tourList = tourMapper.selectRecommendation(city); // 관광지 추천
+			List<Acco> accoList = accoMapper.selectRecommendation(city, acco); // 숙박 추천
+			List<Restaurant> restList = restaurankMapper.selectRecommendation(city, rest); // 음식점 추천
 			
 			model.addAttribute("tourList", tourList);
 			model.addAttribute("accoList", accoList);
 			model.addAttribute("restList", restList);
+			
+			System.out.println("관광지 추천 결과 : " + tourList);
+			System.out.println("숙박 추천 결과 : " + accoList);
+			System.out.println("음식점 추천 결과 : " + restList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -36,7 +36,7 @@ ol {
                       		<div class="shop-item" style="width: 100%; height: 80%;">
                       			<th:block th:if="${tour.img_path != null}">
                        		    <div class="shop-item-image" style="width: 100%; height: 70%;">
-							       <img th:src="@{/img/{fileName}(fileName=${tour.img_path})}" alt="추천 이미지" style="width: 100%; height: 100%;"/>		                              		   
+							       <img th:src="@{/public/img/{fileName}(fileName=${tour.img_path})}" alt="추천 이미지" style="width: 100%; height: 100%;"/>		                              		   
 							       <div class="shop-item-detail">
 							       	  <a class="btn btn-round btn-b" th:href="@{/top/tour/detail/{tour_rank}(tour_rank = ${tour.tour_rank})}">
 							       		  <span>상세 보기</span>
@@ -52,7 +52,7 @@ ol {
 			              	</th:block>
 			              	<th:block th:unless="${tour.img_path != null}">
                              		<div class="shop-item-image" style="width: 100%; height: 70%;">
-							       <img src="/img/JEJUHYUBJAE.jpg" alt="추천 이미지" style="width: 100%; height: 100%;"/>		                              		   
+							       <img src="/img/NullImg.jpg" alt="추천 이미지" style="width: 100%; height: 100%;"/>		                              		   
 							       <div class="shop-item-detail">
 							       	  <a class="btn btn-round btn-b" th:href="@{/top/tour/detail/{tour_rank}(tour_rank = ${tour.tour_rank})}">
 							       		  <span>상세 보기</span>
@@ -81,7 +81,7 @@ ol {
                       		<div class="shop-item" style="width: 100%; height: 80%;">
                       			<th:block th:if="${acco.img_path != null}">
                        		    <div class="shop-item-image" style="width: 100%; height: 70%;">
-							       <img th:src="@{/img/{fileName}(fileName=${acco.img_path})}" alt="추천 이미지" style="width: 100%; height: 100%;"/>		                              		   
+							       <img th:src="@{/public/img/{fileName}(fileName=${acco.img_path})}" alt="추천 이미지" style="width: 100%; height: 100%;"/>		                              		   
 							       <div class="shop-item-detail">
 							       	  <a class="btn btn-round btn-b" th:href="@{/top/acco/detail/{acco_rank}(acco_rank = ${acco.acco_rank})}">
 							       		  <span>상세 보기</span>
@@ -97,7 +97,7 @@ ol {
 			              	</th:block>
 			              	<th:block th:unless="${acco.img_path != null}">
                             	<div class="shop-item-image" style="width: 100%; height: 70%;">
-							        <img src="/img/JEJUHYUBJAE.jpg" alt="추천 이미지" style="width: 100%; height: 100%;"/>		                              		   
+							        <img src="/img/NullImg.jpg" alt="추천 이미지" style="width: 100%; height: 100%;"/>		                              		   
 							        <div class="shop-item-detail">
 							       	   <a class="btn btn-round btn-b" th:href="@{/top/acco/detail/{acco_rank}(acco_rank = ${acco.acco_rank})}">
 							       		   <span>상세 보기</span>
@@ -126,7 +126,7 @@ ol {
                       		<div class="shop-item" style="width: 100%; height: 80%;">
                       			<th:block th:if="${rest.img_path != null}">
                        		    <div class="shop-item-image" style="width: 100%; height: 70%;">
-							       <img th:src="@{/img/{fileName}(fileName=${rest.img_path})}" alt="추천 이미지" style="width: 100%; height: 100%;"/>		                              		   
+							       <img th:src="@{/public/img/{fileName}(fileName=${rest.img_path})}" alt="추천 이미지" style="width: 100%; height: 100%;"/>		                              		   
 							       <div class="shop-item-detail">
 							       	  <a class="btn btn-round btn-b" th:href="@{/top/rest/detail/{rest_rank}(rest_rank = ${rest.rest_rank})}">
 							       		  <span>상세 보기</span>
@@ -142,7 +142,7 @@ ol {
 			              	</th:block>
 			              	<th:block th:unless="${rest.img_path != null}">
                              	<div class="shop-item-image" style="width: 100%; height: 70%;">
-							        <img src="/img/JEJUHYUBJAE.jpg" alt="추천 이미지" style="width: 100%; height: 100%;"/>		                              		   
+							        <img src="/img/NullImg.jpg" alt="추천 이미지" style="width: 100%; height: 100%;"/>		                              		   
 							        <div class="shop-item-detail">
 							       	   <a class="btn btn-round btn-b" th:href="@{/top/rest/detail/{rest_rank}(rest_rank = ${rest.rest_rank})}">
 							       		   <span>상세 보기</span>

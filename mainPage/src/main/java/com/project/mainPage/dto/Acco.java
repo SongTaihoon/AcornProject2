@@ -16,6 +16,12 @@ import lombok.Data;
 | contents    | text         | YES  |     | NULL    |                |
 | user_id     | varchar(45)  | NO   | MUL | NULL    |                |
 | category_id | varchar(255) | YES  | MUL | NULL    |                |
+| price       | float        | YES  |     | 0       |                |
+| location    | float        | YES  |     | 0       |                |
+| service     | float        | YES  |     | 0       |                |
+| room        | float        | YES  |     | 0       |                |
+| clean       | float        | YES  |     | 0       |                |
+| bedding     | float        | YES  |     | 0       |                |
 +-------------+--------------+------+-----+---------+----------------+
 */
 @Data
@@ -32,6 +38,12 @@ public class Acco {
 	 private int search;
 	 private int ranking;
 	 private String img_path;
+	 private float price;
+	 private float location;
+	 private float service;
+	 private float room;
+	 private float clean;
+	 private float bedding;
 	 private UserDto user; // UsersDto.userid : fk 
 	 private List<AccoImg> accoImgs; // 1:N  TourImg.tour_rank fk
 }

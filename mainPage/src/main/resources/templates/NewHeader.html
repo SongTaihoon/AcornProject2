@@ -218,7 +218,7 @@
 	<div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" 
 		 aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
 	  <div class="modal-lg modal-dialog modal-dialog-centered modal-dialog-scrollable">
-	  	 <form class="modal-content" action="/recommendation" name="recommendation" method="post">
+	  	 <form class="modal-content" action="/recommendation" name="recommendation">
              <div class="modal-header border-0">
 		       <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">나의 여행 추천</h1>
 		       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -273,11 +273,11 @@
 					</div>
 			   </div>
 			   <div class="row">
-					<label for="location" class="form-label" style="margin-bottom: 0;">지역</label>
+					<label for="city" class="form-label" style="margin-bottom: 0;">지역</label>
 					<div class="col mb-3" style="padding-right: 8px;">
-						<select name="location" id="location" class="form-select" style="font-size: 11px; border-radius: 2px;">
-						  <option value="1" selected>서귀포</option>
-						  <option value="2">제주</option>
+						<select name="city" id="city" class="form-select" style="font-size: 11px; border-radius: 2px;">
+						  <option th:selected="${#strings.equals(param.city, '서귀포시')}" value="서귀포시">서귀포시</option>
+						  <option th:selected="${#strings.equals(param.city, '제주시')}" value="제주시">제주시</option>
 						</select>
 					</div>
 			   </div>
@@ -285,12 +285,12 @@
 					<label for="acco" class="form-label" style="margin-bottom: 0;">숙박 최애포인트 (가장 중요하게 생각하는 것)</label>
 					<div class="col mb-3" style="padding-right: 8px;">
 						<select name="acco" id="acco" class="form-select" style="font-size: 11px; border-radius: 2px;">
-						  <option value="1" selected>가격</option>
-						  <option value="2">객실</option>
-						  <option value="3">위치</option>
-						  <option value="4">청결도</option>
-						  <option value="5">서비스 (친절도)</option>
-						  <option value="6">침대 퀄리티</option>
+						  <option th:selected="${#strings.equals(param.acco, 'price')}" value="price">가격</option>
+		      	    	  <option th:selected="${#strings.equals(param.acco, 'location')}" value="location">위치</option>
+		      	          <option th:selected="${#strings.equals(param.acco, 'service')}" value="service">서비스 (친절도)</option>
+		      	          <option th:selected="${#strings.equals(param.acco, 'room')}" value="room">객실</option>
+		      	    	  <option th:selected="${#strings.equals(param.acco, 'bedding')}" value="bedding">침대 퀄리티</option>
+		      	    	  <option th:selected="${#strings.equals(param.acco, 'clean')}" value="clean">청결도</option>
 						</select>
 					</div>
 			   </div>
@@ -298,11 +298,11 @@
 					<label for="rest" class="form-label" style="margin-bottom: 0;">음식점 최애포인트 (가장 중요하게 생각하는 것)</label>
 					<div class="col mb-3" style="padding-right: 8px;">
 						<select name="rest" id="rest" class="form-select" style="font-size: 11px; border-radius: 2px;">
-						  <option value="1" selected>가격</option>
-						  <option value="2">서비스 (친절도)</option>
-						  <option value="3">맛</option>
-						  <option value="4">위치</option>
-						  <option value="5">분위기</option>
+						  <option th:selected="${#strings.equals(param.rest, 'price')}" value="price">가격</option>
+		      	    	  <option th:selected="${#strings.equals(param.rest, 'location')}" value="location">위치</option>
+		      	          <option th:selected="${#strings.equals(param.rest, 'service')}" value="service">서비스 (친절도)</option>
+		      	          <option th:selected="${#strings.equals(param.rest, 'taste')}" value="taste">맛</option>
+		      	    	  <option th:selected="${#strings.equals(param.rest, 'mood')}" value="mood">분위기</option>
 						</select>
 					</div>
 			   </div>
