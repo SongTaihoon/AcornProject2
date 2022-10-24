@@ -13,7 +13,7 @@ public interface TourMapper {
 	List<Tour> selectListAll(int startRow, int pageSize);
 	int selectPageAllCount();
 	// detail 
-	Tour selectDetailOne(int tourRank);
+	Tour selectDetailOne(Integer tourRank);
 	// 조회수 
 	int updateViews(int tourRank);
 	// 등록
@@ -22,5 +22,7 @@ public interface TourMapper {
 	int updateOne(Tour tour);
 	// 삭제 
 	int deleteOne(int tourRank);
+	// 메인 화면에 출력
+	List<Tour> mainPageTour();
 }
 

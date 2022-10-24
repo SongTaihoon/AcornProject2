@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.project.mainPage.dto.Restaurant;
+import com.project.mainPage.dto.Tour;
 
 
 // com.project.mainPage.mapper.RestaurankMapper
@@ -14,7 +15,7 @@ public interface RestaurankMapper {
 	List<Restaurant> selectListAll(int startRow, int pageSize);
 	int selectPageAllCount();
 	// detail
-	Restaurant selectDetailOne(int restRank);
+	Restaurant selectDetailOne(Integer restRank);
 	// 조회수 
 	int updateViews(int restRank);
 	// 등록
@@ -23,4 +24,6 @@ public interface RestaurankMapper {
 	int updateOne(Restaurant restaurant);
 	// 삭제 
 	int deleteOne(int restRank);
+	// 메인 화면에 출력
+	List<Restaurant> mainPageRest();
 }

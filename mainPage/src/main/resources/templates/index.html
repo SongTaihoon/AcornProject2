@@ -8,7 +8,7 @@ ol {
 <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
     <header th:insert="/NewHeader"></header>
     <main>
-        <section class="home-section home-parallax home-fade" id="home" style="position: unset;">
+        <section class="home-section home-parallax home-fade home-full-height" id="home" style="position: unset;">
             <div class="hero-slider">
                 <ul class="slides">
                     <li class="bg-dark-30 bg-dark" style="background-image:url(/img/JEJU1.jpeg);">
@@ -19,7 +19,7 @@ ol {
                             </div>
                         </div>
                     </li>
-                    <li class="bg-dark-30 bg-dark" style="background-image:url(/img/JEJU2.jpg);">
+                    <li class="bg-dark-30 bg-dark" style="background-image:url(/img/JEJUJUSANG.jpg);">
                         <div class="titan-caption">
                             <div class="caption-content">
                                 <div class="font-alt mb-30 titan-title-size-2">천혜의 자연환경</div>
@@ -27,7 +27,7 @@ ol {
                             </div>
                         </div>
                     </li>
-                    <li class="bg-dark-30 bg-dark" style="background-image:url(/img/JEJU3.jpeg);">
+                    <li class="bg-dark-30 bg-dark" style="background-image:url(/img/JEJUHALLA.jpg);">
                         <div class="titan-caption">
                            <div class="caption-content">
                                 <div class="font-alt mb-30 titan-title-size-2">방문해 주셔서 감사합니다</div>
@@ -40,122 +40,288 @@ ol {
         </section>
         <section class="module-small bg-light">
               <div class="container-fluid">
-                  <div class="row multi-columns-row d-flex justify-content-evenly">
-                      <div class="col-sm-6 col-md-3 col-lg-3" style="height: 320px;">
-                          <div class="shop-item" style="width: 100%; height: 60%;">
-                          	  <div id="carouselExampleFade1" class="carousel slide carousel-fade" data-bs-ride="carousel" style="width: 100%; height: 100%;">
-								  <div class="carousel-inner" style="width: 100%; height: 100%;">
-								    <div class="carousel-item active" style="width: 100%; height: 100%;">
-	                              		<div class="shop-item-image" style="width: 100%; height: 100%;">
-									       <img src="/img/JEJUHYUBJAE.jpg" alt="추천 이미지" style="width: 100%; height: 100%;"/>
-									       <div class="shop-item-detail"><a class="btn btn-round btn-b" href="/top/tour/detail/22"><span>상세 보기</span></a></div>
-	                              		</div>
-								    </div>
-								    <div class="carousel-item" style="width: 100%; height: 100%;">
-									    <div class="shop-item-image" style="width: 100%; height: 100%;">
-									       <img src="/img/JEJUHYUBJAE2.jpg" alt="추천 이미지" style="width: 100%; height: 100%;"/>
-									       <div class="shop-item-detail"><a class="btn btn-round btn-b" href="/top/tour/detail/22"><span>상세 보기</span></a></div>
-	                              		</div>
-								    </div>
-								    <div class="carousel-item" style="width: 100%; height: 100%;">
-								        <div class="shop-item-image" style="width: 100%; height: 100%;">
-										    <img src="/img/JEJUHYUBJAE3.jpg" alt="추천 이미지" style="width: 100%; height: 100%;"/>
-										    <div class="shop-item-detail"><a class="btn btn-round btn-b" href="/top/tour/detail/22"><span>상세 보기</span></a></div>
-		                                </div>
-								    </div>
-								  </div>
-								  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade1" data-bs-slide="prev">
-								    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-								    <span class="visually-hidden">Previous</span>
-								  </button>
-								  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade1" data-bs-slide="next">
-								    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-								    <span class="visually-hidden">Next</span>
-								  </button>
-							  </div>
-                              <h4 class="shop-item-title font-alt"><a href="/top/tour/detail/22">협재 해수욕장</a></h4>
-                              <span style="font-weight: bold; font-size: 14px;">관광지 1위</span> 
-                          </div>
-                      </div>
-                      <div class="col-sm-6 col-md-3 col-lg-3" style="height: 320px;">
-                          <div class="shop-item" style="width: 100%; height: 60%;">
-                          	   <div id="carouselExampleFade2" class="carousel slide carousel-fade" data-bs-ride="carousel" style="width: 100%; height: 100%;">
-								  <div class="carousel-inner" style="width: 100%; height: 100%;">
-								    <div class="carousel-item active" style="width: 100%; height: 100%;">
-	                              		<div class="shop-item-image" style="width: 100%; height: 100%;">
-									       <img src="/img/JEJUSHILLA.jpeg" alt="추천 이미지" style="width: 100%; height: 100%;"/>
-									       <div class="shop-item-detail"><a class="btn btn-round btn-b" href="/top/acco/detail/3"><span>상세 보기</span></a></div>
-	                              		</div>
-								    </div>
-								    <div class="carousel-item" style="width: 100%; height: 100%;">
-									    <div class="shop-item-image" style="width: 100%; height: 100%;">
-									       <img src="/img/JEJUSHILLA2.jpeg" alt="추천 이미지" style="width: 100%; height: 100%;"/>
-									       <div class="shop-item-detail"><a class="btn btn-round btn-b" href="/top/acco/detail/3"><span>상세 보기</span></a></div>
-	                              		</div>
-								    </div>
-								    <div class="carousel-item" style="width: 100%; height: 100%;">
-								        <div class="shop-item-image" style="width: 100%; height: 100%;">
-										    <img src="/img/JEJUSHILLA3.jpeg" alt="추천 이미지" style="width: 100%; height: 100%;"/>
-										    <div class="shop-item-detail"><a class="btn btn-round btn-b" href="/top/acco/detail/3"><span>상세 보기</span></a></div>
-		                                </div>
-								    </div>
-								  </div>
-								  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade2" data-bs-slide="prev">
-								    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-								    <span class="visually-hidden">Previous</span>
-								  </button>
-								  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade2" data-bs-slide="next">
-								    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-								    <span class="visually-hidden">Next</span>
-								  </button>
-							  </div>
-                              <h4 class="shop-item-title font-alt"><a href="/top/acco/detail/3">신라 호텔 제주</a></h4>
-                              <span style="font-weight: bold; font-size: 14px;">숙박 1위</span> 
-                          </div>
-                      </div>
-                      <div class="col-sm-6 col-md-3 col-lg-3" style="height: 320px;">
-                          <div class="shop-item" style="width: 100%; height: 60%;">
-                              <div id="carouselExampleFade3" class="carousel slide carousel-fade" data-bs-ride="carousel" style="width: 100%; height: 100%;">
-								  <div class="carousel-inner" style="width: 100%; height: 100%;">
-								    <div class="carousel-item active" style="width: 100%; height: 100%;">
-	                              		<div class="shop-item-image" style="width: 100%; height: 100%;">
-									       <img src="/img/JEJUFOOD.jpeg" alt="추천 이미지" style="width: 100%; height: 100%;"/>
-									       <div class="shop-item-detail"><a class="btn btn-round btn-b" href="/top/rest/detail/1"><span>상세 보기</span></a></div>
-	                              		</div>
-								    </div>
-								    <div class="carousel-item" style="width: 100%; height: 100%;">
-									    <div class="shop-item-image" style="width: 100%; height: 100%;">
-									       <img src="/img/JEJUFOOD2.jpeg" alt="추천 이미지" style="width: 100%; height: 100%;"/>
-									       <div class="shop-item-detail"><a class="btn btn-round btn-b" href="/top/rest/detail/1"><span>상세 보기</span></a></div>
-	                              		</div>
-								    </div>
-								    <div class="carousel-item" style="width: 100%; height: 100%;">
-								        <div class="shop-item-image" style="width: 100%; height: 100%;">
-										    <img src="/img/JEJUFOOD3.jpeg" alt="추천 이미지" style="width: 100%; height: 100%;"/>
-										    <div class="shop-item-detail"><a class="btn btn-round btn-b" href="/top/rest/detail/1"><span>상세 보기</span></a></div>
-		                                </div>
-								    </div>
-								  </div>
-								  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade3" data-bs-slide="prev">
-								    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-								    <span class="visually-hidden">Previous</span>
-								  </button>
-								  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade3" data-bs-slide="next">
-								    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-								    <span class="visually-hidden">Next</span>
-								  </button>
-							  </div>
-                              <h4 class="shop-item-title font-alt"><a href="/top/rest/detail/1">우진 해장국</a></h4>
-                              <span style="font-weight: bold; font-size: 14px;">음식점 1위</span> 
-                          </div>
+              	  <div class="row d-flex justify-content-center">
+                      <div class="col-sm-6 col-sm-offset-3">
+                          <h2 class="module-title font-alt">Top 3</h2>
                       </div>
                   </div>
+                  <div class="row multi-columns-row d-flex justify-content-evenly">
+                      <div class="col-sm-6 col-md-3 col-lg-3" style="height: 350px;">
+                          <div class="shop-item" style="width: 100%; height: 80%;">
+                          	  <div id="carouselExampleFade1" class="carousel slide carousel-fade" data-bs-ride="carousel" style="width: 100%; height: 100%;">
+								  <div class="carousel-inner" style="width: 100%; height: 100%;">
+								  	<th:block th:each="tour : ${tourList}">
+								  		<th:block th:if="${tour.img_path != null}">
+										    <div class="carousel-item" th:classappend="${(tour.ranking == 1) ? 'active' : ''}" style="width: 100%; height: 100%;">
+			                              		<div class="shop-item-image" style="width: 100%; height: 70%;">
+											       <img th:src="@{/img/{fileName}(fileName=${tour.img_path})}" alt="추천 이미지" style="width: 100%; height: 100%;"/>		                              		   
+											       <div class="shop-item-detail">
+											       	  <a class="btn btn-round btn-b" th:href="@{/top/tour/detail/{tour_rank}(tour_rank = ${tour.tour_rank})}">
+											       		  <span>상세 보기</span>
+											       	  </a>
+											       </div>
+			                              		</div>
+			                              		<div style="width: 100%; height: 30%;">
+				                              		<h4 class="shop-item-title font-alt">
+											       	    <a th:href="@{/top/tour/detail/{tour_rank}(tour_rank = ${tour.tour_rank})}" th:text="${tour.tourist}"></a>
+											        </h4>
+					                          	    <span style="font-weight: bold; font-size: 14px;" th:text="'관광지 ' + ${tour.ranking} + '위'"></span>
+				                          	    </div> 
+										    </div>
+								  		</th:block>
+									  	<th:block th:unless="${tour.img_path != null}">
+									  		<div class="carousel-item" th:classappend="${(tour.ranking == 1) ? 'active' : ''}" style="width: 100%; height: 100%;">
+			                              		<div class="shop-item-image" style="width: 100%; height: 70%;">
+											       <img src="/img/JEJUHYUBJAE.jpg" alt="추천 이미지" style="width: 100%; height: 100%;"/>		                              		   
+											       <div class="shop-item-detail">
+											       	  <a class="btn btn-round btn-b" th:href="@{/top/tour/detail/{tour_rank}(tour_rank = ${tour.tour_rank})}">
+											       		  <span>상세 보기</span>
+											       	  </a>
+											       </div>
+			                              		</div>
+										        <div style="width: 100%; height: 30%;">
+				                              	    <h4 class="shop-item-title font-alt">
+											       	    <a th:href="@{/top/tour/detail/{tour_rank}(tour_rank = ${tour.tour_rank})}" th:text="${tour.tourist}"></a>
+											        </h4>
+					                          	    <span style="font-weight: bold; font-size: 14px;" th:text="'관광지 ' + ${tour.ranking} + '위'"></span>
+				                          	    </div> 
+										    </div>
+									  	</th:block>
+								  	</th:block>
+								  </div>
+								  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade1" 
+								  		  style="height: 70%;" data-bs-slide="prev">
+								    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								    <span class="visually-hidden">Previous</span>
+								  </button>
+								  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade1" 
+								  		  style="height: 70%;" data-bs-slide="next">
+								    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+								    <span class="visually-hidden">Next</span>
+								  </button>
+							  </div>
+                          </div>
+                      </div>
+                      <div class="col-sm-6 col-md-3 col-lg-3" style="height: 350px;">
+                          <div class="shop-item" style="width: 100%; height: 80%;">
+                          	   <div id="carouselExampleFade2" class="carousel slide carousel-fade" data-bs-ride="carousel" style="width: 100%; height: 100%;">
+								  <div class="carousel-inner" style="width: 100%; height: 100%;">
+							  		<th:block th:each="acco : ${accoList}">
+							  			<th:block th:if="${acco.img_path != null}">
+										    <div class="carousel-item" th:classappend="${(acco.ranking == 1) ? 'active' : ''}" style="width: 100%; height: 100%;">
+			                              		<div class="shop-item-image" style="width: 100%; height: 70%;">
+											       <img th:src="@{/img/{fileName}(fileName=${acco.img_path})}" alt="추천 이미지" style="width: 100%; height: 100%;"/>
+											       <div class="shop-item-detail">
+											       	  <a class="btn btn-round btn-b" th:href="@{/top/acco/detail/{acco_rank}(acco_rank = ${acco.acco_rank})}">
+											       	  	<span>상세 보기</span>
+											       	  </a>
+											       </div>
+			                              		</div>
+			                              		<div style="width: 100%; height: 30%;">
+					                                <h4 class="shop-item-title font-alt">
+					                              	    <a th:href="@{/top/acco/detail/{acco_rank}(acco_rank = ${acco.acco_rank})}" th:text="${acco.tourist}"></a>
+					                                </h4>
+					                                <span style="font-weight: bold; font-size: 14px;" th:text="'숙박 ' + ${acco.ranking} + '위'"></span> 
+				                                </div>
+										    </div>
+									    </th:block>
+									  	<th:block th:unless="${acco.img_path != null}">
+									  		<div class="carousel-item" th:classappend="${(acco.ranking == 1) ? 'active' : ''}" style="width: 100%; height: 100%;">
+			                              		<div class="shop-item-image" style="width: 100%; height: 70%;">
+											       <img src="/img/JEJUSHILLA.jpeg" alt="추천 이미지" style="width: 100%; height: 100%;"/>
+											       <div class="shop-item-detail">
+											       	  <a class="btn btn-round btn-b" th:href="@{/top/acco/detail/{acco_rank}(acco_rank = ${acco.acco_rank})}">
+											       	  	<span>상세 보기</span>
+											       	  </a>
+											       </div>
+			                              		</div>
+			                              		<div style="width: 100%; height: 30%;">
+					                                <h4 class="shop-item-title font-alt">
+					                              	    <a th:href="@{/top/acco/detail/{acco_rank}(acco_rank = ${acco.acco_rank})}" th:text="${acco.tourist}"></a>
+					                                </h4>
+					                                <span style="font-weight: bold; font-size: 14px;" th:text="'숙박 ' + ${acco.ranking} + '위'"></span> 
+				                                </div>
+										    </div>
+									  	</th:block>
+									 </th:block>
+								  </div>
+								  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade2" 
+								  		  style="height: 70%;" data-bs-slide="prev">
+								    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								    <span class="visually-hidden">Previous</span>
+								  </button>
+								  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade2" 
+								  	      style="height: 70%;" data-bs-slide="next">
+								    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+								    <span class="visually-hidden">Next</span>
+								  </button>
+							  </div>
+                          </div>
+                      </div>
+                      <div class="col-sm-6 col-md-3 col-lg-3" style="height: 350px;">
+                          <div class="shop-item" style="width: 100%; height: 80%;">
+                              <div id="carouselExampleFade3" class="carousel slide carousel-fade" data-bs-ride="carousel" style="width: 100%; height: 100%;">
+								  <div class="carousel-inner" style="width: 100%; height: 100%;">
+								  	<th:block th:each="rest : ${restList}">
+								  		<th:block th:if="${rest.img_path != null}">
+										    <div class="carousel-item" th:classappend="${(rest.ranking == 1) ? 'active' : ''}" style="width: 100%; height: 100%;">
+			                              		<div class="shop-item-image" style="width: 100%; height: 70%;">
+											       <img th:src="@{/img/{fileName}(fileName=${rest.img_path})}" alt="추천 이미지" style="width: 100%; height: 100%;"/>
+											       <div class="shop-item-detail">
+											       	   <a class="btn btn-round btn-b" th:href="@{/top/rest/detail/{rest_rank}(rest_rank=${rest.rest_rank})}">
+											       	   	   <span>상세 보기</span>
+											       	   </a>
+											       </div>
+			                              		</div>
+			                              		<div style="width: 100%; height: 30%;">
+					                               <h4 class="shop-item-title font-alt">
+					                              	   <a th:href="@{/top/rest/detail/{rest_rank}(rest_rank=${rest.rest_rank})}" th:text="${rest.tourist}"></a>
+					                               </h4>
+					                               <span style="font-weight: bold; font-size: 14px;" th:text="'음식점 ' + ${rest.ranking} + '위'"></span>
+				                                </div> 
+										    </div>
+								  		</th:block>
+									  	<th:block th:unless="${rest.img_path != null}">
+									  		<div class="carousel-item" th:classappend="${(rest.ranking == 1) ? 'active' : ''}" style="width: 100%; height: 100%;">
+			                              		<div class="shop-item-image" style="width: 100%; height: 70%;">
+											       <img src="/img/JEJUFOOD3.jpeg" alt="추천 이미지" style="width: 100%; height: 100%;"/>
+											       <div class="shop-item-detail">
+											       	   <a class="btn btn-round btn-b" th:href="@{/top/rest/detail/{rest_rank}(rest_rank=${rest.rest_rank})}">
+											       	   	   <span>상세 보기</span>
+											       	   </a>
+											       </div>
+			                              		</div>
+			                              		<div style="width: 100%; height: 30%;">
+					                               <h4 class="shop-item-title font-alt">
+					                              	   <a th:href="@{/top/rest/detail/{rest_rank}(rest_rank=${rest.rest_rank})}" th:text="${rest.tourist}"></a>
+					                               </h4>
+					                               <span style="font-weight: bold; font-size: 14px;" th:text="'음식점 ' + ${rest.ranking} + '위'"></span>
+				                                </div> 
+										    </div>
+									  	</th:block>
+								  	</th:block>
+								  </div>
+								  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade3" 
+								  		  style="height: 70%;" data-bs-slide="prev">
+								    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								    <span class="visually-hidden">Previous</span>
+								  </button>
+								  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade3" 
+								  		  style="height: 70%;" data-bs-slide="next">
+								    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+								    <span class="visually-hidden">Next</span>
+								  </button>
+							  </div>
+                          </div>
+                     </div>
+                  </div>
                   <div class="row mt-10">
-                      <div class="col-sm-12 align-center"><a class="btn btn-b btn-round" href="#">추천받으러 가기</a>
+                      <div class="col-sm-12 align-center">
+                      	<!-- Button trigger modal -->
+	            		<a data-bs-toggle="modal" href="#exampleModal" role="button" class="btn btn-b btn-round">추천받기</a>
                       </div>
                   </div>
               </div>
           </section>
+        <!-- 나의 여행 추천 Modal -->
+		<div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" 
+			 aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+		  <div class="modal-lg modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		  	 <form class="modal-content" action="/recommendation" name="recommendation" method="post">
+	             <div class="modal-header border-0">
+			       <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">나의 여행 추천</h1>
+			       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			     </div>
+	             <div class="modal-body">
+	               <div class="row">
+						<label for="genre" class="form-label" style="margin-bottom: 0;">여행 유형</label>
+						<div class="col mb-3" style="padding-right: 8px;">
+							<select name="genre" id="genre" class="form-select" style="font-size: 11px; border-radius: 2px;">
+							  <option value="1" selected>혼자 여행</option>
+							  <option value="2">가족과 여행</option>
+							  <option value="3">연인과 여행</option>
+							  <option value="4">친구들과 여행</option>
+							  <option value="5">출장</option>
+							</select>
+						</div>
+				   </div>
+				   <div class="row">
+						<label for="period" class="form-label" style="margin-bottom: 0;">여행 기간</label>
+						<div class="col mb-3" style="padding-right: 8px;">
+							<select name="period" id="period" class="form-select" style="font-size: 11px; border-radius: 2px;">
+							  <option value="1">당일치기</option>
+							  <option value="2" selected>1박 2일</option>
+							  <option value="3">2박 3일</option>
+							  <option value="4">3박 4일</option>
+							  <option value="5">4박 5일</option>
+							  <option value="6">5박 이상</option>
+							</select>
+						</div>
+				   </div>
+	               <div class="row">
+						<label for="gender" class="form-label" style="margin-bottom: 0;">성별</label>
+						<div class="col mb-3" style="padding-right: 8px;">
+							<select name="gender" id="gender" class="form-select" style="font-size: 11px; border-radius: 2px;">
+							  <option value="1" selected>남성</option>
+							  <option value="2">여성</option>
+							</select>
+						</div>
+				   </div>
+	               <div class="row">
+						<label for="age" class="form-label" style="margin-bottom: 0;">연령대</label>
+						<div class="col mb-3" style="padding-right: 8px;">
+							<select name="age" id="age" class="form-select" style="font-size: 11px; border-radius: 2px;">
+							  <option value="1">유아</option>
+							  <option value="2">10대</option>
+							  <option value="3" selected>20대</option>
+							  <option value="4">30대</option>
+							  <option value="5">40대</option>
+							  <option value="6">50대</option>
+							  <option value="7">60대 이상</option>
+							</select>
+						</div>
+				   </div>
+				   <div class="row">
+						<label for="location" class="form-label" style="margin-bottom: 0;">지역</label>
+						<div class="col mb-3" style="padding-right: 8px;">
+							<select name="location" id="location" class="form-select" style="font-size: 11px; border-radius: 2px;">
+							  <option value="1" selected>서귀포</option>
+							  <option value="2">제주</option>
+							</select>
+						</div>
+				   </div>
+				   <div class="row">
+						<label for="acco" class="form-label" style="margin-bottom: 0;">숙박 최애포인트 (가장 중요하게 생각하는 것)</label>
+						<div class="col mb-3" style="padding-right: 8px;">
+							<select name="acco" id="acco" class="form-select" style="font-size: 11px; border-radius: 2px;">
+							  <option value="1" selected>가격</option>
+							  <option value="2">객실</option>
+							  <option value="3">위치</option>
+							  <option value="4">청결도</option>
+							  <option value="5">서비스 (친절도)</option>
+							  <option value="6">침대 퀄리티</option>
+							</select>
+						</div>
+				   </div>
+				   <div class="row">
+						<label for="rest" class="form-label" style="margin-bottom: 0;">음식점 최애포인트 (가장 중요하게 생각하는 것)</label>
+						<div class="col mb-3" style="padding-right: 8px;">
+							<select name="rest" id="rest" class="form-select" style="font-size: 11px; border-radius: 2px;">
+							  <option value="1" selected>가격</option>
+							  <option value="2">서비스 (친절도)</option>
+							  <option value="3">맛</option>
+							</select>
+						</div>
+				   </div>
+	             </div>
+	             <div class="modal-footer border-0" style="padding: 16px;">
+			       <button type="button" class="btn btn-outline-dark" data-bs-target="#exampleModalToggle" 
+			        	   style="margin: 0 8px 0 0; padding: 12px 20px;" data-bs-toggle="modal">취소</button>
+	               <button class="btn btn-outline-primary" style="margin: 0; padding: 12px 20px;">제출</button>
+			     </div>
+	          </form>
+		  </div>
+		</div>
         <footer th:insert="/NewFooter"></footer>
     </main>
 </body>

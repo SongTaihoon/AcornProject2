@@ -1,11 +1,7 @@
 package com.project.mainPage.dto;
-
 import java.util.List;
-
 import lombok.Data;
-
-/*
-  desc accommodate;
+/*desc ACCOMMODATE;
 +-------------+--------------+------+-----+---------+----------------+
 | Field       | Type         | Null | Key | Default | Extra          |
 +-------------+--------------+------+-----+---------+----------------+
@@ -17,6 +13,7 @@ import lombok.Data;
 | search      | int          | NO   |     | NULL    |                |
 | views       | int          | NO   |     | 0       |                |
 | acco_phone  | varchar(20)  | YES  |     | NULL    |                |
+| contents    | text         | YES  |     | NULL    |                |
 | user_id     | varchar(45)  | NO   | MUL | NULL    |                |
 | category_id | varchar(255) | YES  | MUL | NULL    |                |
 +-------------+--------------+------+-----+---------+----------------+
@@ -29,10 +26,12 @@ public class Acco {
 	 private String city;
 	 private String address1;
 	 private String acco_phone;
+	 private String contents;
 	 private Category category;
 	 private int views;
 	 private int search;
 	 private int ranking;
+	 private String img_path;
 	 private UserDto user; // UsersDto.userid : fk 
 	 private List<AccoImg> accoImgs; // 1:N  TourImg.tour_rank fk
 }

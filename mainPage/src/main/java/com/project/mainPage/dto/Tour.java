@@ -1,10 +1,7 @@
 package com.project.mainPage.dto;
-
 import java.util.List;
-
 import lombok.Data;
 /*
- *   desc tour;
 +-------------+--------------+------+-----+---------+----------------+
 | Field       | Type         | Null | Key | Default | Extra          |
 +-------------+--------------+------+-----+---------+----------------+
@@ -27,7 +24,7 @@ import lombok.Data;
 >>>>>>> 67412e6be7a439c2c07ffff8348a24d4892a25b8
 | user_id     | varchar(45)  | NO   | MUL | NULL    |                |
 +-------------+--------------+------+-----+---------+----------------+
- * */
+*/
 @Data
 public class Tour {
 	 private int tour_rank;
@@ -41,6 +38,7 @@ public class Tour {
 	 private int views;
 	 private int search;
 	 private int ranking;
+	 private String img_path;
 	 private UserDto user; // UsersDto.user_id : fk 
 	 private List<TourImg> tourImgs; // 1:N  TourImg.tour_rank fk
 }
