@@ -45,7 +45,7 @@
 			</thead>
 			<tbody>
 				<th:block th:each="rest : ${restaurantsList}" >
-					<tr id="rest" th:onclick="location.href='/top/rest/detail/[[${rest.rest_rank}]]'">
+					<tr id="rest">
 						<td th:text="${rest.ranking}"></td>
 						<td th:text="${rest.tourist}"></td>
 						<td th:text="${rest.city}"></td>
