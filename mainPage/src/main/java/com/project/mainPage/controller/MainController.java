@@ -23,6 +23,7 @@ public class MainController {
 	@Autowired
 	private AccoMapper accoMapper;
 	
+//	홈 화면
 	@GetMapping("/")
 	public String index(Model model) {
 		try {
@@ -39,6 +40,7 @@ public class MainController {
 		return "index";
 	}
 	
+//	나의 여행 추천
 	@GetMapping("/recommendation")
 	public String recommendation(
 			@RequestParam(required = false) String city, // 지역

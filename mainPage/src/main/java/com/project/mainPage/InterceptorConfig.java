@@ -35,6 +35,7 @@ public class InterceptorConfig implements WebMvcConfigurer{
 			.addPathPatterns("/user/delete/**")
 			.addPathPatterns("/**/insert.do")
 			.addPathPatterns("/**/update.do")
+			.addPathPatterns("/recommendation")
 			.addPathPatterns("/ /**")		
 			// 추가하거나 예외처리할 주소
 			.excludePathPatterns("/user/signup.do")
