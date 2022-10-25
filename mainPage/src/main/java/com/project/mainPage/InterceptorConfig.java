@@ -16,7 +16,6 @@ public class InterceptorConfig implements WebMvcConfigurer{
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 			registry.addInterceptor(loginCheckInterceptor)
-			.addPathPatterns("/search/**")
 			.addPathPatterns("/board/insert/**")
 			.addPathPatterns("/board/delete/**")
 			.addPathPatterns("/board/update/**")
@@ -47,15 +46,14 @@ public class InterceptorConfig implements WebMvcConfigurer{
 			.excludePathPatterns("/ / ");
 			
 			registry.addInterceptor(adminInterceptor)
-			.addPathPatterns("/admin/**")
 			.addPathPatterns("/user/list/**")
 			.addPathPatterns("/user/search/**")
 			.addPathPatterns("/notice/update/**")
 			.addPathPatterns("/notice/delete/**")
 			.addPathPatterns("/notice/insert.do")
 			.addPathPatterns("/notice/update.do")
-			.addPathPatterns("/qaboard/replyUpdate/**")
 			.addPathPatterns("/qaboard/replyInsert.do")
+			.addPathPatterns("/qaboard/replyUpdate/**")
 			.addPathPatterns("/qaboard/replyUpdate.do")
 			.addPathPatterns("/qaboard/replyDelete/**")
 			.addPathPatterns("/top/tour/insert.do")

@@ -10,7 +10,7 @@ import lombok.Data;
 | user_id         | varchar(255) | NO   | MUL | NULL    |                |
 +-----------------+--------------+------+-----+---------+----------------+
 */
-@Data // get , set , ToString
+@Data
 public class BoardPrefer {
 	private int board_prefer_no;
 	private int board_no; // 댓글 번호 

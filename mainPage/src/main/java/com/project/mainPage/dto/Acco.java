@@ -1,7 +1,7 @@
 package com.project.mainPage.dto;
 import java.util.List;
 import lombok.Data;
-/*desc ACCOMMODATE;
+/*
 +-------------+--------------+------+-----+---------+----------------+
 | Field       | Type         | Null | Key | Default | Extra          |
 +-------------+--------------+------+-----+---------+----------------+
