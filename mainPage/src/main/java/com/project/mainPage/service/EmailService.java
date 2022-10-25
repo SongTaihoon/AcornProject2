@@ -1,9 +1,7 @@
 package com.project.mainPage.service;
 import com.project.mainPage.dto.UserDto;
 import lombok.AllArgsConstructor;
-
 import java.util.Random;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -14,6 +12,7 @@ public class EmailService {
 	@Autowired
     private JavaMailSender mailSender;
     
+//	이메일 보내는 메서드
     public void mailSend(UserDto user) {
     	String title = "JEJU THE BEST 비밀번호 찾기 결과"; // 제목
     	String text = user.getUser_id() + " 님의 비밀번호 : " + user.getUser_pw(); // 내용
@@ -26,6 +25,8 @@ public class EmailService {
 
         mailSender.send(message); // 이메일 보내기
     }
+    
+//  이메일 인증번호 발송하는 객체
     public String sendEmailConfirm(String userEmail) throws Exception {
 		
     	Random random = new Random();

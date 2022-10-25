@@ -1,7 +1,6 @@
 package com.project.mainPage.service;
 import java.util.HashMap;
 import java.util.Random;
-import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;

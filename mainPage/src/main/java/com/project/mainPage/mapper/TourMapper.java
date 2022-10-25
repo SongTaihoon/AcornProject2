@@ -1,19 +1,15 @@
 package com.project.mainPage.mapper;
-
 import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
 import com.project.mainPage.dto.Tour;
-
-
 // com.project.mainPage.mapper.TourMapper
 @Mapper
 public interface TourMapper {
+	// 리스트
 	List<Tour> selectListAll(int startRow, int pageSize);
 	int selectPageAllCount();
-	// detail 
+	// 상세 
 	Tour selectDetailOne(Integer tourRank);
 	// 조회수 
 	int updateViews(int tourRank);
@@ -29,4 +25,3 @@ public interface TourMapper {
 	List<Tour> selectRecommendation(
 			@Param(value = "city") String city);
 }
-

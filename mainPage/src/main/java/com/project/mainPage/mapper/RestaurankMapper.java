@@ -1,22 +1,15 @@
 package com.project.mainPage.mapper;
-
 import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
-import com.project.mainPage.dto.Acco;
 import com.project.mainPage.dto.Restaurant;
-import com.project.mainPage.dto.Tour;
-
-
 // com.project.mainPage.mapper.RestaurankMapper
 @Mapper
 public interface RestaurankMapper {
-	// Restaurant List 
+	// 리스트 
 	List<Restaurant> selectListAll(int startRow, int pageSize);
 	int selectPageAllCount();
-	// detail
+	// 상세
 	Restaurant selectDetailOne(Integer restRank);
 	// 조회수 
 	int updateViews(int restRank);
