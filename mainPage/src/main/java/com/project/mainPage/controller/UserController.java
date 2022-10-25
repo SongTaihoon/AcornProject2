@@ -76,6 +76,7 @@ public class UserController {
 		model.addAttribute("page", page);	
 		return "/user/list";
 	}	
+	
 //	로그인 페이지
 	@GetMapping("/login.do")
 		public String loginPage(
@@ -210,7 +211,6 @@ public class UserController {
 			UserDto user,
 			HttpSession session) {
 		int insert = 0;
-		System.out.println(user);
 		try {
 			insert = userMapper.insertOne(user); // 회원가입 쿼리 실행
 		} catch (Exception e) {
@@ -220,13 +220,13 @@ public class UserController {
 			System.out.println("회원가입 성공! : " + insert);
 			session.setAttribute("loginUser", user); // 회원가입하면 로그인되어 있도록 설정
 			return "redirect:/";
-		}else {
+		} else {
 			System.out.println("회원가입 실패! : " + insert);
 			return "redirect:/user/signup.do";
 		}
 	}
 	
-//	회원 상세 페이지
+//	회원 상세
 	@GetMapping("/detail/{userId}")
 	public String detail(
 			@PathVariable String userId, 
@@ -240,7 +240,6 @@ public class UserController {
 		} else if(user.getUser_id().equals(loginUser.getUser_id()) || (loginUser.getAdminCk() == 1)) { // 로그인된 일반 회원이 본인의 상세 페이지로 이동 / 관리자는 모든 회원 조회 가능
 			System.out.println("회원 상세 페이지로 이동 성공!");
 			model.addAttribute("user", user);
-			System.out.println(user);
 			return "/user/detail";	
 		} else { // 로그인된 일반 회원이 다른 회원의 상세 페이지로 이동할 수 없음
 			System.out.println("다른 회원의 정보를 조회할 수 없습니다.");
@@ -284,7 +283,7 @@ public class UserController {
 		if(update > 0) {
 			System.out.println("회원 수정 성공! : " + update);
 			return "redirect:/user/detail/" + user.getUser_id();
-		}else {
+		} else {
 			System.out.println("회원 수정 실패! : " + update);
 			return "redirect:/user/update/"+ user.getUser_id();
 		}
@@ -353,6 +352,7 @@ public class UserController {
 		}
 		return phoneConfirm;
 	}
+	
 //	회원 삭제
 	@GetMapping("/delete/{userId}")
 	public String delete(

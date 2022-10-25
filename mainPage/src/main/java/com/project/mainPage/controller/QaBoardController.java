@@ -32,7 +32,7 @@ public class QaBoardController {
 	@Autowired
 	private QaBoardService qaBoardService;
 	
-//	고객 문의 리스트 페이지
+//	고객 문의 리스트
 	@GetMapping("/list/{page}")
 	public String list(
 			@PathVariable int page, 
@@ -72,7 +72,7 @@ public class QaBoardController {
 		return "/qaboard/list";
 	}
 
-//	고객 문의 상세 페이지
+//	고객 문의 상세
 	@GetMapping("/detail/{qaBoardno}")
 	public String detail(
 			@PathVariable Integer qaBoardno, 
@@ -85,7 +85,7 @@ public class QaBoardController {
 			qaBoard = qaBoardMapper.selectOne(qaBoardno);
 			
 			// 고객 문의 조회수 로직
-			Cookie oldCookie = null; // oldCookie 객체를 선언한 후 빈값으로 초기화
+			Cookie oldCookie = null; // oldCookie 객체를 선언한 후 빈 값으로 초기화
 			Cookie[] cookies = req.getCookies(); // request 객체에서 쿠키들을 가져와 Cookie 타입을 요소로 가지는 리스트에 담기
 			
 			if (cookies != null) { // 접속한 기록이 있을 때
@@ -113,7 +113,6 @@ public class QaBoardController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("detail_qaBoard" + qaBoard);
 		model.addAttribute("qaBoard", qaBoard);
 		return "/qaboard/detail";
 	}
@@ -164,9 +163,9 @@ public class QaBoardController {
 			if(delete > 0) {
 				System.out.println("qaBoard 삭제 성공! : " + delete);
 				return "redirect:/qaboard/list/1";
-			}else {
+			} else {
 				System.out.println("qaBoard 삭제 실패! : " + delete);
-				return "redirect:/qaboard/detail/"+qaBoardNo;
+				return "redirect:/qaboard/detail/" + qaBoardNo;
 			}
 		} else { // 로그인된 일반 회원이 다른 회원이 작성한 고객 문의 글을 삭제할 수 없음
 			System.out.println("다른 회원이 작성한 고객 문의 글을 삭제할 수 없습니다.");
@@ -189,7 +188,6 @@ public class QaBoardController {
 		} else if(qaBoard.getUser().getUser_id().equals(loginUser.getUser_id()) || (loginUser.getAdminCk() == 1)) { // 로그인된 일반 회원이 본인이 작성한 고객 문의 수정 페이지로 이동 / 관리자는 모든 글 조회 가능
 			System.out.println("고객 문의 수정 페이지로 이동 성공!");
 			model.addAttribute("qaBoard", qaBoard);
-			System.out.println(qaBoard);
 			return "/qaboard/modify";	
 		} else { // 로그인된 일반 회원이 다른 회원이 작성한 고객 문의 수정 페이지로 이동할 수 없음
 			System.out.println("다른 회원이 작성한 고객 문의 글을 수정할 수 없습니다.");
@@ -203,7 +201,6 @@ public class QaBoardController {
 		int update = 0;
 		try {
 			update = qaBoardMapper.updateOne(qaBoard);
-			System.out.println("postUpdate_qaBoard : " + qaBoard);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -233,7 +230,7 @@ public class QaBoardController {
 			System.out.println("qaBoard 답변 등록 성공! : " + insert);
 			System.out.println("qaBoard 답변 여부 1로 바꾸기 성공! : " + update);
 			return "redirect:/qaboard/detail/" + qaBoard.getQaBoardNo();
-		}else {
+		} else {
 			System.out.println("qaBoard 답변 등록 실패! : " + insert);
 			System.out.println("qaBoard 답변 여부 1로 바꾸기 실패! : " + update);
 			return "redirect:/qaboard/detail/" + qaBoard.getQaBoardNo();

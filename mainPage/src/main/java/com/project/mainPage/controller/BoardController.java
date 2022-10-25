@@ -30,8 +30,6 @@ import com.project.mainPage.mapper.BoardImgMapper;
 import com.project.mainPage.mapper.BoardMapper;
 import com.project.mainPage.mapper.BoardPreferMapper;
 import com.project.mainPage.mapper.ReplyMapper;
-import com.project.mainPage.mapper.ReplyPreferMapper;
-import com.project.mainPage.mapper.UserMapper;
 @Controller
 @RequestMapping("/board")
 public class BoardController {	
@@ -56,7 +54,7 @@ public class BoardController {
 	@Value("${spring.servlet.multipart.location}") // 파일이 임시 저장되는 경로 + 파일을 저장할 경로
 	private String savePath;
 	
-//	후기 리스트 페이지
+//	후기 리스트
 	@GetMapping("/list/{page}")
 	public String list(
 			@PathVariable int page, 
@@ -97,7 +95,7 @@ public class BoardController {
 		return "/board/list";
 	}
 	
-//	후기 상세 페이지
+//	후기 상세
 	@GetMapping("/detail/{boardNo}")
 	public String detail(
 			@PathVariable Integer boardNo,
@@ -121,7 +119,7 @@ public class BoardController {
 			board = boardMapper.selectOne(boardNo);
 			
 			// 후기 조회수 로직
-			Cookie oldCookie = null; // oldCookie 객체를 선언한 후 빈값으로 초기화
+			Cookie oldCookie = null; // oldCookie 객체를 선언한 후 빈 값으로 초기화
 			Cookie[] cookies = req.getCookies(); // request 객체에서 쿠키들을 가져와 Cookie 타입을 요소로 가지는 리스트에 담기
 			
 			if (cookies != null) { // 접속한 기록이 있을 때
@@ -156,7 +154,7 @@ public class BoardController {
 				replySize = replyMapper.selectBoardNoCount(boardNo); // 전체 댓글 수
 				repl = replyMapper.selectBoardNoAndUserId(boardNo, loginUsersId); // 내가 작성한 댓글 수
 				
-				//후기 좋아요/싫어요
+				// 후기 좋아요/싫어요
 				if(boardPrefer != null && boardPrefer.getUser_id().equals(loginUser.getUser_id())) {
 					if(boardPrefer.isPrefer()) { // 좋아요
 						board.setPrefer_active(true);
@@ -165,9 +163,8 @@ public class BoardController {
 					}
 				}
 				
-				//댓글 좋아요/싫어요
+				// 댓글 좋아요/싫어요
 				for(Reply reply : board.getReplys()) {
-					System.out.println(reply);
 					for (ReplyPrefer prefer : reply.getGood_prefers()) { // 좋아요
 						if(prefer.getUser_id().equals(loginUser.getUser_id())) {
 							reply.setPrefer_active(true);
@@ -197,7 +194,6 @@ public class BoardController {
 						board.setReplys(replies);
 					}
 				}
-				
 			} else { // 로그인 안 되어 있는 상태
 				replySize = replyMapper.selectBoardNoCount(boardNo);
 				// 댓글 정렬
@@ -232,7 +228,7 @@ public class BoardController {
 	public String insert(HttpSession session) {
 		if(session.getAttribute("loginUser") != null) {
 			return "/board/insert";
-		}else {
+		} else {
 			return "redirect:/user/login.do";
 		}
 	}
@@ -240,7 +236,7 @@ public class BoardController {
 //	후기 등록
 	@PostMapping("/insert.do")
 	public String insert(
-				Board  board,
+				Board board,
 				@RequestParam(name = "imgFile", required = false) MultipartFile [] imgFiles,
 				@SessionAttribute(required = false) UserDto loginUser,
 				HttpSession session) {
@@ -268,14 +264,13 @@ public class BoardController {
 				}
 			}
 			insert = boardService.registBoard(board); // DB에 후기 등록
-			System.out.println(board);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		if(insert > 0) {
 			System.out.println("후기 등록 성공! : " + insert);
 			return "redirect:/board/list/1";
-		}else {
+		} else {
 			System.out.println("후기 등록 실패! : " + insert);
 			return "redirect:/board/insert.do";
 		}
@@ -338,7 +333,7 @@ public class BoardController {
 			Board board, 
 			Model model,
 			@SessionAttribute(name ="loginUser", required = false) UserDto loginUser,
-			@RequestParam(name = "boardImgNo", required = false) int [] boardImgNos, // // required = false : 아무 것도 안 올 수 있는 경우
+			@RequestParam(name = "boardImgNo", required = false) int [] boardImgNos, // required = false : 아무 것도 안 올 수 있는 경우
 			@RequestParam(name = "imgFile", required = false) MultipartFile[] imgFiles,
  			HttpSession session
 			) { 
@@ -346,7 +341,7 @@ public class BoardController {
 		if((loginUser != null && loginUser.getUser_id().equals(board.getUser().getUser_id())) || ((loginUser).getAdminCk() == 1)) {
 			try {
 				int boardImgCount = boardImgMapper.selectCountBoardNo(board.getBoard_no());  // baordImg 등록된 개수 
-				int insertBoardImgLength = BOARD_IMG_LIMIT - boardImgCount + ((boardImgNos != null) ? boardImgNos.length : 0); // 5 -  boardImgCount + 등록될 이미지 개수 
+				int insertBoardImgLength = BOARD_IMG_LIMIT - boardImgCount + ((boardImgNos != null) ? boardImgNos.length : 0); // 5 - boardImgCount + 삭제할 이미지 개수 
 				// 이미지 저장 
 				if(imgFiles != null && insertBoardImgLength > 0) {
 					List<BoardImg> boardImgs = new ArrayList<BoardImg>();
@@ -371,18 +366,17 @@ public class BoardController {
 					}
 				}
 				update = boardService.modifyBoardRemoveBoardImg(board, boardImgNos); // DB에서 후기 수정
-				System.out.println("update board : " + board);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			if(update > 0) {
 				System.out.println("후기 수정 성공! : " + update);
 				return "redirect:/board/detail/" + board.getBoard_no();
-			}else {
-				System.out.println("후기 수정 성공! : " + update);
+			} else {
+				System.out.println("후기 수정 실패! : " + update);
 				return "redirect:/board/update/" + board.getBoard_no();
 			}				
-		} else{ 
+		} else { 
 			return "redirect:/user/login.do";
 		}     
 	}
@@ -404,10 +398,10 @@ public class BoardController {
 				boardPrefer.setPrefer(prefer);
 				boardPrefer.setUser_id(loginUser.getUser_id());
 				modify = boardPreferMapper.insertOne(boardPrefer);
-			}else if(prefer == boardPrefer.isPrefer()) { // 좋아요 싫어요를 한 번 더 눌러서 삭제할 때
+			} else if(prefer == boardPrefer.isPrefer()) { // 좋아요 싫어요를 한 번 더 눌러서 삭제할 때
 				boardPrefer.setPrefer(prefer);
 				modify = boardPreferMapper.deleteOne(boardPrefer.getBoard_prefer_no());
-			}else if(prefer != boardPrefer.isPrefer()) { // 좋아요에서 싫어요로 바꿀 때 or 싫어요에서 좋아요로 바꿀 때
+			} else if(prefer != boardPrefer.isPrefer()) { // 좋아요에서 싫어요로 바꿀 때 or 싫어요에서 좋아요로 바꿀 때
 				boardPrefer.setPrefer(prefer);
 				modify = boardPreferMapper.updateOne(boardPrefer);
 			}
@@ -416,7 +410,7 @@ public class BoardController {
 		}
 		if(modify > 0) {
 			System.out.println("성공!");
-		}else {
+		} else {
 			System.out.println("실패!");
 		}
 		return "redirect:/board/detail/" + boardNo;
