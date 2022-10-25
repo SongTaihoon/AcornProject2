@@ -1,0 +1,3 @@
+
+!ENTRY org.eclipse.ui 2 2 2022-10-25 10:37:51.192
+!MESSAGE Invalid property category path: org.springframework.ide.eclipse.beans.ui.properties.ProjectPropertyPage (bundle: org.springframework.ide.eclipse.xml.namespaces, propertyPage: org.springframework.ide.eclipse.beans.ui.namespaces.projectPropertyPage)
