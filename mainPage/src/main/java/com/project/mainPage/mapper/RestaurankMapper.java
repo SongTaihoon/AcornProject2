@@ -3,7 +3,9 @@ package com.project.mainPage.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import com.project.mainPage.dto.Acco;
 import com.project.mainPage.dto.Restaurant;
 import com.project.mainPage.dto.Tour;
 
@@ -26,4 +28,8 @@ public interface RestaurankMapper {
 	int deleteOne(int restRank);
 	// 메인 화면에 출력
 	List<Restaurant> mainPageRest();
+	// 음식점 추천
+	List<Restaurant> selectRecommendation(
+			@Param(value = "city") String city,
+			@Param(value = "rest") String rest);
 }

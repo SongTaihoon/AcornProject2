@@ -79,7 +79,7 @@
 								<input name="tourImgNo" type="checkbox"
 									   class="form-check-input" th:value="${tourImg.tour_img_no}">
 								<img alt="후기 이미지" 
-									 th:src="@{/img/{file}(file=${tourImg.img_path})}" 
+									 th:src="@{/public/img/{file}(file=${tourImg.img_path})}" 
 									 class="img-thumbnail" width="200">
 							</label>
 						</th:block>

@@ -79,7 +79,7 @@
 								<input name="restaurankImgNo" type="checkbox"
 									   class="form-check-input" th:value="${restaurantImg.restaurank_img_no}">
 								<img alt="음식점 이미지" 
-									 th:src="@{/img/{file}(file=${restaurantImg.img_path})}" 
+									 th:src="@{/public/img/{file}(file=${restaurantImg.img_path})}" 
 									 class="img-thumbnail" width="200">
 							</label>
 						</th:block>

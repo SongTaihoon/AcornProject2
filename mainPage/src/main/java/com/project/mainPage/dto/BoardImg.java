@@ -1,9 +1,6 @@
 package com.project.mainPage.dto;
-
 import lombok.Data;
-
 /*
- *  desc board_img;
 +--------------+--------------+------+-----+---------+----------------+
 | Field        | Type         | Null | Key | Default | Extra          |
 +--------------+--------------+------+-----+---------+----------------+
@@ -11,7 +8,7 @@ import lombok.Data;
 | board_no     | int          | NO   | MUL | NULL    |                |
 | img_path     | varchar(255) | NO   |     | NULL    |                |
 +--------------+--------------+------+-----+---------+----------------+
- * */
+*/
 @Data
 public class BoardImg {	
 	private int board_img_no;

@@ -1,10 +1,14 @@
 =\=\=\=\=\=\=
 <<<<<<<=HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>>=7152490d28b08ecba93d4fc6a301f61fdf9723ec
 =======
 >>>>>>>=5998e5a704edd7332fd051d52c51cea908082ca4
 >>>>>>> 4c1eb4848c5103ea02e1fa0ad8e71d1abf0e8748
+=======
+>>>>>>>=4c1eb4848c5103ea02e1fa0ad8e71d1abf0e8748
+>>>>>>> 7c62fa8a9dcf9884d7754db55fdfdf660e6f7cea
 content_assist_favorite_static_members=org.assertj.core.api.Assertions.*;org.mockito.Matchers.*;org.mockito.Mockito.*;org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.*;org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.*;org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.*;org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;org.springframework.test.web.client.match.MockRestRequestMatchers.*;org.springframework.test.web.client.response.MockRestResponseCreators.*;org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;org.hamcrest.CoreMatchers.*;org.junit.Assert.*
 content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="com.project.mainPage.dto.QaBoard"><rhs name\="com.project.mainPage.dto.QaBoard"/></lhs><lhs name\="javax.mail.Message$RecipientType"><rhs name\="javax.mail.internet.MimeMessage$RecipientType"/></lhs><lhs name\="javax.mail.Address"><rhs name\="javax.mail.internet.InternetAddress"/></lhs><lhs name\="com.project.mainPage.dto.EmailConfirmDto"><rhs name\="com.project.mainPage.dto.EmailConfirmDto"/></lhs><lhs name\="com.project.mainPage.dto.PhoneConfirmDto"><rhs name\="com.project.mainPage.dto.PhoneConfirmDto"/></lhs></history>
 content_assist_number_of_computers=15

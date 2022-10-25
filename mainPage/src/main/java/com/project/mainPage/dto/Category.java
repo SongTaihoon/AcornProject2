@@ -1,6 +1,4 @@
 package com.project.mainPage.dto;
-import java.util.List;
-
 import lombok.Data;
 /*
 +---------------+-------------+------+-----+---------+-------+

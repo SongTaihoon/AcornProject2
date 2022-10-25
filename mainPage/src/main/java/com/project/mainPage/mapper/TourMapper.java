@@ -3,6 +3,7 @@ package com.project.mainPage.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.project.mainPage.dto.Tour;
 
@@ -24,5 +25,8 @@ public interface TourMapper {
 	int deleteOne(int tourRank);
 	// 메인 화면에 출력
 	List<Tour> mainPageTour();
+	// 관광지 추천
+	List<Tour> selectRecommendation(
+			@Param(value = "city") String city);
 }
 

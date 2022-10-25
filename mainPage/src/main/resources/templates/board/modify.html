@@ -96,7 +96,7 @@
 								<input name="boardImgNo" type="checkbox"
 									   class="form-check-input" th:value="${boardImg.board_img_no}">
 								<img alt="후기 이미지" 
-									 th:src="@{/img/{file}(file=${boardImg.img_path})}" 
+									 th:src="@{/public/img/{file}(file=${boardImg.img_path})}" 
 									 class="img-thumbnail" width="200">
 							</label>
 						</th:block>
