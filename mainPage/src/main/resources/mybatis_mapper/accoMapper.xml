@@ -39,7 +39,9 @@
 	<!--  acco List  -->
 	<select id="selectListAll" resultMap="AccoMap">	
 		SELECT a.*, 
+		
 		 	c.category_id,
+		 	
 		 	RANK() OVER(ORDER BY search DESC) AS ranking
 		 	
 			FROM ACCOMMODATE a
@@ -54,8 +56,11 @@
 	</select>
 	<select id="selectRecommendation" resultMap="AccoMap">
 		SELECT a.*, 
+		
 		 	c.category_id,
+		 	
 		 	(SELECT img_path FROM ACCOIMG WHERE acco_rank = a.acco_rank LIMIT 1) img_path
+		 	
 		 	<if test="acco != null">
 				,RANK() OVER(ORDER BY ${acco} DESC) AS ranking
 			</if>
@@ -78,8 +83,10 @@
 	<!-- tour Detail  -->
 	<select id="selectDetailOne" resultMap="AccoMap" parameterType="int">
 		SELECT a.*, 
+		
 			u.user_id, 
 			u.user_name, 
+			
 			i.acco_img_no AS acco_img_no,
 			i.img_path AS img_path,
 			
@@ -107,18 +114,18 @@
 	<insert id="insertOne" parameterType="Acco"
 	 		useGeneratedKeys="true" keyProperty="acco_rank">
 		INSERT INTO ACCOMMODATE 
-			( tourist, address1,province,city,category_id,search , user_id,acco_phone,contents)
-				VALUES (#{tourist}, #{address1},#{province},#{city},#{category.category_id},#{search}, #{user.user_id},#{acco_phone},#{contents})
+			(tourist, address1, province, city, category_id, search, user_id, acco_phone, contents)
+				VALUES (#{tourist}, #{address1}, #{province}, #{city}, #{category.category_id}, #{search}, #{user.user_id}, #{acco_phone}, #{contents})
 	</insert>
 	<!-- 수정  -->
 	<update id="updateOne" parameterType="Acco">
 		UPDATE ACCOMMODATE SET 
-				tourist = #{tourist},
-				city = #{city},
-				address1 = #{address1},
-				search = #{search},
-				acco_phone = #{acco_phone},
-				contents = #{contents}
+			tourist = #{tourist},
+			city = #{city},
+			address1 = #{address1},
+			search = #{search},
+			acco_phone = #{acco_phone},
+			contents = #{contents}
 				WHERE acco_rank = #{acco_rank}
 	</update>
 	<!-- 삭제  -->
@@ -129,7 +136,9 @@
 	<select id="mainPageAcco" resultType="Acco">
 		SELECT DISTINCT a.acco_rank, 
 			a.*, 
+			
 			(SELECT img_path FROM ACCOIMG WHERE acco_rank = a.acco_rank LIMIT 1) img_path,
+			
 			RANK() OVER(ORDER BY search DESC) AS ranking
 			
 		 	FROM ACCOMMODATE a

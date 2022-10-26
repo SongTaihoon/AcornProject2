@@ -32,7 +32,7 @@
 	</resultMap>
 	<!--  tour List  -->
 	<select id="selectListAll" resultMap="TourMap">	
-			SELECT t.*, 
+		SELECT t.*, 
 		 	
 		 	RANK() OVER(ORDER BY search DESC) AS ranking
 		 	
@@ -65,8 +65,10 @@
 	<!-- tour Detail  -->
 	<select id="selectDetailOne" resultMap="TourMap" parameterType="int">
 		SELECT t.*, 
+		
 			u.user_id, 
 			u.user_name, 
+			
 			i.tour_img_no AS tour_img_no,
 			i.img_path AS img_path,
 			

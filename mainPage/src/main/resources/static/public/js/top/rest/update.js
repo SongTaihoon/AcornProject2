@@ -1,3 +1,5 @@
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 //값이 없을 때 submit 불가
 const restUpdateForm = document.forms.restUpdateForm;
 let tourist = restUpdateForm.tourist;

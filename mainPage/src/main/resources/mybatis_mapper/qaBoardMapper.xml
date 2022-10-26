@@ -13,13 +13,13 @@
 			<id column="category_id" property="category_id"/>
 			<id column="category_name" property="category_name"/>
 		</association>
-		<association property="user" javaType="UserDto"  foreignColumn="user_id">
+		<association property="user" javaType="UserDto" foreignColumn="user_id">
 			<id column="user_id" property="user_id"/>
 			<result column="user_name" property="user_name"/>
 			<result column="user_email" property="user_email"/>
 			<result column="user_phone" property="user_phone"/>
 		</association>
-		<association property="qaReply" javaType="qaReply"  foreignColumn="qaBoardNo">
+		<association property="qaReply" javaType="qaReply" foreignColumn="qaBoardNo">
 			<id column="qaReplyNo" property="qaReplyNo"/>
 			<result column="qaReplyContent" property="qaReplyContent"/>
 			<result column="qaReplyDate" property="qaReplyDate"/>
