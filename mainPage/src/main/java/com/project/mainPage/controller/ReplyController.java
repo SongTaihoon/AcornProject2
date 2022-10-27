@@ -27,6 +27,7 @@ import com.project.mainPage.mapper.ReplyPreferMapper;
 public class ReplyController {
 	@Autowired
 	ReplyMapper replyMapper;
+	
 //	application.properties의 설정 경로 받아 오기
 	@Value("${spring.servlet.multipart.location}") // 파일이 임시 저장되는 경로 + 실제로 저장할 경로
 	String savePath;
@@ -213,8 +214,7 @@ public class ReplyController {
 			e.printStackTrace();
 		}
 		return "/board/replyDetail";
-	}
-	
+	}	
 
 //	댓글 좋아요 수정
 	@PutMapping("/prefer/update/{reply_no}/{prefer}")

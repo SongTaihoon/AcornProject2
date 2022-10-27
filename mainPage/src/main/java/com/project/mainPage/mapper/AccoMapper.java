@@ -1,13 +1,8 @@
 package com.project.mainPage.mapper;
-
 import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
-
+import org.apache.ibatis.annotations.Param;
 import com.project.mainPage.dto.Acco;
-import com.project.mainPage.dto.Tour;
-
-
 // com.project.mainPage.mapper.AccoMapper
 @Mapper
 public interface AccoMapper {
@@ -25,5 +20,8 @@ public interface AccoMapper {
 	int deleteOne(int accoRank);
 	// 메인 화면에 출력
 	List<Acco> mainPageAcco();
+	// 숙박 추천
+	List<Acco> selectRecommendation(
+			@Param(value = "city") String city,
+			@Param(value = "acco") String acco);
 }
-

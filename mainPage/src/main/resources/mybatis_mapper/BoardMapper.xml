@@ -24,8 +24,8 @@
 			<result column="birth" property="birth"/>
 		</association>
 		<association property="category" javaType="Category" foreignColumn="category_id">
-				<id column="category_id" property="category_id"/>
-				<id column="category_name" property="category_name"/>
+			<id column="category_id" property="category_id"/>
+			<id column="category_name" property="category_name"/>
 		</association>
 		<collection property="replys" javaType="java.util.ArrayList" ofType="Reply">
 			<id column="reply_no" property="reply_no"/>
@@ -34,22 +34,22 @@
 			<result column="reply_img_path" property="img_path"/>
 			<result column="reply_good" property="good"/>
 			<result column="reply_bad" property="bad"/>
-				<association property="user" javaType="UserDto">
-					<id column="reply_user_id" property="user_id"/>
-						<result column="reply_user_name" property="user_name"/>
-				</association>
-				<collection property="good_prefers" ofType="ReplyPrefer" javaType="java.util.ArrayList">
-					<id column="rp_good_reply_prefer_no" property="reply_prefer_no"/>
-					<result column="rp_good_reply_no" property="reply_no"/>
-					<result column="rp_good_prefer" property="prefer"/>
-					<result column="rp_good_user_id" property="user_id"/>
-				</collection>
-				<collection property="bad_prefers" ofType="ReplyPrefer" javaType="java.util.ArrayList">
-					<id column="rp_bad_reply_prefer_no" property="reply_prefer_no"/>
-					<result column="rp_bad_reply_no" property="reply_no"/>
-					<result column="rp_bad_prefer" property="prefer"/>
-					<result column="rp_bad_user_id" property="user_id"/>
-				</collection>
+			<association property="user" javaType="UserDto">
+				<id column="reply_user_id" property="user_id"/>
+				<result column="reply_user_name" property="user_name"/>
+			</association>
+			<collection property="good_prefers" ofType="ReplyPrefer" javaType="java.util.ArrayList">
+				<id column="rp_good_reply_prefer_no" property="reply_prefer_no"/>
+				<result column="rp_good_reply_no" property="reply_no"/>
+				<result column="rp_good_prefer" property="prefer"/>
+				<result column="rp_good_user_id" property="user_id"/>
+			</collection>
+			<collection property="bad_prefers" ofType="ReplyPrefer" javaType="java.util.ArrayList">
+				<id column="rp_bad_reply_prefer_no" property="reply_prefer_no"/>
+				<result column="rp_bad_reply_no" property="reply_no"/>
+				<result column="rp_bad_prefer" property="prefer"/>
+				<result column="rp_bad_user_id" property="user_id"/>
+			</collection>
 		</collection>
 		<collection property="boardImgs" javaType="java.util.ArrayList" ofType="BoardImg">
 			<id column="iboard_img_no" property="board_img_no"/>

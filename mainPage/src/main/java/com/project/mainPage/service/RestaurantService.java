@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.project.mainPage.dto.Restaurant;
 import com.project.mainPage.dto.RestaurantImg;
-import com.project.mainPage.dto.Tour;
-import com.project.mainPage.dto.TourImg;
 import com.project.mainPage.mapper.RestaurankMapper;
 import com.project.mainPage.mapper.RestaurantImgMapper;
 @Service
@@ -22,7 +20,7 @@ public class RestaurantService {
 	@Value("${spring.servlet.multipart.location}")
 	String savePath;
 	
-	// 음식점 리스트 목록 또는 리스트 페이지 설정 
+	// 음식점 리스트
 	public Restaurant restUpdateView(Integer restRank) throws Exception {
 		restaurankMapper.updateViews(restRank);
 		return restaurankMapper.selectDetailOne(restRank);
@@ -52,8 +50,10 @@ public class RestaurantService {
 		if(restaurantImgNos != null) {
 			for(int no : restaurantImgNos) {
 				RestaurantImg restaurantImg = restaurantImgMapper.selectOne(no);
-				File f = new File(savePath + "/" + restaurantImg.getImg_path() );
+				
+				File f = new File(savePath + "/" + restaurantImg.getImg_path());
 				System.out.println("rest의 이미지 파일(서버) 삭제 성공! : " + f.delete());
+				
 				int removeRestImg = restaurantImgMapper.deleteOne(no);
 				System.out.println("rest의 rest_img(DB) 삭제 성공! : " + removeRestImg);
 			}
@@ -71,10 +71,10 @@ public class RestaurantService {
 	}
 		
 	// 음식점 삭제 
-	public int removeRest(int restRank) throws Exception{
+	public int removeRest(int restRank) throws Exception {
 		int remove = 0;
 		List<RestaurantImg> restaurantImgs = restaurantImgMapper.selectRestRank(restRank);
-		if(restaurantImgs != null ) {
+		if(restaurantImgs != null) {
 			restaurantImgs.stream()
 				.map(RestaurantImg :: getImg_path)
 				.forEach((img) -> {

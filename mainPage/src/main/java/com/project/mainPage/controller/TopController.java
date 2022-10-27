@@ -136,11 +136,10 @@ public class TopController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("tour : " + tour);
 		if(tour != null) {
 			model.addAttribute(tour);
 			return "/top/tour/detail";
-		}else {
+		} else {
 			return "redirect:/top/tour/list/1";	
 		}
 	}
@@ -152,7 +151,7 @@ public class TopController {
 			) {
 		if(loginUser.getAdminCk() == 1) {
 			return "/top/tour/insert";
-		}else {
+		} else {
 			return "redirect:/user/login.do";
 		}
 	}
@@ -188,14 +187,13 @@ public class TopController {
 				}
 			}
 			insert = tourService.registTour(tour); // DB에 관광지 등록
-			System.out.println(tour);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		if(insert > 0) {
 			System.out.println("관광지 등록 성공! : " + insert);
 			return "redirect:/top/tour/list/1";
-		}else {
+		} else {
 			System.out.println("관광지 등록 실패! : " + insert);
 			return "redirect:/top/tour/insert.do";
 		}
@@ -212,7 +210,6 @@ public class TopController {
 		tour = tourMapper.selectDetailOne(tourRank);
 		if(loginUser.getAdminCk() == 1) {
 			model.addAttribute("tour", tour);
-			System.out.println("getMappertour : " + tour);
 			return "/top/tour/update";			
 		} else {
 			return "redirect:/user/login.do";
@@ -265,11 +262,11 @@ public class TopController {
 			if(update > 0) {
 				System.out.println("관광지 수정 성공! : " + update);
 				return "redirect:/top/tour/detail/" + tour.getTour_rank();
-			}else {
+			} else {
 				System.out.println("관광지 수정 실패! : " + update);
 				return "redirect:/top/tour/update/" + tour.getTour_rank();
 			}	
-		}else{ 
+		} else{ 
 			return "redirect:/user/login.do";
 		}  
 	}
@@ -280,31 +277,29 @@ public class TopController {
 	public String delete(
 			@PathVariable int tourRank,
 			@PathVariable String userId,
-			@SessionAttribute(name ="loginUser",required = false) UserDto loginUser,
+			@SessionAttribute(name ="loginUser", required = false) UserDto loginUser,
 			HttpSession session
 			) {
-		System.out.println("loginUser : "+loginUser);
 		String msg = "";
 		if(loginUser != null || loginUser.getAdminCk() == 1) {
-			int delete=0;
+			int delete = 0;
 			try {
 				delete = tourService.removeTour(tourRank);
-			} catch(Exception e) {e.printStackTrace();}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
 			if(delete > 0) {
-				msg="관광지 삭제 성공";
+				msg = "관광지 삭제 성공";
 				session.setAttribute("msg", msg);
-				System.out.println(msg);
 				return "redirect:/top/tour/list/1";
-			}else {
-				msg="관광지 삭제 실패";
+			} else {
+				msg = "관광지 삭제 실패";
 				session.setAttribute("msg", msg);
-				System.out.println(msg);
 				return "redirect:/top/tour/update/" + tourRank;			
 			}	
-		}else {
+		} else {
 			msg = "로그인 하셔야 이용 가능합니다.";
 			session.setAttribute("msg", msg);
-			System.out.println(msg);
 			return "redirect:/user/login.do";
 		}
 	}
@@ -320,7 +315,7 @@ public class TopController {
 		int count = restaurankMapper.selectPageAllCount();
 		Pagination pagination = new Pagination(page, count, "/top/rest/list/", row);
 		model.addAttribute("pagination", pagination);
-		model.addAttribute("restaurantsList",restaurantsList);	
+		model.addAttribute("restaurantsList", restaurantsList);	
 		model.addAttribute("row", row);
 		model.addAttribute("count", count);
 		model.addAttribute("page", page);
@@ -368,11 +363,10 @@ public class TopController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("restaurant : " + restaurant);
 		if(restaurant != null) {
 			model.addAttribute("restaurant", restaurant);
 			return "/top/rest/detail";
-		}else {
+		} else {
 			return "redirect:/top/rest/list/1";	
 		}
 	}
@@ -384,7 +378,7 @@ public class TopController {
 			) {
 		if((loginUser).getAdminCk() == 1) {
 			return "/top/rest/insert";
-		}else {
+		} else {
 			return "redirect:/user/login.do";
 		}
 	}
@@ -392,7 +386,7 @@ public class TopController {
 	// 음식점 등록(관리자)
 	@PostMapping("/rest/insert.do")
 	public String restinsert(
-			Restaurant  restaurant,
+			Restaurant restaurant,
 			@RequestParam(name = "imgFile", required = false) MultipartFile [] imgFiles,
 			@SessionAttribute(required = false) UserDto loginUser,
 			HttpSession session) {
@@ -420,13 +414,13 @@ public class TopController {
 				}
 			}
 			insert = restaurantService.registRest(restaurant); // DB에 관광지 등록
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		if(insert > 0) {
 			System.out.println("음식점 등록 성공! : " + insert);
 			return "redirect:/top/rest/list/1";
-		}else {
+		} else {
 			System.out.println("음식점 등록 실패! : " + insert);
 			return "redirect:/top/rest/insert.do";
 		}
@@ -444,7 +438,6 @@ public class TopController {
 		restaurant = restaurankMapper.selectDetailOne(restRank);
 		if(loginUser != null || loginUser.getAdminCk() == 1) {
 			model.addAttribute("restaurant", restaurant);
-			System.out.println("restaurant : " + restaurant);
 			return "/top/rest/update";			
 		} else {
 			return "redirect:/user/login.do";
@@ -490,7 +483,6 @@ public class TopController {
 					}
 				}
 				update = restaurantService.updateRestRemoveRestImg(restaurant, restaurantImgNos); // DB에서 후기 수정
-				System.out.println("update : "+update);
 			} catch (Exception e) {
 				e.printStackTrace();
 				return "redirect:/top/rest/update/" + restaurant.getRest_rank();
@@ -498,11 +490,11 @@ public class TopController {
 			if(update > 0) {
 				System.out.println("음식점 수정 성공! : " + update);
 				return "redirect:/top/rest/detail/" + restaurant.getRest_rank();
-			}else {
+			} else {
 				System.out.println("음식점 수정 실패! : " + update);
 				return "redirect:/top/rest/update/" + restaurant.getRest_rank();
 			}	
-		}else{ 
+		} else { 
 			return "redirect:/user/login.do";
 		}  
 	}
@@ -525,20 +517,17 @@ public class TopController {
 				e.printStackTrace();
 			}
 			if(delete > 0) {
-				msg="음식점 삭제 성공";
+				msg = "음식점 삭제 성공";
 				session.setAttribute("msg", msg);
-				System.out.println(msg);
 				return "redirect:/top/rest/list/1";
-			}else {
+			} else {
 				msg = "음식점 삭제 실패";
 				session.setAttribute("msg", msg);
-				System.out.println(msg);
 				return "redirect:/top/rest/update/" + restRank;			
 			}	
-		}else {
+		} else {
 			msg = "로그인 하셔야 이용 가능합니다.";
 			session.setAttribute("msg", msg);
-			System.out.println(msg);
 			return "redirect:/user/login.do";
 		}
 	}
@@ -561,7 +550,7 @@ public class TopController {
 		return "top/acco/list";
 	}
 	
-	//숙박 상세
+	// 숙박 상세
 	@GetMapping("/acco/detail/{accoRank}")
 	public String accoDetail(
 			@PathVariable Integer accoRank,
@@ -605,7 +594,7 @@ public class TopController {
 		if(acco != null) {
 			model.addAttribute("acco", acco);
 			return "/top/acco/detail";
-		}else {
+		} else {
 			return "redirect:/top/acco/list/1";	
 		}
 	}
@@ -617,7 +606,7 @@ public class TopController {
 			) {
 		if(loginUser.getAdminCk() == 1) {
 			return "/top/acco/insert";
-		}else {
+		} else {
 			return "redirect:/user/login.do";
 		}
 	}
@@ -653,13 +642,13 @@ public class TopController {
 				}
 			}
 			insert = accoService.registAcco(acco); // DB에 등록
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		if(insert > 0) {
 			System.out.println("숙박 등록 성공! : " + insert);
 			return "redirect:/top/acco/list/1";
-		}else {
+		} else {
 			System.out.println("숙박 등록 실패! : " + insert);
 			return "redirect:/top/acco/insert.do";
 		}
@@ -721,8 +710,6 @@ public class TopController {
 					}
 				}
 				update = accoService.updateAccoRemoveAccoImg(acco, accoImgNos); // DB에서 후기 수정
-
-				System.out.println("update : " + update);
 			} catch (Exception e) {
 				e.printStackTrace();
 				return "redirect:/top/acco/update/" + acco.getAcco_rank();
@@ -730,11 +717,11 @@ public class TopController {
 			if(update > 0) {
 				System.out.println("숙박 수정 성공! : " + update);
 				return "redirect:/top/acco/detail/" + acco.getAcco_rank();
-			}else {
+			} else {
 				System.out.println("숙박 수정 실패! : " + update);
 				return "redirect:/top/acco/update/" + acco.getAcco_rank();
 			}	
-		}else{ 
+		} else { 
 			return "redirect:/user/login.do";
 		}  
 	}	
@@ -759,18 +746,15 @@ public class TopController {
 			if(delete > 0) {
 				msg = "숙박 삭제 성공";
 				session.setAttribute("msg", msg);
-				System.out.println(msg);
 				return "redirect:/top/acco/list/1";
-			}else {
+			} else {
 				msg = "숙박 삭제 실패";
 				session.setAttribute("msg", msg);
-				System.out.println(msg);
 				return "redirect:/top/acco/update/" + accoRank;			
 			}	
-		}else {
+		} else {
 			msg = "로그인 하셔야 이용 가능합니다.";
 			session.setAttribute("msg", msg);
-			System.out.println(msg);
 			return "redirect:/user/login.do";
 		}
 	}

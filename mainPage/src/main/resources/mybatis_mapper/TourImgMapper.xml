@@ -4,7 +4,7 @@
 <mapper namespace="com.project.mainPage.mapper.TourImgMapper">
 	<insert id="insertOne" parameterType="TourImg">
 		INSERT INTO TOURIMG(tour_rank, img_path)
-			VALUES(#{tour_rank},#{img_path})
+			VALUES(#{tour_rank}, #{img_path})
 	</insert>
 	<select id="selectTourRank" resultType="TourImg" parameterType="int">
 		SELECT * FROM TOURIMG

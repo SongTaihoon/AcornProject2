@@ -4,7 +4,7 @@
 <mapper namespace="com.project.mainPage.mapper.AccoImgMapper">
 	<insert id="insertOne" parameterType="AccoImg">
 		INSERT INTO ACCOIMG(acco_rank, img_path)
-			VALUES(#{acco_rank},#{img_path})
+			VALUES(#{acco_rank}, #{img_path})
 	</insert>
 	<select id="selectAccoRank" resultType="AccoImg" parameterType="int">
 		SELECT * FROM ACCOIMG

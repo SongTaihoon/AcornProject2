@@ -3,10 +3,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.mainPage.mapper.QaReplyMapper">
 	<resultMap type="QaReply" id="QaReplyMap">
-	<id column="qaReplyNo" property="qaReplyNo"/>
+		<id column="qaReplyNo" property="qaReplyNo"/>
 		<result column="qaReplyContent" property="qaReplyContent"/>
 		<result column="qaReplyDate" property="qaReplyDate"/>
-		<association property="qaBoard" javaType="QaBoard"  foreignColumn="qaBoardNo">
+		<association property="qaBoard" javaType="QaBoard" foreignColumn="qaBoardNo">
 			<id column="qaBoardNo" property="qaBoardNo"/>
 			<result column="qaBoardAnswer" property="qaBoardAnswer"/>
 		</association>

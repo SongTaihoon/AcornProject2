@@ -16,7 +16,6 @@ public class InterceptorConfig implements WebMvcConfigurer{
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 			registry.addInterceptor(loginCheckInterceptor)
-			.addPathPatterns("/search/**")
 			.addPathPatterns("/board/insert/**")
 			.addPathPatterns("/board/delete/**")
 			.addPathPatterns("/board/update/**")
@@ -35,6 +34,7 @@ public class InterceptorConfig implements WebMvcConfigurer{
 			.addPathPatterns("/user/delete/**")
 			.addPathPatterns("/**/insert.do")
 			.addPathPatterns("/**/update.do")
+			.addPathPatterns("/recommendation")
 			.addPathPatterns("/ /**")		
 			// 추가하거나 예외처리할 주소
 			.excludePathPatterns("/user/signup.do")
@@ -46,15 +46,14 @@ public class InterceptorConfig implements WebMvcConfigurer{
 			.excludePathPatterns("/ / ");
 			
 			registry.addInterceptor(adminInterceptor)
-			.addPathPatterns("/admin/**")
 			.addPathPatterns("/user/list/**")
 			.addPathPatterns("/user/search/**")
 			.addPathPatterns("/notice/update/**")
 			.addPathPatterns("/notice/delete/**")
 			.addPathPatterns("/notice/insert.do")
 			.addPathPatterns("/notice/update.do")
-			.addPathPatterns("/qaboard/replyUpdate/**")
 			.addPathPatterns("/qaboard/replyInsert.do")
+			.addPathPatterns("/qaboard/replyUpdate/**")
 			.addPathPatterns("/qaboard/replyUpdate.do")
 			.addPathPatterns("/qaboard/replyDelete/**")
 			.addPathPatterns("/top/tour/insert.do")

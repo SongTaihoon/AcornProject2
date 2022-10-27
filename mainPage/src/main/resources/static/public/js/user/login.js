@@ -6,19 +6,19 @@ const findPwForm = document.forms.findPwForm; // 비밀번호 찾기 폼
 const ajaxIdUrl = "/user/idCheck/"; // 아이디 ajax
 
 // 로그인 제출 변수
-let idSubmit = true;
-let pwSubmit = true;
+let idSubmit = false;
+let pwSubmit = false;
 
 // 아이디 찾기 제출 변수
-let namesubmit = true;
-let emailsubmit = true;
-let phonesubmit = true;
+let namesubmit = false;
+let emailsubmit = false;
+let phonesubmit = false;
 
 // 비밀번호 찾기 제출 변수
-let idPwSubmit = true;
-let namePwSubmit = true;
-let emailPwSubmit = true;
-let phonePwSubmit = true;
+let idPwSubmit = false;
+let namePwSubmit = false;
+let emailPwSubmit = false;
+let phonePwSubmit = false;
 
 // 전화번호 입력 시 하이픈(-) 자동으로 생성되게 하는 함수
 function phoneAutoComplete(e) {

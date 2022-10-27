@@ -1,7 +1,5 @@
 package com.project.mainPage.dto;
 import lombok.Data;
-import lombok.Getter;
-import lombok.ToString;
 @Data
 public class Pagination {
 	private int page; 	// 요청한 페이지 (현재 위치)

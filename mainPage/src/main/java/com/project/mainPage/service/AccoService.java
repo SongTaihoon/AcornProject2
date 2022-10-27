@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.project.mainPage.dto.Acco;
 import com.project.mainPage.dto.AccoImg;
-import com.project.mainPage.dto.TourImg;
 import com.project.mainPage.mapper.AccoImgMapper;
 import com.project.mainPage.mapper.AccoMapper;
 @Service
@@ -51,8 +50,10 @@ public class AccoService {
 		if(accoImgNos != null) {
 			for(int no : accoImgNos) {
 				AccoImg accoImg = accoImgMapper.selectOne(no);
+				
 				File f = new File(savePath + "/" + accoImg.getImg_path());
 				System.out.println("acco의 이미지 파일(서버) 삭제 성공! : " + f.delete());
+				
 				int removeAccoImg = accoImgMapper.deleteOne(no);
 				System.out.println("acco의 acco_img(DB) 삭제 성공! : " + removeAccoImg);
 			}
@@ -64,7 +65,7 @@ public class AccoService {
 				System.out.println("acco의 acco_img(DB) 등록 성공! : " + registAccoImg);
 			}
 		}
-		update = accoMapper.updateOne(acco); // 관광지 수정
+		update = accoMapper.updateOne(acco); // 숙박 수정
 		System.out.println("service update : " + update);
 		return update;
 	}

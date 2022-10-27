@@ -1,8 +1,6 @@
 package com.project.mainPage.dto;
-
 import lombok.Data;
 /*
- * mysql> desc NOTICE_IMG;
 +---------------+--------------+------+-----+---------+----------------+
 | Field         | Type         | Null | Key | Default | Extra          |
 +---------------+--------------+------+-----+---------+----------------+
@@ -10,7 +8,7 @@ import lombok.Data;
 | notice_no     | int          | NO   | MUL | NULL    |                |
 | img_path      | varchar(255) | NO   |     | NULL    |                |
 +---------------+--------------+------+-----+---------+----------------+
- * */
+*/
 @Data
 public class NoticeImg {
 	private int notice_img_no;

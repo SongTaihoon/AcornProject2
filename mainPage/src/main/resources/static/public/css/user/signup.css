@@ -45,9 +45,12 @@
     padding-left: 15px;
     line-height: 50px;
 }
-#container #subContainer #signupBox #signupForm #button {
+#container #subContainer #signupBox #signupForm .button {
 	height: 50px;
 	width: 454px;    	
+}
+#addressBtn {
+    margin-top: 0;
 }
 html, body {
 	height: 100vh;
@@ -55,7 +58,7 @@ html, body {
 #wrapper {
     min-height: 100%;
     position: relative;
-    padding-bottom: 450px;
+    padding-bottom: 600px;
 }
 .footer {
     bottom: 0;
@@ -72,7 +75,13 @@ input[type='date']:valid::before {
 }
 @media (max-width: 600px) {
 	#wrapper {
-	    padding-bottom: 830px;
+	    padding-bottom: 1500px;
+	}
+	.box {
+	    margin: 10px 0 10px 0;
+	}
+	#addressBtn {
+	    margin-top: 10px;
 	}
 }
 @media (max-width: 992px) {

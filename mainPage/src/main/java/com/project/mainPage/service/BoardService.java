@@ -5,13 +5,11 @@ import org.springframework.stereotype.Service;
 import com.project.mainPage.dto.Board;
 import com.project.mainPage.mapper.BoardMapper;
 import com.project.mainPage.mapper.ReplyMapper;
-
 import java.io.File;
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 import com.project.mainPage.dto.BoardImg;
 import com.project.mainPage.dto.Reply;
-import com.project.mainPage.dto.TourImg;
 import com.project.mainPage.mapper.BoardImgMapper;
 @Service
 public class BoardService {
@@ -28,13 +26,13 @@ public class BoardService {
 	String savePath;
 	
 //	후기 조회수 수정
-	public Board boardUpdateView(int boardNo) throws Exception{
+	public Board boardUpdateView(int boardNo) throws Exception {
 		boardMapper.detailUpdateViews(boardNo);
 		return boardMapper.selectOne(boardNo);
 	}
 		
 //	후기 삭제
-	public int removeBoard(int boardNo) throws Exception{
+	public int removeBoard(int boardNo) throws Exception {
 		int remove = 0;
 		// Board를 참조하는 Reply의 이미지 삭제
 		List<Reply> replies = replyMapper.selectBoardNo(boardNo);
@@ -42,7 +40,7 @@ public class BoardService {
 			for(Reply reply : replies) {
 				if(reply.getImg_path() != null) {
 					File f = new File(savePath + "/" + reply.getImg_path());
-					System.out.println("댓글 이미지 삭제 성공! : " + f.delete()); // 서버(static 폴더 내부에 있는 img폴더)에서 삭제
+					System.out.println("댓글 이미지 삭제 성공! : " + f.delete()); // 서버(static 폴더 내부에 있는 img 폴더)에서 삭제
 				}
 			}
 		}
@@ -53,7 +51,7 @@ public class BoardService {
 				.map(BoardImg::getImg_path)
 				.forEach((img) -> {
 					File f = new File(savePath + "/" + img);
-					System.out.println("후기 이미지 삭제 성공! : " + f.delete()); // 서버(static 폴더 내부에 있는 img폴더)에서 삭제
+					System.out.println("후기 이미지 삭제 성공! : " + f.delete()); // 서버(static 폴더 내부에 있는 img 폴더)에서 삭제
 				});
 		}
 		remove = boardMapper.deleteOne(boardNo); // DB에서 후기 삭제
@@ -87,7 +85,7 @@ public class BoardService {
 				BoardImg boardImg = boardImgMapper.selectOne(no);
 				
 				File f = new File(savePath + "/" + boardImg.getImg_path());
-				System.out.println("board의 이미지 파일(서버) 삭제 성공! : " + f.delete()); // 서버(static 폴더 내부에 있는 img폴더)에서 이미지 삭제
+				System.out.println("board의 이미지 파일(서버) 삭제 성공! : " + f.delete()); // 서버(static 폴더 내부에 있는 img 폴더)에서 이미지 삭제
 				
 				int removeBoardImg = boardImgMapper.deleteOne(no);
 				System.out.println("board의 Board_img(DB) 삭제 성공! : " + removeBoardImg); // DB에서 이미지 삭제

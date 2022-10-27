@@ -19,7 +19,7 @@
 			</if>
  			LIMIT #{startRow}, #{pageSize}
  	</select>
- 	<select id="selectPageAllCount" resultType = "int" >
+ 	<select id="selectPageAllCount" resultType = "int">
  		SELECT COUNT(*) FROM USER 
  		<if test="field != null">
 			WHERE ${field} LIKE CONCAT('%', #{search}, '%')
@@ -71,6 +71,6 @@
  			WHERE user_id = #{user_id}
  	</update>	
  	<delete id="deleteOne" parameterType="UserDto">
- 		DELETE FROM USER WHERE user_id=#{userId}
+ 		DELETE FROM USER WHERE user_id = #{userId}
  	</delete>
  </mapper>
