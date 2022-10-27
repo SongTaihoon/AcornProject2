@@ -1,0 +1,1 @@
+2022-10-21 17:41:14,753 [Worker-22: Compute Mappings for project mainPage] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.project:mainPage:0.0.1-SNAPSHOT @ C:\Users\201025\Desktop\big_data_study220530\AcornProject2\mainPage\pom.xml.
