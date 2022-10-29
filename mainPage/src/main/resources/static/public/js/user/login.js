@@ -163,6 +163,12 @@ loginForm["user_pw"].addEventListener("keydown", (event) => {
 	}
 });
 
+// 비밀번호, 비밀번호 확인 붙여넣기 차단
+loginForm["user_pw"].addEventListener("paste", (event) =>{
+	event.preventDefault();
+	alert("붙여넣을 수 없습니다.");
+});
+
 // 아이디가 올바르지 않을 시 비밀번호 readonly
 loginForm["user_id"].addEventListener("keyup", (event) => {
 	if(idSubmit) { // 가입되어 있는 아이디일 때
