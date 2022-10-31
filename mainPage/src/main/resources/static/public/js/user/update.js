@@ -132,7 +132,7 @@ function noSpaceForm(obj) { // 공백 사용 못하게
        return false;
    }
 }
-
+/*
 // 잘라내기, 복사, 붙여넣기 차단
 document.querySelectorAll("input").forEach((input) => {
 	input.addEventListener("cut", (event) => {
@@ -148,7 +148,7 @@ document.querySelectorAll("input").forEach((input) => {
 		alert("붙여넣을 수 없습니다.");
 	});
 });
-
+*/
 // 이름 입력 이벤트
 updateForm["user_name"].addEventListener("input", (event) => {
 	let value = event.target.value;
@@ -247,6 +247,12 @@ updateForm["user_pw"].addEventListener("keydown", (event) => {
 	if(key == " ") {
 		event.preventDefault();
 	}
+});
+
+// 비밀번호 붙여넣기 차단
+updateForm["user_pw"].addEventListener("paste", (event) =>{
+	event.preventDefault();
+	alert("붙여넣을 수 없습니다.");
 });
 
 // 이메일 입력 이벤트
